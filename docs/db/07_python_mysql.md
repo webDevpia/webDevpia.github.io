@@ -4,6 +4,8 @@ layout: default
 parent: DataBase
 nav_order: 5
 permalink: /db/python_mysql
+# nav_exclude: true
+# search_exclude: true
 ---
 python 에서 mysql 데이터베이스 연결하는 방법을 배웁니다.
 

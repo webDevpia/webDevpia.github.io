@@ -1,5 +1,5 @@
 ---
-title: python mysql 연동하기 1
+title: python mysql 연동하기
 layout: default
 parent: DataBase
 nav_order: 6
