@@ -1,0 +1,7 @@
+FROM httpd:alpine
+
+LABEL maintainer="test@site.org"
+LABEL version="1.0.0"
+LABEL description="docker test"
+
+COPY ./html /usr/local/apache2/htdocs
