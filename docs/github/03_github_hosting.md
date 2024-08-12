@@ -3,6 +3,8 @@ title: Github를 이용한 호스팅
 layout: default
 parent: Git
 permalink: /github_hosting
+# nav_exclude: true
+# search_exclude: true
 ---
 ### 1. GitHub에서 리파지토리 생성(생성되어 있는 리파지토리로 작업할 경우 건너뜀)
 - Public 체크

@@ -3,7 +3,9 @@ title: python mysql 연동하기
 layout: default
 parent: DataBase
 nav_order: 6
-permalink: /db/python_mysql1
+permalink: /db/python_mysql
+# nav_exclude: true
+# search_exclude: true
 ---
 
 # python mysql 연동

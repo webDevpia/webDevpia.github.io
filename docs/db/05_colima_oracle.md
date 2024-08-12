@@ -4,6 +4,8 @@ layout: default
 parent: DataBase
 nav_order: 5
 permalink: /db/colima_oracle
+# nav_exclude: true
+# search_exclude: true
 ---
 # oracle
 

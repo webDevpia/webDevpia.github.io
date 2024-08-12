@@ -4,6 +4,8 @@ layout: default
 parent: DataBase
 nav_order: 2
 permalink: /db/Node_Mongodb
+# nav_exclude: true
+# search_exclude: true
 ---
 
 # MongoDB Node.js연동

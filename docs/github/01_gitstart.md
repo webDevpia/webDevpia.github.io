@@ -3,7 +3,9 @@ title: Git & GitHub
 layout: default
 parent: Git
 # nav_order: 2
-# permalink: /git/GitStart
+permalink: /gitStart
+# nav_exclude: true
+# search_exclude: true
 ---
 # Git & GitHub
 

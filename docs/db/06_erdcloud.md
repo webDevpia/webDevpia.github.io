@@ -4,6 +4,8 @@ layout: default
 parent: DataBase
 nav_order: 7
 permalink: /db/erdcloud
+# nav_exclude: true
+# search_exclude: true
 ---
 
 ## 1. ERD Cloud

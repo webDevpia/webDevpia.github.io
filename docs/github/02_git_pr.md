@@ -2,7 +2,9 @@
 title: Git Pull Request
 layout: default
 parent: Git
-permalink: /Git_PR
+permalink: /git_PR
+# nav_exclude: true
+# search_exclude: true
 ---
 # Pull Request ( pr 발행 )
 

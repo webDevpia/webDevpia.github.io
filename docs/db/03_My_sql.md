@@ -4,6 +4,8 @@ layout: default
 parent: DataBase
 nav_order: 3
 permalink: /db/mysql
+# nav_exclude: true
+# search_exclude: true
 ---
 # Mysql
 

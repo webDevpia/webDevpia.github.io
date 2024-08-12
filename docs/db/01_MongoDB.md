@@ -4,6 +4,8 @@ layout: default
 parent: DataBase
 nav_order: 1
 permalink: /db/MongoDB
+# nav_exclude: true
+# search_exclude: true
 ---
 
 # MongoDB 

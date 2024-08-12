@@ -4,6 +4,8 @@ layout: default
 parent: DataBase
 nav_order: 4
 permalink: /db/node_mysql
+# nav_exclude: true
+# search_exclude: true
 ---
 # Node.js 로 mysql 사용하기
 ## 1. package.json 파일 작성

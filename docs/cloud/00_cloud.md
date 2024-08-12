@@ -4,6 +4,8 @@ title: Cloud
 nav_order: 3
 has_children: true
 permalink: /cloud
+# nav_exclude: true
+# search_exclude: true
 ---
 
 # Cloud
