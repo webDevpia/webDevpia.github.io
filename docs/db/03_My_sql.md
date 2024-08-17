@@ -17,7 +17,7 @@ windows - MySQL Installer for Windows
 mac - MySQL Community Server 8.0.34, MySQL Workbench 8.0.34
 
 # 샘플 데이터베이스 다운로드
-[샘플 데이터베이스 다운로드](/data/mysqlsampledatabase.sql)
+[샘플 데이터베이스 다운로드](/assets/data/mysqlsampledatabase.sql)
 MySQL 샘플 데이터베이스 스키마는 다음 테이블로 구성됩니다.
 
 고객(customers) : 고객의 데이터를 저장합니다.  
@@ -29,7 +29,7 @@ MySQL 샘플 데이터베이스 스키마는 다음 테이블로 구성됩니다
 직원(employees) : 누가 누구에게 보고하는지 등 직원 정보와 조직 구조를 저장합니다.  
 영업소(offices) : 영업소 데이터를 저장합니다.  
 다음 그림은 샘플 데이터베이스의 ER 다이어그램을 보여줍니다.  
-![git](/assets/img/mysql-sample-database.png)
+![git](/assets/img/mysql/mysql-sample-database.png)
 
 ```
 # 샘플데이터 다운로드 받고 터미널창에서
