@@ -20,7 +20,7 @@ import pymongo
 from pymongo import MongoClient
 
 # db 커넥션
-client = MongoClient('mongodb+srv://sseonjo:1yJaNQRqIMxidqQs@cluster0.x8dde.mongodb.net/')
+client = MongoClient('mongodb+srv://<아이디>:<비밀번호>.mongodb.net/')
 print('db 연결')
 ```
 
