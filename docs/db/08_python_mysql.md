@@ -288,8 +288,9 @@ def query_with_fetchall(config):
         conn.close()
 
 if __name__ == '__main__':
+    config = read_config()
     # Call the function with the obtained configuration to execute the query
-    query_with_fetchall()
+    query_with_fetchall(config)
 
 ```
 
