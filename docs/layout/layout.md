@@ -3,6 +3,8 @@ title: Layout
 layout: default
 nav_order: 80
 has_children: true
+nav_exclude: true
+search_exclude: true
 ---
 
 # Layout

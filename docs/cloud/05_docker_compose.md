@@ -4,8 +4,8 @@ layout: default
 parent: Cloud
 nav_order: 5
 permalink: /cloud/docker_compose
-# nav_exclude: true
-# search_exclude: true
+nav_exclude: true
+search_exclude: true
 ---
 # Docker Compose 란?
 - Docker Compose 는 여러 컨테이너를 모아서 관리하기 위한 툴

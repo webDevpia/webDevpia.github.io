@@ -4,8 +4,8 @@ layout: default
 parent: Cloud
 nav_order: 4
 permalink: /cloud/dockerfile
-# nav_exclude: true
-# search_exclude: true
+nav_exclude: true
+search_exclude: true
 ---
 
 # 1. Dockerfile 이란?

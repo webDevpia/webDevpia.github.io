@@ -4,6 +4,8 @@ layout: default
 parent: Site
 nav_order: 2
 permalink: /site/netlify
+nav_exclude: true
+search_exclude: true
 ---
 
 # Netlify Deploy

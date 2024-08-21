@@ -4,8 +4,8 @@ author: shimseonjo
 category: Doc
 layout: post
 permalink: /mac_setting
-# nav_exclude: true
-# search_exclude: true
+nav_exclude: true
+search_exclude: true
 ---
 ## finder 에서 숨긴 파일 확인하기
 cmd + shift + . (토글방식으로 동작)

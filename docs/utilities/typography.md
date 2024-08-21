@@ -2,6 +2,8 @@
 layout: default
 title: Typography
 parent: Utilities
+nav_exclude: true
+search_exclude: true
 ---
 
 # Typography Utilities

@@ -2,6 +2,8 @@
 layout: default
 title: Color
 parent: Utilities
+nav_exclude: true
+search_exclude: true
 ---
 
 # Color Utilities

@@ -4,8 +4,8 @@ layout: default
 parent: Cloud
 nav_order: 6
 permalink: /cloud/docker_inspect
-# nav_exclude: true
-# search_exclude: true
+nav_exclude: true
+search_exclude: true
 ---
 
 # docker 조사하기

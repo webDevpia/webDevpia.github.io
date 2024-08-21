@@ -4,6 +4,8 @@ layout: default
 parent: Site
 nav_order: 1
 permalink: /site/koyeb
+nav_exclude: true
+search_exclude: true
 ---
 
 # Koyeb으로 배포하기

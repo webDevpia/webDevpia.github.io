@@ -3,8 +3,8 @@ title: Reference Site
 layout: default
 permalink: /reference_site
 nav_order: 98
-# nav_exclude: true
-# search_exclude: true
+nav_exclude: true
+search_exclude: true
 ---
 
 #### 1. 색상 참고 사이트

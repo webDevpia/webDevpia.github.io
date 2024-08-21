@@ -4,6 +4,8 @@ title: Utilities
 nav_order: 80
 has_children: true
 permalink: docs/utilities
+nav_exclude: true
+search_exclude: true
 ---
 
 # Utilities

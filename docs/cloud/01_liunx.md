@@ -4,8 +4,8 @@ layout: default
 parent: Cloud
 nav_order: 1
 permalink: /cloud/linux
-# nav_exclude: true
-# search_exclude: true
+nav_exclude: true
+search_exclude: true
 ---
 
 # 리눅스 배경

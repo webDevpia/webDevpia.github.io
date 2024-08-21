@@ -4,6 +4,8 @@ layout: default
 parent: Site
 nav_order: 3
 permalink: /site/supabase
+nav_exclude: true
+search_exclude: true
 ---
 
 # Supabase
