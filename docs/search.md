@@ -2,6 +2,8 @@
 layout: default
 title: Search
 nav_order: 80
+nav_exclude: true
+search_exclude: true
 ---
 
 # Search
