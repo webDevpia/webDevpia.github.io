@@ -16,7 +16,8 @@ permalink: /db/python_mysql
 [샘플데이터 다운로드](/assets/data/pub.sql)
 
 ### 2. 계정 생성 후 권한 설정하기
-```mysql
+
+```sql
 create user 'test'@'%' identified by 'password';
 grant all privileges on *.* to 'test'@'%';
 ```
