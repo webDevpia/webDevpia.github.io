@@ -138,12 +138,12 @@ MongoDB Compass를 실행하고 Connection URI에 붙여넣고, \<username\>과 
 ![](/assets/img/mongodb/mongodb30.jpg)
 
 ### 2. 문서 데이터 모델
-mongodb는 문서 기반 데이터 모델을 사용
+mongodb는 문서 기반 데이터 모델을 사용  
 데이터의 계층적 표현이 가능, 복잡한 조인 연산 없이도 하나의 문서 안에 모두 표현 가능
 ![](/assets/img/mongodb/mongodb31.jpg)
 
 ### 3. JSON과 BSON 차이
-json 문서를 사용하지만 내부 저장시에는 이진 포맷으로 인코딩한 BSON문서로 변환되어 저장.  
+json 문서를 사용하지만 내부 저장시에는 이진 포맷으로 인코딩한 BSON문서로 변환되어 저장.    
 BSON 형식은 컴퓨터가 쉽게 이해할수 있는 형식이며, 검색 속도가 빠르고 json의 데이터 유형에 추가하여 날짜와 이진 데이터 유형을 지원한다.  
 MongoDB가 자동으로 처리해주기는 하지만 인코딩과 디코딩이 추가로 필요하다.
 ![](/assets/img/mongodb/mongodb32.jpg)
@@ -314,7 +314,7 @@ db.회원.find({ })
 db.회원.find({회원이름:"홍나리"}) 
 db.회원.find({나이:24, 성별:"여"}) 
 
-//나타나는 필드 목록을 정할수 있다.
+//나타나는 필드 목록을 정할 수 있다.
 //true(1),false(0)
 //true와 false를 섞어서 사용은 안됨 
 db.회원.find({}, {회원이름:true}) 
