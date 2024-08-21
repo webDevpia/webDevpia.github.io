@@ -1,7 +1,7 @@
 ---
 layout: default
 title: UI Components
-nav_order:80
+nav_order: 80
 has_children: true
 permalink: /docs/ui-components
 nav_exclude: true
