@@ -12,7 +12,7 @@ permalink: /db/python_mysql
 
 ## 1. mysql
 
-[샘플데이터 다운로드](../data/pub.sql)
+[샘플데이터 다운로드](/assets/data/pub.sql)
 
 ## 2. python
 
