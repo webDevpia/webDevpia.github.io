@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Configuration
-nav_order:80
+nav_order: 80
 nav_exclude: true
 search_exclude: true
 ---
