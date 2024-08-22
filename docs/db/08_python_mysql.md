@@ -457,16 +457,21 @@ templates/list.html
   <title>Document</title>
 </head>
 <body>
-  <table border = 1>
+  <table border="1">
+    <tr>
+      <td>id</td>
+      <td>title</td>
+      <td>isbn</td>
+    </tr>
     {% for item in datas %}
-    
-       <tr>
-          <td> {{ item }} </td>
-       </tr>
-       
+    <tr>
+      <td>{{item[0]}}</td>
+      <td>{{item[1]}}</td>
+      <td>{{item[2]}}</td>
+    </tr>
     {% endfor %}
- </table>
-
+  </table>
+  
 </body>
 </html>
 ```
