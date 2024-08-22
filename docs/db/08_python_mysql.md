@@ -448,7 +448,7 @@ if  __name__ == '__main__':
 ```
 
 templates/list.html
-```html
+```txt
 <!DOCTYPE html>
 <html lang="en">
 <head>
