@@ -2,8 +2,8 @@
 title: Tailwind
 layout: default
 parent: Language
-# nav_order: 1
-# permalink: /language/emmet
+nav_order: 10
+permalink: /language/tailwind
 # nav_exclude: true
 # search_exclude: true
 ---

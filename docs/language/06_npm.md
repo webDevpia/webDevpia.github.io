@@ -2,8 +2,8 @@
 title: npm
 layout: default
 parent: Language
-# nav_order: 1
-# permalink: /language/emmet
+nav_order: 7
+permalink: /language/npm
 # nav_exclude: true
 # search_exclude: true
 ---

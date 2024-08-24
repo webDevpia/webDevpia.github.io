@@ -2,8 +2,8 @@
 title: javascript function
 layout: default
 parent: Language
-# nav_order: 1
-# permalink: /language/emmet
+nav_order: 9
+permalink: /language/js_func
 # nav_exclude: true
 # search_exclude: true
 ---

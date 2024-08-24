@@ -2,8 +2,8 @@
 title: vscode 단축키
 layout: default
 parent: Language
-# nav_order: 1
-# permalink: /language/emmet
+nav_order: 4
+permalink: /language/vs_key
 # nav_exclude: true
 # search_exclude: true
 ---

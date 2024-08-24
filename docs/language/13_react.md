@@ -2,8 +2,8 @@
 title: React
 layout: default
 parent: Language
-# nav_order: 1
-# permalink: /language/emmet
+nav_order: 11
+permalink: /language/react
 # nav_exclude: true
 # search_exclude: true
 ---

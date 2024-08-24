@@ -2,8 +2,8 @@
 title: spring
 layout: default
 parent: Language
-# nav_order: 1
-# permalink: /language/emmet
+nav_order: 13
+permalink: /language/spring
 # nav_exclude: true
 # search_exclude: true
 ---

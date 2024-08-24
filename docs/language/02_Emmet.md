@@ -2,7 +2,7 @@
 title: Emmet
 layout: default
 parent: Language
-nav_order: 1
+nav_order: 2
 permalink: /language/emmet
 # nav_exclude: true
 # search_exclude: true
