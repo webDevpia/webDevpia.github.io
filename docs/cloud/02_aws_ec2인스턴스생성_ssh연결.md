@@ -4,8 +4,8 @@ layout: default
 parent: Cloud
 nav_order: 2
 permalink: /cloud/AWS
-nav_exclude: true
-search_exclude: true
+# nav_exclude: true
+# search_exclude: true
 ---
 
 # AWS EC2 인스턴스 생성 및 SSH로 접속
