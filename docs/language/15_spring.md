@@ -29,4 +29,3 @@ Lombok
 외부 브라우저 설정  
 설정 - Spring Boot Dashboard - Spring >Dashboard:Open With의 값 extenal로 변경  
 
-# 2.
