@@ -1,10 +1,3 @@
----
-layout: default
-# title: 404
-# permalink: /404
-nav_exclude: true
-search_exclude: true
----
 # 1. Django 배포
 ## 1. 가상환경 설정 및 프로젝트 생성
 ```

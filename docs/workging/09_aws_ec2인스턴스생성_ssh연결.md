@@ -1,10 +1,4 @@
----
-layout: default
-# title: 404
-# permalink: /404
-nav_exclude: true
-search_exclude: true
----
+
 # AWS EC2 인스턴스 생성 및 SSH로 접속
 - Amazon Elastic Compute Cloud(Amazon EC2)
 ## 1. AWS 가입하기

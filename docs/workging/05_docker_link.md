@@ -1,10 +1,4 @@
----
-layout: default
-# title: 404
-# permalink: /404
-nav_exclude: true
-search_exclude: true
----
+
 # 컨테이너 활용과 연결
 
 ## docker로 jupyter notebook 띄우기

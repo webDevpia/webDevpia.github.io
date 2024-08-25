@@ -1,10 +1,4 @@
----
-layout: default
-# title: 404
-# permalink: /404
-nav_exclude: true
-search_exclude: true
----
+
 # docker 조사하기
 ## docker history
 - 이미지 히스토리 확인

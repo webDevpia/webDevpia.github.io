@@ -1,10 +1,4 @@
----
-layout: default
-# title: 404
-# permalink: /404
-nav_exclude: true
-search_exclude: true
----
+
 # Docker Compose 란?
 - Docker Compose 는 여러 컨테이너를 모아서 관리하기 위한 툴
 - 웹서비스는 프론트엔드 서버, 데이터베이스 서버, 백엔드 서버로 이루어저 있는 경우가 많음

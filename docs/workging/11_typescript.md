@@ -1,13 +1,3 @@
----
-title: typescript
-layout: default
-parent: Language
-# nav_order: 1
-# permalink: /language/emmet
-nav_exclude: true
-search_exclude: true
----
-
 # 타입스크립트
 
 마이크로소프트가 개발하고 유지하는 오픈소스 프로그래밍 언어. 2012년 발표  

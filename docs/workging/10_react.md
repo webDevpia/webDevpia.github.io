@@ -1,10 +1,3 @@
----
-layout: default
-# title: 404
-# permalink: /404
-nav_exclude: true
-search_exclude: true
----
 # react 환경 구축
 ## 1. vscode에 확장팩 설치
 - Remote Development (vscdoe extension)

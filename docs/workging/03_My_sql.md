@@ -1,12 +1,4 @@
----
-title: MySQL
-layout: default
-parent: DataBase
-nav_order: 3
-permalink: /db/mysql
-nav_exclude: true
-search_exclude: true
----
+
 # Mysql
 
 MySQL은 관계형 데이터베이스 관리를 위해 설계된 강력한 데이터베이스 관리 시스템입니다. 

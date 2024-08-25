@@ -1,12 +1,4 @@
----
-title: javascript this
-layout: default
-parent: Language
-# nav_order: 1
-# permalink: /language/emmet
-nav_exclude: true
-search_exclude: true
----
+
 
 # javascript
 ## this

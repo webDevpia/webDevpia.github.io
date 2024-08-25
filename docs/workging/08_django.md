@@ -1,10 +1,3 @@
----
-layout: default
-# title: 404
-# permalink: /404
-nav_exclude: true
-search_exclude: true
----
 # Django + Dockerfile
 ## 1. 로컬 컴퓨터에서 작업(windows 환경)
 ### 1. 가상환경 만들기
