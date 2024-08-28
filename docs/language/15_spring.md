@@ -9,23 +9,31 @@ permalink: /language/spring
 ---
 
 # 1. 환경설정
-## 1. java 설치 및 설정
-## 2. vscode 셋팅
-### 1. extensions
-IntelliCode  
-Material Icon Theme  
-GitHub Theme  
-Spring Boot Extension Pack  
-Spring Boot Developer Extension Pack  
-thymeleaf  
-Gradle for Java  
-## 3. spring boot 프로젝트 생성
-ctrl + shift + p (보기 > 명령팔레트)  
-sprint Initializer  
-Spring Boot DevTools  
-Spring Web  
-Lombok  
-  
-외부 브라우저 설정  
-설정 - Spring Boot Dashboard - Spring >Dashboard:Open With의 값 extenal로 변경  
+## 1. IntelliJ(인텔리제이) 롬복(Lombok) 설정
+
+![](/assets/img/spring/spring001.png)
+
+### 설치
+File - Setting - Plugins 에서 lombok install  
+설치가 완료되면 인텔리제이 재실행
+
+### 설정
+File - Setting - Compiler - annotation processors에서   
+Enable annotation processing 활성화 - OK
+
+
+## 2. IntelliJ(인텔리제이) Spring Boot DevTools 적용하기
+
+### build.gradle 파일에
+```
+dependencies {
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+}
+```
+
+File > Settings
+Build, Exeution, Deployment > Compiler > Build project autiomaically 체크
+
+File > Settings
+Advanced Settings > Allow auto-make to start even if developed application is currently running 체크
 
