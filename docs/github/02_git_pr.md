@@ -91,7 +91,7 @@ upstream 쪽에 Pull request 항목에 요청이 들어온게 확인된다.
 ![git](/assets/img/git/git_pr_22.png)
 
 ### merge 혹은 close
-![git](/assets/img/git_pr_23.png)
+![git](/assets/img/git/git_pr_23.png)
 
 pull request 요청 이후 내용을 수정하고 add, commit, push 하면 pull request 요청이 머지되거나 혹은 close 되기전까지 자동으로 upstream 쪽으로 자동 갱신된다.
 ![git](/assets/img/git/git_pr_24.png)
