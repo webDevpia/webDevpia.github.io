@@ -173,7 +173,13 @@ git branch 브랜치명 커밋값(ffa3169)
 ```
 ![git](/assets/img/git/git_10_2.png)
 
+```
+# github에 개인 작업 브랜치 올리기
+git push origin test01
 
+# github에 개인 작업 브랜치 지우기
+git push origin --delete test01
+```
 ## 9. .gitignore 파일
 작업 디렉토리 최상위에 위치하게 한다.  
 .gitignore 파일을 작성하고, 제외하고자 하는 파일에 대한 내용을 기재한다.
