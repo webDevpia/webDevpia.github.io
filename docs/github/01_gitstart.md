@@ -271,10 +271,19 @@ git revert [되돌리고 싶은 commit의 해시값 6자기까지]
 # 역순 commit C -> commit B -> commit A순으로 revert
 
 # revert한 이력이 다 개별적으로 남은 위의 경우 3개의 커밋이 더 생성됨
+
 # 이때 --no-commit 옵션을 주면 커밋은 하나만 생성되지만 명령어는 3번에 걸쳐 작성
 
 # 한번에 명령으로 3단계를 취소하고 싶다면 HEAD~3
 git revert --no-commit HEAD~3 #3단계를 취소함
+
+# 충돌에 대한 처리는 해야함.
+
+# 충돌 처리후 계속진행하거나 
+git revert --continue
+
+# 중단
+git revert --abort
 
 # revert 후 commit하고 push하면 된다.
 ```
