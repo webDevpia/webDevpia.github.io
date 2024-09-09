@@ -217,10 +217,13 @@ git push origin --delete test01
 ```bash
 git log
 git log --oneline
-git reset --soft 커밋아이디
 
-// 스테이지에 올리지 않은 파일 정리
-git clean -f     
+git reset --soft 커밋아이디
+# 스테이지에 올라온 정보 제거
+git restore --stated .
+
+# 워킹 디렉토리에 있는 정보 제거
+git restore .
 
 // github와 로컬 컴퓨터 내용이 일치하지 않을 경우 로컬 컴퓨터 내용으로 push 함.
 git push -f           
