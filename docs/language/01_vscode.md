@@ -37,9 +37,10 @@ permalink: /language/vscode
 
 ### 단축키 추가
 터미널 <-> 에디터 간 전환하기
-1. 1. ctrl + shift + p를 누르고 Open keyboard Shortcuts (JSON) 으로 들어가 설정한다. Default가 아니다. 
+1. ctrl + shift + p를 누르고 Open keyboard Shortcuts (JSON) 으로 들어가 설정한다. Default가 아니다. 
 
 2. 아래와 같이 작성(ctrl + ; 으로 전환)
+
 ```json
 // 키 바인딩을 이 파일에 넣어서 기본값 재정의
 [
@@ -56,6 +57,7 @@ permalink: /language/vscode
    }
 ]
 ```
+
 ## 2. VScode Extension
 ### Material Icon Theme
 파일 및 폴더 아이콘 테마
