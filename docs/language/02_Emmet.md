@@ -9,7 +9,7 @@ permalink: /language/emmet
 ---
 
 [Emmet](https://emmet.io/)  
-[mdn(Mozilla Developer Network 의 약어)](https://developer.mozilla.org/ko/)
+[mdn(Mozilla Developer Network 의 약어)](https://developer.mozilla.org/ko/)   
 [Emmet CheatSheet](/assets/data/cheatsheet-a5.pdf)
 
 ### html 기본 생성
