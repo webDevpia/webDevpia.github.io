@@ -122,12 +122,17 @@ origin쪽 github에서 synk fork -> discard 하고 local에서
 git pull --rebase
 ```
 로 가져온다.
+
 혹은 upstream을 local에서 직접 추가하고 pull 해서 코드 상태를 일치시키기도 한다.
 
 #### upstream 추가
 ```bash
-git remote add upstream 'upstream url 주소'
-git pull upstream main --rebase
-git reset --hard '커밋코드'
-git push -f
+# 1.	업스트림 리포지토리 추가: 
+git remote add upstream <원본 리포지토리 URL>
+# 2.	업스트림에서 최신 변경 사항 가져오기: 
+git fetch upstream
+# 3.	업스트림의 변경 사항을 로컬에 병합: 
+git merge upstream/main
+# 4.	포크한 리포지토리에 변경 사항 푸시: 
+git push origin main
 ```
