@@ -44,7 +44,7 @@ origin 쪽에서 커밋내용을 확인할 수 있다.
 
 ![git](/assets/img/git/git_pr_10.png)
 
-### local 컴퓨터에 fork 리파지토리 clone 및 원본 리파지토리 리모트 등록
+### local 컴퓨터에 fork 리파지토리 clone
 
 ![git](/assets/img/git/git_pr_11.png)
 

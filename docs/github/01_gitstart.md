@@ -265,7 +265,7 @@ git reflog "branch name"
 
 ## 12. revert
 ```
-git revert [되돌리고 싶은 commit의 해시값 6자기까지]
+git revert [되돌리고 싶은 commit의 7자리까지]
 
 # commit A -> commit B -> commit C 라면 
 # 역순 commit C -> commit B -> commit A순으로 revert
@@ -286,7 +286,11 @@ git revert --continue
 git revert --abort
 
 # revert 후 commit하고 push하면 된다.
+
+# 단순히 커밋 메시지를 수정하거나 할 경우는  reset 이나 revert 등을 사용하기 보다는
+# --amend 옵션을 활용한다.
 ```
+
 
 ## 13. 협업하기
 github의 공개 저장소는 주소만 알면 누구나 접속하여 소스를 확인하고 내려받을 수 있다.  
