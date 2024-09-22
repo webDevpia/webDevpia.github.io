@@ -274,33 +274,212 @@ plt.show()
 ```
 
 ## 3. 웹으로 서비스 하기
+
+model.py
 ```py
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from PIL import Image
+from torchvision import transforms
+import torchvision.transforms.functional as TF
+
+class CNN(nn.Module):
+    def __init__(self):
+        super(CNN, self).__init__()
+        self.conv1 = nn.Conv2d(1, 32, 3, 1)
+        self.conv2 = nn.Conv2d(32, 64, 3, 1)
+        self.dropout1 = nn.Dropout2d(0.25)
+        self.dropout2 = nn.Dropout2d(0.5)
+        self.fc1 = nn.Linear(9216, 128)
+        self.fc2 = nn.Linear(128, 10)
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = F.relu(x)
+        x = self.conv2(x)
+        x = F.relu(x)
+        x = F.max_pool2d(x, 2)
+        x = self.dropout1(x)
+        x = torch.flatten(x, 1)
+        x = self.fc1(x)
+        x = F.relu(x)
+        x = self.dropout2(x)
+        x = self.fc2(x)
+        output = F.log_softmax(x, dim=1)
+        return output
+
+    
+# 이미지 전처리 (MNIST와 동일하게 처리하고 색상 반전 추가)
+def preprocess_image(img_path):
+    # 이미지 불러오기
+    image = Image.open(img_path)
+
+    # 전처리: 흑백으로 변환, 크기 조정, 텐서 변환, 정규화
+    preprocess = transforms.Compose([
+        transforms.Grayscale(num_output_channels=1),  # 흑백 변환
+        transforms.Resize((28, 28)),  # 크기 조정
+        transforms.ToTensor(),  # 텐서로 변환
+        transforms.Normalize((0.1307,), (0.3081,))  # MNIST 데이터와 동일한 정규화
+    ])
+    
+    # 이미지 반전 (검은 바탕에 흰 글씨로 만들기)
+    image = TF.invert(image)
+
+    # 전처리 적용
+    image_tensor = preprocess(image).unsqueeze(0)  # 배치 차원 추가 (1, 1, 28, 28)
+    
+    return image_tensor
 
 ```
-```py
 
+app.py
+```py
+from flask import Flask, redirect, render_template,request
+import os
+from PIL import Image
+import model as m
+import torch
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/mnist',methods=['get'])
+def mnist():
+    return render_template('mnist_upload.html')
+
+
+@app.route('/mnist',methods=['post'])
+def fileupload():
+    f = request.files['filename']
+    img_path=os.path.dirname(__file__)+'/uploads/'+f.filename
+    f.save(img_path)
+    
+    # 이미지 전처리 및 예측
+    image_tensor = m.preprocess_image(img_path)
+
+    # 모델 불러오기
+    model = m.CNN()
+    model.load_state_dict(torch.load(os.path.dirname(__file__)+'/mnist_model.pth',weights_only=True))
+
+    # 모델 재평가
+    model.eval()
+    # 예측
+    with torch.no_grad():  # 기울기 계산 비활성화 (평가 모드)
+        output = model(image_tensor)
+        predicted = torch.argmax(output, dim=1)  # 가장 높은 확률을 가진 클래스를 예측
+
+    # 예측 결과 출력
+    print(f'Predicted class: {predicted.item()}')
+    return render_template('mnist_result.html',data=predicted.item())
+
+if __name__ == '__main__':
+    app.run(debug=True,port=8088)
 ```
-```py
-
+/templates/default.html
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <title>
+            {% block title %}{% endblock %}
+        </title>
+    </head>
+    <body>
+        {% include 'menu.html' %} 
+        {% block content %}{% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    </body>
+</html>
 ```
-```py
 
+/templates/menu.html
+```html
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">부경대 디지털 스마트 5기</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mnist">숫자인식</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
 ```
-```py
-
+/templates/index.html
+```html
+{% extends 'default.html' %}
+{% block title %}index{% endblock %}
+{% block content %}
+<br/>
+<br/>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+          Featured
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Special title treatment</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-success">Go somewhere</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
 ```
-```py
+/templates/mnist_upload.html
+```html
+{% extends 'default.html' %}
+{% block title %}mnist 숫자 인식{% endblock %}
+{% block content %}
+<br>
+<br>
+<br>
+<div class="container">
+    <form action="/mnist" method="POST" enctype="multipart/form-data">
+        <div>
+            <label for="formFileLg" class="form-label">판독할 숫자 이미지를 선택하세요</label>
+            <input class="form-control form-control-lg" id="formFileLg" type="file" name='filename'>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
 
+    </form>
+</div>
+{% endblock %}
 ```
-```py
 
-```
-```py
+/templates/mnist_result.html
+```html
+{% extends 'default.html' %}
+{% block title %}mnist 숫자 인식{% endblock %}
+{% block content %}
+<br>
+<br>
+<div class="container">
+   <h1 style="text-align: center;">인식 결과는 {{data}}입니다.</h1> 
+</div>
 
-```
-```py
-
-```
-```py
-
+{% endblock %}
 ```
