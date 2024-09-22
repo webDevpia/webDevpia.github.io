@@ -10,7 +10,23 @@ permalink: /ai/mnist
 # CNN을 모델을 이용한 숫자 인식 만들기
 
 ## 1. 모델생성 및 학습 및 평가
+```colab
+from google.colab import drive
+drive.mount('/content/drive')
+```
 
+```colab
+root_dir = '/content/drive/MyDrive/Colab Notebooks/pytorch_test/mnist'
+```
+
+```colab
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from torchvision import datasets, transforms
+from matplotlib import pyplot as plt
+```
 ## 2. 생성된 모델 사용하기
 
 ## 3. 웹으로 서비스 하기
