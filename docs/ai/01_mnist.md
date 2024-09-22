@@ -24,6 +24,8 @@ drive.mount('/content/drive')
 root_dir = '/content/drive/MyDrive/Colab Notebooks/pytorch_test/mnist'
 ```
 
+### 2. 모델 생성
+
 필요한 라이브러리 import
 ```py
 import torch
@@ -53,7 +55,7 @@ epoch_num = 15
 learning_rate = 0.0001
 ```
 
-학습과 평과에 사용할 MNIST 데이터를 다운로드 받아서 저장
+학습과 평가에 사용할 MNIST 데이터를 다운로드 받아서 저장
 ```py
 train_data = datasets.MNIST(root=root_dir+'/data',
                             train=True,
@@ -64,24 +66,29 @@ test_data = datasets.MNIST(root=root_dir+'/data',
                             transform=transforms.ToTensor())
 ```
 
+다운로드 받은 데이터 건수 확인
 ```py
 print(len(train_data),len(test_data))
 ```
 
+다운로드 받은 데이터의 타입 확인
 ```py
 print(type(train_data))
 ```
 
+이미지와 레이블 저장 형태 확인
 ```py
 image,label = train_data[0]
 print(label.shape)
 print(image.shape)
 ```
 
+이미지 출력
 ```py
 plt.imshow(image.squeeze(),cmap='gray')
 ```
 
+모델에 배치 사이즈 만큼 읽어서 제공할 DataLoader 생성
 ```py
 train_loader = torch.utils.data.DataLoader(dataset=train_data,
                                            batch_size=batch_size,
@@ -91,16 +98,13 @@ test_loader = torch.utils.data.DataLoader(dataset=test_data,
                                            shuffle = True)
 ```
 
+DataLoader 로더해서 형태 파악
 ```py
 first_batch = train_loader.__iter__().__next__()
-```
 
-```py
 print(type(first_batch))
 print(len(first_batch))
-```
 
-```py
 print(len(first_batch))
 print(first_batch[0].shape)
 print(first_batch[1].shape)
@@ -119,6 +123,7 @@ first_batch     | <class 'list'>            | 2
 first_batch[0]  | <class 'torch.Tensor'>    | torch.Size([50, 1, 28, 28])
 first_batch[1]  | <class 'torch.Tensor'>    | torch.Size([50])
 
+모델 정의
 ```py
 class CNN(nn.Module):
     def __init__(self):
@@ -146,6 +151,7 @@ class CNN(nn.Module):
         return output
 ```
 
+모델 생성및 옵티마이저, 오차함수 생성
 ```py
 model = CNN().to(device)
 optimizer = optim.Adam(model.parameters(),lr = learning_rate)
@@ -154,6 +160,9 @@ criterion = nn.CrossEntropyLoss()
 print(model)
 ```
 
+### 3. 모델 학습
+
+생성된 모델 학습모드로 설정하고 학습 진행
 ```py
 model.train()
 i = 0
@@ -172,6 +181,9 @@ for epoch in range(epoch_num):
 
 ```
 
+### 4. 모델 평가 및 모델 저장
+
+테스트 데이터로 모델 평가
 ```py
 model.eval()
 correct = 0
@@ -183,18 +195,19 @@ for data, target in test_loader:
   correct += prediction.eq(target.data).sum()
 ```
 
+결과값의 형태 파악
 ```py
-output.shape
+print(output.shape)
+
+print(output.data.max(1))
 ```
 
+정확도 계산해서 출력
 ```py
-output.data.max(1)
+print(100*correct/len(test_loader.dataset))
 ```
 
-```py
-100*correct/len(test_loader.dataset)
-```
-
+모델 저장
 ```py
 torch.save(model.state_dict(),root_dir+'/mnist_model.pth')
 ```
