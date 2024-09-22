@@ -202,48 +202,105 @@ torch.save(model.state_dict(),root_dir+'/mnist_model.pth')
 ## 2. 생성된 모델 사용하기
 
 ```py
+from PIL import Image
+from torchvision import transforms
+import torchvision.transforms.functional as TF
 
+# 이미지 전처리 (MNIST와 동일하게 처리하고 색상 반전 추가)
+def preprocess_image(img_path):
+    # 이미지 불러오기
+    image = Image.open(img_path)
+
+    # 전처리: 흑백으로 변환, 크기 조정, 텐서 변환, 정규화
+    preprocess = transforms.Compose([
+        transforms.Grayscale(num_output_channels=1),  # 흑백 변환
+        transforms.Resize((28, 28)),  # 크기 조정
+        transforms.ToTensor(),  # 텐서로 변환
+        transforms.Normalize((0.1307,), (0.3081,))  # MNIST 데이터와 동일한 정규화
+    ])
+
+    # 이미지 반전 (검은 바탕에 흰 글씨로 만들기)
+    image = TF.invert(image)
+
+    # 전처리 적용
+    image_tensor = preprocess(image).unsqueeze(0)  # 배치 차원 추가 (1, 1, 28, 28)
+
+    return image_tensor
 ```
 ```py
+# 이미지 파일 불러오기 및 전처리
+img_path = root_dir+'/myimg/5.png'  # 테스트할 이미지 경로
 
+# 이미지 전처리 및 예측
+image_tensor = preprocess_image(img_path)
+
+# 모델 불러오기
+model = CNN()
+model.load_state_dict(torch.load(root_dir+'/mnist_model.pth',weights_only=True))
+
+# 모델 재평가
+model.eval()
+# 예측
+with torch.no_grad():  # 기울기 계산 비활성화 (평가 모드)
+    output = model(image_tensor)
+    predicted = torch.argmax(output, dim=1)  # 가장 높은 확률을 가진 클래스를 예측
+
+# 예측 결과 출력
+print(f'Predicted class: {predicted.item()}')
 ```
 ```py
-
+# 전처리된 텐서 출력
+print(image_tensor)  # 이미지 텐서 값 출력
 ```
 ```py
-
+# image_tensor의 차원을 출력
+print(image_tensor.shape)
+# 1: 배치 크기 (이미지가 1개)
+# 1: 채널 수 (흑백 이미지이므로 1채널)
+# 28: 이미지의 높이 (28 픽셀)
+# 28: 이미지의 너비 (28 픽셀)
 ```
 ```py
+import matplotlib.pyplot as plt
 
-```
-```py
+# 전처리된 텐서를 다시 이미지로 시각화
+image_to_show = image_tensor.squeeze(0)  # 배치 차원 제거 (1, 28, 28)
+image_to_show = image_to_show.squeeze(0)  # 채널 차원 제거 (28, 28)
 
+# 시각화
+plt.imshow(image_to_show, cmap='gray')  # 흑백 이미지이므로 cmap='gray' 사용
+plt.title('Preprocessed Image')
+plt.show()
 ```
-```py
 
-```
-```py
-
-```
-```py
-
-```
-```py
-
-```
-```py
-
-```
-```py
-
-```
-```py
-
-```
-```py
-
-```
-```py
-
-```
 ## 3. 웹으로 서비스 하기
+```py
+
+```
+```py
+
+```
+```py
+
+```
+```py
+
+```
+```py
+
+```
+```py
+
+```
+```py
+
+```
+```py
+
+```
+```py
+
+```
+```py
+
+```
