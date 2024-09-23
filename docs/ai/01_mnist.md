@@ -395,7 +395,7 @@ if __name__ == '__main__':
     app.run(debug=True,port=8088)
 ```
 /templates/default.html
-```liquid
+```html
 <!DOCTYPE html>
 <html>
     <head>
