@@ -240,6 +240,7 @@ def preprocess_image(img_path):
 
     return image_tensor
 ```
+
 ```py
 # 이미지 파일 불러오기 및 전처리
 img_path = root_dir+'/myimg/5.png'  # 테스트할 이미지 경로
