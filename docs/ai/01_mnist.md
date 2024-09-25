@@ -378,7 +378,8 @@ def fileupload():
 
     # 모델 불러오기
     model = m.CNN()
-    model.load_state_dict(torch.load(os.path.dirname(__file__)+'/mnist_model.pth',weights_only=True))
+    # model.load_state_dict(torch.load('/mnist_model.pth',weights_only=True))
+    model.load_state_dict(torch.load('mnist_model.pth',map_location='cpu'))
 
     # 모델 재평가
     model.eval()
