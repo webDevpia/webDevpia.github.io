@@ -416,3 +416,98 @@ if __name__ == '__main__':
     </body>
 </html>
 ```
+/templates/menu.html
+```html
+<nav class="navbar navbar-expand-lg" style="background-color: #036dd6;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">부경대학교 디지털 스마트 5기</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/mnist">숫자인식</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+```
+
+/templates/index.html
+```html
+{% raw %}
+{% extends "default.html" %}
+{% block title %}홈페이지{% endblock %}
+{% block content %}
+{% endraw %}
+<h1>홈페이지</h1>
+{% raw %}
+{% endblock %}
+{% endraw %}
+```
+
+/templates/mnist_upload.html
+```html
+{% raw %}
+{% extends "default.html" %}
+{% block title %}숫자 이미지 입력{% endblock %}
+{% block content %}
+{% endraw %}
+<br>
+<br>
+<br>
+<div class="container">
+  <form action="/mnist" method="post" enctype="multipart/form-data">
+    <div>
+      <label for="formFileLg" class="form-label">판독할 숫자 이미지를 선택하세요</label>
+      <input class="form-control form-control-lg" id="formFileLg" name="imgfile" type="file">
+    </div>
+    <br>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary mb-3">숫자판독시작</button>
+    </div>
+  </form>
+</div>
+{% raw %}{% endblock %}{% endraw %}
+```
+
+/templates/mnist_result.html
+```html
+{% raw %}
+{% extends "default.html" %}
+{% block title %}숫자 분석 결과 페이지{% endblock %}
+{% block content %}
+{% endraw %}
+<br>
+<br>
+<br>
+<div class="container">
+<h1>숫자 판독 결과는 {% raw %}{{data}}{% endraw %}입니다.</h1>
+<img width="100" height="100"  
+  src="/static/upload/{{img_path}}" alt="">
+</div>
+{% raw %}{% endblock %}{% endraw %}
+```
