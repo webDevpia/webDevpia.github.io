@@ -1,5 +1,5 @@
 ---
-title: labelstudio
+title: Label Studio
 layout: default
 parent: AI
 nav_order: 3
