@@ -12,13 +12,13 @@ permalink: /ai/ollama
 ## Ollama 설치
 [Ollama](https://ollama.com/)
 
-1. 다운로드 클릭
+### 1. 다운로드 클릭
 ![](/assets/img/ollama/ollama001.png)
 
-2. 운영체제에 맞춰 다운로드
+### 2. 운영체제에 맞춰 다운로드
 ![](/assets/img/ollama/ollama002.png)
 
-3. 설치 후 터미널에서 설치 확인 후, 모델 실행
+### 3. 설치 후 터미널에서 설치 확인 후, 모델 실행
 
 ```bash
 ollama list
@@ -130,6 +130,7 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 ```
 
 LoRA는 대규모 언어 모델을 적은 수의 매개변수만으로 효과적으로 fine-tuning할 수 있게 해주는 기능
+
 ```py
 model = FastLanguageModel.get_peft_model(
     model,
@@ -196,6 +197,7 @@ dataset = dataset.map(formatting_prompts_func, batched = True,)
 ```
 
 ### 모델 훈련시키기
+
 ```py
 from trl import SFTTrainer
 from transformers import TrainingArguments
@@ -298,7 +300,6 @@ _ = model.generate(**inputs, streamer = text_streamer, max_new_tokens = 128)
 model.save_pretrained_gguf("model", tokenizer, quantization_method ="f16")
 ```
 
-
 ```py
 # Save to 8bit Q8_0
 if False: model.save_pretrained_gguf("model", tokenizer,)
@@ -325,17 +326,17 @@ if True:
 ```
 
 ## 커스텀 모델 로컬에 등록
-1. Modelfile 파일 생성
+### 1. Modelfile 파일 생성
 ```txt
 FROM ./unsloth.F16.gguf
 ```
 
-2. 모델 만들기
+### 2. 모델 만들기
 ```bash
 ollama create example -f Modelfile
 ```
 
-3. 모델 실행
+### 3. 모델 실행
 ```bash
 ollama run example
 ```
@@ -361,58 +362,58 @@ You are Mario from Super Mario Bros. Answer as Mario, the assistant, only.
 
 ### docker desktop 설치
 
-1. docker desktop 
+### 1. docker desktop 
 ![](/assets/img/ollama/ollama004.png)
 
-2. 운영체제에 맞는 프로그램 다운로드
+### 2. 운영체제에 맞는 프로그램 다운로드
 ![](/assets/img/ollama/ollama005.png)
 
-3. 다운로드 받은 프로그램 실행
+### 3. 다운로드 받은 프로그램 실행
 ![](/assets/img/ollama/ollama006.png)
 ![](/assets/img/ollama/ollama007.png)
 
-4. 설치 후 close and restart 클릭
+### 4. 설치 후 close and restart 클릭
 ![](/assets/img/ollama/ollama008.png)
 
-5. 재부팅 후 Accept 클릭
+### 5. 재부팅 후 Accept 클릭
 ![](/assets/img/ollama/ollama009.png)
 
-6. Finish
+### 6. Finish
 ![](/assets/img/ollama/ollama010.png)
 
-7. Skip
+### 7. Skip
 ![](/assets/img/ollama/ollama011.png)
 
-8. 설치 완료
+### 8. 설치 완료
 ![](/assets/img/ollama/ollama012.png)
 
 ## open WebUI 설치
-1. open WebUI 사이트로 이동
+### 1. open WebUI 사이트로 이동
 ![](/assets/img/ollama/ollama013.png)
 
-2. Doc 에서 설치 명령어 복사
+### 2. Doc 에서 설치 명령어 복사
 ![](/assets/img/ollama/ollama014.png)
 
-3. 명령프롬프트에서 실행
+### 3. 명령프롬프트에서 실행
 ![](/assets/img/ollama/ollama015.png)
 
-4. 설치 진행
+### 4. 설치 진행
 ![](/assets/img/ollama/ollama016.png)
 
-5. docker desktop에서 열기
+### 5. docker desktop에서 열기
 ![](/assets/img/ollama/ollama017.png)
 
-6. 웹브라우저가 실행되면 가입 클릭
+### 6. 웹브라우저가 실행되면 가입 클릭
 ![](/assets/img/ollama/ollama018.png)
 
-7. 이름, 이메일, 비밀번호 입력후 계정만들기 버튼 클릭
+### 7. 이름, 이메일, 비밀번호 입력후 계정만들기 버튼 클릭
 ![](/assets/img/ollama/ollama019.png)
 
-8. 새로운 기능 창 닫기
+### 8. 새로운 기능 창 닫기
 ![](/assets/img/ollama/ollama020.png)
 
-9. 모델 선택
+### 9. 모델 선택
 ![](/assets/img/ollama/ollama021.png)
 
-10. 질문 입력
+### 10. 질문 입력
 ![](/assets/img/ollama/ollama022.png)
