@@ -488,53 +488,45 @@ docker-compose stop
 
 ### 3. FlowiseAI 사용하기
 
-#### localhost:3030 으로 접속
+#### 1) localhost:3030 으로 접속
 ![](/assets/img/flowise/flowise001.png)
 
-#### 
+#### 2) Document Store 클릭
 ![](/assets/img/flowise/flowise003.png)
 
-#### 
+#### 3) Add New 클릭하고 Name 입력하고 Add 버튼 클릭
 ![](/assets/img/flowise/flowise004.png)
 
-#### 
+#### 4) 생성된 Document Store 클릭
 ![](/assets/img/flowise/flowise005.png)
 
-#### 
+#### 5) Add Document Loader 버튼 클릭
 ![](/assets/img/flowise/flowise006.png)
 
-#### 
+#### 6) 문서의 종류에 따라서 선택 후 등록
 ![](/assets/img/flowise/flowise007.png)
 
-#### 
+#### 7) Upset Config 버튼 클릭
 ![](/assets/img/flowise/flowise008.png)
 
-#### 
+#### 8) Select Embeddings 클릭
 ![](/assets/img/flowise/flowise009.png)
 
-#### 
+#### 9) Ollama Embeddings 선택
 ![](/assets/img/flowise/flowise010.png)
 
-#### 
+#### 10) Select Vector Store 클릭 후 Faiss 선택, 항목 입력 후 Upset 버튼 클릭
 ![](/assets/img/flowise/flowise011.png)
 
-#### 
+#### 11) Test Retrieval 버튼 클릭후 테스트 후, Save Config 버튼 클릭
 ![](/assets/img/flowise/flowise012.png)
 
-#### 
-![](/assets/img/flowise/flowise013.png)
-
-#### 
-![](/assets/img/flowise/flowise014.png)
-
-#### 
+#### 12) Chatflows 선택 후, Add New 버튼 클릭
 ![](/assets/img/flowise/flowise015.png)
 
-#### 
+#### 13) 작성
 ![](/assets/img/flowise/flowise016.png)
 
-#### 
 ![](/assets/img/flowise/flowise017.png)
 
-#### 
 ![](/assets/img/flowise/flowise018.png)
