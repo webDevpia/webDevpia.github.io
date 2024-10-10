@@ -19,6 +19,13 @@ permalink: /ai/ollama
 ![](/assets/img/ollama/ollama002.png)
 
 ### 3. 설치 후 터미널에서 설치 확인 후, 모델 실행
+#### 설치확인
+```bash
+ollama serve
+```
+웹브라우저에서 127.0.0.1:11434 접속해서  Ollama is running 나오면 실행중임.
+
+
 
 ```bash
 ollama list
@@ -417,3 +424,113 @@ You are Mario from Super Mario Bros. Answer as Mario, the assistant, only.
 
 ### 10. 질문 입력
 ![](/assets/img/ollama/ollama022.png)
+
+## FlowiseAI를 이용한 쳇봇
+
+### 1. 필요한 모델 다운로드
+
+```bash
+ollama list
+ollama run llama3.2:3b
+/bye
+ollama pull nomic-embed-text
+```
+
+### 2. FlowiseAI 설치
+
+[FlowiseAI](https://flowiseai.com/)  
+[github](https://github.com/FlowiseAI/Flowise)
+
+#### 1. github clone
+
+```bash
+git clone https://github.com/FlowiseAI/Flowise.git
+```
+#### 2. docker 폴더로 이동
+
+#### 3. .env.example 파일을 .env 로 복사
+
+```bash
+PORT=3030
+FLOWISE_USERNAME=user
+FLOWISE_PASSWORD=1234
+```
+
+#### 4. docker-compose.yml 수정
+
+```yml
+# ports 항목에 11434 포트 포워딩 추가
+        ports:
+            - '${PORT}:${PORT}'
+            - 11434:11434
+```
+
+#### 5. docker compose로 빌드 및 실행
+
+##### 1. 서비스 시작
+
+```bash
+docker-compose up -d
+```
+
+##### 2. 서비스 종료
+
+```bash
+docker-compose stop
+```
+
+### 3. FlowiseAI 사용하기
+
+#### 1.
+![](/assets/img/flowise/flowise001.png)
+
+#### 
+![](/assets/img/flowise/flowise002.png)
+
+#### 
+![](/assets/img/flowise/flowise003.png)
+
+#### 
+![](/assets/img/flowise/flowise004.png)
+
+#### 
+![](/assets/img/flowise/flowise005.png)
+
+#### 
+![](/assets/img/flowise/flowise006.png)
+
+#### 
+![](/assets/img/flowise/flowise007.png)
+
+#### 
+![](/assets/img/flowise/flowise008.png)
+
+#### 
+![](/assets/img/flowise/flowise009.png)
+
+#### 
+![](/assets/img/flowise/flowise010.png)
+
+#### 
+![](/assets/img/flowise/flowise011.png)
+
+#### 
+![](/assets/img/flowise/flowise012.png)
+
+#### 
+![](/assets/img/flowise/flowise013.png)
+
+#### 
+![](/assets/img/flowise/flowise014.png)
+
+#### 
+![](/assets/img/flowise/flowise015.png)
+
+#### 
+![](/assets/img/flowise/flowise016.png)
+
+#### 
+![](/assets/img/flowise/flowise017.png)
+
+#### 
+![](/assets/img/flowise/flowise018.png)
