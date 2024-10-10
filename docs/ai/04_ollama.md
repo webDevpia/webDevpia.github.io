@@ -518,7 +518,7 @@ docker-compose stop
 #### 10) Select Vector Store 클릭 후 Faiss 선택, 항목 입력 후 Upset 버튼 클릭
 ![](/assets/img/flowise/flowise011.png)
 
-#### 11) Test Retrieval 버튼 클릭후 테스트 후, Save Config 버튼 클릭
+#### 11) Test Retrieval 버튼 클릭후 테스트, Save Config 버튼 클릭
 ![](/assets/img/flowise/flowise012.png)
 
 #### 12) Chatflows 선택 후, Add New 버튼 클릭
