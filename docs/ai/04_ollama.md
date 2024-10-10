@@ -333,12 +333,15 @@ if True:
 ```
 
 ## 커스텀 모델 로컬에 등록
+
 ### 1. Modelfile 파일 생성
-```txt
+
+```bash
 FROM ./unsloth.F16.gguf
 ```
 
 ### 2. 모델 만들기
+
 ```bash
 ollama create example -f Modelfile
 ```
