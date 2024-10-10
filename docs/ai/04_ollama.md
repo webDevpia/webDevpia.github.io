@@ -347,16 +347,18 @@ ollama create example -f Modelfile
 ```
 
 ### 3. 모델 실행
+
 ```bash
 ollama run example
 ```
+
 ## 프롬프트 사용자 지정
 
 ```bash
 ollama pull llama3.2
 ```
 
-```txt
+```bash
 FROM llama3.2
 
 # set the temperature to 1 [higher is more creative, lower is more coherent]
