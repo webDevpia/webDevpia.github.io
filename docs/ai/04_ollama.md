@@ -430,7 +430,8 @@ You are Mario from Super Mario Bros. Answer as Mario, the assistant, only.
 ### 10. 질문 입력
 ![](/assets/img/ollama/ollama022.png)
 
-## FlowiseAI를 이용한 쳇봇
+
+## FlowiseAI
 
 ### 1. 필요한 모델 다운로드
 
@@ -446,14 +447,15 @@ ollama pull nomic-embed-text
 [FlowiseAI](https://flowiseai.com/)  
 [github](https://github.com/FlowiseAI/Flowise)
 
-#### 1. github clone
+#### 1) github clone
 
 ```bash
 git clone https://github.com/FlowiseAI/Flowise.git
 ```
-#### 2. docker 폴더로 이동
 
-#### 3. .env.example 파일을 .env 로 복사
+#### 2) docker 폴더로 이동
+
+#### 3) .env.example 파일을 .env 로 복사
 
 ```bash
 PORT=3030
@@ -461,7 +463,7 @@ FLOWISE_USERNAME=user
 FLOWISE_PASSWORD=1234
 ```
 
-#### 4. docker-compose.yml 수정
+#### 4) docker-compose.yml 수정
 
 ```yml
 # ports 항목에 11434 포트 포워딩 추가
@@ -470,15 +472,15 @@ FLOWISE_PASSWORD=1234
             - 11434:11434
 ```
 
-#### 5. docker compose로 빌드 및 실행
+#### 5) docker compose로 빌드 및 실행
 
-##### 1. 서비스 시작
+서비스 시작
 
 ```bash
 docker-compose up -d
 ```
 
-##### 2. 서비스 종료
+서비스 종료
 
 ```bash
 docker-compose stop
@@ -486,11 +488,8 @@ docker-compose stop
 
 ### 3. FlowiseAI 사용하기
 
-#### 1.
+#### localhost:3030 으로 접속
 ![](/assets/img/flowise/flowise001.png)
-
-#### 
-![](/assets/img/flowise/flowise002.png)
 
 #### 
 ![](/assets/img/flowise/flowise003.png)
