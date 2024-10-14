@@ -6,3 +6,5 @@ description: "Just the Docs is a responsive Jekyll theme with built-in search th
 permalink: /
 ---
 # 부경대학교 디지털 스마트 5기  
+
+![](/assets/img/main.avif)
