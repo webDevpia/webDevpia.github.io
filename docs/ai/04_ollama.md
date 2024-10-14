@@ -551,7 +551,6 @@ langchain-community
 ```
 
 ```bash
-
 pip install -r requirements.txt
 ```
 
@@ -561,12 +560,12 @@ pip install -r requirements.txt
 
 ### 2. 코드 작성
 
-.env
+파일명 : .env
 ```env
 OPENAI_API_KEY=OPENAI_API_KEY
 ```
 
-chatbot_ollama.py
+파일명 : chatbot_ollama.py
 ```py
 ## streamlit 관련 모듈 불러오기
 import streamlit as st
@@ -768,13 +767,20 @@ if __name__ == "__main__":
 
 ```
 
-faiss_upload_viewer.py
+### 3. 실행
+```
+streamlit run chatbot_ollama.py
+```
+### 4. FAISS 데이터 확인
+
+파일명 : faiss_upload_viewer.py
 ```py
 import streamlit as st
 import pandas as pd
 import numpy as np
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.embeddings import OllamaEmbeddings
 import tempfile
 import os
 
@@ -783,6 +789,7 @@ st.set_page_config(page_title="LangChain FAISS 색인 내용", layout="wide")
 
 st.title("LangChain FAISS 색인 내용")
 
+ollama_url = "http://127.0.0.1:11434"
 # Add a file uploader for the individual FAISS index files
 uploaded_files = st.file_uploader(
     "'index.faiss'와 'index.pkl' 파일을 업로드하세요",
@@ -820,7 +827,8 @@ if uploaded_files is not None and len(uploaded_files) > 0:
         try:
             vectorstore = FAISS.load_local(
                 tmpdirname,
-                embeddings=OpenAIEmbeddings(model="text-embedding-3-small"),
+                # embeddings=OpenAIEmbeddings(model="text-embedding-3-small"),
+                embeddings = OllamaEmbeddings( model="nomic-embed-text",base_url=ollama_url),
                 allow_dangerous_deserialization=True
             )
         except Exception as e:
