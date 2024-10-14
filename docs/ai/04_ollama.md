@@ -322,12 +322,12 @@ if False: model.push_to_hub_gguf("PAUL1122/model", tokenizer, quantization_metho
 if False: model.save_pretrained_gguf("model", tokenizer, quantization_method = "q4_k_m")
 if False: model.push_to_hub_gguf("PAUL1122/model", tokenizer, quantization_method = "q4_k_m", token = "")
 
-if True:
+if False:
     model.push_to_hub_gguf(
-        "PAUL1122/model", # 본인 허깅페이스 프로필 이름을 입력
+        "shimseonjo/model", # 본인 허깅페이스 프로필 이름을 입력
         tokenizer,
         quantization_method = "q8_0",
-        token = "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", # 허깅페이스 토큰을 가져와서 넣어줌  https://huggingface.co/settings/tokens
+        token = "hf_***************************", # 허깅페이스 토큰을 가져와서 넣어줌  https://huggingface.co/settings/tokens
     )
 
 ```
