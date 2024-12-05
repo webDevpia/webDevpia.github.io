@@ -7,6 +7,19 @@ nav_order: 98
 # search_exclude: true
 ---
 
+#### napkin
+[https://www.napkin.ai/](https://www.napkin.ai/)
+
+#### 컬러 패턴 생성
+[https://colormagic.app/](https://colormagic.app/)
+
+
+#### 2D -> 3D 이미지로
+[https://www.immersity.ai/](https://www.immersity.ai/)
+
+
+
+
 #### 1. 색상 참고 사이트
 
 [https://colorhunt.co/](https://colorhunt.co/)
@@ -40,7 +53,6 @@ nav_order: 98
 [https://picsum.photos/](https://picsum.photos/)
 
 
-
 #### 6. 웹 UI/UX
 
 [https://www.figma.com/](https://www.figma.com/)
@@ -50,6 +62,10 @@ nav_order: 98
 [https://pixso.net/](https://pixso.net/)
 
 
-
 #### fake db
 [https://jsonplaceholder.typicode.com/](https://jsonplaceholder.typicode.com/)
+
+
+
+
+
