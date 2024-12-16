@@ -150,3 +150,220 @@ messages = [
 ai_message = llm.invoke(messages)
 print(ai_message.content)
 ```
+
+### 기본사용법
+03_chat_model.py
+```python
+import langchain
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+llm = ChatOpenAI(model="gpt-4o")
+
+# [ INVOKE ]
+# messages = [
+#     ("system", "당신은 서울의 음식과 문화에 대한 전문가입니다."),
+#     ("human", "서울 광장시장에서 먹을 만한 길거리 음식을 소개해 주세요.")
+# ]
+
+# ai_message = llm.invoke(messages)
+# print(ai_message.content)
+
+
+# [ BATCH ]
+# messages = [
+#     [("system", "당신은 서울의 음식에 대한 전문가입니다."),
+#     ("human", "서울 광장시장에서 먹을 만한 길거리 음식을 소개해 주세요.")],
+#     [("system", "당신은 서울의 문화에 대한 전문가입니다."),
+#     ("human", "서울에서 데이트할 떄 가 볼 만한 분위기 좋은 곳을 알려주세요.")]
+# ]
+
+# ai_messages = llm.batch(messages)
+# for ai_message in ai_messages:
+#     print(ai_message.content)
+#     print()
+
+
+# [STERAM]
+messages = [
+    ("system", "당신은 서울의 문화에 대한 전문가입니다."),
+    ("human", "서울에서 데이트할 떄 가 볼 만한 분위기 좋은 곳을 알려주세요.")
+]
+
+ai_message = llm.stream(messages)
+for chunk in ai_message:
+    print(chunk.content, end="")
+```
+
+### 동기 방식, 비동기 방식
+04_chat_async.py
+```python
+import langchain
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from dotenv import load_dotenv
+import os
+import asyncio
+import time
+
+async def invoke_async(llm, messages):
+    ai_message = await llm.ainvoke(messages)
+    print(ai_message.content)
+
+async def invoke_parallel(llm, messages):
+    tasks = [invoke_async(llm, messages) for _ in range(10)]
+    await asyncio.gather(*tasks)
+
+load_dotenv()
+
+llm = ChatOpenAI(model="gpt-4o")
+
+messages = [
+    ("system", "당신은 서울의 문화에 대한 전문가입니다."),
+    ("human", "서울에서 데이트할 떄 가 볼 만한 분위기 좋은 곳을 알려주세요.")
+]
+
+start = time.perf_counter()
+
+# print("Sync")
+# for _ in range(10):
+#     ai_message = llm.invoke(messages)
+#     print(ai_message.content)
+#     print()
+
+print("Async")
+asyncio.run(invoke_parallel(llm, messages))
+
+end = time.perf_counter()
+print(f"Elapsed time: {end - start:.2f} seconds")
+```
+
+### 
+05_message_history.py
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from langchain_community.chat_message_histories import ChatMessageHistory
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+llm = ChatOpenAI(model="gpt-4o")
+
+# messages = [
+#     SystemMessage("당신은 여행 전문가로 고객의 여행 일정에 도움을 줍니다."),
+#     HumanMessage("부산 여행에서 딱 한 곳만을 가봐야 한다면 어떤 곳인지 알려주세요.")
+# ]
+
+# ai_message = llm.invoke(messages)
+# messages.append(ai_message)
+# messages.append(HumanMessage("부산역에서 그 곳에 가는 교통편을 알려주세요. "))
+# ai_message = llm.invoke(messages)
+# messages.append(HumanMessage("그 근처에서 먹을 만한 음식점들을을 추천해해주세요."))
+# ai_message = llm.invoke(messages)
+# messages.append(ai_message)
+# for message in messages:
+#     print(type(message), message)
+
+history = ChatMessageHistory()
+history.add_message(SystemMessage("당신은 여행 전문가로 고객의 여행 일정에 도움을 줍니다."))
+history.add_user_message("부산 여행에서 딱 한 곳만을 가봐야 한다면 어떤 곳인지 알려주세요.")
+ai_message = llm.invoke(history.messages)
+history.add_ai_message(ai_message.content)
+history.add_user_message("부산역에서 그 곳에 가는 교통편을 알려주세요.")
+ai_message = llm.invoke(history.messages)
+history.add_ai_message(ai_message.content)
+history.add_user_message("그 근처에서 먹을 만한 음식점들을을 추천해해주세요.")
+ai_message = llm.invoke(history.messages)
+history.add_ai_message(ai_message.content)
+for message in history.messages:
+    print(type(message), message)
+```
+
+### 
+06_memory.py
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain.memory import ConversationBufferMemory
+from dotenv import load_dotenv
+
+load_dotenv()
+
+llm = ChatOpenAI(model="gpt-4o")
+
+memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+memory.clear()
+
+memory.save_context({"human": "안녕하세요, 챗봇님"}, 
+                    {"bot": "안녕하세요! 반가워요, 호칭을 어떠게 하는게 좋을까요?"})
+memory.save_context({"human": "음, 전 홍길동입니다."}, 
+                    {"bot": "네, 홍길동님! 만나서 반갑습니다."})
+memory.save_context({"human": "경복궁을 가고 싶은데 혹시 어떻게 가는지 알려 줄 수 있나요?"}, 
+                    {"bot": "물론이죠. 경복궁은 지하철 3호선을 타고 가면 편리해요."})
+
+print(memory.load_memory_variables({}))
+```
+###
+07_prompt_template.py
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from langchain.prompts import PromptTemplate, load_prompt
+from dotenv import load_dotenv
+
+load_dotenv()
+
+llm = ChatOpenAI(model="gpt-4o")
+
+template = PromptTemplate.from_template("{city}에서 {adjective} {topic}을 알려주세요.")
+prompt = template.format(city="서울", adjective="가장 유명한", topic="맛집")
+ai_message = llm.invoke(prompt)
+print(ai_message.content)
+
+template.save("template.json")
+template = load_prompt("template.json")
+prompt = template.format(city="부산", adjective="가장 맛있는", topic="음식점")
+ai_message = llm.invoke(prompt)
+print(ai_message.content)
+```
+
+###
+08_lcel.ipynb
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from dotenv import load_dotenv
+
+load_dotenv()
+
+llm = ChatOpenAI(model="gpt-4o")
+
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+
+prompt = PromptTemplate.from_template("{city}에서 가장 유명한 랜드마크가 무엇인가요?")
+chain = LLMChain(llm=llm, prompt=prompt)
+chain.invoke({"city": "파리"})
+
+chain = prompt | llm # LCEL
+chain.invoke({"city": "파리"})
+
+from langchain.chains import SequentialChain
+
+p_1 = PromptTemplate.from_template("{city}에서 가장 유명한 랜드마크가 무엇인가요? 설명은 필요없고 딱 이름 하나만 알려주세요.")
+p_2 = PromptTemplate.from_template("{landmark}에 {transport}로 가려면 어떻게 가나요?")
+
+c_1 = LLMChain(llm=llm, prompt=p_1, verbose=True, output_key="landmark")
+c_2 = LLMChain(llm=llm, prompt=p_2, verbose=True)
+
+chain = SequentialChain(chains=[c_1, c_2], input_variables=["city", "transport"], verbose=True)
+
+chain.invoke({"city": "서울", "transport": "지하철"})
+```
