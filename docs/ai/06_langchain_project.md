@@ -345,6 +345,10 @@ with tab2:
             st.success('Done')
         st.write(report)
 ```
-
+### 6. 실행
+```bash
+meilisearch --master-key="aSampleMasterKey"
+streamlit run app.py
+```
 
 
