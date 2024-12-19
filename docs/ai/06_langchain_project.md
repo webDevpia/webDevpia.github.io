@@ -4,8 +4,8 @@ layout: default
 parent: AI
 nav_order: 5
 permalink: /ai/langchain_proj
-# nav_exclude: true
-# search_exclude: true
+nav_exclude: true
+search_exclude: true
 ---
 # LangChain Project
 
