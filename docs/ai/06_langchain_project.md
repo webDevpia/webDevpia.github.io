@@ -2,7 +2,7 @@
 title: LangChain Project
 layout: default
 parent: AI
-nav_order: 5
+nav_order: 6
 permalink: /ai/langchain_proj
 nav_exclude: true
 search_exclude: true
