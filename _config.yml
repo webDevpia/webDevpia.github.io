@@ -119,8 +119,9 @@ nav_sort: case_sensitive # Capital letters sorted before lowercase
 
 # External navigation links
 nav_external_links:
-  - title: Digital Smart Academy Busan
+  - title: "Digital Smart Academy Busan"
     url: https://icms.pknu.ac.kr/dsbacademy
+
 liquid:
    error_mode: strict
    strict_filters: true
