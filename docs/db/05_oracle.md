@@ -1,15 +1,33 @@
 ---
-title: Colima Oracle
+title: Oracle
 layout: default
 parent: DataBase
 nav_order: 5
-permalink: /db/colima_oracle
+permalink: /db/oracle
 # nav_exclude: true
 # search_exclude: true
 ---
 # oracle
 
-## 1. 맥북에서 Docker로 oracle DB 설치 (colima 사용)
+## 1. 맥북에서 Docker로 oracle DB 설치
+### 1) docker 이미지 실행
+```
+docker run -d —name oracle -p 1521:1521 -e ORACLE_PASSWORD=password gvenzl/oracle-free:23-slim
+```
+
+### 2) SQL Developer 연결 테스트
+- Name에는 원하는 이름을 입력해주시면 됩니다.
+- 데이터베이스 유형은 Oracle입니다.
+- 사용자 초기 이름은 SYS, 비밀번호는 password로 설정하였습니다.
+- 호스트 이름은 localhost입니다.
+- 포트는 1521입니다.
+- SID는 FREE 입니다.
+- 테스트를 누르면 상태에 성공이라고 뜨는 것을 확인할 수 있습니다.
+
+
+-------------------------------------------
+
+## 2. 맥북에서 Docker로 oracle DB 설치 (colima 사용)
 
 ### 1) colima를 설치합니다.
 

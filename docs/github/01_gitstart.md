@@ -13,6 +13,14 @@ permalink: /gitStart
 git 프로그램 설치  
 [git 다운로드](https://git-scm.com/)
 
+#### git 설치시 체크항목 
+
+##### 1) git에서 사용할 기본 편집기 선택
+Choosing the default editer used by Git 에서 [Use Visual Studio Code as Git's default editor]선택
+
+##### 2) 기본 브랜치의 이름 변경
+Adjusting the name of the initial branch in new repositories에서 [Override the default branch anme for new repositories] 의 내용을 'main'으로 변경한다.
+
 #### git 버전 확인  
 
 ```
@@ -53,7 +61,7 @@ git config --unset user.email
 # vscode를 기본 에디터로 설정
 git config --global core.editor "code --wait --disable-extensions"
 
-# 초기값 변경
+# 브랜치명 초기값 변경
 git config --global init.defaultBranch main  
 
 # 현재 브랜치명 수정
