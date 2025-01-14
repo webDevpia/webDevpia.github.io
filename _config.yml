@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.github_repo }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: 디지털스마트 아카데미
+title: 디지털스마트아카데미
 description: 부경대학교
 baseurl: "" # the subpath of your site, e.g. /blog
 #url: "https://just-the-docs.com" # the base hostname & protocol for your site, e.g. http://example.com
@@ -58,7 +58,7 @@ search_enabled: true
 search:
   # Split pages into sections that can be searched individually
   # Supports 1 - 6, default: 2
-  heading_level: 2
+  heading_level: 3
   # Maximum amount of previews per search result
   # Default: 3
   previews: 2
@@ -111,7 +111,7 @@ aux_links_new_tab: false
 
 # Enable or disable the side/mobile menu globally
 # Nav menu can also be selectively enabled or disabled using page variables or the minimal layout
-nav_enabled: true
+nav_enabled: false
 
 # Sort order for navigation links
 # nav_sort: case_insensitive # default, equivalent to nil
