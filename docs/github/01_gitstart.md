@@ -25,6 +25,7 @@ Adjusting the name of the initial branch in new repositories에서 [Override the
 
 ```
 git -v
+git --version
 ```
 
 ## 2. github 회원가입
@@ -40,6 +41,12 @@ git -v
 # 설정정보 확인
 git config --list
 git config -l
+
+# 전역 설정정보 확인
+git config --global --list
+
+# 전역 설정정보 에디터에서 확인
+git config --global -e
 
 # 전역으로 설정
 git config --global user.name <github-name>
@@ -59,13 +66,25 @@ git config --unset user.name
 git config --unset user.email
 
 # vscode를 기본 에디터로 설정
+# --wait 에디터를 열어서 사용하는동안 터미널에서 대기
+# --disable-extensions : VS Code 실행 시 모든 확장 기능을 비활성화함
 git config --global core.editor "code --wait --disable-extensions"
+
+
+# 운영체제별 줄바꿈 방식
+# Windows: CRLF (\r\n) 사용
+# Linux/macOS: LF (\n) 사용
+
+git config --global core.autocrlf true
+git config --global core.autocrlf input
+
 
 # 브랜치명 초기값 변경
 git config --global init.defaultBranch main  
 
 # 현재 브랜치명 수정
-git branch -M main 
+git branch -M main
+
 ```
 
 ## 5. 로컬 저장소 만들고 github를 리모트 저장소로 등록하기
