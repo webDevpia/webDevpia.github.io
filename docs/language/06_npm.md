@@ -40,19 +40,23 @@ npm install -P express
 ```
 
 ## package.json의 구성 요소
-<table>
-<tr><td> 항목 </td><td> 설명 </td></tr> 
-<tr><td> name </td><td> 필수, 패키지명. 214자 글자수 제한, 밑줄 또는 점으로 시작할 수 없음. 대문자 사용할수 없음. </td></tr>
-<tr><td>  version </td><td> 필수, 패키지 버전 "1.0.0" [Major][Minor][Patch] </td></tr>
-<tr><td>  description </td><td> npm에서 serch로 검색했을 때 나타나는 패키지 설명 </td></tr>
-<tr><td>  main </td><td> 패키지의 진입점(entry point)이 되는 모듈의 ID. 패키지 root의 상대경로로 지정해야 한다. 지정하지 않은 경우 root폴더의 index.js로 기본값이 설정</td></tr>
-<tr><td>  scripts </td><td> command의 alias(별칭)을 정의해 놓고 간단하게 호출할수 있다. </td></tr>
-<tr><td>  keywords </td><td> description과 마찬가지로 npm에서 검색되었을 때 리스트에 표시되어 사람들이 패키지를 찾아내고 이해할수 있는데 도움을 준다. </td></tr>
-<tr><td>  author </td><td> 배포자 </td></tr>
-<tr><td> license </td><td> 배포한 패키지에 대해 어떤 권한과 제한 사항에 대해 명시 </td></tr>
-<tr><td>  dependencies </td><td> 해당 패키지, 프로젝트가 어떤 외부 라이브러리에 의존성을 가지는지 명시 </td></tr>
-<tr><td>  devDependencies </td><td> 개발시에만 필요한 의존 패키지들을 명시 </td></tr>
-</table>
+
+<!-- <div class="code-example" markdown="1"> -->
+
+| 항목 | 설명 |
+|:-----|:-----|
+| name | 필수, 패키지명. 214자 글자수 제한, 밑줄 또는 점으로 시작할 수 없음. 대문자 사용할수 없음. |
+| version | 필수, 패키지 버전 "1.0.0" `[Major][Minor][Patch]`   |
+| description | npm에서 serch로 검색했을 때 나타나는 패키지 설명      |
+| main | 패키지의 진입점(entry point)이 되는 모듈의 ID. 패키지 root의 상대경로로 지정해야 한다. 지정하지 않은 경우 root폴더의 index.js로 기본값이 설정 |
+| scripts | command의 alias(별칭)을 정의해 놓고 간단하게 호출할수 있다. |
+| keywords | description과 마찬가지로 npm에서 검색되었을 때 리스트에 표시되어 사람들이 패키지를 찾아내고 이해할수 있는데 도움을 준다. |
+| author | 배포자 |
+| license | 배포한 패키지에 대해 어떤 권한과 제한 사항에 대해 명시 |
+| dependencies | 해당 패키지, 프로젝트가 어떤 외부 라이브러리에 의존성을 가지는지 명시 |
+| devDependencies | 개발시에만 필요한 의존 패키지들을 명시 |
+
+<!-- </div> -->
 
 ## 설치한 패키지 확인
 ```bash
