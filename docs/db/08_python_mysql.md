@@ -461,13 +461,15 @@ templates/list.html
       <td>title</td>
       <td>isbn</td>
     </tr>
+    {% raw %}
     {% for item in datas %}
+    {% endraw %}
     <tr>
-      <td>{{item[0]}}</td>
-      <td>{{item[1]}}</td>
-      <td>{{item[2]}}</td>
+      <td>{% raw %}{{item[0]}}{% endraw %}</td>
+      <td>{% raw %}{{item[1]}}{% endraw %}</td>
+      <td>{% raw %}{{item[2]}}{% endraw %}</td>
     </tr>
-    {% endfor %}
+    {% raw %}{% endfor %}{% endraw %}
   </table>
   
 </body>
