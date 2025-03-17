@@ -455,21 +455,24 @@ templates/list.html
   <title>Document</title>
 </head>
 <body>
-  <table border="1">
-    <tr>
-      <td>id</td>
-      <td>title</td>
-      <td>isbn</td>
-    </tr>
+  <pre>
+{% raw %}
+  &lt;table border="1"&gt;
+    &lt;tr&gt;
+      &lt;td&gt;id&lt;/td&gt;
+      &lt;td&gt;title&lt;/td&gt;
+      &lt;td&gt;isbn&lt;/td&gt;
+    &lt;/tr&gt;
     {% for item in datas %}
-    <tr>
-      <td>{{item[0]}}</td>
-      <td>{{item[1]}}</td>
-      <td>{{item[2]}}</td>
-    </tr>
+    &lt;tr&gt;
+      &lt;td&gt;{{item[0]}}&lt;/td&gt;
+      &lt;td&gt;{{item[1]}}&lt;/td&gt;
+      &lt;td&gt;{{item[2]}}&lt;/td&gt;
+    &lt;/tr&gt;
     {% endfor %}
-  </table>
-  
+  &lt;/table&gt;
+{% endraw %}
+  </pre>
 </body>
 </html>
 ```
