@@ -146,7 +146,7 @@ fetchone.py
 from mysql.connector import MySQLConnection, Error
 from config import read_config
 
-def query_with_fetchone(config):
+def query_with_fetchone():
     # Initialize variables for cursor and connection
     cursor = None
     conn = None
@@ -185,7 +185,7 @@ if __name__ == '__main__':
     config = read_config()
     
     # Call the function with the obtained configuration to execute the query
-    query_with_fetchone(config)
+    query_with_fetchone()
 
 ```
 
@@ -255,7 +255,7 @@ fetchall.py
 from mysql.connector import MySQLConnection, Error
 from config import read_config
 
-def query_with_fetchall(config):
+def query_with_fetchall():
     try:
         config = read_config()
         # Establish a connection to the MySQL database using the provided configuration
@@ -288,9 +288,7 @@ def query_with_fetchall(config):
         conn.close()
 
 if __name__ == '__main__':
-    config = read_config()
-    # Call the function with the obtained configuration to execute the query
-    query_with_fetchall(config)
+    query_with_fetchall()
 
 ```
 
@@ -448,7 +446,7 @@ if  __name__ == '__main__':
 ```
 
 templates/list.html
-```txt
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
