@@ -446,7 +446,7 @@ if  __name__ == '__main__':
 ```
 
 templates/list.html
-```liquid
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
