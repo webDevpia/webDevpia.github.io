@@ -16,7 +16,7 @@ Version 1.1
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`pub` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`pub` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
 USE `pub`;
 
@@ -30,7 +30,7 @@ CREATE TABLE `authors` (
   `last_name` varchar(40) NOT NULL,
   `photo` blob,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `authors` */
 
@@ -47,7 +47,7 @@ CREATE TABLE `book_author` (
   KEY `author_id` (`author_id`),
   CONSTRAINT `ba_fk1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE CASCADE,
   CONSTRAINT `ba_fk2` FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `book_author` */
 
@@ -63,7 +63,7 @@ CREATE TABLE `books` (
   `isbn` varchar(13) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `isbn` (`isbn`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `books` */
 
