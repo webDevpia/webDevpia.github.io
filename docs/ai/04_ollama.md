@@ -6,7 +6,7 @@ nav_order: 4
 permalink: /ai/ollama
 # nav_exclude: true
 # search_exclude: true
----
+--- 
 # Ollama
 
 ## Ollama 설치
