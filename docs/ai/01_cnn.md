@@ -62,3 +62,18 @@ sampling). 일반적으로 Pooling 크기와 Stride를 동일하게 부여하여
 ## 11. Dropout
 Fully Connected Layer의 너무 촘촘한 연결로 인한 많은 파라미터(weight) 생성은 오히려 오버 피팅을 가져 올 수 있음. Dropout을 통해 Layer간 연결을 줄일 수 있으며 오버 피팅 개선을 가져 올 수 있음. 
 ![](/assets/img/cnn/cnn013.png)  
+
+## 12. conv 연산 적용 후 출력 피처맵의 크기(size) 구하기 
+![](/assets/img/cnn/cnn014.png) 
+
+### Stride가 1이고, padding이 없는 경우
+![](/assets/img/cnn/cnn015.png)  
+
+### Stride가 1이고, padding이 1인 경우
+![](/assets/img/cnn/cnn016.png)  
+
+### Stride가 2이고, padding이 없는 경우
+![](/assets/img/cnn/cnn017.png)  
+
+### Stride가 1이고, padding이 1인 경우
+![](/assets/img/cnn/cnn018.png)   
