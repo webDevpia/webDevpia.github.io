@@ -304,22 +304,22 @@ class CNN(nn.Module):
 # 이미지 전처리 (MNIST와 동일하게 처리하고 색상 반전 추가)
 def preprocess_image(img_path):
     # 이미지 불러오기
-    image = Image.open(img_path)
+    image = Image.open(img_path).convert('RGB')
 
     # 전처리: 흑백으로 변환, 크기 조정, 텐서 변환, 정규화
     preprocess = transforms.Compose([
         transforms.Grayscale(num_output_channels=1),  # 흑백 변환
         transforms.Resize((28, 28)),  # 크기 조정
-        transforms.ToTensor(),  # 텐서로 변환
+        transforms.ToTensor()  # 텐서로 변환
     ])
     
     # 이미지 반전 (검은 바탕에 흰 글씨로 만들기)
     image = TF.invert(image)
 
     # 전처리 적용
-    image_tensor = preprocess(image).unsqueeze(0)  # 배치 차원 추가 (1, 1, 28, 28)
+    image = preprocess(image).unsqueeze(0)  # 배치 차원 추가 (1, 1, 28, 28)
     
-    return image_tensor
+    return image
 
 ```
 
@@ -327,7 +327,6 @@ app.py
 ```py
 from flask import Flask, redirect, render_template,request
 import os
-from PIL import Image
 import model as m
 import torch
 
@@ -344,32 +343,32 @@ def mnist():
 
 @app.route('/mnist',methods=['post'])
 def fileupload():
-    f = request.files['filename']
-    img_path=os.path.dirname(__file__)+'/uploads/'+f.filename
+    f = request.files['imgfile']
+    img_path=os.path.dirname(__file__)+'/static/uploads/'+f.filename
     f.save(img_path)
     
     # 이미지 전처리 및 예측
-    image_tensor = m.preprocess_image(img_path)
+    image = m.preprocess_image(img_path)
 
     # 모델 불러오기
     model = m.CNN()
-    # model.load_state_dict(torch.load('/mnist_model.pth',weights_only=True))
-    model.load_state_dict(torch.load('mnist_model.pth',map_location='cpu'))
+    model.load_state_dict(torch.load('mnist_cnn.pt',map_location='cpu'))
 
     # 모델 재평가
     model.eval()
+
     # 예측
-    with torch.no_grad():  # 기울기 계산 비활성화 (평가 모드)
-        output = model(image_tensor)
-        predicted = torch.argmax(output, dim=1)  # 가장 높은 확률을 가진 클래스를 예측
+    output = model(image)
+    predicted = torch.argmax(output, dim=1)  # 가장 높은 확률을 가진 클래스를 예측
 
     # 예측 결과 출력
     print(f'Predicted class: {predicted.item()}')
-    return render_template('mnist_result.html',data=predicted.item())
+    return render_template('mnist_result.html',data=predicted.item(),img_path='uploads/'+f.filename)
 
 if __name__ == '__main__':
     app.run(debug=True,port=8088)
 ```
+
 /templates/default.html
 ```html
 <!DOCTYPE html>
@@ -394,7 +393,7 @@ if __name__ == '__main__':
 ```
 /templates/menu.html
 ```html
-<nav class="navbar navbar-expand-lg" style="background-color: #036dd6;">
+<nav class="navbar navbar-expand-lg" style="background-color:rgb(2, 2, 2);">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">부경대학교 디지털 스마트 5기</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -483,7 +482,7 @@ if __name__ == '__main__':
 <div class="container">
 <h1>숫자 판독 결과는 {% raw %}{{data}}{% endraw %}입니다.</h1>
 <img width="100" height="100"  
-  src="/static/upload/{{img_path}}" alt="">
+  src="{{url_for('static',filename=img_path)}}" alt="">
 </div>
 {% raw %}{% endblock %}{% endraw %}
 ```
