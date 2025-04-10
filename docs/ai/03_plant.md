@@ -18,9 +18,9 @@ permalink: /ai/plant
 #### 분류 클래스와 각 클래스별 데이터수, 데이터 예시
 ![](/assets/img/plant/plant001.png)
 
-> 두 가지의 모델을 구축한 후 성능 평가
-> CNN 기본 구조를 이용한 베이스 라인 모델
-> 미리 학습된 모델을 이용한 전이학습(Transfer Learning)
+두 가지의 모델을 구축한 후 성능 평가
+CNN 기본 구조를 이용한 베이스 라인 모델
+미리 학습된 모델을 이용한 전이학습(Transfer Learning)
 
 ## 1. 데이터 준비
 
