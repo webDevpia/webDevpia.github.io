@@ -395,7 +395,7 @@ if __name__ == '__main__':
 ```html
 <nav class="navbar navbar-expand-lg" style="background-color:rgb(2, 2, 2);">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">부경대학교 디지털 스마트 5기</a>
+    <a class="navbar-brand" href="#">부경대학교 디지털 스마트 6기</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -482,7 +482,10 @@ if __name__ == '__main__':
 <div class="container">
 <h1>숫자 판독 결과는 {% raw %}{{data}}{% endraw %}입니다.</h1>
 <img width="100" height="100"  
-  src="{{url_for('static',filename=img_path)}}" alt="">
+  {% raw %}
+  src="{{url_for('static',filename=img_path)}}" 
+  {% endraw %}
+  alt="">
 </div>
 {% raw %}{% endblock %}{% endraw %}
 ```
