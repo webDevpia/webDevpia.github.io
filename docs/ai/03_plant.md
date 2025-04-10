@@ -97,8 +97,6 @@ for cls in classes_list:
 ```
 
 
-![](/assets/img/plant/plant004.png)
-
 ### 데이터 분할과 클래스별 데이터 수 확인
 
 ```py
@@ -253,7 +251,7 @@ class Net(nn.Module):
         x = self.pool(x)
         x = F.dropout(x, p=0.25, training=self.training)
 
-        x = x.view(-1, 4096)
+        x = x.view(-1, 4096) # 64*8*8
         x = self.fc1(x)
         x = F.relu(x)
         x = F.dropout(x, p=0.5, training=self.training)
@@ -337,6 +335,14 @@ torch.save(base,'baseline.pt')
 ```
 
 ## 3. Transfer Learning 모델 학습
+
+높은 성능의 이미지 분류 모델을 구축하기 위해서는 많은 수의 질 좋은 데이터 셋이 필요.  
+많은 경우에 양질의 데이터셋을 대량으로 구하기는 어려움.  
+대량의 데이터셋으로 미리 학습된 모델을 재활용한 후, 일부를 조정하여 다른 주제의 이미지 분류 모델에 사용이 효과적일수 있음.
+미리 학습된 모델은 Pre-Trained Model, 이 모델을 조정하는 과정을 Fine-Tuning이라함.  
+이러한 기법을 통틀어서 전이학습(Transfer Learning)이라고함.
+
+![](/assets/img/plant/plant004.png)
 
 ### Transfer Learning을 위한 준비
 ```py
