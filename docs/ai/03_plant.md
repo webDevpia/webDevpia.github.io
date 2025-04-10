@@ -7,7 +7,9 @@ permalink: /ai/plant
 # nav_exclude: true
 # search_exclude: true
 ---
+
 # 작물 잎 사진으로 질병 분류
+
 이미지 분류 모델을 활용하여 작물 잎 사진의 종류와 질병 유무를 분류하는 프로젝트.     
 프로젝트에서 사용하는 총 데이터의 수는 약 40,000개  
 각 클래스의 이름은 작물의 종류와 질병 종류를 나타냄.   
@@ -15,7 +17,7 @@ permalink: /ai/plant
 예를 들어, Potato의 경우 세 가지 클래스 Potato_Early_ blight, Potato_Late_blight, Potato_healthy  
 이 중에서 Potato_healthy로 분류된 경우가 질병이 없는 Potato를 의미.  
 
-#### 분류 클래스와 각 클래스별 데이터수, 데이터 예시
+### 분류 클래스와 각 클래스별 데이터수, 데이터 예시
 ![](/assets/img/plant/plant001.png)
 
 두 가지의 모델을 구축한 후 성능 평가
@@ -24,11 +26,11 @@ CNN 기본 구조를 이용한 베이스 라인 모델
 
 ## 1. 데이터 준비
 
-#### 학습 데이터 이해
+### 학습 데이터 이해
 학습에 사용할 데이터는 각 이미지의 분류 클래스가 폴더로 구분되어 있는 형태로 각 폴더 안에는 Train, Validation, Test 데이터가 구별되지 않은 상태로 저장되어 있음.
 ![](/assets/img/plant/plant002.png)
 
-#### 데이터 분리
+### 데이터 분리
 Train, Validation, Test 데이터로 나누고 각각의 클래스에 해당하는 폴더에 저장
 ![](/assets/img/plant/plant003.png)
 
@@ -97,7 +99,7 @@ for cls in classes_list:
 
 ![](/assets/img/plant/plant004.png)
 
-#### 데이터 분할과 클래스별 데이터 수 확인
+### 데이터 분할과 클래스별 데이터 수 확인
 
 ```py
 import math
@@ -135,7 +137,7 @@ for cls in classes_list:
 
 ## 2. 베이스라인 모델 학습
 
-#### 운영체제별 디바이스 확인
+### 운영체제별 디바이스 확인
 
 ```py
 def get_device():
@@ -170,7 +172,7 @@ def get_device():
 # device = get_device()
 ```
 
-#### 베이스라인 모델 학습을 위한 준비
+### 베이스라인 모델 학습을 위한 준비
 
 ```py
 import torch
@@ -213,7 +215,7 @@ train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE,
 val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
 ```
 
-#### 베이스라인 모델 설계하기
+### 베이스라인 모델 설계하기
 
 ```py
 import torch.nn as nn
@@ -263,7 +265,7 @@ model_base = Net().to(DEVICE)
 optimizer = optim.Adam(model_base.parameters(), lr=0.001)
 ```
 
-#### 모델 학습을 위한 함수
+### 모델 학습을 위한 함수
 
 ```py
 def train(model, train_loader, optimizer):
@@ -277,7 +279,7 @@ def train(model, train_loader, optimizer):
         optimizer.step()
 ```
 
-#### 모델 평가를 위한 함수
+### 모델 평가를 위한 함수
 
 ```py
 def evaluate(model, test_loader):
@@ -301,7 +303,7 @@ def evaluate(model, test_loader):
     return test_loss, test_accuracy
 ```
 
-#### 모델 학습을 실행하기
+### 모델 학습을 실행하기
 
 ```py
 import time
@@ -336,7 +338,7 @@ torch.save(base,'baseline.pt')
 
 ## 3. Transfer Learning 모델 학습
 
-#### Transfer Learning을 위한 준비
+### Transfer Learning을 위한 준비
 ```py
 data_transforms = {
     'train': transforms.Compose([transforms.Resize([64,64]),
@@ -359,7 +361,7 @@ dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
 class_names = image_datasets['train'].classes
 ```
 
-#### Pre-Trained Model 불러오기
+### Pre-Trained Model 불러오기
 
 ```py
 from torchvision import models
@@ -376,7 +378,7 @@ from torch.optim import lr_scheduler
 exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 ```
 
-#### Pre-Trained Model의 일부 Layer Freeze하기
+### Pre-Trained Model의 일부 Layer Freeze하기
 ```py
 ct = 0
 for child in resnet.children():
@@ -386,7 +388,7 @@ for child in resnet.children():
             param.requires_grad = False
 ```
 
-#### Transfer Learning 모델 학습과 검증을 위한 함수
+### Transfer Learning 모델 학습과 검증을 위한 함수
 ```py
 def train_resnet(model, criterion, optimizer, scheduler, num_epochs=25):
 
@@ -446,7 +448,7 @@ def train_resnet(model, criterion, optimizer, scheduler, num_epochs=25):
     return model
 ```
 
-#### 모델 학습을 실행하기
+### 모델 학습을 실행하기
 ```py
 model_resnet50 = train_resnet(resnet, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=EPOCH)
 
@@ -455,14 +457,14 @@ torch.save(model_resnet50, 'resnet50.pt')
 
 ##  4. 모델 평가
 
-#### 베이스라인 모델 평가를 위한 전처리하기
+### 베이스라인 모델 평가를 위한 전처리하기
 
 ```py
 transform_base = transforms.Compose([transforms.Resize([64,64]),transforms.ToTensor()])
 test_base = datasets.ImageFolder(root='./splitted/test',transform=transform_base)
 test_loader_base = torch.utils.data.DataLoader(test_base, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
 ```
-#### Transfer Learning모델 평가를 위한 전처리하기
+### Transfer Learning모델 평가를 위한 전처리하기
 
 ```py
 transform_resNet = transforms.Compose([
@@ -476,7 +478,7 @@ test_resNet = datasets.ImageFolder(root='./splitted/test', transform=transform_r
 test_loader_resNet = torch.utils.data.DataLoader(test_resNet, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
 ```
 
-#### 베이스라인 모델 성능 평가하기
+### 베이스라인 모델 성능 평가하기
 ```py
 baseline=torch.load('baseline.pt', weights_only=False)
 baseline.eval()
@@ -485,7 +487,7 @@ test_loss, test_accuracy = evaluate(baseline, test_loader_base)
 print('baseline test acc:  ', test_accuracy)
 ```
 
-#### Transfer Learning 모델 성능 평가하기
+### Transfer Learning 모델 성능 평가하기
 
 ```py
 resnet50=torch.load('resnet50.pt', weights_only=False)
