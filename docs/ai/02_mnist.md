@@ -118,8 +118,8 @@ print(f"{'first_batch[0]':15s} | {str(type(first_batch[0])):<25s} | {first_batch
 print(f"{'first_batch[1]':15s} | {str(type(first_batch[1])):<25s} | {first_batch[1].shape}")
 ```
 
-name | type | size  
-num of batch | | 1200  
+name            | type                      | size  
+num of batch    |                           | 1200  
 first_batch     | <class 'list'>            | 2
 first_batch[0]  | <class 'torch.Tensor'>    | torch.Size([50, 1, 28, 28])
 first_batch[1]  | <class 'torch.Tensor'>    | torch.Size([50])
@@ -211,7 +211,7 @@ print(100*correct/len(test_loader.dataset))
 
 모델 저장
 ```py
-torch.save(model.state_dict(),root_dir+'/mnist_model.pth')
+torch.save(model.state_dict(),root_dir+'/model/mnist_cnn.pt')
 ```
 
 ## 2. 생성된 모델 사용하기
@@ -271,7 +271,6 @@ model.py
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torch.optim as optim
 from PIL import Image
 from torchvision import transforms
 import torchvision.transforms.functional as TF
