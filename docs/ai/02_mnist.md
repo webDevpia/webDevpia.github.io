@@ -482,10 +482,7 @@ if __name__ == '__main__':
 <div class="container">
 <h1>숫자 판독 결과는 {% raw %}{{data}}{% endraw %}입니다.</h1>
 <img width="100" height="100"  
-  {% raw %}
-  src="{{url_for('static',filename=img_path)}}" 
-  {% endraw %}
-  alt="">
+  {% raw %}src="{{url_for('static',filename=img_path)}}"{% endraw %} alt="">
 </div>
 {% raw %}{% endblock %}{% endraw %}
 ```
