@@ -2,7 +2,7 @@
 title: PLANT
 layout: default
 parent: AI
-nav_order: 1
+nav_order: 3
 permalink: /ai/plant
 # nav_exclude: true
 # search_exclude: true

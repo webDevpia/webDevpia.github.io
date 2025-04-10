@@ -2,7 +2,7 @@
 title: Label Studio
 layout: default
 parent: AI
-nav_order: 3
+nav_order: 5
 permalink: /ai/labelstudio
 # nav_exclude: true
 # search_exclude: true

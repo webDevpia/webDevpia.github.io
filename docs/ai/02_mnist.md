@@ -2,7 +2,7 @@
 title: MNIST
 layout: default
 parent: AI
-nav_order: 1
+nav_order: 2
 permalink: /ai/mnist
 # nav_exclude: true
 # search_exclude: true

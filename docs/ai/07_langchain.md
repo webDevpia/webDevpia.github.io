@@ -2,7 +2,7 @@
 title: LangChain
 layout: default
 parent: AI
-nav_order: 5
+nav_order: 7
 permalink: /ai/langchain
 nav_exclude: true
 search_exclude: true

@@ -2,7 +2,7 @@
 title: Rag Project
 layout: default
 parent: AI
-nav_order: 7
+nav_order: 9
 permalink: /ai/lag_proj
 nav_exclude: true
 search_exclude: true
