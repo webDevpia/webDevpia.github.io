@@ -1,9 +1,9 @@
 ---
 title: LangChain Project
 layout: default
-parent: AI
-nav_order: 8
-permalink: /ai/langchain_proj
+parent: LangChain
+nav_order: 3
+permalink: /langchain/langchain_proj
 # nav_exclude: true
 # search_exclude: true
 ---

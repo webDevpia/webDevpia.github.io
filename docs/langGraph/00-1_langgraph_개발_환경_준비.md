@@ -1,9 +1,9 @@
 ---
-title: LangGraph
+title: LangGraph_env
 layout: default
-parent: AI
-nav_order: 6
-permalink: /ai/ollama
+parent: LangGraph
+nav_order: 1
+permalink: /langgraph/env
 # nav_exclude: true
 # search_exclude: true
 --- 

@@ -1,3 +1,13 @@
+---
+title: LangGraph_desc
+layout: default
+parent: LangGraph
+nav_order: 2
+permalink: /langgraph/desc
+# nav_exclude: true
+# search_exclude: true
+--- 
+
 # LangGraph: 개념 및 그래프 접근법
 
 ## 1. 개념 설명

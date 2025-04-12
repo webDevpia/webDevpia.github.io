@@ -1,9 +1,9 @@
 ---
 title: Rag Project
 layout: default
-parent: AI
-nav_order: 9
-permalink: /ai/lag_proj
+parent: LangChain
+nav_order: 4
+permalink: /langchain/lag_proj
 # nav_exclude: true
 # search_exclude: true
 ---

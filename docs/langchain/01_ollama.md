@@ -1,9 +1,9 @@
 ---
 title: Ollama
 layout: default
-parent: AI
-nav_order: 6
-permalink: /ai/ollama
+parent: LangChain
+nav_order: 1
+permalink: /langchain/ollama
 # nav_exclude: true
 # search_exclude: true
 --- 

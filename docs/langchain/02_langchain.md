@@ -1,9 +1,9 @@
 ---
 title: LangChain
 layout: default
-parent: AI
-nav_order: 7
-permalink: /ai/langchain
+parent: LangChain
+nav_order: 2
+permalink: /langchain/langchain
 # nav_exclude: true
 # search_exclude: true
 ---
