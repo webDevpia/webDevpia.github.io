@@ -1,5 +1,5 @@
 ---
-title: LangGraph_desc
+title: LangGraph 개념 
 layout: default
 parent: LangGraph
 nav_order: 2
