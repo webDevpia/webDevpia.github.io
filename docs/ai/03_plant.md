@@ -20,9 +20,9 @@ permalink: /ai/plant
 ### 분류 클래스와 각 클래스별 데이터수, 데이터 예시
 ![](/assets/img/plant/plant001.png)
 
-두 가지의 모델을 구축한 후 성능 평가
-CNN 기본 구조를 이용한 베이스 라인 모델
-미리 학습된 모델을 이용한 전이학습(Transfer Learning)
+두 가지의 모델을 구축한 후 성능 평가  
+CNN 기본 구조를 이용한 베이스 라인 모델  
+미리 학습된 모델을 이용한 전이학습(Transfer Learning)  
 
 ## 1. 데이터 준비
 
@@ -33,6 +33,9 @@ CNN 기본 구조를 이용한 베이스 라인 모델
 ### 데이터 분리
 Train, Validation, Test 데이터로 나누고 각각의 클래스에 해당하는 폴더에 저장
 ![](/assets/img/plant/plant003.png)
+
+데이터 파일을 구글 드라이브에서 다운로드 받기 위한 함수 정의  
+다운로드 받은 파일을 저장할 폴더 생성 및 기존 폴더가 있을 경우 삭제 후 생성  
 
 ```py
 import gdown
@@ -75,6 +78,7 @@ download_and_unzip_from_google_drive(file_id, output_dir)
 
 ```
 
+압축푼 데이터를 각 train, val, test 로 나누기 위한 splitted 폴더를 생성
 
 ```py
 original_dataset_dir = './dataset'
@@ -99,6 +103,7 @@ for cls in classes_list:
 
 ### 데이터 분할과 클래스별 데이터 수 확인
 
+데이터 분류별로 각각 train:60%, validation:20%, test:20% 로 분리해서 splitted폴더로 복사
 ```py
 import math
 
@@ -136,7 +141,7 @@ for cls in classes_list:
 ## 2. 베이스라인 모델 학습
 
 ### 운영체제별 디바이스 확인
-
+각 운영체제별로 cpu, gpu 사용 여부를 체크
 ```py
 def get_device():
     import platform
@@ -176,13 +181,14 @@ def get_device():
 import torch
 import os
 
-USE_CUDA = torch.cuda.is_available()
+# USE_CUDA = torch.cuda.is_available()
 # DEVICE = torch.device("cuda" if USE_CUDA else "cpu")
 DEVICE = torch.device(get_device())
 BATCH_SIZE = 256
 EPOCH = 30
 ```
 
+.ipynb_checkpoints 디렉토리의 값 때문에 문제가 생길 경우에만 
 ```py
 import shutil
 import os
@@ -209,8 +215,18 @@ val_dataset = datasets.ImageFolder(root='./splitted/val', transform=transform_ba
 ```py
 from torch.utils.data import DataLoader
 
-train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
-val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
+val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=True)
+
+images , labels = next(iter(train_loader))
+
+import matplotlib.pyplot as plt
+import torchvision.transforms.functional as F
+
+F.to_pil_image(images[0]) # 이미지 확인
+len(train_dataset.classes) # 클래스 값 확인
+labels[0].item(),train_dataset.classes[labels[0].item()] # 레이블 값의 클래스 명을 확인
+plt.imshow(F.to_pil_image(images[0]))
 ```
 
 ### 베이스라인 모델 설계하기
@@ -225,7 +241,7 @@ class Net(nn.Module):
     def __init__(self):
 
         super(Net, self).__init__()
-
+        # 이미지채널 3, 필터적용개수 32, 필터사이즈 3, 이미지의 입력은(3,64,64)
         self.conv1 = nn.Conv2d(3, 32, 3, padding=1)
         self.pool = nn.MaxPool2d(2,2)
         self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
@@ -293,12 +309,25 @@ def evaluate(model, test_loader):
             test_loss += F.cross_entropy(output,target, reduction='sum').item()
 
 
-            pred = output.max(1, keepdim=True)[1]
+            pred = output.max(1, keepdim=True)[1] # 각 행별로 가장 큰값의 인덱스 값을 리턴
             correct += pred.eq(target.view_as(pred)).sum().item()
 
     test_loss /= len(test_loader.dataset)
     test_accuracy = 100. * correct / len(test_loader.dataset)
     return test_loss, test_accuracy
+```
+```py
+import torch
+
+# 예: 배치 크기 3, 클래스 수 4
+output = torch.tensor([
+    [0.2, 0.1, 0.6, 0.1],  # → 클래스 2 (0.6)
+    [0.3, 0.4, 0.2, 0.1],  # → 클래스 1 (0.4)
+    [0.05, 0.2, 0.3, 0.45] # → 클래스 3 (0.45)
+])
+
+pred = output.max(1, keepdim=True)[1]
+print(pred)
 ```
 
 ### 모델 학습을 실행하기
@@ -330,7 +359,12 @@ def train_baseline(model ,train_loader, val_loader, optimizer, num_epochs = 30):
     return model
 
 
-base = train_baseline(model_base, train_loader, val_loader, optimizer, EPOCH)  	 #(16)
+base = train_baseline(model_base, train_loader, val_loader, optimizer, EPOCH)  	 
+```
+
+학습된 모델을 저장한다.  
+저장 경로를 구글 드라이브로 할 경우 인스턴스가 종료되더라도 구글 드라이브에 남아 있음.
+```py
 torch.save(base,'baseline.pt')
 ```
 
@@ -361,7 +395,7 @@ data_transforms = {
 ```py
 data_dir = './splitted'
 image_datasets = {x: datasets.ImageFolder(root=os.path.join(data_dir, x), transform=data_transforms[x]) for x in ['train', 'val']}
-dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=BATCH_SIZE, shuffle=True, num_workers=4) for x in ['train', 'val']}
+dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=BATCH_SIZE, shuffle=True) for x in ['train', 'val']}
 dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
 
 class_names = image_datasets['train'].classes
@@ -372,15 +406,21 @@ class_names = image_datasets['train'].classes
 ```py
 from torchvision import models
 
-resnet = models.resnet50(pretrained=True)
+resnet = models.resnet50(pretrained=True) 
+# print(resnet) 으로 구성 레이어를 확인할 수 있다.
+#  (fc): Linear(in_features=2048, out_features=1000, bias=True)
+# 마지막 레이어인 분류기 쪽에 출력값을 33으로 조정한다.
 num_ftrs = resnet.fc.in_features
 resnet.fc = nn.Linear(num_ftrs, 33)
+
 resnet = resnet.to(DEVICE)
 
 criterion = nn.CrossEntropyLoss()
 optimizer_ft = optim.Adam(filter(lambda p: p.requires_grad, resnet.parameters()), lr=0.001)
 
 from torch.optim import lr_scheduler
+
+# 7 에폭마다 학습률에 0.1을 곱하여 학습률을 줄여나간다.
 exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 ```
 
@@ -389,7 +429,10 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 ct = 0
 for child in resnet.children():
     ct += 1
-    if ct < 6:
+    print(ct)
+    print(child)
+    print('---------------------------------')
+    if ct < 9:
         for param in child.parameters():
             param.requires_grad = False
 ```
@@ -457,7 +500,10 @@ def train_resnet(model, criterion, optimizer, scheduler, num_epochs=25):
 ### 모델 학습을 실행하기
 ```py
 model_resnet50 = train_resnet(resnet, criterion, optimizer_ft, exp_lr_scheduler, num_epochs=EPOCH)
+```
 
+학습된 모델 저장
+```py
 torch.save(model_resnet50, 'resnet50.pt')
 ```
 
@@ -468,7 +514,7 @@ torch.save(model_resnet50, 'resnet50.pt')
 ```py
 transform_base = transforms.Compose([transforms.Resize([64,64]),transforms.ToTensor()])
 test_base = datasets.ImageFolder(root='./splitted/test',transform=transform_base)
-test_loader_base = torch.utils.data.DataLoader(test_base, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+test_loader_base = torch.utils.data.DataLoader(test_base, batch_size=BATCH_SIZE, shuffle=True)
 ```
 ### Transfer Learning모델 평가를 위한 전처리하기
 
@@ -481,7 +527,7 @@ transform_resNet = transforms.Compose([
     ])
 
 test_resNet = datasets.ImageFolder(root='./splitted/test', transform=transform_resNet)
-test_loader_resNet = torch.utils.data.DataLoader(test_resNet, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+test_loader_resNet = torch.utils.data.DataLoader(test_resNet, batch_size=BATCH_SIZE, shuffle=True)
 ```
 
 ### 베이스라인 모델 성능 평가하기
