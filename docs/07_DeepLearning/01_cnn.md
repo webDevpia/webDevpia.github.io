@@ -1,9 +1,9 @@
 ---
 title: CNN
 layout: default
-parent: AI
+parent: DeepLearning
 nav_order: 1
-permalink: /ai/cnn
+permalink: /deeplearning/cnn
 # nav_exclude: true
 # search_exclude: true
 ---

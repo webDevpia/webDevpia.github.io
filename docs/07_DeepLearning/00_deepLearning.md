@@ -1,9 +1,9 @@
 ---
 layout: default
-title: AI
+title: DeepLearning
 nav_order: 7
 has_children: true
-permalink: /ai
+permalink: /deeplearning
 # nav_exclude: true
 # search_exclude: true
 ---

@@ -1,9 +1,9 @@
 ---
 title: Object Detection
 layout: default
-parent: AI
+parent: DeepLearning
 nav_order: 4
-permalink: /ai/objectdetection
+permalink: /deeplearning/objectdetection
 # nav_exclude: true
 # search_exclude: true
 ---

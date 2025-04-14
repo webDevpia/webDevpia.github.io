@@ -1,9 +1,9 @@
 ---
 title: MNIST
 layout: default
-parent: AI
+parent: DeepLearning
 nav_order: 2
-permalink: /ai/mnist
+permalink: /deeplearning/mnist
 # nav_exclude: true
 # search_exclude: true
 ---

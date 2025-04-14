@@ -1,9 +1,9 @@
 ---
 title: Label Studio
 layout: default
-parent: AI
+parent: DeepLearning
 nav_order: 5
-permalink: /ai/labelstudio
+permalink: /deeplearning/labelstudio
 # nav_exclude: true
 # search_exclude: true
 ---

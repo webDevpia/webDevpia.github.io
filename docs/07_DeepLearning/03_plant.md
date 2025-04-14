@@ -1,9 +1,9 @@
 ---
 title: PLANT
 layout: default
-parent: AI
+parent: DeepLearning
 nav_order: 3
-permalink: /ai/plant
+permalink: /deeplearning/plant
 # nav_exclude: true
 # search_exclude: true
 ---
