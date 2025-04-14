@@ -13,10 +13,10 @@ permalink: /llm/ollama
 [Ollama](https://ollama.com/)
 
 ### 1. 다운로드 클릭
-![](/docs/llm/img/ollama/ollama001.png)
+![](./img/ollama/ollama001.png)
 
 ### 2. 운영체제에 맞춰 다운로드
-![](/docs/llm/img/ollama/ollama002.png)
+![](./img/ollama/ollama002.png)
 
 ### 3. 설치 후 터미널에서 설치 확인 후, 모델 실행
 #### 설치확인
