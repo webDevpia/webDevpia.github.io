@@ -1,9 +1,9 @@
 ---
 title: Ollama
 layout: default
-parent: LangChain
+parent: LLM
 nav_order: 1
-permalink: /langchain/ollama
+permalink: /llm/ollama
 # nav_exclude: true
 # search_exclude: true
 --- 
@@ -13,10 +13,10 @@ permalink: /langchain/ollama
 [Ollama](https://ollama.com/)
 
 ### 1. 다운로드 클릭
-![](/docs/langchain/img/ollama/ollama001.png)
+![](/docs/llm/img/ollama/ollama001.png)
 
 ### 2. 운영체제에 맞춰 다운로드
-![](/docs/langchain/img/ollama/ollama002.png)
+![](/docs/llm/img/ollama/ollama002.png)
 
 ### 3. 설치 후 터미널에서 설치 확인 후, 모델 실행
 #### 설치확인
@@ -31,7 +31,7 @@ ollama serve
 ollama list
 ollama run llama3.2
 ```
-![](/docs/langchain/img/ollama/ollama003.png)
+![](/docs/llm/img/ollama/ollama003.png)
 
 
 ## Ollama 사용
@@ -384,60 +384,60 @@ You are Mario from Super Mario Bros. Answer as Mario, the assistant, only.
 ### docker desktop 설치
 
 ### 1. docker desktop 
-![](/docs/langchain/img/ollama/ollama004.png)
+![](/docs/llm/img/ollama/ollama004.png)
 
 ### 2. 운영체제에 맞는 프로그램 다운로드
-![](/docs/langchain/img/ollama/ollama005.png)
+![](/docs/llm/img/ollama/ollama005.png)
 
 ### 3. 다운로드 받은 프로그램 실행
-![](/docs/langchain/img/ollama/ollama006.png)
-![](/docs/langchain/img/ollama/ollama007.png)
+![](/docs/llm/img/ollama/ollama006.png)
+![](/docs/llm/img/ollama/ollama007.png)
 
 ### 4. 설치 후 close and restart 클릭
-![](/docs/langchain/img/ollama/ollama008.png)
+![](/docs/llm/img/ollama/ollama008.png)
 
 ### 5. 재부팅 후 Accept 클릭
-![](/docs/langchain/img/ollama/ollama009.png)
+![](/docs/llm/img/ollama/ollama009.png)
 
 ### 6. Finish
-![](/docs/langchain/img/ollama/ollama010.png)
+![](/docs/llm/img/ollama/ollama010.png)
 
 ### 7. Skip
-![](/docs/langchain/img/ollama/ollama011.png)
+![](/docs/llm/img/ollama/ollama011.png)
 
 ### 8. 설치 완료
-![](/docs/langchain/img/ollama/ollama012.png)
+![](/docs/llm/img/ollama/ollama012.png)
 
 ## open WebUI 설치
 ### 1. open WebUI 사이트로 이동
-![](/docs/langchain/img/ollama/ollama013.png)
+![](/docs/llm/img/ollama/ollama013.png)
 
 ### 2. Doc 에서 설치 명령어 복사
-![](/docs/langchain/img/ollama/ollama014.png)
+![](/docs/llm/img/ollama/ollama014.png)
 
 ### 3. 명령프롬프트에서 실행
 ![](/docs/langchain/img/ollama/ollama015.png)
 
 ### 4. 설치 진행
-![](/docs/langchain/img/ollama/ollama016.png)
+![](/docs/llm/img/ollama/ollama016.png)
 
 ### 5. docker desktop에서 열기
-![](/docs/langchain/img/ollama/ollama017.png)
+![](/docs/llm/img/ollama/ollama017.png)
 
 ### 6. 웹브라우저가 실행되면 가입 클릭
-![](/docs/langchain/img/ollama/ollama018.png)
+![](/docs/llm/img/ollama/ollama018.png)
 
 ### 7. 이름, 이메일, 비밀번호 입력후 계정만들기 버튼 클릭
-![](/docs/langchain/img/ollama/ollama019.png)
+![](/docs/llm/img/ollama/ollama019.png)
 
 ### 8. 새로운 기능 창 닫기
-![](/docs/langchain/img/ollama/ollama020.png)
+![](/docs/llm/img/ollama/ollama020.png)
 
 ### 9. 모델 선택
-![](/docs/langchain/img/ollama/ollama021.png)
+![](/docs/llm/img/ollama/ollama021.png)
 
 ### 10. 질문 입력
-![](/docs/langchain/img/ollama/ollama022.png)
+![](/docs/llm/img/ollama/ollama022.png)
 
 
 ## FlowiseAI
@@ -498,47 +498,47 @@ docker-compose stop
 ### 3. FlowiseAI 사용하기
 
 #### 1) localhost:3030 으로 접속
-![](/docs/langchain/img/flowise/flowise001.png)
+![](/docs/llm/img/flowise/flowise001.png)
 
 #### 2) Document Store 클릭
-![](/docs/langchain/img/flowise/flowise003.png)
+![](/docs/llm/img/flowise/flowise003.png)
 
 #### 3) Add New 클릭하고 Name 입력하고 Add 버튼 클릭
-![](/docs/langchain/img/flowise/flowise004.png)
+![](/docs/llm/img/flowise/flowise004.png)
 
 #### 4) 생성된 Document Store 클릭
-![](/docs/langchain/img/flowise/flowise005.png)
+![](/docs/llm/img/flowise/flowise005.png)
 
 #### 5) Add Document Loader 버튼 클릭
-![](/docs/langchain/img/flowise/flowise006.png)
+![](/docs/llm/img/flowise/flowise006.png)
 
 #### 6) 문서의 종류에 따라서 선택 후 등록
-![](/docs/langchain/img/flowise/flowise007.png)
+![](/docs/llm/img/flowise/flowise007.png)
 
 #### 7) Upset Config 버튼 클릭
-![](/docs/langchain/img/flowise/flowise008.png)
+![](/docs/llm/img/flowise/flowise008.png)
 
 #### 8) Select Embeddings 클릭
-![](/docs/langchain/img/flowise/flowise009.png)
+![](/docs/llm/img/flowise/flowise009.png)
 
 #### 9) Ollama Embeddings 선택
-![](/docs/langchain/img/flowise/flowise010.png)
+![](/docs/llm/img/flowise/flowise010.png)
 
 #### 10) Select Vector Store 클릭 후 Faiss 선택, 항목 입력 후 Upset 버튼 클릭
-![](/docs/langchain/img/flowise/flowise011.png)
+![](/docs/llm/img/flowise/flowise011.png)
 
 #### 11) Test Retrieval 버튼 클릭후 테스트, Save Config 버튼 클릭
-![](/docs/langchain/img/flowise/flowise012.png)
+![](/docs/llm/img/flowise/flowise012.png)
 
 #### 12) Chatflows 선택 후, Add New 버튼 클릭
-![](/docs/langchain/img/flowise/flowise015.png)
+![](/docs/llm/img/flowise/flowise015.png)
 
 #### 13) 작성
-![](/docs/langchain/img/flowise/flowise016.png)
+![](/docs/llm/img/flowise/flowise016.png)
 
-![](/docs/langchain/img/flowise/flowise017.png)
+![](/docs/llm/img/flowise/flowise017.png)
 
-![](/docs/langchain/img/flowise/flowise018.png)
+![](/docs/llm/img/flowise/flowise018.png)
 
 #### 14) streamlit으로 Flowise 연동해서 사용
 streamlit_app.py
@@ -609,7 +609,7 @@ if prompt := st.chat_input("What is up?"):
 
 ## 주택 청약 FAQ 챗봇
 
-![](/docs/langchain/img/ollama/ollama023.png)
+![](/docs/llm/img/ollama/ollama023.png)
 
 ### 1. 환경설정
 
@@ -630,7 +630,7 @@ pip install -r requirements.txt
 
 [주택청약 pdf문서 다운로드 사이트](https://www.molit.go.kr/USR/policyData/m_34681/dtl.jsp?search=&srch_dept_nm=&srch_dept_id=&srch_usr_nm=&srch_usr_titl=Y&srch_usr_ctnt=&search_regdate_s=&search_regdate_e=&psize=10&s_category=&p_category=&lcmspage=1&id=4765)
 
-[주택청약 pdf문서](/docs/langchain/data/★%202024%20주택청약%20FAQ.pdf)
+[주택청약 pdf문서](/docs/llm/data/★%202024%20주택청약%20FAQ.pdf)
 
 ### 2. 코드 작성
 
