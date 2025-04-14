@@ -31,7 +31,7 @@ ollama serve
 ollama list
 ollama run llama3.2
 ```
-![](/docs/llm/img/ollama/ollama003.png)
+![](./img/ollama/ollama003.png)
 
 
 ## Ollama 사용
@@ -384,60 +384,60 @@ You are Mario from Super Mario Bros. Answer as Mario, the assistant, only.
 ### docker desktop 설치
 
 ### 1. docker desktop 
-![](/docs/llm/img/ollama/ollama004.png)
+![](./img/ollama/ollama004.png)
 
 ### 2. 운영체제에 맞는 프로그램 다운로드
-![](/docs/llm/img/ollama/ollama005.png)
+![](./img/ollama/ollama005.png)
 
 ### 3. 다운로드 받은 프로그램 실행
-![](/docs/llm/img/ollama/ollama006.png)
-![](/docs/llm/img/ollama/ollama007.png)
+![](./img/ollama/ollama006.png)
+![](./img/ollama/ollama007.png)
 
 ### 4. 설치 후 close and restart 클릭
-![](/docs/llm/img/ollama/ollama008.png)
+![](./img/ollama/ollama008.png)
 
 ### 5. 재부팅 후 Accept 클릭
-![](/docs/llm/img/ollama/ollama009.png)
+![](./img/ollama/ollama009.png)
 
 ### 6. Finish
-![](/docs/llm/img/ollama/ollama010.png)
+![](./img/ollama/ollama010.png)
 
 ### 7. Skip
-![](/docs/llm/img/ollama/ollama011.png)
+![](./img/ollama/ollama011.png)
 
 ### 8. 설치 완료
-![](/docs/llm/img/ollama/ollama012.png)
+![](./img/ollama/ollama012.png)
 
 ## open WebUI 설치
 ### 1. open WebUI 사이트로 이동
-![](/docs/llm/img/ollama/ollama013.png)
+![](./img/ollama/ollama013.png)
 
 ### 2. Doc 에서 설치 명령어 복사
-![](/docs/llm/img/ollama/ollama014.png)
+![](./img/ollama/ollama014.png)
 
 ### 3. 명령프롬프트에서 실행
 ![](/docs/langchain/img/ollama/ollama015.png)
 
 ### 4. 설치 진행
-![](/docs/llm/img/ollama/ollama016.png)
+![](./img/ollama/ollama016.png)
 
 ### 5. docker desktop에서 열기
-![](/docs/llm/img/ollama/ollama017.png)
+![](./img/ollama/ollama017.png)
 
 ### 6. 웹브라우저가 실행되면 가입 클릭
-![](/docs/llm/img/ollama/ollama018.png)
+![](./img/ollama/ollama018.png)
 
 ### 7. 이름, 이메일, 비밀번호 입력후 계정만들기 버튼 클릭
-![](/docs/llm/img/ollama/ollama019.png)
+![](./img/ollama/ollama019.png)
 
 ### 8. 새로운 기능 창 닫기
-![](/docs/llm/img/ollama/ollama020.png)
+![](./img/ollama/ollama020.png)
 
 ### 9. 모델 선택
-![](/docs/llm/img/ollama/ollama021.png)
+![](./img/ollama/ollama021.png)
 
 ### 10. 질문 입력
-![](/docs/llm/img/ollama/ollama022.png)
+![](./img/ollama/ollama022.png)
 
 
 ## FlowiseAI
@@ -498,47 +498,47 @@ docker-compose stop
 ### 3. FlowiseAI 사용하기
 
 #### 1) localhost:3030 으로 접속
-![](/docs/llm/img/flowise/flowise001.png)
+![](./img/flowise/flowise001.png)
 
 #### 2) Document Store 클릭
-![](/docs/llm/img/flowise/flowise003.png)
+![](./img/flowise/flowise003.png)
 
 #### 3) Add New 클릭하고 Name 입력하고 Add 버튼 클릭
-![](/docs/llm/img/flowise/flowise004.png)
+![](./img/flowise/flowise004.png)
 
 #### 4) 생성된 Document Store 클릭
-![](/docs/llm/img/flowise/flowise005.png)
+![](./img/flowise/flowise005.png)
 
 #### 5) Add Document Loader 버튼 클릭
-![](/docs/llm/img/flowise/flowise006.png)
+![](./img/flowise/flowise006.png)
 
 #### 6) 문서의 종류에 따라서 선택 후 등록
-![](/docs/llm/img/flowise/flowise007.png)
+![](./img/flowise/flowise007.png)
 
 #### 7) Upset Config 버튼 클릭
-![](/docs/llm/img/flowise/flowise008.png)
+![](./img/flowise/flowise008.png)
 
 #### 8) Select Embeddings 클릭
-![](/docs/llm/img/flowise/flowise009.png)
+![](./img/flowise/flowise009.png)
 
 #### 9) Ollama Embeddings 선택
-![](/docs/llm/img/flowise/flowise010.png)
+![](./img/flowise/flowise010.png)
 
 #### 10) Select Vector Store 클릭 후 Faiss 선택, 항목 입력 후 Upset 버튼 클릭
-![](/docs/llm/img/flowise/flowise011.png)
+![](./img/flowise/flowise011.png)
 
 #### 11) Test Retrieval 버튼 클릭후 테스트, Save Config 버튼 클릭
-![](/docs/llm/img/flowise/flowise012.png)
+![](./img/flowise/flowise012.png)
 
 #### 12) Chatflows 선택 후, Add New 버튼 클릭
-![](/docs/llm/img/flowise/flowise015.png)
+![](./img/flowise/flowise015.png)
 
 #### 13) 작성
-![](/docs/llm/img/flowise/flowise016.png)
+![](./img/flowise/flowise016.png)
 
-![](/docs/llm/img/flowise/flowise017.png)
+![](./img/flowise/flowise017.png)
 
-![](/docs/llm/img/flowise/flowise018.png)
+![](./img/flowise/flowise018.png)
 
 #### 14) streamlit으로 Flowise 연동해서 사용
 streamlit_app.py
@@ -609,7 +609,7 @@ if prompt := st.chat_input("What is up?"):
 
 ## 주택 청약 FAQ 챗봇
 
-![](/docs/llm/img/ollama/ollama023.png)
+![](./img/ollama/ollama023.png)
 
 ### 1. 환경설정
 
@@ -630,7 +630,7 @@ pip install -r requirements.txt
 
 [주택청약 pdf문서 다운로드 사이트](https://www.molit.go.kr/USR/policyData/m_34681/dtl.jsp?search=&srch_dept_nm=&srch_dept_id=&srch_usr_nm=&srch_usr_titl=Y&srch_usr_ctnt=&search_regdate_s=&search_regdate_e=&psize=10&s_category=&p_category=&lcmspage=1&id=4765)
 
-[주택청약 pdf문서](/docs/llm/data/★%202024%20주택청약%20FAQ.pdf)
+[주택청약 pdf문서](./data/★%202024%20주택청약%20FAQ.pdf)
 
 ### 2. 코드 작성
 
