@@ -17,44 +17,44 @@ permalink: /db/MongoDB
 
 #### windows 환경
 Try Community Edition의 Download 클릭
-![](/assets/img/mongodb/mongodb001.png)
+![](./img/mongodb/mongodb001.png)
 
 Select package 버튼 클릭
-![](/assets/img/mongodb/mongodb002.png)
+![](./img/mongodb/mongodb002.png)
 
 버전, 플랫폼 등 선택 후 다운로드
-![](/assets/img/mongodb/mongodb003.png)
+![](./img/mongodb/mongodb003.png)
 
 다운로드 받은 파일 실행
-![](/assets/img/mongodb/mongodb004.png)
+![](./img/mongodb/mongodb004.png)
 
 라이센스 허용  
-![](/assets/img/mongodb/mongodb005.png)
+![](./img/mongodb/mongodb005.png)
 
 Complete 기본으로 Next
-![](/assets/img/mongodb/mongodb006.png)
+![](./img/mongodb/mongodb006.png)
 
-![](/assets/img/mongodb/mongodb007.png)
+![](./img/mongodb/mongodb007.png)
 
-![](/assets/img/mongodb/mongodb008.png)
+![](./img/mongodb/mongodb008.png)
 
-![](/assets/img/mongodb/mongodb009.png)
+![](./img/mongodb/mongodb009.png)
 
-![](/assets/img/mongodb/mongodb010.png)
+![](./img/mongodb/mongodb010.png)
 
-![](/assets/img/mongodb/mongodb011.png)
+![](./img/mongodb/mongodb011.png)
 
 환경변수 설정으로 이동  
-![](/assets/img/mongodb/mongodb012.png)
+![](./img/mongodb/mongodb012.png)
 
 시스템 변수에 Path 선택 후 편집 클릭  
-![](/assets/img/mongodb/mongodb013.png)
+![](./img/mongodb/mongodb013.png)
 
 새로 만들기 클릭한 후,  C:\Program Files\MongoDB\Server\7.0\bin를 추가한다.
-![](/assets/img/mongodb/mongodb014.png)
+![](./img/mongodb/mongodb014.png)
 
 vscode나 터미널창이 열려있다면 닫았다가 다시 열어서 확인한다.
-![](/assets/img/mongodb/mongodb015.png)
+![](./img/mongodb/mongodb015.png)
 
 설치된 MongoDB Compass를 통해 접속 확인한다.
 #### macOS
@@ -70,46 +70,46 @@ brew services stop mongodb-community@7.0
 ```
 ### 2. Cloud
 mongodb를 aws, 애저, 구글 클라우드 같은 클라우드에 올려놓고 사용할수 있다. 이 서비스를 Atlas라고 함.
-![](/assets/img/mongodb/mongodb016.png)
+![](./img/mongodb/mongodb016.png)
 
 스토리지의 사이즈등 여러 정책에 따라 무료인 Shared, 사용량에 따라 요금을 부과하는 Serverless, 매달 일정 금액을 지불하는 Dedicated 등이 있다.
-![](/assets/img/mongodb/mongodb017.png)
+![](./img/mongodb/mongodb017.png)
 
 회원 등록
-![](/assets/img/mongodb/mongodb018.png)
+![](./img/mongodb/mongodb018.png)
 
 체크하고 Submit버튼 클릭
-![](/assets/img/mongodb/mongodb019.png)
+![](./img/mongodb/mongodb019.png)
 
 Welcome화면
-![](/assets/img/mongodb/mongodb020.png)
+![](./img/mongodb/mongodb020.png)
 
 사용 목적 등 간단한 설문조사에 답 선택 
-![](/assets/img/mongodb/mongodb021.png)
+![](./img/mongodb/mongodb021.png)
 
 Free, aws, Seoul 선택하고 Create 버튼 클릭
-![](/assets/img/mongodb/mongodb022.png)
+![](./img/mongodb/mongodb022.png)
 
 사용자 이름과 비밀번호 설정하고, mongodb접속 위치를 추가
-![](/assets/img/mongodb/mongodb023.png)
+![](./img/mongodb/mongodb023.png)
 
 설정완료 화면이 나온다.
-![](/assets/img/mongodb/mongodb024.png)
+![](./img/mongodb/mongodb024.png)
 
 샘플데이터를 로드하여 볼 수 있다.
-![](/assets/img/mongodb/mongodb025.png)
+![](./img/mongodb/mongodb025.png)
 
 로컬컴퓨터의 MongoDB Compass를 통해 접속하기 위해 CONNECT를 클릭한다.
-![](/assets/img/mongodb/mongodb026.png)
+![](./img/mongodb/mongodb026.png)
 
 Compass를 선택한다.
-![](/assets/img/mongodb/mongodb027.png)
+![](./img/mongodb/mongodb027.png)
 
 connection string 을 복사한다.
-![](/assets/img/mongodb/mongodb028.png)
+![](./img/mongodb/mongodb028.png)
 
 MongoDB Compass를 실행하고 Connection URI에 붙여넣고, \<username\>과 \<password\>를 수정하고 연결 테스트 한다.
-![](/assets/img/mongodb/mongodb029.png)
+![](./img/mongodb/mongodb029.png)
 
 
 ## MongoDB 개념 정리
@@ -135,23 +135,23 @@ MongoDB Compass를 실행하고 Connection URI에 붙여넣고, \<username\>과 
 	- local 데이터베이스 : 단일 서버에 대한 데이터를 저장
 	- config 데이터베이스 : 샤딩된 클러스터에 관한 각 샤드(shard) 정보를 저장  
 
-![](/assets/img/mongodb/mongodb30.jpg)
+![](./img/mongodb/mongodb30.jpg)
 
 ### 2. 문서 데이터 모델
 mongodb는 문서 기반 데이터 모델을 사용  
 데이터의 계층적 표현이 가능, 복잡한 조인 연산 없이도 하나의 문서 안에 모두 표현 가능
-![](/assets/img/mongodb/mongodb31.jpg)
+![](./img/mongodb/mongodb31.jpg)
 
 ### 3. JSON과 BSON 차이
 json 문서를 사용하지만 내부 저장시에는 이진 포맷으로 인코딩한 BSON문서로 변환되어 저장.    
 BSON 형식은 컴퓨터가 쉽게 이해할수 있는 형식이며, 검색 속도가 빠르고 json의 데이터 유형에 추가하여 날짜와 이진 데이터 유형을 지원한다.  
 MongoDB가 자동으로 처리해주기는 하지만 인코딩과 디코딩이 추가로 필요하다.
-![](/assets/img/mongodb/mongodb32.jpg)
+![](./img/mongodb/mongodb32.jpg)
 
 ### 4. MongoDB의 동적 스키마
 MongoDB는 동적 스키마를 가진다. 즉 미리 정해진 스키마가 존재하지 않는다는 의미이며, 이는 급격한 변화에 능동적으로 대응할수 있다는걸 의미.  
 같은 컬렉션 안에서도 서로 다른 스키마를 가질수 있다.
-![](/assets/img/mongodb/mongodb33.jpg)
+![](./img/mongodb/mongodb33.jpg)
 
 ### 5. MongoDB의 관계 표현
 관계형DB는 1:1, 1:N, M:N 관례를 외래키 참조 관계로 표현  
@@ -163,10 +163,10 @@ MongoDB는 외래키 개념이 없어 문서간의 연관관계를 다음 두가
   관계를 갖는 다른 문서의 키 필드 값을 참조키로 저장하는 정규화 형태  
   서로 다른 독립된 문서에 대한 _id 필드값을 외래키처럼 저장함으로써 관계를 표현  
 
-![](/assets/img/mongodb/mongodb34.jpg)
+![](./img/mongodb/mongodb34.jpg)
 
 ### 6. MongoDB완 관계형 데이터베이스 구조 비교
-![](/assets/img/mongodb/mongodb35.jpg)
+![](./img/mongodb/mongodb35.jpg)
 
 ## 쉘을 이용한 데이터베이스와 컬렉션 관리
 명령어 입력시 대소문자 구분함.
@@ -202,8 +202,8 @@ db.mycollection.stats()
 db.getCollectionInfos()    
 ```
 ### 2. 실습 예제 데이터베이스(cinemadb:회원,영화 컬렉션)
-![](/assets/img/mongodb/mongodb36.jpg)
-![](/assets/img/mongodb/mongodb37.jpg)
+![](./img/mongodb/mongodb36.jpg)
+![](./img/mongodb/mongodb37.jpg)
 
 ### 3. 컬렉션 생성 및 변경 : createCollection(),renameCollection()
 ```
@@ -225,10 +225,10 @@ db.createCollection("회원")
 ```
 
 ### 4. 몽고db 데이터 유형
-![](/assets/img/mongodb/mongodb38.jpg)
+![](./img/mongodb/mongodb38.jpg)
 
 ### 5. 컬렉션 문서 관리 명령문
-![](/assets/img/mongodb/mongodb39.jpg)
+![](./img/mongodb/mongodb39.jpg)
 
 ### 6. 컬렉션 문서 삽입 insert문
 _id필드는 명시적으로 정의하지 않으면 자동으로 ObjectId 자료형을 가진 값으로 채워진다.  
@@ -358,7 +358,7 @@ db.영화.find({등급:{$in:["A","C"]}})
 ```
 
 ### 10. $regex 연산자의 문자열패턴
-![](/assets/img/mongodb/mongodb40.jpg)
+![](./img/mongodb/mongodb40.jpg)
 
 ```
 //문서안에 내장된 문서에 접근시는 상위필드와 하위필드 사이 마침표(.)를 이용하여 연결
