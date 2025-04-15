@@ -14,7 +14,7 @@ permalink: /github_hosting
 ### 2. 해당 리파지토리 clone하여 html파일 등 작성하고 github에 올린다.
 
 ### 3. 해당 리파지토리 setting - Pages탭에서 브랜치를 선택하고 save
-![](/assets/img/git/github_hosting01.png)
+![](./img/git/github_hosting01.png)
 
 ### 4. https://아이디.github.io/ 으로 접속(적용될 때까지 시간이 몇분 소요됨)
 

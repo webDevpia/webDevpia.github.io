@@ -35,26 +35,26 @@ permalink: /db/erdcloud
 
 ### 팀(내프로필-팀에서 생성)  
 로그인 후 프로필을 선택하고 팀+ 를 클릭
-![erd](/assets/img/erd/erd_01.png)
+![erd](./img/erd/erd_01.png)
 
 팀이름 입력, 팀회원은 팀원의 아이디나 이메일 주소로 찾아서 선택하고 만들기 버튼 클릭
-![erd](/assets/img/erd/erd_02.png)
+![erd](./img/erd/erd_02.png)
 
 erd를 생성할 때 공유에 팀을 체크하고 만들어 놓은 팀을 선택한다.
-![erd](/assets/img/erd/erd_03.png)
+![erd](./img/erd/erd_03.png)
 
 수정시 해당팀을 선택하고 오른쪽 상단의 팀수정 버튼을 클릭
-![erd](/assets/img/erd/erd_04.png)
+![erd](./img/erd/erd_04.png)
 
 팀원을 추가하거나 팀삭제 버튼을 클릭해서 삭제할 수 있다.
-![erd](/assets/img/erd/erd_05.png)
+![erd](./img/erd/erd_05.png)
 
 ### ERD 작성
 관계 설정 : 부모테이블 클릭하고 자식테이블 클릭  
 #### 식별관계(실선)-부모테이블의 기본키를 자식테이블의 기본키로 사용  
 #### 비-식별관계(점선)-부모테이블의 기본키를 자식테이블의 외래키로 사용  
-![erd](/assets/img/erd/erd_06.png)
+![erd](./img/erd/erd_06.png)
 
 관계설정을 제거하려면 자식테이블 쪽의 외래키를 선택하고 해당 필드를 삭제하면 된다.
-![erd](/assets/img/erd/erd_07.png)
+![erd](./img/erd/erd_07.png)
 

@@ -33,8 +33,8 @@ git --version
 [github 사이트](https://github.com/)
 
 ## 3. git 작업순서
-![git](/assets/img/git/git_3_1.png)
-![git](/assets/img/git/git_3_2.png)
+![git](./img/git/git_3_1.png)
+![git](./img/git/git_3_2.png)
 
 ## 4. git 환경설정
 ```
@@ -178,7 +178,7 @@ git log --oneline --graph
 
 ```
 
-![git](/assets/img/git/git_10_1.png)
+![git](./img/git/git_10_1.png)
 
 ```
 # 브랜치 병합(main에서 작업해야함)
@@ -198,7 +198,7 @@ git branch -d 브랜치명
 git branch 브랜치명 커밋값(ffa3169)
 
 ```
-![git](/assets/img/git/git_10_2.png)
+![git](./img/git/git_10_2.png)
 
 ```
 # github에 개인 작업 브랜치 올리기
@@ -272,15 +272,15 @@ git push -f
 커밋 기록은 변경됩니다.  
 
 <b>github push 이전에 되돌리기</b>
-![git](/assets/img/git/git_6_1.png)
-![git](/assets/img/git/git_6_3.png)
-![git](/assets/img/git/git_6_2.png)
+![git](./img/git/git_6_1.png)
+![git](./img/git/git_6_3.png)
+![git](./img/git/git_6_2.png)
 
 <b>github push 이후에 되돌리기</b>
-![git](/assets/img/git/git_6_4.png)
-![git](/assets/img/git/git_6_5.png)
-![git](/assets/img/git/git_6_7.png)
-![git](/assets/img/git/git_6_6.png)
+![git](./img/git/git_6_4.png)
+![git](./img/git/git_6_5.png)
+![git](./img/git/git_6_7.png)
+![git](./img/git/git_6_6.png)
 
 ## 11. reflog
 로컬 저장소에서  HEAD의 업데이트 기록을 확인
@@ -330,61 +330,61 @@ github의 공개 저장소는 주소만 알면 누구나 접속하여 소스를 
 
 ### 1. 팀장 : github 리파지토리 생성
 리파지토리를 이름을 입력하고, Add a README file 항목에 체크, Add .gitignore는 python을 선택하여 생성해주자.
-![git](/assets/img/git/git_13_01.png)
+![git](./img/git/git_13_01.png)
 
 생성된 리파지토리를 확인한다.
-![git](/assets/img/git/git_13_02.png)
+![git](./img/git/git_13_02.png)
 
 ### 2. 팀장 : 팀원 초대
 Settings -> Access -> Collaborators 를 선택하고, Add people 버튼을 클릭한다.
-![git](/assets/img/git/git_13_03.png)
+![git](./img/git/git_13_03.png)
 
 추가할 팀원의 아이디를 검색하고 선택한다.
-![git](/assets/img/git/git_13_04.png)
+![git](./img/git/git_13_04.png)
 
 Add XXX to this repository 버튼을 클릭한다.
-![git](/assets/img/git/git_13_05.png)
+![git](./img/git/git_13_05.png)
 
 ### 3. 팀원 : 확인메일 수락처리
 github에 등록된 이메일 계정으로 로그인 후 메일을 확인하고 'View invitation' 버튼을 클릭한다.
-![git](/assets/img/git/git_13_06.png)
+![git](./img/git/git_13_06.png)
 
 'Accept invitation' 버튼을 클릭한다.
-![git](/assets/img/git/git_13_07.png)
+![git](./img/git/git_13_07.png)
 
 팀장의 리파지토리 사이트로 이동된다.
-![git](/assets/img/git/git_13_08.png)
+![git](./img/git/git_13_08.png)
 
 ### 4. 팀장, 팀원 : github 리파지토리 clone
 팀장의 리파지토리 사이트의 '<>Code'를 클릭하고 url 주소를 복사한다.
-![git](/assets/img/git/git_13_10.png)
+![git](./img/git/git_13_10.png)
 
 vscode의 EXPLORER 탭에서 'Clone Repository' 버튼을 클릭하고, 주소입력란이 나타나면 url 주소를 붙여넣기한다.
-![git](/assets/img/git/git_13_11_w.png)
+![git](./img/git/git_13_11_w.png)
 
 github의 리파지토리를 어디로 복사할지 경로를 선택한다. 선택한 경로 밑으로 리파지토리 이름의 폴더가 생성된다.
-![git](/assets/img/git/git_13_12_w.png)
+![git](./img/git/git_13_12_w.png)
 
-![git](/assets/img/git/git_13_13_w.png)
+![git](./img/git/git_13_13_w.png)
 
 ### 5. 팀장, 팀원 : 작업 후 push 전에 반드시 변경사항 가져와서(pull) 병합한 후 push 
 사용자1 : test1.txt 파일 작업 후, 변경 사항을 내려받고(pull) add, commit, push
-![git](/assets/img/git/git_13_14.png)
+![git](./img/git/git_13_14.png)
 
 사용자2 : test2.txt 파일 작업 후, 변경 사항을 내려받고(pull) add, commit, push
-![git](/assets/img/git/git_13_15.png)
+![git](./img/git/git_13_15.png)
 
 사용자2 : 사용자1이 작성했던 test1.txt의 내용을 수정하고, pull, add, commit, push
-![git](/assets/img/git/git_13_16.png)
+![git](./img/git/git_13_16.png)
 
 사용자1 : test1.txt의 내용을 수정하고, pull, add, commit
-![git](/assets/img/git/git_13_17.png)
+![git](./img/git/git_13_17.png)
 
-![git](/assets/img/git/git_13_18.png)
+![git](./img/git/git_13_18.png)
 
-![git](/assets/img/git/git_13_19.png)
+![git](./img/git/git_13_19.png)
 
-![git](/assets/img/git/git_13_20.png)
-![git](/assets/img/git/git_13_21.png)
+![git](./img/git/git_13_20.png)
+![git](./img/git/git_13_21.png)
 
-![git](/assets/img/git/git_13_22.png)
+![git](./img/git/git_13_22.png)

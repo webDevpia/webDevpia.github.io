@@ -11,23 +11,23 @@ permalink: /site/supabase
 # Supabase
 
 ## 1. 회원가입
-![](/assets/img/supabase/supabase01.png)
+![](./img/supabase/supabase01.png)
 
-![](/assets/img/supabase/supabase02.png)
+![](./img/supabase/supabase02.png)
 
-![](/assets/img/supabase/supabase03.png)
+![](./img/supabase/supabase03.png)
 
-![](/assets/img/supabase/supabase04.png)
+![](./img/supabase/supabase04.png)
 
-![](/assets/img/supabase/supabase05.png)
+![](./img/supabase/supabase05.png)
 
-![](/assets/img/supabase/supabase06.png)
+![](./img/supabase/supabase06.png)
 
-![](/assets/img/supabase/supabase07.png)
+![](./img/supabase/supabase07.png)
 
-![](/assets/img/supabase/supabase08.png)
+![](./img/supabase/supabase08.png)
 
-![](/assets/img/supabase/supabase09.png)
+![](./img/supabase/supabase09.png)
 
 
 ## 2. postgreSQL

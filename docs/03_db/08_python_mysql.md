@@ -13,7 +13,7 @@ permalink: /db/python_mysql
 ## 1. mysql
 
 ### 1. 샘플데이터 다운로드 후 실행하기
-[샘플데이터 다운로드](/assets/data/pub.sql)
+[샘플데이터 다운로드](./data/pub.sql)
 
 ### 2. 계정 생성 후 권한 설정하기
 

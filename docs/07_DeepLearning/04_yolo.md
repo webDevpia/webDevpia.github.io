@@ -23,21 +23,21 @@ permalink: /deeplearning/objectdetection
 
 - 이미지에서 하나의 객체 전체를 포함하는 가장 작은 직사각형
 
-![](/assets/img/yolo/object_detaction001.png)
+![](./img/yolo/object_detaction001.png)
 
 ## IOU(Intersection Over Union)
 
 - 실측값(Ground Truth)과 모델이 예측한 값이 얼마나 겹치는지를 나타내는 지표
-  ![](/assets/img/yolo/object_detaction002.png)
+  ![](./img/yolo/object_detaction002.png)
 
 - IOU가 높을수록 잘 예측한 모델
-  ![](/assets/img/yolo/object_detaction003.png)
+  ![](./img/yolo/object_detaction003.png)
 
 <br>
 
 - 예시
 
-  ![](/assets/img/yolo/object_detaction004.png)
+  ![](./img/yolo/object_detaction004.png)
 
 ## NMS(Non-Maximum Suppression, 비최댓값 억제)
 
@@ -48,7 +48,7 @@ permalink: /deeplearning/objectdetection
   2. 각 상자에 대해 다른 모든 상자와의 IOU를 계산
   3. 특정 임곗값을 넘는 상자는 제거
 
-  ![](/assets/img/yolo/object_detaction005.png)
+  ![](./img/yolo/object_detaction005.png)
 ## 모델 성능 평가
 
 ### 정밀도(Precision)와 재현율(Recall)
@@ -83,7 +83,7 @@ permalink: /deeplearning/objectdetection
 - 예를 들어, 모델이 보행자를 탐지하고 있으면 특별한 이유없이 차를 세우더라도 어떤 보행자도 놓치지 않도록 재현율을 높여야 함
 - 모델이 투자 기회를 탐지하고 있다면 일부 기회를 놓치게 되더라도 잘못된 기회에 돈을 거는 일을 피하기 위해 정밀도를 높여야 함
 
-![](/assets/img/yolo/object_detaction006.png)
+![](./img/yolo/object_detaction006.png)
 
 
 ### AP (Average Precision, 평균 정밀도) 와 mAP(mean Average Precision)
@@ -99,7 +99,7 @@ permalink: /deeplearning/objectdetection
   - 최소 2개 이상의 객체를 탐지하는 대회인 PASCAL Visual Object Classes와 Common Objects in Context(COCO)에서 mAP가 사용됨
   - COCO 데이터셋이 더 많은 클래스를 포함하고 있기 때문에 보통 Pascal VOC보다 점수가 더 낮게 나옴
 
-    ![](/assets/img/yolo/object_detaction007.png)
+    ![](./img/yolo/object_detaction007.png)
 
 ## 데이터셋
 
@@ -112,7 +112,7 @@ permalink: /deeplearning/objectdetection
 - ROI에 대한 27,450개의 Annotation이 존재
 - 이미지당 2.4개의 객체 존재
 
-  ![](/assets/img/yolo/object_detaction008.png)
+  ![](./img/yolo/object_detaction008.png)
 
 
 ### COCO Dataset
@@ -123,12 +123,12 @@ permalink: /deeplearning/objectdetection
       
 - https://cocodataset.org/
 
-![](/assets/img/yolo/object_detaction009.png)
+![](./img/yolo/object_detaction009.png)
 
 
 ## 객체 탐지 (Object Detection)의 역사
 
-![](/assets/img/yolo/object_detaction010.png)
+![](./img/yolo/object_detaction010.png)
 
 * RCNN (2013)
   - Rich feature hierarchies for accurate object detection and semantic segmentation (https://arxiv.org/abs/1311.2524)

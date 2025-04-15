@@ -18,7 +18,7 @@ permalink: /deeplearning/plant
 이 중에서 Potato_healthy로 분류된 경우가 질병이 없는 Potato를 의미.  
 
 ### 분류 클래스와 각 클래스별 데이터수, 데이터 예시
-![](/assets/img/plant/plant001.png)
+![](./img/plant/plant001.png)
 
 두 가지의 모델을 구축한 후 성능 평가  
 CNN 기본 구조를 이용한 베이스 라인 모델  
@@ -28,11 +28,11 @@ CNN 기본 구조를 이용한 베이스 라인 모델
 
 ### 학습 데이터 이해
 학습에 사용할 데이터는 각 이미지의 분류 클래스가 폴더로 구분되어 있는 형태로 각 폴더 안에는 Train, Validation, Test 데이터가 구별되지 않은 상태로 저장되어 있음.
-![](/assets/img/plant/plant002.png)
+![](./img/plant/plant002.png)
 
 ### 데이터 분리
 Train, Validation, Test 데이터로 나누고 각각의 클래스에 해당하는 폴더에 저장
-![](/assets/img/plant/plant003.png)
+![](./img/plant/plant003.png)
 
 데이터 파일을 구글 드라이브에서 다운로드 받기 위한 함수 정의  
 다운로드 받은 파일을 저장할 폴더 생성 및 기존 폴더가 있을 경우 삭제 후 생성  
@@ -376,7 +376,7 @@ torch.save(base,'baseline.pt')
 미리 학습된 모델은 Pre-Trained Model, 이 모델을 조정하는 과정을 Fine-Tuning이라함.  
 이러한 기법을 통틀어서 전이학습(Transfer Learning)이라고함.
 
-![](/assets/img/plant/plant004.png)
+![](./img/plant/plant004.png)
 
 ### Transfer Learning을 위한 준비
 ```py
