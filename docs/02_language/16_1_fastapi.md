@@ -1,16 +1,16 @@
 ---
-title: fastApi
+title: fastApi 1
 layout: default
-parent: Language
+parent: fastApi
 nav_order: 13
-permalink: /language/fastapi
+permalink: /language/fastapi_01
 # nav_exclude: true
 # search_exclude: true
 ---
 
 # 1. FastAPI
 
-## 
+## 1. 실습 환경 구축
 
 ### 1. 가상환경 설정 및 FastAPI 설치
 
@@ -109,6 +109,7 @@ http://127.0.0.1:8081/docs로 접속해서 결과 확인
 ```py
 
 ```
+
 
 
 
