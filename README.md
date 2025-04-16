@@ -2,6 +2,7 @@
 layout: home
 title: Jekyll Gitbook Theme
 permalink: /
+cover: /assets/dinosaur.gif
 ---
 
 Make Jelly site have a GitBook look!
