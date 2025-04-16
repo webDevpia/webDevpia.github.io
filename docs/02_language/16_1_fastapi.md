@@ -1,7 +1,7 @@
 ---
 title: FastAPI 01
 layout: default
-parent: FastAPI
+parent: Language/FastAPI
 nav_order: 1
 permalink: /language/fastapi_01
 has_children: false

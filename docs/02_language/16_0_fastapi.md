@@ -1,14 +1,12 @@
 ---
-title: FastAPI
 layout: default
+title: FastAPI
 parent: Language
-nav_order: 13
-permalink: /language/fastapi
+nav_order: 16
 has_children: true
-has_toc: true
-# nav_exclude: true
-# search_exclude: true
+permalink: /language/fastapi
 ---
+
 # FastAPI
 {: .no_toc }
 
