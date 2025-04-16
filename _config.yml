@@ -1,8 +1,8 @@
 # Configurations
-title:            Jekyll Gitbook
-longtitle:        Jekyll Gitbook
-author:           HE Tao
-email:            sighingnow@gmail.com
+title:            부경대학교 스마트아카데미 6기
+longtitle:        부경대학교 스마트아카데미 6기
+author:           shimseonjo
+email:            shimseonjo@gmail.com
 description: >
   Build Jekyll site with the GitBook style.
 
