@@ -15,7 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 title: Digital Smart Academy
 description: 부경대학교 디지털 스마트 아카데미
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/" # the subpath of your site, e.g. /blog
 #url: "https://just-the-docs.com" # the base hostname & protocol for your site, e.g. http://example.com
 #repository: just-the-docs/just-the-docs # for github-metadata
 
@@ -184,7 +184,7 @@ plugins:
 kramdown:
   syntax_highlighter_opts:
     block:
-      line_numbers: false
+      line_numbers: true
 
 compress_html:
   clippings: all
