@@ -1,9 +1,9 @@
 ---
-title: FastAPI 01
+title: FastAPI
 layout: default
-parent: Language/FastAPI
-nav_order: 1
-permalink: /language/fastapi_01
+parent: Language
+nav_order: 16
+permalink: /language/fastapi
 has_children: false
 # nav_exclude: true
 # search_exclude: true
@@ -13,7 +13,7 @@ has_children: false
 
 ## 1. 실습 환경 구축
 
-### 1. 가상환경 설정 및 FastAPI 설치
+### [](#header-3)Header 3
 
 ```bash
 conda create --name fastapi
