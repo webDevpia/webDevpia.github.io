@@ -1,5 +1,5 @@
 ---
-title: fastApi
+title: FastAPI
 layout: default
 parent: Language
 nav_order: 13

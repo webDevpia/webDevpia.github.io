@@ -1,8 +1,8 @@
 ---
-title: fastApi 1
+title: fastApi 01
 layout: default
-parent: fastApi
-nav_order: 13
+parent: FastAPI
+nav_order: 1
 permalink: /language/fastapi_01
 # nav_exclude: true
 # search_exclude: true
@@ -49,10 +49,6 @@ http://127.0.0.1:8081/docs로 접속해서 결과 확인
 
 ![](./img/fastapi/fastapi001.png)
 
-
-```py
-
-```
 
 ```py
 
