@@ -2,8 +2,8 @@
 layout: default
 title: Customization
 nav_order: 80
-# nav_exclude: true
-# search_exclude: true
+nav_exclude: true
+search_exclude: true
 ---
 
 # Customization

@@ -137,7 +137,7 @@ drwxr-xr-x   2 root root 4096 Apr 18  2022 boot
 ### chmod : 파일 권한 변경
 
 - 숫자를 사용하는 방법
-![권한변경](./img/img002.png)
+![권한변경](./img/linux/img002.png)
 
 ```bash
 rwxrwxrwx = 777
@@ -202,7 +202,7 @@ id # 계정확인
 - 표준 스트림 흐름을 바꿔줄 수 있다.
     - \> , <  을 사용함
     - 주로 명령어 표준 출력을 화면이 아닌 파일에 쓸 때
-    ![](/img/img003.png)
+    ![](./img/linux/img003.png)
 
 ```bash
 
@@ -220,7 +220,7 @@ ls >> files.txt
 ### 파이프(pipe)
 
 - 두 프로세스 사이에서 한 프로세스의 출력 스트림을 또다른 프로세스의 입력 스트림으로 사용할 때 사용됨
-![](/img/img004.png)
+![](./img/linux/img004.png)
 
 ```bash
 ls | grep files.txt
