@@ -8,7 +8,7 @@ permalink: /deeplearning
 # search_exclude: true
 ---
 
-# AI
+# DeepLearning
 {: .no_toc }
 
 

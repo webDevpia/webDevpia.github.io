@@ -12,6 +12,7 @@ permalink: /langchain/langchain_proj
 ## llm 투자보고서
 
 ### 1. llm 연결 테스트 및 프롬프트 작성
+
 ```python
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
