@@ -1,9 +1,10 @@
 ---
-title: fastApi 01
+title: FastAPI 01
 layout: default
 parent: FastAPI
 nav_order: 1
 permalink: /language/fastapi_01
+has_children: false
 # nav_exclude: true
 # search_exclude: true
 ---
