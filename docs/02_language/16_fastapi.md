@@ -40,11 +40,10 @@ app = FastAPI()
 # Operation은 GET, POST, PUT/PATCH, DELETE등의 HTTP 메소드임. 
 @app.get("/")
 async def root():
-{% raw %}
-``` 
-독스트링 작성
-```
-{% endraw %}
+    """
+    루트 경로('/')에 대한 GET 요청을 처리하는 함수입니다.
+    간단한 JSON 응답을 반환합니다.
+    """
     return {"message": "Hello World"}
 ```
 
@@ -58,10 +57,6 @@ http://127.0.0.1:8081/docs로 접속해서 결과 확인
 
 ![](./img/fastapi/fastapi001.png)
 
-
-```py
-
-```
 
 ```py
 
