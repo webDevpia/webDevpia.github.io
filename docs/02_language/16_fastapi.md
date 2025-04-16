@@ -18,11 +18,8 @@ has_children: false
 {:toc}
 
 ---
-# 1. FastAPI
 
-## 1. 실습 환경 구축
-
-### [](#header-3)Header 3
+## 실습 환경 구축
 
 ```bash
 conda create --name fastapi
@@ -30,7 +27,7 @@ conda activate fastapi
 pip install fastapi
 ```
 
-### 2. 
+### 
 ```py
 # FastAPI import
 from fastapi import FastAPI
@@ -43,9 +40,11 @@ app = FastAPI()
 # Operation은 GET, POST, PUT/PATCH, DELETE등의 HTTP 메소드임. 
 @app.get("/")
 async def root():
-``` 독스트링 작성
-
+{% raw %}
+``` 
+독스트링 작성
 ```
+{% endraw %}
     return {"message": "Hello World"}
 ```
 
