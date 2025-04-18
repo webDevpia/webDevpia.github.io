@@ -1,3 +1,13 @@
+---
+title: Jinja
+layout: default
+parent: Language
+nav_order: 17
+permalink: /language/jinja
+has_children: false
+# nav_exclude: true
+# search_exclude: true
+---
 # Jinja 템플릿 엔진 기초 가이드
 
 ## 개요
