@@ -155,7 +155,7 @@ def index():
 템플릿 파일 (index.html):
 
 ```html
-<!DOCTYPE html>
+ {% raw %}<!DOCTYPE html>
 <html>
 <head>
     <title>{{ title }}</title>
@@ -163,12 +163,12 @@ def index():
 <body>
     <h1>사용자 목록</h1>
     <ul>
-    {% raw %}{% for user in users %}{% endraw %}
-        <li>{% raw %}{{ user }}{% endraw %}</li>
-    {% raw %}{% endfor %}{% endraw %}
+   {% for user in users %}
+        <li>{{ user }}</li>
+   {% endfor %}
     </ul>
 </body>
-</html>
+</html>{% endraw %}
 ```
 
 ## 정리
