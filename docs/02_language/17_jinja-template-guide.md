@@ -72,9 +72,7 @@ Jinja의 기본 구분 기호(delimiters)는 다음과 같습니다:
 {% endraw %}
 
 ```html
-{% raw %}
-<h1>안녕하세요, {{ user_name }}님!</h1>
-{% endraw %}
+{% raw %}<h1>안녕하세요, {{ user_name }}님!</h1>{% endraw %}
 ```
 
 ### 2. 제어 구조
@@ -84,25 +82,21 @@ Jinja는 다양한 제어 구조를 지원합니다:
 #### For 루프
 
 ```html
-{% raw %}
-<ul>
+{% raw %}<ul>
 {% for user in users %}
     <li>{{ user.username }}</li>
 {% endfor %}
-</ul>
-{% endraw %}
+</ul>{% endraw %}
 ```
 
 #### If 조건문
 
 ```html
-{% raw %}
-{% if user.is_authenticated %}
+{% raw %}{% if user.is_authenticated %}
     <p>환영합니다, {{ user.username }}!</p>
 {% else %}
     <p>로그인해주세요.</p>
-{% endif %}
-{% endraw %}
+{% endif %}{% endraw %}
 ```
 
 ### 3. 필터
@@ -110,11 +104,9 @@ Jinja는 다양한 제어 구조를 지원합니다:
 필터는 파이프(`|`) 기호를 사용하여 변수의 출력을 수정할 수 있습니다:
 
 ```html
-{% raw %}
-{{ name|capitalize }}
+{% raw %}{{ name|capitalize }}
 {{ list|join(', ') }}
-{{ text|truncate(100) }}
-{% endraw %}
+{{ text|truncate(100) }}{% endraw %}
 ```
 
 ### 4. 주석
@@ -122,9 +114,7 @@ Jinja는 다양한 제어 구조를 지원합니다:
 주석은 출력에 포함되지 않습니다:
 
 ```html
-{% raw %}
-{# 이 주석은 HTML 출력에 포함되지 않습니다 #}
-{% endraw %}
+{% raw %}{# 이 주석은 HTML 출력에 포함되지 않습니다 #}{% endraw %}
 ```
 ## 사용 예제
 
