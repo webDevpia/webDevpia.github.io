@@ -223,7 +223,31 @@ async def update_item_mt(item_id: int, item: Item, user: User):
 uvicorn Requests.main_rbody:app --port=8081 --reload
 ```
 
-#### javascript기반 Requests Body 적용
+```json
+{
+    "name": "Foo",
+    "description": "An optional description",
+    "price": 45.2,
+    "tax": 3.5
+}
+```
+
+```json
+{
+    "item": {
+        "name": "Foo",
+        "description": "The pretender",
+        "price": 42.0,
+        "tax": 3.2
+    },
+    "user": {
+        "username": "dave",
+        "full_name": "Dave Grohl"
+    }
+}
+```
+
+javascript기반 Requests Body 적용. 
 
 static/rbody.html
 
@@ -350,6 +374,7 @@ async def update_item_mt(item_id: int, item: Item, user: User):
 uvicorn Requests.main_rbody_js:app --port=8081 --reload
 ```
 
+
 ### Form
 
 HTML Form Element를 이용해서 Post로 Request Body를 전송하는 경우 FastAPI에서 Form()으로 처리  
@@ -357,7 +382,10 @@ HTML Form Element를 이용해서 Post로 Request Body를 전송하는 경우 Fa
 여러 개의 input 값들을 한번에 처리할 수도 있지만, 이를 위해서는 Form()과 Pydantic을 classmethod로 결합해야 함  
 
  ![](./img/fastapi/fastapi006.png)
+
  ![](./img/fastapi/fastapi007.png)
+
+
 Requests/main_form.py
 
 ```py
@@ -432,6 +460,7 @@ uvicorn Requests.main_rbody_js:app --port=8081 --reload
 FastAPI의 Request 객체는 HTTP Request에 대한 대부분의 정보를 다 가지고 있음. 
 
  ![](./img/fastapi/fastapi008.png)
+
  ![](./img/fastapi/fastapi009.png)
 
 Requests/main_request.py
@@ -496,18 +525,129 @@ async def create_item_form(request: Request):
 uvicorn Requests.main_request:app --port=8081 --reload
 ```
 
-#### 테스트는 Thunder Client로 진행
+테스트는 Thunder Client로 진행
 
  ![](./img/fastapi/fastapi010.png)
+
  ![](./img/fastapi/fastapi011.png)
 
+
 ## FastAPI Response
+http Response는 clinet Request에 따른 serve에서 내려 보내는 메시지   
+요청 Request의 처리 상태, 여러 메타정보, 그리고 Content 데이터를 담고 있음
+
+ ![](./img/fastapi/fastapi012.png)
+
+ FastAPI Response Class 유형
+
+ ![](./img/fastapi/fastapi013.png)
+
+Responses/main_response.py
 
 ```py
+from fastapi import FastAPI, Form, status
+from fastapi.responses import (
+    JSONResponse,
+    HTMLResponse,
+    RedirectResponse
+)
 
+from pydantic import BaseModel
+
+app = FastAPI()
+
+#response_class는 default가 JSONResponse. response_class가 HTMLResponse일 경우 아래 코드는?
+@app.get("/resp_json/{item_id}", response_class=JSONResponse)
+async def response_json(item_id: int, q: str | None = None):
+    return JSONResponse(content={"message": "Hello World", 
+                                 "item_id": item_id,
+                                 "q": q}, status_code=status.HTTP_200_OK)
+
+
+# HTML Response
+@app.get("/resp_html/{item_id}", response_class=HTMLResponse)
+async def response_html(item_id: int, item_name: str | None = None):
+    html_str = f'''
+    <html>
+    <body>
+        <h2>HTML Response</h2>
+        <p>item_id: {item_id}</p>
+        <p>item_name: {item_name}</p>
+    </body>
+    </html>
+    '''
+    return HTMLResponse(html_str, status_code=status.HTTP_200_OK)
+
+
+# Redirect(Get -> Get)
+@app.get("/redirect")
+async def redirect_only(comment: str | None = None):
+    print(f"redirect {comment}")
+    
+    return RedirectResponse(url=f"/resp_html/3?item_name={comment}")
+
+# Redirect(Post -> Get)
+@app.post("/create_redirect")
+async def create_item(item_id: int = Form(), item_name: str = Form()):
+    print(f"item_id: {item_id} item name: {item_name}")
+
+    return RedirectResponse(url=f"/resp_html/{item_id}?item_name={item_name}"
+                            , status_code=status.HTTP_302_FOUND)
+
+
+class Item(BaseModel):
+    name: str
+    description: str
+    price: float
+    tax: float | None = None
+
+# Pydantic model for response data
+class ItemResp(BaseModel):
+    name: str
+    description: str
+    price_with_tax: float
+
+# reponse_model
+@app.post("/create_item/", response_model=ItemResp
+          , status_code=status.HTTP_201_CREATED)
+async def create_item_model(item: Item):
+    item_dict = item.model_dump
+    if item.tax:
+        price_with_tax = item.price + item.tax
+    else:
+        price_with_tax = item.price
+    
+    item_resp = ItemResp(
+        name=item.name,
+        description=item.description,
+        price_with_tax=price_with_tax
+    )
+    # 반드시 response_model로 정의된 pydantic model을 반환. 
+    return item_resp
+```
+
+
+```bash
+uvicorn Responses.main_response:app --port=8081 --reload
+```
+
+```json
+{
+    "name": "Foo",
+    "description": "An optional description",
+    "price": 45.2,
+    "tax": 3.5
+}
 ```
 
 ## 템플릿 엔진과 정적 파일(Static file) 다루기
+html 등의 태그 기반의 마크업등은 다양한 표현 방식을 제공하면서 길고 복잡한 형태의 파일로 구성.  
+Template 엔진은 표현을 위한 Frontend, 로직과 데이터 핸들링을 위한 Backend 처리를 쉽게 분리할 수 있게 해줌.  
+유연한 동적 Content 생성, 개발팀과 Designer의 역활을 분리, 소스코드 모듈화 및 재사용성 증대등의 다양한 장점을 지원
+
+![](./img/fastapi/fastapi014.png)
+
+[jinja 문법 기본](jinja-template-guide.md)
 
 ```py
 
@@ -556,6 +696,43 @@ uvicorn Requests.main_request:app --port=8081 --reload
 
 ```
 
+## Blog 애플리케이션 개발하기 - 비동기(Asynchronous) DB처리
+
+```py
+
+```
+
+## FastAPI Exception Handler
+
+```py
+
+```
+
+## FastAPI Middleware
+
+```py
+
+```
+
+## Blog 애플리케이션 개발하기 - Login
+
+```py
+
+```
+
+## Cookie와 Signed Cookie 기반의 FastAPI Session Middleware
+
+```py
+
+```
+
+## Blog 애플리케이션 개발하기 - SessionMiddleware 적용
+
+```py
+
+```
+## Blog 애플리케이션 개발하기 - Redis 기반 Session 적용
+
 ```py
 
 ```
@@ -563,35 +740,3 @@ uvicorn Requests.main_request:app --port=8081 --reload
 ```py
 
 ```
-
-```py
-
-```
-
-```py
-
-```
-
-```py
-
-```
-
-```py
-
-```
-
-```py
-
-```
-
-```py
-
-```
-
-
-
-
-
-
-
-
