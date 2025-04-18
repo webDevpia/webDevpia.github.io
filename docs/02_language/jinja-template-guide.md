@@ -21,6 +21,8 @@ Jinja 템플릿은 다음과 같은 요소로 구성됩니다:
 
 Jinja의 기본 구분 기호(delimiters)는 다음과 같습니다:
 
-{% raw %}{% ... %}{% endblock %} - **문장(Statements)** - 제어 구조(for 루프, if 조건문 등)
-{% raw %}{{ ... }}{% endblock %} - **표현식(Expressions)** - 출력으로 인쇄될 표현식
-{% raw %}{# ... #}{% endblock %} - **주석(Comments)** - 템플릿 출력에 포함되지 않는 주석
+{% raw %}
+{% ... %} - **문장(Statements)** - 제어 구조(for 루프, if 조건문 등)
+{{ ... }} - **표현식(Expressions)** - 출력으로 인쇄될 표현식
+{# ... #}- **주석(Comments)** - 템플릿 출력에 포함되지 않는 주석
+{% endblock %} 
