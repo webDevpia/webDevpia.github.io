@@ -881,11 +881,119 @@ h1 {
 
 ## FastAPI의 APIRouter
 
-```py
+`Router/main_org.py'
 
+```py
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Item(BaseModel):
+    name: str
+    description: str = None
+    price: float
+    tax: float = None
+
+@app.get("/item/{item_id}")
+async def read_item(item_id: int):
+    return {"item_id": item_id}
+
+@app.post("/item")
+async def create_item(item: Item):
+    return item
+
+@app.put("/item/{item_id}")
+async def update_item(item_id: int, item: Item):
+    return {"item_id": item_id, "item": item}
+
+@app.get("/users/")
+async def read_users():
+    return [{"username": "Rickie"}, {"username": "Martin"}]
+
+
+@app.get("/users/me")
+async def read_user_me():
+    return {"username": "currentuser"}
+
+
+@app.get("/users/{username}")
+async def read_user(username: str):
+    return {"username": username}
+```
+
+`Router/main.py'
+
+```py
+from fastapi import FastAPI
+from routes import item, user
+
+app = FastAPI()
+
+app.include_router(item.router)
+app.include_router(user.router)
+```
+
+`Router/routes/item.py'
+
+```py
+from fastapi import APIRouter
+from pydantic import BaseModel
+
+router = APIRouter(prefix="/item", tags=["item"])
+
+class Item(BaseModel):
+    name: str
+    description: str = None
+    price: float
+    tax: float = None
+
+@router.get("/{item_id}")
+async def read_item(item_id: int):
+    return {"item_id": item_id}
+
+@router.post("/")
+async def create_item(item: Item):
+    return item
+
+@router.put("/{item_id}")
+async def update_item(item_id: int, item: Item):
+    return {"item_id": item_id, "item": item}
+```
+
+`Router/routes/user.py'
+
+```py
+from fastapi import APIRouter
+
+router = APIRouter(prefix="/user", tags=["user"])
+
+@router.get("/")
+async def read_users():
+    return [{"username": "Rickie"}, {"username": "Martin"}]
+
+@router.get("/me")
+async def read_user_me():
+    return {"username": "currentuser"}
+
+@router.get("/{username}", tags=["users"])
+async def read_user(username: str):
+    return {"username": username}
 ```
 
 ## Pydantic
+
+** 다양하고 빠른 Validation 수행 **
+데이터 타입 검증 및 데이터 값에 대한 검증 수행  
+정규식 지원 및 다양한 내장 검증 로직 제공  
+Core 검증 로직은 Rust로 제작되어 가장 빠른 파이썬 데이터 검증 라이브러리  
+
+** Serialization 지원 **
+쉽게 Json이나 Dict 형태로 Serialization 수행  
+
+** 다양한 Echo 시스템에서 활용되며 문서화 시스템에서 지원 **
+FastAPI, HuggingFace, LangChain
+
 
 ```py
 
