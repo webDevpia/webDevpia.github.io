@@ -1,9 +1,9 @@
 ---
-title: LM
+title: LM Studio
 layout: default
 parent: LLM
 nav_order: 1
-permalink: /llm/ollama
+permalink: /llm/lmstudio
 # nav_exclude: true
 # search_exclude: true
 --- 
