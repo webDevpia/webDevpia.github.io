@@ -107,11 +107,11 @@ http://127.0.0.1:8081/docs에 접속하면 Swagger UI를 통해 자동 생성된
 
 ![](./img/fastapi/fastapi001.png)
 
-	GET은 데이터를 요청할 때,
-	POST는 데이터를 생성할 때,
-	PUT, PATCH는 데이터를 수정할 때,
-	DELETE는 데이터를 삭제할 때,
-	HEAD는 데이터의 존재 여부만 확인.
+	**GET**은 데이터를 요청할 때,
+	**POST**는 데이터를 생성할 때,
+	**PUT**, **PATCH**는 데이터를 수정할 때,
+	**DELETE**는 데이터를 삭제할 때,
+	**HEAD**는 데이터의 존재 여부만 확인.
 
 
 ### Swagger UI를 이용한 동작 확인
@@ -139,13 +139,13 @@ FastAPI는 Path Parameter, Query Parameter, Request Body, Form Fields, Header, C
 
 ```py
 from fastapi import FastAPI
-from enum import Enum
 
 app = FastAPI()
 
 # http://localhost:8081/items/3
 # decorator에 path값으로 들어오는 문자열중에 
 # format string { }로 지정된 변수가 path parameter
+
 @app.get("/items/{item_id}")
 # 수행 함수 인자로 path parameter가 입력됨. 
 # 함수 인자의 타입을 지정하여 path parameter 타입 지정.
@@ -1032,15 +1032,15 @@ async def read_user(username: str):
 
 ## Pydantic
 
-** 다양하고 빠른 Validation 수행 **
-데이터 타입 검증 및 데이터 값에 대한 검증 수행  
+**다양하고 빠른 Validation 수행**  
+데이터 타입 검증 및 데이터 값에 대한 검증 수행    
 정규식 지원 및 다양한 내장 검증 로직 제공  
 Core 검증 로직은 Rust로 제작되어 가장 빠른 파이썬 데이터 검증 라이브러리  
 
-** Serialization 지원 **
+**Serialization 지원**  
 쉽게 Json이나 Dict 형태로 Serialization 수행  
 
-** 다양한 Echo 시스템에서 활용되며 문서화 시스템에서 지원 **
+**다양한 Echo 시스템에서 활용되며 문서화 시스템에서 지원**  
 FastAPI, HuggingFace, LangChain
 
 `Pydantic/pydantic_01.py`
