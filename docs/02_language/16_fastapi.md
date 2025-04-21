@@ -1716,10 +1716,478 @@ finally:
 ```
 
 ## Blog 애플리케이션 개발하기
+  
+**API 명세서**  
+![](./img/fastapi/fastapi015.png)
 
-```py
+**Application 모듈 디렉토리 구조**  
+
+![](./img/fastapi/fastapi016.png)
+
+```sql
+create database blog_db;
+
+drop table if exists blog;
+
+create table blog_db.blog
+(id integer auto_increment primary key,
+title varchar(200) not null,
+author varchar(100) not null,
+content varchar(4000) not null,
+image_loc varchar(300) null,
+modified_dt datetime not null
+);
+
+truncate table blog;
+
+insert into blog(title, author, content, modified_dt)
+values ('FastAPI는 어떤 장점이 있는가?', '둘리', 
+'FastAPI는 Python을 사용한 웹 애플리케이션 및 API 개발을 위한 현대적인 프레임워크로, 빠른 성능과 쉬운 사용성, 자동 문서화, 그리고 모던한 설계가 주요 장점입니다. \n
+비동기 I/O 기능을 활용하여 높은 성능을 자랑하며, Python의 타입 힌트를 적극 활용해 타입 검사와 코드 자동 완성이 뛰어나 개발자가 실수를 줄이고 생산성을 높일 수 있습니다. \n
+또한, 자동으로 API 문서를 생성하고 유지해주어 개발자가 인터랙티브한 문서를 쉽게 제공할 수 있습니다. \n
+최신 웹 표준과 기술을 반영한 설계로 확장성과 유지보수성이 뛰어나며, 빠르게 성장하는 커뮤니티와 생태계를 통해 다양한 플러그인과 확장 기능을 지원받을 수 있습니다.'
+, now());
+
+insert into blog(title, author, content, modified_dt)
+values ('FastAPI 주요 요소는 무엇인가', '고길동', 
+'FastAPI의 주요 구성 요소에는 클라이언트로부터 받은 HTTP 요청을 처리하는 Request 객체와 서버에서 클라이언트로 보내는 HTTP 응답을 생성하는 Response 객체가 포함됩니다.\n
+ 또한, 경로와 경로 동작을 정의하여 API 엔드포인트를 설정하고, 의존성 주입을 통해 코드의 모듈화와 재사용성을 높일 수 있습니다.\n
+ 요청 바디는 Pydantic 모델을 사용해 자동으로 유효성 검사되며, 경로 및 쿼리 매개변수로 API 요청에서 전달되는 데이터를 처리합니다. \n
+ FastAPI는 OpenAPI와 JSON Schema를 기반으로 API 문서를 자동 생성하며, Swagger UI와 ReDoc을 통해 실시간으로 API를 탐색하고 테스트할 수 있는 기능을 제공합니다.\n
+ 템플릿 렌더링 기능을 통해 HTML 페이지를 동적으로 생성할 수 있어, API뿐만 아니라 전체 웹 애플리케이션도 쉽게 구축할 수 있습니다.'
+, now());
+
+insert into blog(title, author, content, modified_dt)
+values ('FastAPI를 어떻게 사용하면 좋을까요?', '도우넛', 
+'FastAPI는 빠른 성능과 간단한 사용성 덕분에 다양한 분야에서 널리 사용되고 있습니다.\n
+FastAPI는 고성능 API 서버 구축, 머신 러닝 모델 서빙, 마이크로서비스 아키텍처, 실시간 데이터 처리 애플리케이션, 백엔드 API 서버, 그리고 CRUD 애플리케이션 개발 등 다양한 분야에서 사용됩니다.\n
+특히, 비동기 처리를 통한 빠른 성능과 자동 문서화 기능 덕분에 실시간 데이터 처리나 챗봇, IoT 애플리케이션 같은 응답 속도가 중요한 프로젝트에 적합합니다.\n
+또한, 웹 애플리케이션의 백엔드 API 서버로 사용되거나, Pydantic과 SQLAlchemy 같은 라이브러리와 결합해 CRUD 애플리케이션을 빠르고 효율적으로 개발할 수 있습니다.\n
+FastAPI는 다양한 규모와 유형의 프로젝트에서 성능과 개발 효율성을 높이는 데 큰 역할을 합니다.'
+, now());
+
+COMMIT;
+
+/* connection 모니터링 스크립트. root로 수행 필요. */
+select * from sys.session where db='blog_db' order by conn_id;
+```
+
+`Blog_DB_Handling/.env`
+
+```env
+DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
 
 ```
+`Blog_DB_Handling/main.py`
+
+```py
+from fastapi import FastAPI
+from routes import blog
+
+app = FastAPI()
+app.include_router(blog.router)
+```
+
+`Blog_DB_Handling/utils/util.py`
+
+```py
+def truncate_text(text, limit=150) -> str:
+    if text is not None:
+        if len(text) > limit:
+            truncated_text = text[:limit] + "...."
+        else:
+            truncated_text = text
+        return truncated_text
+    return None
+
+def newline_to_br(text_newline: str) -> str:
+    if text_newline is not None:
+        return text_newline.replace('\n', '<br>')
+    return None
+```
+
+`Blog_DB_Handling/routes/blog.py`
+
+```py
+from fastapi import APIRouter, Request, Depends, Form, status
+from fastapi.responses import RedirectResponse
+from fastapi.exceptions import HTTPException
+from fastapi.templating import Jinja2Templates
+from db.database import direct_get_conn, context_get_conn
+from sqlalchemy import text, Connection
+from sqlalchemy.exc import SQLAlchemyError
+from schemas.blog_schema import Blog, BlogData
+from utils import util
+
+
+
+# router 생성
+router = APIRouter(prefix="/blogs", tags=["blogs"])
+# jinja2 Template 엔진 생성
+templates = Jinja2Templates(directory="templates")
+
+@router.get("/")
+async def get_all_blogs(request: Request):
+    conn = None
+    try:
+        conn = direct_get_conn()
+        query = """
+        SELECT id, title, author, content, image_loc, modified_dt FROM blog;
+        """
+        result = conn.execute(text(query))
+        all_blogs = [BlogData(id=row.id,
+            title=row.title,
+            author=row.author,
+            content=util.truncate_text(row.content),
+            image_loc=row.image_loc, 
+            modified_dt=row.modified_dt) for row in result]
+        
+        result.close()
+        return templates.TemplateResponse(
+            request = request,
+            name = "index.html",
+            context = {"all_blogs": all_blogs}
+        )
+    
+    except SQLAlchemyError as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="알수없는 이유로 서비스 오류가 발생하였습니다")
+    finally:
+        if conn:
+            conn.close()
+
+@router.get("/show/{id}")
+def get_blog_by_id(request: Request, id: int,
+                conn: Connection = Depends(context_get_conn)):
+    try:
+        query = f"""
+        SELECT id, title, author, content, image_loc, modified_dt from blog
+        where id = :id
+        """
+        stmt = text(query)
+        bind_stmt = stmt.bindparams(id=id)
+        result = conn.execute(bind_stmt)
+        # 만약에 한건도 찾지 못하면 오류를 던진다. 
+        if result.rowcount == 0:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f"해당 id {id}는(은) 존재하지 않습니다.")
+
+        row = result.fetchone()
+        blog = BlogData(id=row[0], title=row[1], author=row[2], content=util.newline_to_br(row[3]),
+                image_loc=row[4], modified_dt=row[5])
+        
+        result.close()
+        return templates.TemplateResponse(
+            request = request,
+            name="show_blog.html",
+            context = {"blog": blog})
+    
+    except SQLAlchemyError as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="알수없는 이유로 서비스 오류가 발생하였습니다")
+
+
+@router.get("/new")
+def create_blog_ui(request: Request):
+    return templates.TemplateResponse(
+        request = request,
+        name = "new_blog.html",
+        context = {}
+    )
+
+@router.post("/new")
+def create_blog(request: Request
+                , title = Form(min_length=2, max_length=200)
+                , author = Form(max_length=100)
+                , content = Form(min_length=2, max_length=4000)
+                , conn: Connection = Depends(context_get_conn)):
+    try:
+        query = f"""
+        INSERT INTO blog(title, author, content, modified_dt)
+        values ('{title}', '{author}', '{content}', now())
+        """
+        conn.execute(text(query))
+        conn.commit()
+
+        return RedirectResponse("/blogs", status_code=status.HTTP_302_FOUND)
+    except SQLAlchemyError as e:
+        print(e)
+        conn.rollback()
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="요청데이터가 제대로 전달되지 않았습니다.")
+
+@router.get("/modify/{id}")
+def update_blog_ui(request: Request, id: int, conn = Depends(context_get_conn)):
+    try:
+        query = f"""
+        select id, title, author, content from blog where id = :id
+        """
+        stmt = text(query)
+        bind_stmt = stmt.bindparams(id=id)
+        result = conn.execute(bind_stmt)
+        # 해당 id로 데이터가 존재하지 않으면 오류를 던진다.
+        if result.rowcount == 0:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f"해당 id {id}는(은) 존재하지 않습니다.")
+        row = result.fetchone()
+    
+        return templates.TemplateResponse(
+            request = request,
+            name="modify_blog.html",
+            context = {"id": row.id, "title": row.title,
+                    "author": row.author, "content": row.content}
+        )
+    except SQLAlchemyError as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="요청데이터가 제대로 전달되지 않았습니다.")
+
+@router.post("/modify/{id}")
+def update_blog(request: Request, id: int
+                , title = Form(min_length=2, max_length=200)
+                , author = Form(max_length=100)
+                , content = Form(min_length=2, max_length=4000)
+                , conn: Connection = Depends(context_get_conn)):
+    
+    try:
+        query = f"""
+        UPDATE blog 
+        SET title = :title , author= :author, content= :content
+        where id = :id
+        """
+        bind_stmt = text(query).bindparams(id=id, title=title, 
+                                        author=author, content=content)
+        result = conn.execute(bind_stmt)
+        # 해당 id로 데이터가 존재하지 않아 update 건수가 없으면 오류를 던진다.
+        if result.rowcount == 0:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f"해당 id {id}는(은) 존재하지 않습니다.")
+        conn.commit()
+        return RedirectResponse(f"/blogs/show/{id}", status_code=status.HTTP_302_FOUND)
+    except SQLAlchemyError as e:
+        print(e)
+        conn.rollback()
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="요청데이터가 제대로 전달되지 않았습니다. ")
+
+@router.post("/delete/{id}")
+def delete_blog(request: Request, id: int
+                , conn: Connection = Depends(context_get_conn)):
+    try:
+        query = f"""
+        DELETE FROM blog
+        where id = :id
+        """
+
+        bind_stmt = text(query).bindparams(id=id)
+        result = conn.execute(bind_stmt)
+        # 해당 id로 데이터가 존재하지 않아 delete 건수가 없으면 오류를 던진다.
+        if result.rowcount == 0:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f"해당 id {id}는(은) 존재하지 않습니다.")
+        conn.commit()
+        return RedirectResponse("/blogs", status_code=status.HTTP_302_FOUND)
+
+    except SQLAlchemyError as e:
+        print(e)
+        conn.rollback()
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+```
+
+`Blog_DB_Handling/schemas/blog_schema.py`
+
+```py
+from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import Optional, Annotated
+from pydantic.dataclasses import dataclass
+
+class BlogInput(BaseModel):
+    title: str = Field(..., min_length=2, max_length=200)
+    author: str = Field(..., max_length=100)
+    content: str = Field(..., min_length=2, max_length=4000)
+    image_loc: Optional[str] = Field(None, max_length=400)
+    #image_loc: Annotated[str, Field(None, max_length=400)] = None
+
+class Blog(BlogInput):
+    id: int
+    modified_dt: datetime
+
+@dataclass
+class BlogData:
+    id: int
+    title: str
+    author: str
+    content: str
+    modified_dt: datetime
+    image_loc: str | None = None
+```
+
+`Blog_DB_Handling/db/database.py`
+
+```py
+from sqlalchemy import create_engine, Connection
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.pool import QueuePool, NullPool
+from contextlib import contextmanager
+from fastapi import status
+from fastapi.exceptions import HTTPException
+from dotenv import load_dotenv
+import os
+
+# database connection URL
+# DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
+load_dotenv()
+
+DATABASE_CONN = os.getenv("DATABASE_CONN")
+
+engine = create_engine(DATABASE_CONN, #echo=True,
+                    poolclass=QueuePool,
+                    #poolclass=NullPool, # Connection Pool 사용하지 않음. 
+                    pool_size=10, max_overflow=0,
+                    pool_recycle=300)
+
+def direct_get_conn():
+    conn = None
+    try:
+        conn = engine.connect()
+        return conn
+    except SQLAlchemyError as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+
+def context_get_conn():
+    conn = None
+    try:
+        conn = engine.connect()
+        yield conn
+    except SQLAlchemyError as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+    finally:
+        if conn:
+            conn.close()
+
+```
+
+`Blog_DB_Handling/templates/index.html`
+
+```html
+{% raw %}<!DOCTYPE html>
+<html>
+<head>
+    <title>블로그에 오신걸 환영합니다</title>
+</head>
+<body>
+    <h1>모든 블로그 리스트</h1>
+    <div><a href="/blogs/new">새로운 Blog 생성</a></div>
+    {% for blog in all_blogs %}
+        <div>
+            <h3><a href="/blogs/show/{{ blog.id }}">{{ blog.title }}</a></h3>
+            <p><small>Posted on {{ blog.modified_dt }} by {{ blog.author }} </small> </p>
+            <p> {{ blog.content }} </p>
+        </div>
+    {% endfor %}
+</body>
+</html>{% endraw %}
+```
+
+`Blog_DB_Handling/templates/show_blog.html`
+
+```html
+{% raw %}<!DOCTYPE html>
+<html>
+<head>
+    <title>블로그에 오신걸 환영합니다</title>
+</head>
+<body>
+    <div>
+        
+        <h1>{{ blog.title }} </h1>
+        <h5>Posted on {{ blog.modified_dt }} by {{ blog.author }} </small> </p>
+        <h3>{{ blog.content | safe }}</h3>
+    </div>
+    <div>
+        <a href="/blogs">Home으로 돌아가기</a>
+        <a href="/blogs/modify/{{ blog.id }}">수정하기</a>
+        <form action="/blogs/delete/{{ blog.id }}" method="POST">
+            <button>삭제하기</button>
+        </form>
+        
+    </div>
+</body>
+</html>{% endraw %}
+```
+
+`Blog_DB_Handling/templates/new_blog.html`
+
+```html
+{% raw %}<html>
+<head>
+    <title>새로운 블로그 생성</title>
+</head>
+<body>
+    <form action="/blogs/new" method="POST">
+        <div style="margin-bottom: 20px">
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" style="width: 20rem;">
+        </div>
+        <div style="margin-bottom: 20px">
+            <label for="author">작성자:</label>
+            <input type="text" id="author" name="author" style="width: 10rem;">
+        </div>
+        <div style="margin-bottom: 20px">
+            <label for="content">내용:</label>
+            <textarea name="content" rows="5" cols="50"></textarea>
+        </div>
+        <button>신규 블로그 생성</button>
+    </form>
+    
+</body>
+</html>{% endraw %}
+```
+
+`Blog_DB_Handling/templates/modify_blog.html`
+
+```html
+<html>
+<head>
+    <title>블로그 수정</title>
+</head>
+<body>
+    <form action="/blogs/modify/{{ id }}" method="POST">
+        <div style="margin-bottom: 20px">
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" value="{{ title }}" style="width: 20rem;">
+        </div>
+        <div style="margin-bottom: 20px">
+            <label for="author">작성자:</label>
+            <input type="text" id="author" name="author" value="{{ author }}"style="width: 10rem;">
+        </div>
+        <div style="margin-bottom: 20px">
+            <label for="content">내용:</label>
+            <textarea name="content" rows="5" cols="50">{{ content }}</textarea>
+        </div>
+        <button>블로그 수정</button>
+    </form>
+    
+</body>
+</html>
+```
+
 
 ## Blog 애플리케이션 개발하기 - 리팩토링
 
@@ -1745,35 +2213,3 @@ finally:
 
 ```
 
-## FastAPI Middleware
-
-```py
-
-```
-
-## Blog 애플리케이션 개발하기 - Login
-
-```py
-
-```
-
-## Cookie와 Signed Cookie 기반의 FastAPI Session Middleware
-
-```py
-
-```
-
-## Blog 애플리케이션 개발하기 - SessionMiddleware 적용
-
-```py
-
-```
-## Blog 애플리케이션 개발하기 - Redis 기반 Session 적용
-
-```py
-
-```
-
-```py
-
-```
