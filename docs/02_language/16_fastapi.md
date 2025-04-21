@@ -2135,7 +2135,7 @@ def context_get_conn():
 `Blog_DB_Handling/templates/new_blog.html`
 
 ```html
-{% raw %}<html>
+<html>
 <head>
     <title>새로운 블로그 생성</title>
 </head>
@@ -2157,13 +2157,13 @@ def context_get_conn():
     </form>
     
 </body>
-</html>{% endraw %}
+</html>
 ```
 
 `Blog_DB_Handling/templates/modify_blog.html`
 
 ```html
-<html>
+{% raw %}<html>
 <head>
     <title>블로그 수정</title>
 </head>
@@ -2185,7 +2185,7 @@ def context_get_conn():
     </form>
     
 </body>
-</html>
+</html>{% endraw %}
 ```
 
 
