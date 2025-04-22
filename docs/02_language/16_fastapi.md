@@ -2640,22 +2640,202 @@ def delete_blog(conn: Connection, id: int):
 </body>
 </html>{% endraw %}
 ```
+## Bootstrap 테스트
+
+`Bootstrap_Template/main.py`
+
+```py
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
+
+app = FastAPI()
+
+# jinja2 Template 생성. 인자로 directory 입력
+templates = Jinja2Templates(directory="templates")
+
+class Item(BaseModel):
+    name: str
+    description: str
+
+@app.get("/all_items", response_class=HTMLResponse)
+async def read_all_items(request: Request):
+    all_items = [Item(name="테스트_상품명_" +str(i), 
+                    description="테스트 내용입니다. 인덱스는 " + str(i)) for i in range(5) ]
+    print("all_items:", all_items)
+    return templates.TemplateResponse(
+        request=request, 
+        #name="index_no_include.html",
+        #name="index_include.html",
+        name="index.html", 
+        context={"all_items": all_items}
+    )
+```
+
+`Bootstrap_Template/layout/main_layout.html`
+
+```py
+{% raw %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Item UI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    {% include '/layout/navbar.html' %}
+    <!-- End of Navbar-->
+
+    <!-- Main Section -->
+    {% block content %}
+    {% endblock %}
+    <!-- End of Main Section -->
+
+    <!-- Footer -->
+    {% include '/layout/footer.html' %}
+    <!-- End of Footer -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>{% endraw %}
+```
+
+`Bootstrap_Template/layout/navbar.html`
+
+```py
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">My Item</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+```
+
+`Bootstrap_Template/layout/footer.html`
+
+```py
+<footer class="bg-light text-center py-4 mt-4 mt-auto">
+    <div class="container">
+        <p class="mb-0">© 2024 All Rights Reserved.</p>
+    </div>
+</footer>
+```
+
+`Bootstrap_Template/templates/index.html`
+
+```py
+{% raw %}{% extends "/layout/main_layout.html" %}
+    {% block content %}
+    <main class="px-3">
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    {% for item in all_items %}
+                    <div class="mb-4">
+                        <h2 class="fw-bold">Item: {{ item.name }}</h2>
+                        <p class="text-muted">{{ item.description }}</p>
+                        <a href="#" class="btn btn-success">Learn More</a>
+                    </div>
+                    {% endfor %}
+                </div>                
+            </div>
+        </div>
+    </main>
+    {% endblock %}{% endraw %}
+```
 
 ## Blog 애플리케이션 개발하기 - Bootstrap 적용 및 File Upload
 
-```py
-
-```
-
-## Blog 애플리케이션 개발하기 - 비동기(Asynchronous) DB처리
+`Blog_Bootstrap/`
 
 ```py
 
 ```
 
-## FastAPI Exception Handler
+`Blog_Bootstrap/`
 
 ```py
 
 ```
+
+`Blog_Bootstrap/`
+
+```py
+
+```
+
+`Blog_Bootstrap/`
+
+```py
+
+```
+
+`Blog_Bootstrap/`
+
+```py
+
+```
+
+`Blog_Bootstrap/`
+
+```py
+
+```
+
+`Blog_Bootstrap/`
+
+```py
+
+```
+
+`Blog_Bootstrap/`
+
+```py
+
+```
+
+`Blog_Bootstrap/`
+
+```py
+
+```
+
+`Blog_Bootstrap/`
+
+```py
+
+```
+
+`Blog_Bootstrap/`
+
+```py
+
+```
+
+`Blog_Bootstrap/`
+
+```py
+
+```
+
+
 
