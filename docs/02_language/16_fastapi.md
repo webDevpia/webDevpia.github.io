@@ -1724,6 +1724,9 @@ finally:
 
 ![](./img/fastapi/fastapi016.png)
 
+
+**데이터베이스 생성하기**
+
 ```sql
 create database blog_db;
 
@@ -1772,12 +1775,16 @@ COMMIT;
 select * from sys.session where db='blog_db' order by conn_id;
 ```
 
+**환경 설정 파일 작성하기**
+
 `Blog_DB_Handling/.env`
 
 ```env
 DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
-
 ```
+
+**FastAPI 프로그램 진입점**
+
 `Blog_DB_Handling/main.py`
 
 ```py
@@ -1787,6 +1794,8 @@ from routes import blog
 app = FastAPI()
 app.include_router(blog.router)
 ```
+
+**글자의 길이를 150으로 잘라주는 함수와 웹브라우저에서 줄바꿈을 위한 <br>태그로 변환함수**
 
 `Blog_DB_Handling/utils/util.py`
 
@@ -1806,6 +1815,8 @@ def newline_to_br(text_newline: str) -> str:
     return None
 ```
 
+**api 명세서에 따른 router**
+
 `Blog_DB_Handling/routes/blog.py`
 
 ```py
@@ -1818,7 +1829,6 @@ from sqlalchemy import text, Connection
 from sqlalchemy.exc import SQLAlchemyError
 from schemas.blog_schema import Blog, BlogData
 from utils import util
-
 
 
 # router 생성
@@ -2005,6 +2015,8 @@ def delete_blog(request: Request, id: int
                             detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
 ```
 
+**schema 작성**
+
 `Blog_DB_Handling/schemas/blog_schema.py`
 
 ```py
@@ -2033,6 +2045,8 @@ class BlogData:
     modified_dt: datetime
     image_loc: str | None = None
 ```
+
+**데이터베이스와 연결함수 작성**
 
 `Blog_DB_Handling/db/database.py`
 
@@ -2191,8 +2205,440 @@ def context_get_conn():
 
 ## Blog 애플리케이션 개발하기 - 리팩토링
 
-```py
+`Blog_MVC/main.py`
 
+```py
+from fastapi import FastAPI
+from routes import blog
+
+app = FastAPI()
+app.include_router(blog.router)
+```
+
+`Blog_MVC/utils/util.py`
+
+```py
+def truncate_text(text, limit=150) -> str:
+    if text is not None:
+        if len(text) > limit:
+            truncated_text = text[:limit] + "...."
+        else:
+            truncated_text = text
+        return truncated_text
+    return None
+
+def newline_to_br(text_newline: str) -> str:
+    if text_newline is not None:
+        return text_newline.replace('\n', '<br>')
+    return None
+```
+
+`Blog_MVC/routes/blog.py`
+
+```py
+from fastapi import APIRouter, Request, Depends, Form, status
+from fastapi.responses import RedirectResponse
+from fastapi.exceptions import HTTPException
+from fastapi.templating import Jinja2Templates
+from db.database import direct_get_conn, context_get_conn
+from sqlalchemy import text, Connection
+from sqlalchemy.exc import SQLAlchemyError
+from schemas.blog_schema import Blog, BlogData
+from services import blog_svc
+from utils import util
+
+
+
+# router 생성
+router = APIRouter(prefix="/blogs", tags=["blogs"])
+# jinja2 Template 엔진 생성
+templates = Jinja2Templates(directory="templates")
+@router.get("/")
+async def get_all_blogs(request: Request, conn: Connection = Depends(context_get_conn)):
+    all_blogs = blog_svc.get_all_blogs(conn)
+    
+    return templates.TemplateResponse(
+        request = request,
+        name = "index.html",
+        context = {"all_blogs": all_blogs}
+    )
+    
+
+@router.get("/show/{id}")
+def get_blog_by_id(request: Request, id: int,
+                conn: Connection = Depends(context_get_conn)):
+    blog = blog_svc.get_blog_by_id(conn, id)
+    blog.content = util.newline_to_br(blog.content)
+
+    return templates.TemplateResponse(
+        request = request,
+        name="show_blog.html",
+        context = {"blog": blog})
+
+@router.get("/new")
+def create_blog_ui(request: Request):
+    return templates.TemplateResponse(
+        request = request,
+        name = "new_blog.html",
+        context = {}
+    )
+
+@router.post("/new")
+def create_blog(request: Request
+                , title = Form(min_length=2, max_length=200)
+                , author = Form(max_length=100)
+                , content = Form(min_length=2, max_length=4000)
+                , conn: Connection = Depends(context_get_conn)):
+    
+    blog_svc.create_blog(conn, title=title, author=author, content=content)
+
+    return RedirectResponse("/blogs", status_code=status.HTTP_302_FOUND)
+    
+
+@router.get("/modify/{id}")
+def update_blog_ui(request: Request, id: int, conn = Depends(context_get_conn)):
+    blog = blog_svc.get_blog_by_id(conn, id=id)
+    
+    return templates.TemplateResponse(
+        request = request,
+        name="modify_blog.html",
+        context = {"blog": blog}
+    )
+    
+@router.post("/modify/{id}")
+def update_blog(request: Request, id: int
+                , title = Form(min_length=2, max_length=200)
+                , author = Form(max_length=100)
+                , content = Form(min_length=2, max_length=4000)
+                , conn: Connection = Depends(context_get_conn)):
+    
+    blog_svc.update_blog(conn=conn, id=id, title=title, author=author, content=content)
+    return RedirectResponse(f"/blogs/show/{id}", status_code=status.HTTP_302_FOUND)
+    
+@router.post("/delete/{id}")
+def delete_blog(request: Request, id: int
+                , conn: Connection = Depends(context_get_conn)):
+    
+    blog_svc.delete_blog(conn=conn, id=id)
+    return RedirectResponse("/blogs", status_code=status.HTTP_302_FOUND)
+
+```
+
+`Blog_MVC/schemas/blog_schema.py`
+
+```py
+from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import Optional, Annotated
+from pydantic.dataclasses import dataclass
+
+class BlogInput(BaseModel):
+    title: str = Field(..., min_length=2, max_length=200)
+    author: str = Field(..., max_length=100)
+    content: str = Field(..., min_length=2, max_length=4000)
+    image_loc: Optional[str] = Field(None, max_length=400)
+    #image_loc: Annotated[str, Field(None, max_length=400)] = None
+
+class Blog(BlogInput):
+    id: int
+    modified_dt: datetime
+
+@dataclass
+class BlogData:
+    id: int
+    title: str
+    author: str
+    content: str
+    modified_dt: datetime
+    image_loc: str | None = None
+```
+
+`Blog_MVC/db/database.py`
+
+```py
+from sqlalchemy import create_engine, Connection
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.pool import QueuePool, NullPool
+from contextlib import contextmanager
+from fastapi import status
+from fastapi.exceptions import HTTPException
+from dotenv import load_dotenv
+import os
+
+# database connection URL
+# DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
+load_dotenv()
+
+DATABASE_CONN = os.getenv("DATABASE_CONN")
+
+engine = create_engine(DATABASE_CONN, #echo=True,
+                    poolclass=QueuePool,
+                    #poolclass=NullPool, # Connection Pool 사용하지 않음. 
+                    pool_size=10, max_overflow=0,
+                    pool_recycle=300)
+
+def direct_get_conn():
+    conn = None
+    try:
+        conn = engine.connect()
+        return conn
+    except SQLAlchemyError as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+
+def context_get_conn():
+    conn = None
+    try:
+        conn = engine.connect()
+        yield conn
+    except SQLAlchemyError as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+    finally:
+        if conn:
+            conn.close()
+
+```
+
+`Blog_MVC/services/blog_svc.py`
+
+```py
+from fastapi import status
+from fastapi.exceptions import HTTPException
+from sqlalchemy import text, Connection
+from sqlalchemy.exc import SQLAlchemyError
+from schemas.blog_schema import Blog, BlogData
+from utils import util
+from typing import List
+
+def get_all_blogs(conn: Connection) -> List:
+    try:
+        query = """
+        SELECT id, title, author, content, image_loc, modified_dt FROM blog;
+        """
+        result = conn.execute(text(query))
+        all_blogs = [BlogData(id=row.id,
+            title=row.title,
+            author=row.author,
+            content=util.truncate_text(row.content),
+            image_loc=row.image_loc, 
+            modified_dt=row.modified_dt) for row in result]
+        
+        result.close()
+        return all_blogs
+    except SQLAlchemyError as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="알수없는 이유로 서비스 오류가 발생하였습니다")
+
+
+def get_blog_by_id(conn: Connection, id: int):
+    try:
+        query = f"""
+        SELECT id, title, author, content, image_loc, modified_dt from blog
+        where id = :id
+        """
+        stmt = text(query)
+        bind_stmt = stmt.bindparams(id=id)
+        result = conn.execute(bind_stmt)
+        # 만약에 한건도 찾지 못하면 오류를 던진다. 
+        if result.rowcount == 0:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f"해당 id {id}는(은) 존재하지 않습니다.")
+
+        row = result.fetchone()
+        blog = BlogData(id=row[0], title=row[1], author=row[2], 
+                        content=row[3],
+                        image_loc=row[4], modified_dt=row[5])
+        
+        result.close()
+        return blog
+    
+    except SQLAlchemyError as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            detail="알수없는 이유로 서비스 오류가 발생하였습니다")
+
+def create_blog(conn: Connection, title:str, author: str, content:str):
+    try:
+        query = f"""
+        INSERT INTO blog(title, author, content, modified_dt)
+        values ('{title}', '{author}', '{content}', now())
+        """
+        conn.execute(text(query))
+        conn.commit()
+        
+    except SQLAlchemyError as e:
+        print(e)
+        conn.rollback()
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="요청데이터가 제대로 전달되지 않았습니다.")
+
+def update_blog(conn: Connection,  id: int
+                ,  title:str
+                , author: str
+                , content:str):
+    
+    try:
+        query = f"""
+        UPDATE blog 
+        SET title = :title , author= :author, content= :content
+        where id = :id
+        """
+        bind_stmt = text(query).bindparams(id=id, title=title, 
+                                        author=author, content=content)
+        result = conn.execute(bind_stmt)
+        # 해당 id로 데이터가 존재하지 않아 update 건수가 없으면 오류를 던진다.
+        if result.rowcount == 0:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f"해당 id {id}는(은) 존재하지 않습니다.")
+        conn.commit()
+        
+    except SQLAlchemyError as e:
+        print(e)
+        conn.rollback()
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail="요청데이터가 제대로 전달되지 않았습니다. ")
+    
+
+
+def delete_blog(conn: Connection, id: int):
+    try:
+        query = f"""
+        DELETE FROM blog
+        where id = :id
+        """
+
+        bind_stmt = text(query).bindparams(id=id)
+        result = conn.execute(bind_stmt)
+        # 해당 id로 데이터가 존재하지 않아 delete 건수가 없으면 오류를 던진다.
+        if result.rowcount == 0:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail=f"해당 id {id}는(은) 존재하지 않습니다.")
+        conn.commit()
+
+    except SQLAlchemyError as e:
+        print(e)
+        conn.rollback()
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+
+```
+
+`Blog_MVC/templates/index.html`
+
+```py
+{% raw %}<!DOCTYPE html>
+<html>
+<head>
+    <title>블로그에 오신걸 환영합니다</title>
+</head>
+<body>
+    <h1>모든 블로그 리스트</h1>
+    <div><a href="/blogs/new">새로운 Blog 생성</a></div>
+    {% for blog in all_blogs %}
+        <div>
+            <h3><a href="/blogs/show/{{ blog.id }}">{{ blog.title }}</a></h3>
+            <p><small>Posted on {{ blog.modified_dt }} by {{ blog.author }} </small> </p>
+            <p> {{ blog.content }} </p>
+        </div>
+    {% endfor %}
+</body>
+</html>{% endraw %}
+```
+
+
+`Blog_MVC/templates/show_blog.html`
+
+```py
+{% raw %}<!DOCTYPE html>
+<html>
+<head>
+    <title>블로그에 오신걸 환영합니다</title>
+</head>
+<body>
+    <div>
+        
+        <h1>{{ blog.title }} </h1>
+        <h5>Posted on {{ blog.modified_dt }} by {{ blog.author }} </small> </p>
+        <h3>{{ blog.content | safe }}</h3>
+    </div>
+    <div>
+        <a href="/blogs">Home으로 돌아가기</a>
+        <a href="/blogs/modify/{{ blog.id }}">수정하기</a>
+        <form action="/blogs/delete/{{ blog.id }}" method="POST">
+            <button>삭제하기</button>
+        </form>
+        
+    </div>
+</body>
+</html>{% endraw %}
+```
+
+`Blog_MVC/templates/new_blog.html`
+
+```py
+{% raw %}<html>
+<head>
+    <title>새로운 블로그 생성</title>
+</head>
+<body>
+    <form action="/blogs/new" method="POST">
+        <div style="margin-bottom: 20px">
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" style="width: 20rem;">
+        </div>
+        <div style="margin-bottom: 20px">
+            <label for="author">작성자:</label>
+            <input type="text" id="author" name="author" style="width: 10rem;">
+        </div>
+        <div style="margin-bottom: 20px">
+            <label for="content">내용:</label>
+            <textarea name="content" rows="5" cols="50"></textarea>
+        </div>
+        <button>신규 블로그 생성</button>
+    </form>
+</body>
+</html>{% endraw %}
+```
+
+
+`Blog_MVC/templates/modify_blog.html`
+
+```py
+{% raw %}<html>
+<head>
+    <title>블로그 수정</title>
+</head>
+<body>
+    <form action="/blogs/modify/{{ blog.id }}" method="POST">
+        <div style="margin-bottom: 20px">
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" value="{{ blog.title }}" style="width: 20rem;">
+        </div>
+        <div style="margin-bottom: 20px">
+            <label for="author">작성자:</label>
+            <input type="text" id="author" name="author" value="{{ blog.author }}"style="width: 10rem;">
+        </div>
+        <div style="margin-bottom: 20px">
+            <label for="content">내용:</label>
+            <textarea name="content" rows="5" cols="50">{{ blog.content }}</textarea>
+        </div>
+        <button>블로그 수정</button>
+    </form>
+    
+</body>
+</html>{% endraw %}
 ```
 
 ## Blog 애플리케이션 개발하기 - Bootstrap 적용 및 File Upload
