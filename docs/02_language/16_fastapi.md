@@ -113,11 +113,11 @@ uvicorn은 ASGI 서버로, FastAPI 애플리케이션을 실행.
 
 ![](./img/fastapi/fastapi001.png)
 
-**GET**은 데이터를 요청할 때,
-**POST**는 데이터를 생성할 때,
-**PUT**, **PATCH**는 데이터를 수정할 때,
-**DELETE**는 데이터를 삭제할 때,
-**HEAD**는 데이터의 존재 여부만 확인.
+**GET**은 데이터를 요청할 때,  
+**POST**는 데이터를 생성할 때,  
+**PUT**, **PATCH**는 데이터를 수정할 때,  
+**DELETE**는 데이터를 삭제할 때,  
+**HEAD**는 데이터의 존재 여부만 확인.  
 
 
 ### Swagger UI를 이용한 동작 확인
