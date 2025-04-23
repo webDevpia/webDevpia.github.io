@@ -107,17 +107,17 @@ uvicorn Welcome.main:app --port=8081 --reload
 uvicorn은 ASGI 서버로, FastAPI 애플리케이션을 실행.  
 --reload 옵션은 코드 변경 시 자동으로 서버를 재시작  
 브라우저에서 http://127.0.0.1:8081에 접속하면 {"message": "Hello World"}라는 응답을 확인할 수 있음.
-http://127.0.0.1:8081/docs에 접속하면 Swagger UI를 통해 자동 생성된 API 문서를 확인할 수 있음.
+**http://127.0.0.1:8081/docs**에 접속하면 Swagger UI를 통해 자동 생성된 API 문서를 확인할 수 있음.
 
 ### FastAPI와 클라이언트 간 동작 흐름 이해가기
 
 ![](./img/fastapi/fastapi001.png)
 
-	**GET**은 데이터를 요청할 때,
-	**POST**는 데이터를 생성할 때,
-	**PUT**, **PATCH**는 데이터를 수정할 때,
-	**DELETE**는 데이터를 삭제할 때,
-	**HEAD**는 데이터의 존재 여부만 확인.
+**GET**은 데이터를 요청할 때,
+**POST**는 데이터를 생성할 때,
+**PUT**, **PATCH**는 데이터를 수정할 때,
+**DELETE**는 데이터를 삭제할 때,
+**HEAD**는 데이터의 존재 여부만 확인.
 
 
 ### Swagger UI를 이용한 동작 확인
