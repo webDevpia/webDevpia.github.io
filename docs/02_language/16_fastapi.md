@@ -23,20 +23,21 @@ has_children: false
 ### 왜 FastAPI인가?
 
 **탁월한 성능**
-- ASGI 표준을 따르는 FastAPI는 비동기 방식으로 요청을 처리하여, 파이썬 웹 프레임워크 중에서도 단연 최상의 속도를 제공합니다.
-- 빠른 응답 속도는 오늘날 수많은 사용자를 동시에 수용해야 하는 대규모 애플리케이션에 필수적인 요소입니다.
+- ASGI 표준을 따르는 FastAPI는 비동기 방식으로 요청을 처리하여, 파이썬 웹 프레임워크 중에서도 단연 최상의 속도를 제공.
+- ASGI(Asynchronous Server Gateway Interface)는 Python 웹 애플리케이션과 서버 간의 비동기 통신을 위한 표준 인터페이스
+- 빠른 응답 속도는 오늘날 수많은 사용자를 동시에 수용해야 하는 대규모 애플리케이션에 필수적인 요소.
 
 **개발자를 위한 직관적인 설계**
-- FastAPI는 개발자가 더욱 효율적이고 생산적으로 작업할 수 있도록 설계되었습니다. 
-- 직관적인 내부 API, Dependency Injection 기능, 일원화된 타입 힌트(type hint), 그리고 자동으로 생성되는 OpenAPI 문서는 개발 과정에서 오류를 최소화하고, 프로젝트의 속도를 비약적으로 높여줍니다.
+- FastAPI는 개발자가 더욱 효율적이고 생산적으로 작업할 수 있도록 설계. 
+- 직관적인 내부 API, Dependency Injection 기능, 일원화된 타입 힌트(type hint), 그리고 자동으로 생성되는 OpenAPI 문서는 개발 과정에서 오류를 최소화하고, 프로젝트의 속도를 비약적으로 높여줌.
 
 **편리한 데이터 처리와 검증**
-- FastAPI는 Pydantic과 완벽하게 통합되어, 데이터 검증과 직렬화, 파싱 과정을 안전하고 정밀하게 처리합니다. 
-- 이로 인해 개발자는 더욱 효율적이고 신뢰할 수 있는 코드를 작성할 수 있으며, 복잡한 데이터 구조도 손쉽게 다룰 수 있습니다.
+- FastAPI는 Pydantic과 완벽하게 통합되어, 데이터 검증과 직렬화, 파싱 과정을 안전하고 정밀하게 처리. 
+- 이로 인해 개발자는 더욱 효율적이고 신뢰할 수 있는 코드를 작성할 수 있으며, 복잡한 데이터 구조도 손쉽게 다룰 수 있음.
 
 **비동기 처리의 무한한 가능성**
-- FastAPI는 비동기 프로그래밍을 통해 동시에 다수의 작업을 처리하는 능력을 제공합니다.
-- 특히, 데이터베이스와 외부 API와 같은 I/O 바운드 작업에서 빛을 발하며, 빠르고 반응성이 뛰어난 애플리케이션을 구축할 수 있습니다.
+- FastAPI는 비동기 프로그래밍을 통해 동시에 다수의 작업을 처리하는 능력을 제공.
+- 특히, 데이터베이스와 외부 API와 같은 I/O 바운드 작업에서 빛을 발하며, 빠르고 반응성이 뛰어난 애플리케이션을 구축할 수 있음.
 
 ### 성능 비교
 
@@ -71,11 +72,14 @@ has_children: false
 conda create --name fastapi
 conda activate fastapi
 pip install fastapi
+pip list | grep fastapi 
+# fastapi   0.115.12
 ```
 
 ### 동작 테스트
 
 `welcome/main.py`
+
 ```py
 from fastapi import FastAPI
 
@@ -89,6 +93,7 @@ async def root():
     """
     return {"message": "Hello World"}
 ```
+
 - Path는 domain 명을 제외하고 / 로 시작하는 URL 부분
 - 만약 url이 https://example.com/items/foo 라면 path는 /items/foo
 - Operation은 GET, POST, PUT/PATCH, DELETE 등의 HTTP 메소드
@@ -98,6 +103,7 @@ async def root():
 ```bash
 uvicorn Welcome.main:app --port=8081 --reload
 ```
+
 uvicorn은 ASGI 서버로, FastAPI 애플리케이션을 실행.  
 --reload 옵션은 코드 변경 시 자동으로 서버를 재시작  
 브라우저에서 http://127.0.0.1:8081에 접속하면 {"message": "Hello World"}라는 응답을 확인할 수 있음.
@@ -126,9 +132,73 @@ http://127.0.0.1:8081/docs로 접속해서 결과 확인
 
 FastAPI는 Path Parameter, Query Parameter, Request Body, Form Fields, Header, Cookie, File 등의 다양한 Request 들을 다룰 수 있게 지원함.
 
-![](./img/fastapi/fastapi003.png)
+### FastAPI 요청 매개변수 유형
 
-![](./img/fastapi/fastapi004.png)
+**Path Parameter**
+
+- URL Path의 일부로서 path에 정보를 담아서 GET Method로 전달
+- URL이 http://www.example.com/job/2 라면 여기에서 2를 path request 값으로 전달하고 이를 API 서버에서 인식할 수 있음
+- 메시지는 Body 없이 전달
+
+```
+GET /job/2 HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla
+Accept: application/json
+```
+
+**Query Parameter**
+
+- Query String이라고도 불리며 url에서 ?뒤에 key와 value 값을 가지는 형태로 GET Method로 request 전달
+- 개별 parameter는 & 로 분리
+- http://www.example.com/job?id=3&pageIndex=1&sort=ascending 라면 변수명 id로 3을, pageIndex로 1을, sort는 ascending으로 값을 전달
+- 메시지는 Body 없이 전달
+
+```
+GET /job?id=3&pageIndex=1&sort=ascending
+Host: www.example.com
+User-Agent: Mozilla
+Accept: application/json
+```
+
+**Request Body**
+
+- POST/PUT Method로 Message Header가 아닌 Body에 작성된 Request
+- FastAPI에서는 Content-type: application/json으로 전송되어 Body에 작성된 JSON 기반 Request를 의미
+
+```
+POST /items HTTP/1.1
+Host: localhost:801
+User-Agent: Mozilla
+Accept: application/json
+Content-Type: application/json
+
+{ "id": "min", "password": "123" }
+```
+
+**Form**
+
+- HTML Form에서 POST Method로 Message Header가 아닌 Body에 작성된 Request
+- FastAPI에서는 Content-type: application/x-www-form-urlencoded으로 Body에 작성된 Request를 의미
+
+```
+POST /login HTTP/1.1
+Host: localhost:801
+User-Agent: Mozilla
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+id=min&password=123
+```
+
+HTML 폼 예시:
+```html
+<form action="/login" method="POST">
+  <input type="text" name="id" value="min">
+  <input type="text" name="password" value="123">
+  <input type="submit"> 제출
+</form>
+```
 
 ![](./img/fastapi/fastapi005.png)
 
