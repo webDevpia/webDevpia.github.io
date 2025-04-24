@@ -125,6 +125,19 @@ uvicorn은 ASGI 서버로, FastAPI 애플리케이션을 실행.
 api들을 브라우저 기반에서 편리하게 관리 및 문서화, 테스트 할 수 있는 기능을 제공  
 http://127.0.0.1:8081/docs로 접속해서 결과 확인  
 
+```py
+from fastapi import FastAPI
+
+app = FastAPI()
+@app.get("/",summary="간단한 API",tags=['Simple'],description="매우 간단한 API 연습")
+async def root():
+    """
+    루트 경로('/')에 대한 GET 요청을 처리하는 함수입니다.
+    간단한 JSON 응답을 반환합니다.
+    """
+    return {"message": "Hello World"}
+```
+
 ![](./img/fastapi/fastapi002.png)
 
 

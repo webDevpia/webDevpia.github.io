@@ -71,9 +71,8 @@ console.log(hi());
 - 자바스크립트는 기본적으로 동기적으로 작동함
 - 자바스크립트는 싱글쓰레드 언어이다.(한번에 하나씩 실행)  
 
-<img src="./img/js/js001.png" width="200" >  
-
-<img src="./img/js/js002.png" width="100" >
+![](./img/js/js001.png)
+![](./img/js/js002.png)
 
 ```js
 console.log('작업 1');
@@ -94,13 +93,13 @@ function print() {
 
 동기프로그램의 문제
 - 동기프로그램은 직관적이고 이해하기 쉽지만 순서대로만 실행되어야 하므로 Blocking 문제가 생김  
-<img src="./img/js/js003.png" width="300" >
+![](./img/js/js003.png)
 
 ### 2. 비동기 프로그래밍
 - 작성된 순서대로 실행하나 완료될 때까지 기다리지 않고 다음 작업을 시작함
 - 처리가 오래 걸리는 작업은 작업이 끝난 이후 콜백함수에 의해 후처리 작업이 진행  
 
-<img src="./img/js/js004.png" width="300" >
+![](./img/js/js004.png)
 
 ```js
 // setTimeout(콜백함수,지연시간)은 비동기 함수이다.
@@ -128,14 +127,16 @@ console.log('작업 3');
 
 자바스크립트는 v8 엔진에 의해서 실행되며 싱글스레드이나 v8엔진 외에도 Web APIs환경도 있다. Web APIs환경은 멀티쓰레드 환경이고 비동기 프로그래밍이 가능하다.  
 
-<img src="./img/js/js005.png" width="300" >  
-<img src="./img/js/js006.png" width="300" >  
+![](./img/js/js005.png)
+![](./img/js/js006.png)
+
 
 ### 3. 콜백함수
 
 다른 함수의 인자로 전달되는 함수를 말함.  
-<img src="./img/js/js007.png" width="300" >    
-<img src="./img/js/js008.png" width="300" >  
+
+![](./img/js/js007.png)
+![](./img/js/js008.png)
 
 #### 비동기 콜백
 비동기 처리에 사용되는 콜백함수를 말함.  
@@ -258,35 +259,35 @@ ES6에서 등장
 비동기 작업을 처리하고 그 결과는 성공(resolve) 혹은 실패(reject)로 리턴 
 Promise는 비동기 작업 진행중일때 아직 비어 있다가 처리가 완료되면 그 결과물이 저장된다.
 
-<img src="./img/js/js009.png" width="300" >
+![](./img/js/js009.png)
 
 결과는 성공 혹은 실패로 볼 수 있다.  
 
-<img src="./img/js/js010.png" width="300" >
+![](./img/js/js010.png)
 
 처음 상태는 대기 상태에서 성공 시는 결과 값이 실패 시는 오류에 대한 정보가 저장된다.  
 
-<img src="./img/js/js011.png" width="300" >
+![](./img/js/js011.png)
 
 promise는 state와 result 두 개의 값을 가지는 객체    
 
-<img src="./img/js/js012.png" width="300" >
+![](./img/js/js012.png)
 
 state는 3가지 값을 가진다.  
 
-<img src="./img/js/js013.png" width="300" >
+![](./img/js/js013.png)
 
 - 대기  
-<img src="./img/js/js014.png" width="300" >
+![](./img/js/js0014.png)
 
 - 성공  
-<img src="./img/js/js015.png" width="300" >
+![](./img/js/js015.png)
 
 - 실패  
-<img src="./img/js/js016.png" width="300" >  
+![](./img/js/js016.png)
 
 - 성공하면 resolve를 실패하면 reject를 받아서 처리한다.  
-<img src="./img/js/js017.png" width="300" >  
+![](./img/js/js017.png)
 
 #### 2. Promise 객체 생성
 ```js
@@ -599,10 +600,10 @@ Promise.all은 여러개의 Promise들을 인자값으로 넣고, Promise를 하
 각 함수의 실행이 모두 완료되고 난 이후 처리가 필요하다면 Promise.all을 사용한다.  
 
 순차적 실행 시간    
-<img src="./img/js/js018.png" width="300" >  
+![](./img/js/js018.png)
 
 병렬처리시 실행 시간  
-<img src="./img/js/js019.png" width="300" >  
+![](./img/js/js019.png)
 
 ```js
 //사용자 정보를 받아옴
