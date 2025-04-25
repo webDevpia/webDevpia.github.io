@@ -805,3 +805,505 @@ def search_place(state: dict) -> dict:
     {% endraw %}
     
 ```
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# Kakao API를 이용한 장소 검색 함수 불러오기
+from agents.place import search_place
+```
+
+## ✍️ 2. 샘플 입력 구성
+
+```python
+# 검색 키워드와 지역을 포함한 상태 정보 구성
+state = {
+    "location": "홍대",
+    "search_keyword": "한식"
+}
+```
+
+## 🚀 3. 장소 검색 실행 및 결과 확인
+
+```python
+# Kakao API를 호출하여 추천 장소를 가져옵니다.
+result = search_place(state)
+print("추천된 장소 이름:", result["recommended_place"]["name"])
+print("주소:", result["recommended_place"]["address"])
+print("지도 링크:", result["recommended_place"]["url"])
+```
+
+## ✏️ 4. 다양한 키워드로 테스트해보세요
+
+```python
+state2 = {
+    "location": "신촌",
+    "search_keyword": "북카페"
+}
+result2 = search_place(state2)
+print("추천 장소:", result2["recommended_place"])
+```
+
+# 10. Summary Agent 실습 노트북
+
+추천된 음식/활동과 장소 정보를 바탕으로, GPT를 활용하여 사용자에게 보여줄 요약 메시지를 생성하는 흐름을 실습합니다.
+
+LangGraph의 마지막 단계이며, 사용자에게 감성적인 안내 문장을 생성해주는 역할을 합니다.
+
+`agents/summary.py`
+
+```py
+from langchain_openai import ChatOpenAI
+from config import OPENAI_API_KEY, OPENAI_MODEL
+
+# GPT 기반 최종 요약 메시지 생성 에이전트 구성
+llm = ChatOpenAI(
+    model=OPENAI_MODEL,                     # 사용할 GPT 모델 이름
+    api_key=OPENAI_API_KEY,                # OpenAI API 키
+    temperature=0.7                         # 창의성 높임 (감성적 문장 유도)
+)
+
+def summarize_message(state: dict) -> dict:
+    """
+    추천된 음식/활동, 장소, 시간대 정보를 바탕으로
+    사용자에게 보여줄 감성적인 요약 문장을 생성하는 함수입니다.
+    """
+
+    # 추천 항목 리스트에서 첫 항목 추출
+    items = state.get("recommended_items", ["추천 항목 없음"])
+    if isinstance(items, dict):
+        items = list(items.values())
+    elif not isinstance(items, list):
+        items = [str(items)]
+    item = items[0]  # 요약 문장에 사용할 대표 항목
+
+    # 상태에서 필요한 정보 추출
+    season = state.get("season", "")
+    weather = state.get("weather", "")
+    time_slot = state.get("time_slot", "")
+    intent = state.get("intent", "food")
+    place = state.get("recommended_place", {})
+
+    # 장소 정보 추출
+    place_name = place.get("name", "추천 장소")
+    place_address = place.get("address", "")
+    place_url = place.get("url", "")
+
+    # food 또는 activity에 따라 안내 메시지 스타일 조정
+    category = "음식" if intent == "food" else "활동"
+
+    # GPT 프롬프트 구성
+    prompt = f"""
+사용자의 의도는 '{category}'입니다.
+현재는 {season}이고, 날씨는 {weather}, 시간대는 {time_slot}입니다.
+추천 {category}: {item}
+추천 장소: {place_name} ({place_address})
+지도 링크: {place_url}
+
+이 정보를 바탕으로 사용자에게 감성적이고 따뜻한 문장으로 한 문단의 추천 메시지를 작성해 주세요.
+"""
+
+    # GPT 호출
+    response = llm.invoke([
+        {"role": "system", "content": "너는 음식 또는 활동을 추천하는 친절한 AI야."},
+        {"role": "user", "content": prompt.strip()}
+    ])
+
+    # 최종 문장을 상태에 추가하여 반환
+    return {**state, "final_message": response.content.strip()}
+    
+```
+
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# 요약 메시지 생성을 위한 GPT 기반 함수 불러오기
+from agents.summary import summarize_message
+```
+
+## ✍️ 2. 샘플 상태 구성
+
+```python
+# 추천 결과와 장소 정보가 포함된 상태 입력
+state = {
+    "user_input": "배고파",
+    "intent": "food",
+    "season": "봄",
+    "weather": "Rain",
+    "time_slot": "야간",
+    "recommended_items": ["김치찌개", "된장찌개"],
+    "recommended_place": {
+        "name": "홍대 맛집 김치네",
+        "address": "서울 마포구 홍익로 10",
+        "url": "http://place.map.kakao.com/123456"
+    }
+}
+```
+
+## 📝 3. 요약 메시지 생성 실행
+
+```python
+# 요약 메시지를 생성해 봅니다.
+result = summarize_message(state)
+print("생성된 요약 메시지:\n")
+print(result["final_message"])
+```
+
+## ✏️ 4. 활동 추천 버전으로도 테스트해보세요
+
+```python
+state2 = {
+    "user_input": "놀고 싶어",
+    "intent": "activity",
+    "season": "가을",
+    "weather": "Clear",
+    "time_slot": "저녁",
+    "recommended_items": ["전시회 관람", "야경 산책"],
+    "recommended_place": {
+        "name": "서울 전시센터",
+        "address": "서울 중구 세종대로 99",
+        "url": "http://place.map.kakao.com/654321"
+    }
+}
+result2 = summarize_message(state2)
+print("활동 추천 요약 메시지:\n")
+print(result2["final_message"])
+```
+
+# 11. LangGraph 음식/활동 추천 시스템 구현하기
+
+LangGraph를 기반으로 한 음식/활동 추천 서비스를 구성하는 전체 흐름을 단계별로 실습합니다.
+Streamlit 없이 Python 코드만으로 LangGraph 흐름을 실습하고, 각 노드의 동작 결과를 디버깅해보는 데 중점을 둡니다.
+
+## 1. 필수 라이브러리 및 에이전트 함수 불러오기
+
+먼저, 프로젝트에 필요한 모듈과 LangGraph 구성에 사용할 에이전트 함수를 불러옵니다.
+
+```python
+
+# 필요한 라이브러리 불러오기
+from langgraph.graph import StateGraph, END
+from typing_extensions import TypedDict
+
+# 프로젝트에서 정의한 에이전트들 불러오기
+from agents.intent import classify_intent
+from agents.time import get_time_slot
+from agents.season import get_season
+from agents.weather import get_weather
+from agents.food import recommend_food
+from agents.activity import recommend_activity
+from agents.keyword import generate_search_keyword
+from agents.place import search_place
+from agents.summary import summarize_message
+from agents.intent_unsupported import intent_unsupported_handler
+
+```
+
+## 2.  상태 정의하기 (State Type)
+
+LangGraph는 모든 정보를 상태(State)로 전달하며 작동합니다. 여기서 우리가 처리할 정보 항목들을 정의합니다.
+
+```python
+
+# 상태 구조 정의: LangGraph의 흐름을 구성하는 상태값입니다.
+# 각 노드에서는 이 딕셔너리를 입력받고, 일부 키를 업데이트하여 다음 노드로 넘깁니다.
+class State(TypedDict):
+    user_input: str
+    location: str
+    time_slot: str
+    season: str
+    weather: str
+    intent: str
+    recommended_items: list
+    search_keyword: str
+    recommended_place: dict
+    final_message: str
+```
+
+## 3. 그래프 빌더 구성하기
+LangGraph에서 각 노드 함수들을 연결하여 하나의 상태 흐름으로 만듭니다.
+
+```python
+
+# 그래프 빌더 생성
+builder = StateGraph(State)
+
+# 에이전트 노드 추가
+builder.add_node("classify_intent", classify_intent)
+builder.add_node("get_time_slot", get_time_slot)
+builder.add_node("get_season", get_season)
+builder.add_node("get_weather", get_weather)
+builder.add_node("recommend_food", recommend_food)
+builder.add_node("recommend_activity", recommend_activity)
+builder.add_node("generate_search_keyword", generate_search_keyword)
+builder.add_node("search_place", search_place)
+builder.add_node("summarize_message", summarize_message)
+builder.add_node("intent_unsupported", intent_unsupported_handler)
+
+```
+
+## 4. 분기 정의 및 그래프 컴파일
+
+사용자의 의도에 따라 추천 흐름을 음식 / 활동 / 지원불가로 분기 처리합니다.
+```python
+
+# 분기 함수 정의: 의도에 따라 경로를 다르게 설정
+def route_intent(state: State) -> str:
+    intent = state.get("intent", "")
+    if intent == "food":
+        return "recommend_food"
+    elif intent == "activity":
+        return "recommend_activity"
+    return "intent_unsupported"
+
+# 흐름 구성
+builder.set_entry_point("classify_intent")
+builder.add_edge("classify_intent", "get_time_slot")
+builder.add_edge("get_time_slot", "get_season")
+builder.add_edge("get_season", "get_weather")
+builder.add_conditional_edges("get_weather", route_intent, {
+    "recommend_food": "recommend_food",
+    "recommend_activity": "recommend_activity",
+    "intent_unsupported": "intent_unsupported"
+})
+builder.add_edge("recommend_food", "generate_search_keyword")
+builder.add_edge("recommend_activity", "generate_search_keyword")
+builder.add_edge("generate_search_keyword", "search_place")
+builder.add_edge("search_place", "summarize_message")
+builder.add_edge("summarize_message", END)
+builder.add_edge("intent_unsupported", END)
+
+# 그래프 컴파일
+graph = builder.compile()
+
+```
+## 5. 테스트 실행 및 결과 확인
+
+입력 예시를 기반으로 그래프를 실행하고, 각 단계의 출력을 확인합니다.
+
+```python
+
+# 테스트 입력 예시
+test_input = {
+    "user_input": "비 오는 날 따뜻한 거 먹고 싶다",
+    "location": "홍대"
+}
+
+# 그래프 실행
+events = list(graph.stream(test_input))
+print("✅ LangGraph 실행 완료\n")
+for i, e in enumerate(events):
+    print(f"Step {i+1}: {list(e.keys())[0]}")
+    print(e, "\n")
+
+# 최종 상태 출력
+final_state = events[-1].get("__end__") or events[-1].get("summarize_message", {})
+print("📦 최종 추천 메시지:")
+print(final_state.get("final_message", "추천 결과가 없습니다."))
+
+```
+
+```python
+
+실행 결과:
+>>> GPT intent 응답: { "intent": ["food"] }
+>>> OpenWeather API 호출 시작 (서울 기준)
+>>> GPT 생성 키워드 검색: 홍대 한식
+✅ LangGraph 실행 완료
+
+Step 1: classify_intent
+{'classify_intent': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'intent': 'food'}} 
+
+Step 2: get_time_slot
+{'get_time_slot': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'intent': 'food', 'time_slot': '점심'}} 
+
+Step 3: get_season
+{'get_season': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'intent': 'food', 'season': '봄'}} 
+
+Step 4: get_weather
+{'get_weather': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'season': '봄', 'intent': 'food', 'weather': 'Rain'}} 
+
+Step 5: recommend_food
+{'recommend_food': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'season': '봄', 'weather': 'Rain', 'intent': 'food', 'recommended_items': ['김치찌개', '부대찌개']}} 
+
+Step 6: generate_search_keyword
+{'generate_search_keyword': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'season': '봄', 'weather': 'Rain', 'intent': 'food', 'recommended_items': ['김치찌개', '부대찌개'], 'search_keyword': '한식'}} 
+
+Step 7: search_place
+{'search_place': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'season': '봄', 'weather': 'Rain', 'intent': 'food', 'recommended_items': ['김치찌개', '부대찌개'], 'search_keyword': '한식', 'recommended_place': {'name': '홍대 조선시대', 'address': '서울 마포구 홍익로3길 44', 'url': 'http://place.map.kakao.com/1985225055'}}} 
+
+Step 8: summarize_message
+{'summarize_message': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'season': '봄', 'weather': 'Rain', 'intent': 'food', 'recommended_items': ['김치찌개', '부대찌개'], 'search_keyword': '한식', 'recommended_place': {'name': '홍대 조선시대', 'address': '서울 마포구 홍익로3길 44', 'url': 'http://place.map.kakao.com/1985225055'}, 'final_message': '봄비가 내리는 오늘 점심, 따뜻한 김치찌개 한 그릇이 그리워지는 순간입니다. 홍대 조선시대에서 깊고 얼큰한 김치찌개를 즐기며, 비 오는 날의 감성을 느껴보세요. 뜨거운 국물 한 입에 마음이 따뜻해지고, 이곳의 아늑한 분위기가 당신의 하루를 더욱 특별하게 만들어 줄 것입니다. 비 오는 날, 맛있는 김치찌개와 함께 소중한 시간을 가져보세요. [지도 링크](http://place.map.kakao.com/1985225055)에서 지금 바로 찾아가 보세요!'}} 
+
+📦 최종 추천 메시지:
+봄비가 내리는 오늘 점심, 따뜻한 김치찌개 한 그릇이 그리워지는 순간입니다. 홍대 조선시대에서 깊고 얼큰한 김치찌개를 즐기며, 비 오는 날의 감성을 느껴보세요. 뜨거운 국물 한 입에 마음이 따뜻해지고, 이곳의 아늑한 분위기가 당신의 하루를 더욱 특별하게 만들어 줄 것입니다. 비 오는 날, 맛있는 김치찌개와 함께 소중한 시간을 가져보세요. [지도 링크](http://place.map.kakao.com/1985225055)에서 지금 바로 찾아가 보세요!
+
+```
+
+## 그래프 시각화
+
+```python
+
+pythonfrom IPython.display import Image, display
+display(Image(graph.get_graph().draw_mermaid_png()))
+
+```
+![](./img/agent_task/agent_task001.png)
+
+`run_graph.py`
+```py
+from langgraph.graph import StateGraph, END
+from typing_extensions import TypedDict
+
+# 각 단계에서 사용할 에이전트 함수들 불러오기
+from agents.intent import classify_intent
+from agents.time import get_time_slot
+from agents.season import get_season
+from agents.weather import get_weather
+from agents.food import recommend_food
+from agents.activity import recommend_activity
+from agents.keyword import generate_search_keyword
+from agents.place import search_place
+from agents.summary import summarize_message
+from agents.intent_unsupported import intent_unsupported_handler
+
+# 상태(State) 타입 정의
+# LangGraph에서 상태는 모든 노드 간에 주고받는 정보를 의미하며,
+# 어떤 정보를 다룰지 명확히 정의해 줍니다.
+class State(TypedDict):
+    user_input: str                # 사용자의 입력 문장
+    location: str                  # 지역 정보 (예: "홍대")
+    time_slot: str                 # 시간대 (예: "아침", "점심", "야간")
+    season: str                    # 계절 (예: "봄", "가을")
+    weather: str                   # 날씨 상태 (예: "Rain", "Clear")
+    intent: str                    # 분류된 의도 ("food", "activity", "unknown")
+    recommended_items: list        # 추천 음식 또는 활동 리스트
+    search_keyword: str            # 장소 검색용 키워드
+    recommended_place: dict        # 장소 추천 결과 (name, address, url)
+    final_message: str             # GPT가 생성한 최종 안내 메시지
+
+# LangGraph builder 생성
+builder = StateGraph(State)
+
+# 각 노드에 이름을 붙여 LangGraph에 등록
+builder.add_node("classify_intent", classify_intent)
+builder.add_node("get_time_slot", get_time_slot)
+builder.add_node("get_season", get_season)
+builder.add_node("get_weather", get_weather)
+builder.add_node("recommend_food", recommend_food)
+builder.add_node("recommend_activity", recommend_activity)
+builder.add_node("generate_search_keyword", generate_search_keyword)
+builder.add_node("search_place", search_place)
+builder.add_node("summarize_message", summarize_message)
+builder.add_node("intent_unsupported", intent_unsupported_handler)
+
+# 의도(intent)에 따라 음식 추천 / 활동 추천 / 종료 노드를 분기하는 함수
+def route_intent(state: State) -> str:
+    intent = state.get("intent", "")
+    if intent == "food":
+        return "recommend_food"
+    elif intent == "activity":
+        return "recommend_activity"
+    return "intent_unsupported"  # intent가 unknown이면 graceful 종료로 분기
+
+# 흐름 연결
+builder.set_entry_point("classify_intent")
+builder.add_edge("classify_intent", "get_time_slot")
+builder.add_edge("get_time_slot", "get_season")
+builder.add_edge("get_season", "get_weather")
+
+# 분기 처리: intent에 따라 추천 경로 달라짐
+builder.add_conditional_edges("get_weather", route_intent, {
+    "recommend_food": "recommend_food",
+    "recommend_activity": "recommend_activity",
+    "intent_unsupported": "intent_unsupported"
+})
+
+# 공통 후처리 흐름
+builder.add_edge("recommend_food", "generate_search_keyword")
+builder.add_edge("recommend_activity", "generate_search_keyword")
+builder.add_edge("generate_search_keyword", "search_place")
+builder.add_edge("search_place", "summarize_message")
+
+# 종료 처리
+builder.add_edge("summarize_message", END)
+builder.add_edge("intent_unsupported", END)
+
+# 그래프 최종 컴파일
+graph = builder.compile()
+
+```
+`test_graph.py`
+```py
+import pytest
+from run_graph import graph
+
+# pytest에서 공통으로 사용할 기본 입력 상태 설정
+@pytest.fixture
+def base_state():
+    # 테스트에 사용할 간단한 상태 값 (입력 문장과 지역 정보)
+    return {
+        "user_input": "배고파",   # 추천 흐름 시작용 입력 문장
+        "location": "홍대"       # 테스트용 지역
+    }
+
+# LangGraph 실행 테스트 함수
+def test_graph_execution(base_state):
+    # LangGraph 실행: 상태를 기반으로 전체 흐름을 순차적으로 실행
+    events = list(graph.stream(base_state))
+
+    # 실행 결과는 리스트 형태여야 하며, 1개 이상 단계가 있어야 함
+    assert isinstance(events, list)
+    assert len(events) > 0
+
+    # 최종 상태 추출 (마지막 단계 또는 __end__ 키 기준)
+    final_state = events[-1].get("__end__") or events[-1]
+    summary = final_state.get("summarize_message", final_state)
+
+    # 최종 메시지가 존재해야 함
+    assert "final_message" in summary
+    assert isinstance(summary["final_message"], str)
+
+    # 결과 메시지 콘솔에 출력
+    print("\n✅ 요약 메시지:")
+    print(summary["final_message"])
+    
+    
+```
+`test_runner.py`
+```py
+from run_graph import graph
+
+# 이 스크립트는 LangGraph 흐름을 터미널에서 테스트하기 위한 테스트 실행기입니다.
+# Streamlit 없이도 상태 입력만으로 추천 전체 흐름을 실행할 수 있습니다.
+
+# 🧪 테스트용 입력 상태 설정
+test_input = {
+    "user_input": "배고파",
+    "location": "홍대"
+}
+
+# LangGraph 실행 및 결과 출력
+print("🧠 LangGraph 실행 시작...\n")
+try:
+    events = list(graph.stream(test_input))  # 그래프 실행
+    print("✅ 실행 완료. 단계별 상태:\n")
+
+    # 각 단계별 상태 출력
+    for i, e in enumerate(events):
+        step_name = list(e.keys())[0]
+        print(f"Step {i+1}: {step_name}")
+        print(e, "\n")
+
+    # 최종 요약 메시지 추출 (summarize_message 내부 또는 마지막 상태)
+    final_state = events[-1].get("__end__") or events[-1]
+    summary = final_state.get("summarize_message", final_state)
+    final_message = summary.get("final_message", "추천 메시지가 없습니다.")
+
+    print("📦 최종 추천 메시지:")
+    print(final_message)
+
+except Exception as e:
+    print("❌ 실행 중 오류 발생:")
+    print(str(e))
+    
+```

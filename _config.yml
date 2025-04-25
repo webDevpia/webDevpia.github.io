@@ -15,9 +15,9 @@
 # in the templates via {{ site.myvariable }}.
 title: Digital Smart Academy
 description: 부경대학교 디지털 스마트 아카데미
-baseurl: "/" # the subpath of your site, e.g. /blog
-#url: "https://just-the-docs.com" # the base hostname & protocol for your site, e.g. http://example.com
-#repository: just-the-docs/just-the-docs # for github-metadata
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://shimseonjo.github.io" # the base hostname & protocol for your site
+repository: shimseonjo/shimseonjo.github.io # for github-metadata
 
 permalink: pretty
 
@@ -176,10 +176,20 @@ callouts:
 # ga_tracking: UA-2709176-10,G-5FG1HLH3XQ
 # ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true/nil by default)
 
+# GitHub Pages 설정
+github:
+  metadata: true
+
+# GitHub Pages에서 지원하는 플러그인만 사용
 plugins:
   - jekyll-seo-tag
   - jekyll-github-metadata
   - jekyll-include-cache
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-default-layout
+  - jekyll-titles-from-headings
 
 kramdown:
   syntax_highlighter_opts:
