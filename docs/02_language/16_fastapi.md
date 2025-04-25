@@ -2620,7 +2620,7 @@ def delete_blog(conn: Connection, id: int):
 
 `Blog_MVC/templates/index.html`
 
-```py
+```html
 {% raw %}<!DOCTYPE html>
 <html>
 <head>
@@ -2643,7 +2643,7 @@ def delete_blog(conn: Connection, id: int):
 
 `Blog_MVC/templates/show_blog.html`
 
-```py
+```html
 {% raw %}<!DOCTYPE html>
 <html>
 <head>
@@ -2670,7 +2670,7 @@ def delete_blog(conn: Connection, id: int):
 
 `Blog_MVC/templates/new_blog.html`
 
-```py
+```html
 {% raw %}<html>
 <head>
     <title>새로운 블로그 생성</title>
@@ -2698,7 +2698,7 @@ def delete_blog(conn: Connection, id: int):
 
 `Blog_MVC/templates/modify_blog.html`
 
-```py
+```html
 {% raw %}<html>
 <head>
     <title>블로그 수정</title>
@@ -2723,6 +2723,7 @@ def delete_blog(conn: Connection, id: int):
 </body>
 </html>{% endraw %}
 ```
+
 ## Bootstrap 테스트
 
 `Bootstrap_Template/main.py`
@@ -2758,7 +2759,7 @@ async def read_all_items(request: Request):
 
 `Bootstrap_Template/layout/main_layout.html`
 
-```py
+```html
 {% raw %}<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2789,7 +2790,7 @@ async def read_all_items(request: Request):
 
 `Bootstrap_Template/layout/navbar.html`
 
-```py
+```html
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="#">My Item</a>
@@ -2815,7 +2816,7 @@ async def read_all_items(request: Request):
 
 `Bootstrap_Template/layout/footer.html`
 
-```py
+```html
 <footer class="bg-light text-center py-4 mt-4 mt-auto">
     <div class="container">
         <p class="mb-0">© 2024 All Rights Reserved.</p>
@@ -2825,7 +2826,7 @@ async def read_all_items(request: Request):
 
 `Bootstrap_Template/templates/index.html`
 
-```py
+```html
 {% raw %}{% extends "/layout/main_layout.html" %}
     {% block content %}
     <main class="px-3">
@@ -3275,7 +3276,7 @@ def delete_blog(conn: Connection, id: int, image_loc: str = None):
 
 `Blog_Bootstrap/templates/layout/main_layout.html`
 
-```py
+```html
 {% raw %}<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3301,7 +3302,7 @@ def delete_blog(conn: Connection, id: int, image_loc: str = None):
 
 `Blog_Bootstrap/templates/layout/navbar.html`
 
-```py
+```html
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
@@ -3329,7 +3330,7 @@ def delete_blog(conn: Connection, id: int, image_loc: str = None):
 
 `Blog_Bootstrap/templates/layout/footer.html`
 
-```py
+```html
 <!-- Footer -->
 <footer class="bg-light text-center py-4 mt-auto">
     <div class="container">
@@ -3340,7 +3341,7 @@ def delete_blog(conn: Connection, id: int, image_loc: str = None):
 
 `Blog_Bootstrap/templates/index.html`
 
-```py
+```html
 {% raw %}{% extends "/layout/main_layout.html" %}
     {% block content %}
     <!-- Main Content -->
@@ -3372,7 +3373,7 @@ def delete_blog(conn: Connection, id: int, image_loc: str = None):
 
 `Blog_Bootstrap/templates/show_blog.html`
 
-```py
+```html
 {% raw %}{% extends "/layout/main_layout.html" %}
     {% block content %}
     <!-- Blog Post Content -->
@@ -3431,7 +3432,7 @@ def delete_blog(conn: Connection, id: int, image_loc: str = None):
 
 `Blog_Bootstrap/templates/new_blog.html`
 
-```py
+```html
 {% raw %}{% extends "/layout/main_layout.html" %}
     {% block content %}
 
@@ -3475,7 +3476,7 @@ def delete_blog(conn: Connection, id: int, image_loc: str = None):
 
 `Blog_Bootstrap/templates/modify_blog.html`
 
-```py
+```html
 {% raw %}{% extends "/layout/main_layout.html" %}
     {% block content %}
 
