@@ -19,6 +19,9 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://shimseonjo.github.io" # the base hostname & protocol for your site
 repository: shimseonjo/shimseonjo.github.io # for github-metadata
 
+# 테마 설정
+theme: jekyll-theme-primer
+
 permalink: pretty
 
 exclude:
@@ -125,6 +128,7 @@ nav_external_links:
 liquid:
    error_mode: strict
    strict_filters: true
+   strict_variables: false  # 변수가 없을 때 오류를 발생시키지 않음
 
 # Footer content
 # appears at the bottom of every page's main content
@@ -190,6 +194,10 @@ plugins:
   - jekyll-readme-index
   - jekyll-default-layout
   - jekyll-titles-from-headings
+  - jekyll-coffeescript
+  - jekyll-commonmark-ghpages
+  - jekyll-gist
+  - jekyll-paginate
 
 kramdown:
   syntax_highlighter_opts:
@@ -205,3 +213,16 @@ compress_html:
   profile: false
   # ignore:
   #   envs: all
+
+# Markdown 설정
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+    span:
+      line_numbers: false
+    table:
+      line_numbers: false

@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # GitHub Pages에서 지원하는 Jekyll 버전
-gem "jekyll", "~> 4.3.2"
+gem "github-pages", "~> 232", group: :jekyll_plugins
 
 # GitHub Pages에서 지원하는 플러그인들
 gem "jekyll-seo-tag", "~> 2.8.0"
