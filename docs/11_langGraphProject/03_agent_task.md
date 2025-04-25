@@ -931,7 +931,7 @@ state = {
     "season": "봄",
     "weather": "Rain",
     "time_slot": "야간",
-    "recommended_items": ["김치찌개", "된장찌개"],
+    "recommended_items": ["김치찌개", "부대찌개"],
     "recommended_place": {
         "name": "홍대 맛집 김치네",
         "address": "서울 마포구 홍익로 10",
