@@ -1076,6 +1076,7 @@ builder.add_edge("intent_unsupported", END)
 graph = builder.compile()
 
 ```
+
 ## 5. 테스트 실행 및 결과 확인
 
 입력 예시를 기반으로 그래프를 실행하고, 각 단계의 출력을 확인합니다.
@@ -1100,4 +1101,165 @@ final_state = events[-1].get("__end__") or events[-1].get("summarize_message", {
 print("📦 최종 추천 메시지:")
 print(final_state.get("final_message", "추천 결과가 없습니다."))
 
+```
+
+## 터미널에서 실행
+
+```py
+from langgraph.graph import StateGraph, END
+from typing_extensions import TypedDict
+
+# 각 단계에서 사용할 에이전트 함수들 불러오기
+from agents.intent import classify_intent
+from agents.time import get_time_slot
+from agents.season import get_season
+from agents.weather import get_weather
+from agents.food import recommend_food
+from agents.activity import recommend_activity
+from agents.keyword import generate_search_keyword
+from agents.place import search_place
+from agents.summary import summarize_message
+from agents.intent_unsupported import intent_unsupported_handler
+
+# 상태(State) 타입 정의
+# LangGraph에서 상태는 모든 노드 간에 주고받는 정보를 의미하며,
+# 어떤 정보를 다룰지 명확히 정의해 줍니다.
+class State(TypedDict):
+    user_input: str                # 사용자의 입력 문장
+    location: str                  # 지역 정보 (예: "홍대")
+    time_slot: str                 # 시간대 (예: "아침", "점심", "야간")
+    season: str                    # 계절 (예: "봄", "가을")
+    weather: str                   # 날씨 상태 (예: "Rain", "Clear")
+    intent: str                    # 분류된 의도 ("food", "activity", "unknown")
+    recommended_items: list        # 추천 음식 또는 활동 리스트
+    search_keyword: str            # 장소 검색용 키워드
+    recommended_place: dict        # 장소 추천 결과 (name, address, url)
+    final_message: str             # GPT가 생성한 최종 안내 메시지
+
+# LangGraph builder 생성
+builder = StateGraph(State)
+
+# 각 노드에 이름을 붙여 LangGraph에 등록
+builder.add_node("classify_intent", classify_intent)
+builder.add_node("get_time_slot", get_time_slot)
+builder.add_node("get_season", get_season)
+builder.add_node("get_weather", get_weather)
+builder.add_node("recommend_food", recommend_food)
+builder.add_node("recommend_activity", recommend_activity)
+builder.add_node("generate_search_keyword", generate_search_keyword)
+builder.add_node("search_place", search_place)
+builder.add_node("summarize_message", summarize_message)
+builder.add_node("intent_unsupported", intent_unsupported_handler)
+
+# 의도(intent)에 따라 음식 추천 / 활동 추천 / 종료 노드를 분기하는 함수
+def route_intent(state: State) -> str:
+    intent = state.get("intent", "")
+    if intent == "food":
+        return "recommend_food"
+    elif intent == "activity":
+        return "recommend_activity"
+    return "intent_unsupported"  # intent가 unknown이면 graceful 종료로 분기
+
+# 흐름 연결
+builder.set_entry_point("classify_intent")
+builder.add_edge("classify_intent", "get_time_slot")
+builder.add_edge("get_time_slot", "get_season")
+builder.add_edge("get_season", "get_weather")
+
+# 분기 처리: intent에 따라 추천 경로 달라짐
+builder.add_conditional_edges("get_weather", route_intent, {
+    "recommend_food": "recommend_food",
+    "recommend_activity": "recommend_activity",
+    "intent_unsupported": "intent_unsupported"
+})
+
+# 공통 후처리 흐름
+builder.add_edge("recommend_food", "generate_search_keyword")
+builder.add_edge("recommend_activity", "generate_search_keyword")
+builder.add_edge("generate_search_keyword", "search_place")
+builder.add_edge("search_place", "summarize_message")
+
+# 종료 처리
+builder.add_edge("summarize_message", END)
+builder.add_edge("intent_unsupported", END)
+
+# 그래프 최종 컴파일
+graph = builder.compile()
+
+
+```
+
+```py
+import pytest
+from run_graph import graph
+
+# pytest에서 공통으로 사용할 기본 입력 상태 설정
+@pytest.fixture
+def base_state():
+    # 테스트에 사용할 간단한 상태 값 (입력 문장과 지역 정보)
+    return {
+        "user_input": "배고파",   # 추천 흐름 시작용 입력 문장
+        "location": "홍대"       # 테스트용 지역
+    }
+
+# LangGraph 실행 테스트 함수
+def test_graph_execution(base_state):
+    # LangGraph 실행: 상태를 기반으로 전체 흐름을 순차적으로 실행
+    events = list(graph.stream(base_state))
+
+    # 실행 결과는 리스트 형태여야 하며, 1개 이상 단계가 있어야 함
+    assert isinstance(events, list)
+    assert len(events) > 0
+
+    # 최종 상태 추출 (마지막 단계 또는 __end__ 키 기준)
+    final_state = events[-1].get("__end__") or events[-1]
+    summary = final_state.get("summarize_message", final_state)
+
+    # 최종 메시지가 존재해야 함
+    assert "final_message" in summary
+    assert isinstance(summary["final_message"], str)
+
+    # 결과 메시지 콘솔에 출력
+    print("\n✅ 요약 메시지:")
+    print(summary["final_message"])
+    
+    
+```
+
+```py
+from run_graph import graph
+
+# 이 스크립트는 LangGraph 흐름을 터미널에서 테스트하기 위한 테스트 실행기입니다.
+# Streamlit 없이도 상태 입력만으로 추천 전체 흐름을 실행할 수 있습니다.
+
+# 🧪 테스트용 입력 상태 설정
+test_input = {
+    "user_input": "배고파",
+    "location": "홍대"
+}
+
+# LangGraph 실행 및 결과 출력
+print("🧠 LangGraph 실행 시작...\n")
+try:
+    events = list(graph.stream(test_input))  # 그래프 실행
+    print("✅ 실행 완료. 단계별 상태:\n")
+
+    # 각 단계별 상태 출력
+    for i, e in enumerate(events):
+        step_name = list(e.keys())[0]
+        print(f"Step {i+1}: {step_name}")
+        print(e, "\n")
+
+    # 최종 요약 메시지 추출 (summarize_message 내부 또는 마지막 상태)
+    final_state = events[-1].get("__end__") or events[-1]
+    summary = final_state.get("summarize_message", final_state)
+    final_message = summary.get("final_message", "추천 메시지가 없습니다.")
+
+    print("📦 최종 추천 메시지:")
+    print(final_message)
+
+except Exception as e:
+    print("❌ 실행 중 오류 발생:")
+    print(str(e))
+    
 ```
