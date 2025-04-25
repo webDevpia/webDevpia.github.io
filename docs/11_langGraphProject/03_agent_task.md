@@ -7,118 +7,1300 @@ permalink: /langgraph_prj/agent_proj
 # nav_exclude: true
 # search_exclude: true
 --- 
+# 00. 환경설정 파일 작성
 
-# 📘 프로젝트 정의서: 아, 뭐 먹지? 뭐 하지?
+`.env`
 
----
-
-## ✅ 프로젝트 개요
-
-**"아, 뭐 먹지? 뭐 하지?"**는 GPT 및 LangGraph를 기반으로 사용자의 자연어 입력을 분석하고,  
-현재 시간, 계절, 날씨를 고려하여 적절한 **음식 또는 활동을 추천**하는 스마트 개인 비서형 AI 서비스입니다.
-
-사용자는 단순히 `"배고파"`, `"심심해"`, `"뭐하지?"` 와 같은 자연어를 입력하면,  
-GPT가 이를 이해하고 추천 흐름을 자동으로 제어합니다.
-
----
-
-## 🎯 목표
-
-- 자연어 기반 상황 분석 및 의도 분류
-- 실시간 조건(날씨, 시간대, 계절)에 맞춘 개인화 추천
-- 음식/활동 → 장소 검색 → 감성 요약까지 완결된 추천 서비스 구현
-- 초급자도 이해할 수 있는 LangGraph 기반 구조 실습 지원
-
----
-
-## 🧩 기술 스택
-
-| 항목 | 사용 기술 |
-|------|-----------|
-| LLM 기반 추천 | GPT-4o (via `langchain-openai`)  
-| 흐름 제어 | LangGraph  
-| 웹 UI | Streamlit (옵션)  
-| 외부 API | Kakao Local API, OpenWeather API  
-| 환경 구성 | Python 3.12, `.env`, `python-dotenv`  
-
----
-
-## 🧠 주요 기능
-
-| 기능 | 설명 |
-|------|------|
-| Intent 분류 | 입력 문장을 `food`, `activity`, `unknown` 으로 분류  
-| 시간대 감지 | 현재 시각 → `"아침", "점심", "저녁", "야간"`  
-| 계절 감지 | 현재 월 → `"봄", "여름", "가을", "겨울"`  
-| 날씨 확인 | OpenWeather API를 통해 날씨 (`Rain`, `Clear` 등) 추출  
-| 음식/활동 추천 | 조건 기반으로 GPT 추천 2가지 생성  
-| 장소 검색 | Kakao API로 추천 항목 기반 장소 추천  
-| 감성 메시지 생성 | 최종 결과를 요약 문장으로 생성해 사용자에게 출력  
-
----
-
-## 🗂 에이전트 구성
-
-| 에이전트 | 설명 |
-|----------|------|
-| `classify_intent` | 입력 문장 분석 → 추천 흐름 분기  
-| `get_time_slot` | 시간대 추출 (5~11: 아침 등)  
-| `get_season` | 월 기준 계절 추출  
-| `get_weather` | 날씨 API 호출 → 현재 날씨 추출  
-| `recommend_food` | GPT로 음식 추천 2개 생성  
-| `recommend_activity` | GPT로 활동 추천 2개 생성  
-| `generate_search_keyword` | 검색 키워드 (예: 한식, 북카페 등) 생성  
-| `search_place` | Kakao API로 장소 추천  
-| `summarize_message` | 최종 안내 문장 생성  
-| `intent_unsupported_handler` | 추천 불가 시 graceful 종료 메시지 제공  
-
----
-
-## 🧪 테스트 방법
-
-- 터미널 실행: `python test_runner.py`
-- Pytest 실행: `pytest test_graph.py`
-- Web UI: `streamlit run app.py`
-
----
-
-## 👨‍🏫 수업 활용 안내
-
-- 각 에이전트별 `.ipynb` 실습 파일 제공 (설명 + 주석 포함)
-- 테스트 스크립트 및 UI 코드 주석화 제공
-- 수업 난이도 조절 가능: LangGraph 흐름 → 각 노드 실습
-
----
-
-## 📂 프로젝트 구성 파일 예시
-
-```
-📦 ah-mwo-meokji
-├── agents/
-│   ├── intent.py
-│   ├── time.py
-│   ├── season.py
-│   ├── weather.py
-│   ├── food.py
-│   ├── activity.py
-│   ├── keyword.py
-│   ├── place.py
-│   ├── summary.py
-│   └── intent_unsupported.py
-├── run_graph.py
-├── app.py
-├── test_runner.py
-├── test_graph.py
-├── .env
+```py
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-4o-mini
+TAVILY_API_KEY=
+KAKAO_API_KEY=
+WEATHER_API_KEY=
 ```
 
----
+`config.py`
 
-## ✨ 확장 아이디어
+```py
+import os
+from dotenv import load_dotenv
 
-- `"다른 음식 추천해줘"` → 대화형 흐름 확장
-- 지도 시각화 / 추천 기록 저장
-- 사용자 피드백(👍/👎) 수집 및 반영
-- 대화형 Web UI 구성 (Streamlit Chat)
+load_dotenv()
 
----
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
+KAKAO_API_KEY = os.getenv("KAKAO_API_KEY")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+```
+
+# 01. Intent Agent 실습
+
+사용자의 자연어 입력을 GPT를 통해 `food`, `activity`, `unknown` 중 하나로 분류하는 의도 판단 에이전트를 실습합니다.
+
+LangGraph 흐름에서 가장 첫 번째로 실행되는 노드이며, 입력이 어떤 추천 경로로 이어질지 결정하는 중요한 단계입니다.
+
+`agents/intent.py`
+
+```py
+from langchain_openai import ChatOpenAI
+from config import OPENAI_API_KEY, OPENAI_MODEL
+import json
+
+# GPT 기반 의도 분류 에이전트 설정
+# 사용자의 입력 문장을 기반으로 food / activity / unknown 중 하나로 분류합니다.
+llm = ChatOpenAI(
+    model=OPENAI_MODEL,                    # 사용할 OpenAI 모델 (예: gpt-4o)
+    api_key=OPENAI_API_KEY,               # 환경변수에서 불러온 OpenAI API 키
+    temperature=0.3,                      # 창의성 제어 (낮을수록 일관성 ↑)
+    model_kwargs={                        # OpenAI에 전달할 추가 옵션
+        "response_format": {"type": "json_object"}  # 반드시 JSON 객체로 응답
+    }
+)
+# 노드로 사용할 함수는 반드시 독스트링이 반드시 있어야 합니다.
+# 독스트링이 없으면 에러가 발생합니다.
+# 독스트링은 반드시 함수의 첫 번째 줄에 작성해야 합니다.
+def classify_intent(state: dict) -> dict:
+    """사용자의 입력 문장을 기반으로 GPT를 호출하여 food, activity, unknown 중 하나의 intent를 분류합니다."""
+    user_input = state.get("user_input", "")  # 사용자의 입력 문장 추출
+
+    # GPT에게 의도를 분류하도록 요청할 프롬프트
+    prompt = f"""
+당신은 사용자의 자연어 입력을 food / activity / unknown 중 하나로 분류하는 AI입니다.
+
+입력: "{user_input}"
+
+분류 기준:
+- 음식 관련 표현 → "food" (예: 배고파, 뭐 먹지, 야식 추천해줘 등)
+- 활동 관련 표현 → "activity" (예: 심심해, 뭐 하지, 놀고 싶어 등)
+- 증상, 감정, 질문, 애매한 표현 → "unknown"
+
+조금 애매한 표현이라도 의미가 보이면 food 또는 activity로 분류하세요.
+
+출력은 반드시 다음 중 하나의 JSON 배열 또는 객체로 작성하세요:
+- 배열: ["food"]
+- 객체: {{ "intent": ["food"] }}
+"""
+
+    # GPT 호출
+    response = llm.invoke([{"role": "user", "content": prompt.strip()}])
+
+    # GPT의 응답 원문을 출력 (디버깅용)
+    intent_raw = response.content.strip()
+    print(">>> GPT intent 응답:", intent_raw)
+
+    try:
+        # 응답을 JSON으로 파싱
+        parsed = json.loads(intent_raw)
+
+        # case 1: 응답이 배열 형태일 경우 (예: ["food"])
+        if isinstance(parsed, list) and parsed and parsed[0] in ["food", "activity"]:
+            return {**state, "intent": parsed[0]}
+
+        # case 2: 응답이 딕셔너리 형태일 경우 (예: {"intent": ["activity"]})
+        if isinstance(parsed, dict):
+            if "intent" in parsed:
+                inner = parsed["intent"]
+                if isinstance(inner, list) and inner and inner[0] in ["food", "activity"]:
+                    return {**state, "intent": inner[0]}
+            # fallback: GPT가 "food": [] 또는 "activity": [] 형식으로 응답했을 경우
+            for key in ["food", "activity"]:
+                if key in parsed:
+                    return {**state, "intent": key}
+
+    except Exception as e:
+        print(">>> intent 분류 파싱 실패:", str(e))
+
+    # 모든 조건 실패 시 unknown으로 처리
+    return {**state, "intent": "unknown"}
+    
+```
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# 필요한 라이브러리 및 에이전트 함수 불러오기
+from agents.intent import classify_intent
+```
+
+## ✍️ 2. 샘플 입력 준비
+
+```python
+# 예시 입력을 딕셔너리로 구성합니다.
+test_input_1 = {"user_input": "배고파"}
+test_input_2 = {"user_input": "뭐 하지?"}
+test_input_3 = {"user_input": "배가 아파요..."}
+```
+
+## 🚀 3. Intent 분류 함수 실행
+
+```python
+# classify_intent는 state 딕셔너리를 입력받아 intent를 판단해 반환합니다.
+print("입력1:", test_input_1["user_input"])
+print("결과:", classify_intent(test_input_1)["intent"])
+
+print("입력2:", test_input_2["user_input"])
+print("결과:", classify_intent(test_input_2)["intent"])
+
+print("입력3:", test_input_3["user_input"])
+print("결과:", classify_intent(test_input_3)["intent"])
+```
+
+## ✏️ 4. 직접 입력해보고 테스트해 보세요
+
+```python
+# 아래에 원하는 문장을 입력해보고 intent가 어떻게 분류되는지 확인해 보세요.
+my_input = {"user_input": "비 오는 날 뭐 먹을까?"}
+print("입력:", my_input["user_input"])
+print("결과:", classify_intent(my_input)["intent"])
+```
+
+
+# 02. Time Agent 실습 노트북
+
+현재 시각을 기준으로 시간대를 자동 분류하는 Time Agent의 동작을 실습합니다.
+
+시간대는 아침(5-11시), 점심(11-16시), 저녁(16-22시), 야간(22-5시) 중 하나로 분류됩니다.
+LangGraph 내에서 조건 분기를 위한 중요한 컨텍스트입니다.
+
+`agents/time.py`
+
+```py
+from datetime import datetime
+
+def get_time_slot(state: dict) -> dict:
+    """현재 시각을 기준으로 시간대를 분류하여 상태에 추가합니다.
+
+    시간대는 다음과 같이 분류됩니다:
+    - 05:00 ~ 11:00 -> '아침'
+    - 11:00 ~ 16:00 -> '점심'
+    - 16:00 ~ 22:00 -> '저녁'
+    - 22:00 ~ 05:00 -> '야간'
+    """
+    hour = datetime.now().hour  # 현재 시간의 시(hour) 정보를 가져옵니다.
+
+    # 시간에 따라 적절한 시간대를 반환합니다.
+    if 5 <= hour < 11:
+        return {**state, "time_slot": "아침"}
+    elif 11 <= hour < 16:
+        return {**state, "time_slot": "점심"}
+    elif 16 <= hour < 22:
+        return {**state, "time_slot": "저녁"}
+    else:
+        return {**state, "time_slot": "야간"}  # 22시 이후 또는 5시 이전은 야간으로 처리
+        
+```
+
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# 시간대 추출 에이전트 함수 불러오기
+from agents.time import get_time_slot
+```
+
+## ✍️ 2. 샘플 상태 구성
+
+```python
+# 최소 입력: 아무 값 없이 빈 딕셔너리도 가능 (내부적으로 datetime.now 사용)
+state = {}
+```
+
+## 🕒 3. 시간대 추출 실행
+
+```python
+result = get_time_slot(state)
+print("현재 시간에 따른 분류된 시간대:", result["time_slot"])
+```
+
+## 🔁 4. 직접 테스트해보세요
+
+```python
+# 실제 시각 확인 (현재 실행되는 환경 기준)
+from datetime import datetime
+print("현재 시각 (기준):", datetime.now().strftime("%Y-%m-%d %H:%M"))
+```
+
+# 03. Season Agent 실습 노트북
+
+현재 날짜를 기준으로 계절을 자동 분류하는 Season Agent의 동작을 실습합니다.
+
+계절은 봄(3~5월), 여름(6~8월), 가을(9~11월), 겨울(12~2월) 중 하나로 분류되며,
+LangGraph 내에서는 음식/활동 추천 시 조건 컨텍스트로 사용됩니다.
+
+`agents/season.py`
+
+```py
+from datetime import datetime
+
+def get_season(state: dict) -> dict:
+    """현재 월(month)을 기준으로 계절을 분류하여 상태에 추가합니다.
+
+    분류 기준:
+    - 3월 ~ 5월   : 봄
+    - 6월 ~ 8월   : 여름
+    - 9월 ~ 11월  : 가을
+    - 12월, 1월, 2월 : 겨울
+    """
+    month = datetime.now().month  # 현재 월(1~12)을 가져옵니다
+
+    # 월에 따라 계절을 분류합니다
+    if 3 <= month <= 5:
+        season = "봄"
+    elif 6 <= month <= 8:
+        season = "여름"
+    elif 9 <= month <= 11:
+        season = "가을"
+    else:
+        season = "겨울"  # 12월, 1월, 2월
+
+    # 상태에 계절 정보를 추가해서 반환합니다
+    return {**state, "season": season}
+    
+```
+
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# 계절 분류 에이전트 함수 불러오기
+from agents.season import get_season
+```
+
+## ✍️ 2. 샘플 상태 구성
+
+```python
+# 계절 분류는 현재 월을 기준으로 자동 판단됩니다.
+state = {}
+```
+
+## 🍃 3. 계절 분류 실행
+
+```python
+result = get_season(state)
+print("현재 날짜에 따른 분류된 계절:", result["season"])
+```
+
+## 🗓 4. 오늘 날짜 확인
+
+```python
+from datetime import datetime
+print("오늘 날짜:", datetime.now().strftime("%Y-%m-%d"))
+```
+
+# 04. Weather Agent 실습 노트북
+
+OpenWeather API를 활용하여 현재 지역의 날씨 정보를 가져오는 Weather Agent의 동작을 실습합니다.
+
+LangGraph 내에서는 음식 및 활동 추천 시 조건을 구성하는 중요한 컨텍스트입니다.
+
+`agents/weather.py`
+
+```py
+import os
+import requests
+from config import WEATHER_API_KEY
+
+def get_weather(state: dict) -> dict:
+    """OpenWeather API를 통해 현재 날씨 정보를 가져와서 상태에 추가합니다.
+
+    현재는 location이 '서울' 기준으로 고정되어 있으며,
+    반환되는 날씨 상태는 'Clear', 'Clouds', 'Rain', 'Snow' 등입니다.
+    """
+
+    # OpenWeather API 호출 URL과 파라미터 설정
+    url = "https://api.openweathermap.org/data/2.5/weather"
+    params = {
+        "q": "Seoul",
+        "appid": WEATHER_API_KEY,
+        "lang": "kr",
+        "units": "metric"
+    }
+
+    # API 요청 전 로그 출력
+    print(">>> OpenWeather API 호출 시작 (서울 기준)")
+
+    # GET 요청을 통해 날씨 정보 요청
+    response = requests.get(url, params=params)
+
+    # 응답 코드가 실패일 경우 예외 발생
+    response.raise_for_status()
+
+    # 응답에서 날씨 상태 추출
+    weather_data = response.json()
+    weather = weather_data["weather"][0]["main"]  # 예: 'Clear', 'Rain', 'Clouds'
+
+    # 상태에 날씨 정보 추가 후 반환
+    return {**state, "weather": weather}
+```
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# 날씨 정보를 불러오는 Weather Agent 함수
+from agents.weather import get_weather
+```
+
+## ✍️ 2. 샘플 입력 구성
+
+```python
+# 지역 정보가 포함된 상태 구성 (현재는 'Seoul'로 고정되어 있음)
+state = {
+    "location": "홍대"  # 내부적으로 'Seoul'로 요청됩니다.
+}
+```
+
+## 🌦 3. 날씨 정보 가져오기
+
+```python
+# OpenWeather API를 호출하여 날씨 정보를 받아옵니다.
+result = get_weather(state)
+print("날씨 상태:", result.get("weather"))
+```
+
+## ℹ️ 참고 사항
+- 날씨는 OpenWeather에서 가져오며, `weather_main` 값을 사용합니다 (예: Clear, Rain, Snow 등)
+- 실제 요청은 기본 설정된 'Seoul'에 대해 수행되며, 향후 확장을 위해 location별 좌표 기반 API도 사용할 수 있습니다.
+
+
+# 05. Food Agent 실습
+
+사용자의 의도(`food`)에 따라 GPT를 통해 음식 추천을 생성하는 흐름을 실습합니다.
+
+LangGraph 내에서 `intent == food`인 경우 실행되며, 추천 음식 리스트를 생성합니다.
+
+`agents/food.py`
+```py
+from langchain_openai import ChatOpenAI
+from config import OPENAI_API_KEY, OPENAI_MODEL
+import json
+
+# GPT 기반 음식 추천 에이전트 구성
+llm = ChatOpenAI(
+    model=OPENAI_MODEL,                     # 사용할 GPT 모델 이름
+    api_key=OPENAI_API_KEY,                # .env에서 불러온 API 키
+    temperature=0.5,                       # 결과 다양성 조절
+    model_kwargs={
+        "response_format": {"type": "json_object"}  # JSON 형식 강제
+    }
+)
+
+def recommend_food(state: dict) -> dict:
+    """
+    사용자의 입력과 계절, 날씨, 시간대 정보를 기반으로
+    GPT를 통해 음식 추천을 생성하는 함수입니다.
+    """
+
+    # 상태에서 필요한 정보 추출
+    user_input = state.get("user_input", "")
+    season = state.get("season", "봄")
+    weather = state.get("weather", "Clear")
+    time_slot = state.get("time_slot", "점심")
+
+    # GPT에게 보낼 프롬프트 정의 (f-string 내부 문자열은 안전하게 작성) 페르소나는 디테일하게 작성하는것이 좋음.
+    prompt = f"""당신은 음식 추천 AI입니다.
+
+사용자 입력: "{user_input}"
+현재 조건:
+- 계절: {season}
+- 날씨: {weather}
+- 시간대: {time_slot}
+
+이 조건에 어울리는 음식 2가지를 추천해 주세요.
+
+사용자가 특정 음식을 언급한 경우(예: "피자")에는 그 음식을 포함하거나,
+관련된 음식 또는 어울리는 음식으로 추천해도 좋습니다.
+
+결과는 반드시 JSON 배열 형식으로 출력하세요.
+예: ["피자", "떡볶이"]
+"""  # f-string 끝
+
+    # GPT 호출 실행
+    response = llm.invoke([{"role": "user", "content": prompt.strip()}])
+
+    # 응답 내용을 JSON으로 파싱
+    items = json.loads(response.content)
+
+    # 응답이 딕셔너리일 경우 → 값만 추출
+    if isinstance(items, dict):
+        items = [i for sub in items.values() for i in (sub if isinstance(sub, list) else [sub])]
+    elif not isinstance(items, list):
+        items = [str(items)]  # 리스트가 아니면 리스트로 감싸기
+
+    # 추천 음식 리스트를 상태에 추가하여 반환
+    return {**state, "recommended_items": items}
+    
+```
+
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# GPT 기반 음식 추천 에이전트 함수 불러오기
+from agents.food import recommend_food
+```
+
+## ✍️ 2. 샘플 입력 구성
+
+```python
+# 음식 추천에 필요한 최소 상태를 정의합니다.
+state = {
+    "user_input": "비오는 날 뜨끈한 거 뭐 없을까",
+    "season": "봄",
+    "weather": "Rain",
+    "time_slot": "야간"
+}
+```
+
+## 🚀 3. 음식 추천 실행 및 결과 확인
+
+```python
+# GPT가 조건에 맞는 음식 리스트를 생성합니다.
+result = recommend_food(state)
+print("추천된 음식 리스트:", result["recommended_items"])
+```
+
+## ✏️ 4. 다른 조건으로도 테스트해보세요
+
+```python
+# 여기에 다른 계절/날씨/시간대를 넣어보며 실습해보세요.
+state2 = {
+    "user_input": "출출해",
+    "season": "겨울",
+    "weather": "Clear",
+    "time_slot": "야간"
+}
+result2 = recommend_food(state2)
+print("추천된 음식:", result2["recommended_items"])
+```
+
+# 06. Activity Agent 실습
+
+사용자의 의도(`activity`)에 따라 GPT를 통해 활동 추천을 생성하는 흐름을 실습합니다.
+
+LangGraph 내에서 `intent == activity`인 경우 실행되며, 날씨, 계절, 시간대 정보를 활용해 활동 리스트를 생성합니다.
+
+`agents/activity.py`
+
+```py
+from langchain_openai import ChatOpenAI
+from config import OPENAI_API_KEY, OPENAI_MODEL
+import json
+
+# GPT 기반 활동 추천 에이전트 구성
+llm = ChatOpenAI(
+    model=OPENAI_MODEL,                    # 사용할 GPT 모델 이름
+    api_key=OPENAI_API_KEY,               # OpenAI API 키 (환경변수에서 불러옴)
+    temperature=0.5,                      # 창의성 제어 (중간값)
+    model_kwargs={                        # 응답 형식 명시
+        "response_format": {"type": "json_object"}
+    }
+)
+
+def recommend_activity(state: dict) -> dict:
+    """
+    GPT를 사용하여 사용자의 상황과 입력을 기반으로
+    추천할 활동 2가지를 생성하는 함수입니다.
+    """
+
+    # 입력 상태에서 정보 추출
+    user_input = state.get("user_input", "")
+    season = state.get("season", "봄")
+    weather = state.get("weather", "Clear")
+    time_slot = state.get("time_slot", "점심")
+
+    # GPT에게 활동 추천을 요청할 프롬프트 작성
+    prompt = f"""당신은 활동 추천 AI입니다.
+
+사용자 입력: "{user_input}"
+현재 조건:
+- 계절: {season}
+- 날씨: {weather}
+- 시간대: {time_slot}
+
+이 조건과 입력에 어울리는 활동 2가지를 추천해 주세요.
+실내 활동이 포함되면 더 좋습니다.
+
+결과는 반드시 JSON 배열 형식으로 출력하세요.
+예: ["북카페 가기", "실내 보드게임"]
+"""  # 안전한 f-string
+
+    # GPT 호출
+    response = llm.invoke([{"role": "user", "content": prompt.strip()}])
+
+    # GPT 응답 파싱
+    items = json.loads(response.content)
+
+    # dict 형태 응답 → 값만 리스트로 추출
+    if isinstance(items, dict):
+        items = [i for sub in items.values() for i in (sub if isinstance(sub, list) else [sub])]
+    elif not isinstance(items, list):
+        items = [str(items)]  # 단일 문자열을 리스트로 감싸기
+
+    # 추천 활동을 상태에 추가하여 반환
+    return {**state, "recommended_items": items}
+    
+```
+
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# GPT 기반 활동 추천 에이전트 함수 불러오기
+from agents.activity import recommend_activity
+```
+
+## ✍️ 2. 샘플 입력 구성
+
+```python
+# 활동 추천에 필요한 최소 상태 정보를 입력합니다.
+state = {
+    "user_input": "심심해",
+    "season": "봄",
+    "weather": "Rain",
+    "time_slot": "야간"
+}
+```
+
+## 🚀 3. 활동 추천 실행 및 결과 확인
+
+```python
+# GPT가 조건에 맞는 활동 리스트를 생성합니다.
+result = recommend_activity(state)
+print("추천된 활동 리스트:", result["recommended_items"])
+```
+
+## ✏️ 4. 다른 조건으로도 테스트해보세요
+
+```python
+# 여기에 다른 입력을 설정해서 테스트할 수 있습니다.
+state2 = {
+    "user_input": "뭔가 하고 싶어",
+    "season": "겨울",
+    "weather": "Snow",
+    "time_slot": "야간"
+}
+result2 = recommend_activity(state2)
+print("추천된 활동:", result2["recommended_items"])
+```
+
+# 07. Intent Unsupported Agent 실습 노트북
+
+사용자 입력이 음식/활동 추천과 관련되지 않았을 경우,
+그에 대한 대응 메시지를 생성하는 Intent Unsupported Agent의 동작을 실습합니다.
+
+LangGraph에서는 분류된 intent가 'food', 'activity' 외의 'unknown'일 경우에만 실행되며,
+사용자에게 자연스럽고 친절한 종료 메시지를 제공합니다.
+
+`agents/intent_unsupported.py`
+
+```py
+def intent_unsupported_handler(state: dict) -> dict:
+    """
+    사용자의 입력이 'food'나 'activity'로 분류되지 않은 경우에 실행되는 에이전트입니다.
+
+    의도가 'unknown'으로 판단되면 추천을 수행하지 않고,
+    대신 사용자에게 정중한 안내 메시지를 전달합니다.
+    """
+
+    # 안내 메시지를 상태에 추가
+    return {
+        **state,
+        "final_message": "죄송해요! 저는 음식이나 활동 추천만 도와드릴 수 있어요 😊"
+    }
+    
+```
+
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# 의도를 분류할 수 없을 때 실행되는 종료 메시지 함수 불러오기
+from agents.intent_unsupported import intent_unsupported_handler
+```
+
+## ✍️ 2. 샘플 입력 구성
+
+```python
+# 사용자의 입력이 추천 불가능한 경우 상태 예시
+state = {
+    "user_input": "아이구 배야!",
+    "intent": "unknown"
+}
+```
+
+## 🛑 3. graceful 종료 메시지 출력
+
+```python
+# 종료 메시지 생성
+result = intent_unsupported_handler(state)
+print("메시지:", result["final_message"])
+```
+
+# 08. Keyword Agent 실습 노트북
+
+음식 또는 활동 추천 결과를 바탕으로, 장소 검색에 사용할 키워드를 생성하는 흐름을 실습합니다.
+
+GPT를 활용하여 추천 항목(예: 김치찌개, 책 읽기 등)을 검색 가능한 장소 키워드(예: 한식, 북카페 등)로 변환합니다.
+
+`agents/keyword.py`
+
+```py
+from langchain_openai import ChatOpenAI
+from config import OPENAI_API_KEY, OPENAI_MODEL
+import json
+
+# GPT 기반 검색 키워드 생성 에이전트
+# 음식 또는 활동 추천 결과를 바탕으로 장소 검색에 적합한 키워드를 추출합니다.
+llm = ChatOpenAI(
+    model=OPENAI_MODEL,                     # 사용할 GPT 모델
+    api_key=OPENAI_API_KEY,                # 환경변수에서 불러온 OpenAI API 키
+    temperature=0.3,                       # 창의성 낮게 (정확성 위주)
+    model_kwargs={
+        "response_format": {"type": "json_object"}  # 응답 형식 강제: JSON 객체
+    }
+)
+
+def generate_search_keyword(state: dict) -> dict:
+    """
+    GPT를 사용하여 추천 항목을 바탕으로 장소 검색용 키워드를 생성하는 함수입니다.
+    예: 김치찌개 → 한식, 책 읽기 → 북카페
+    """
+
+    # 추천 항목 리스트 추출 (음식 또는 활동)
+    items = state.get("recommended_items", ["추천"])
+    if isinstance(items, dict):
+        # 딕셔너리인 경우 → 값만 추출 (중첩 flatten)
+        items = [i for sub in items.values() for i in (sub if isinstance(sub, list) else [sub])]
+    elif not isinstance(items, list):
+        items = [str(items)]  # 문자열인 경우 → 리스트로 변환
+
+    item = items[0]  # 첫 번째 추천 항목을 기반으로 키워드 생성
+
+    user_input = state.get("user_input", "")      # 사용자 입력
+    intent = state.get("intent", "food")          # food 또는 activity
+
+    # GPT 프롬프트 작성
+    prompt = f"""사용자의 입력: "{user_input}"
+추천 항목: "{item}"
+의도: "{intent}"
+
+이 항목을 장소에서 검색하려고 합니다.
+음식이라면 음식 종류(예: 김치찌개 → 한식),
+활동이라면 장소 유형(예: 책 읽기 → 북카페)으로 변환하세요.
+
+결과는 반드시 JSON 배열로 출력하세요.
+예: ["한식"]
+"""  # f-string 끝
+
+    # GPT 호출
+    response = llm.invoke([{"role": "user", "content": prompt.strip()}])
+
+    # GPT 응답 파싱
+    keywords = json.loads(response.content)
+
+    # dict 형태 응답 → 값 추출
+    if isinstance(keywords, dict):
+        keywords = [i for sub in keywords.values() for i in (sub if isinstance(sub, list) else [sub])]
+    elif not isinstance(keywords, list):
+        keywords = [str(keywords)]
+
+    # 생성된 키워드 중 첫 번째를 상태에 추가
+    return {**state, "search_keyword": keywords[0] if keywords else item}
+    
+```
+
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# GPT 기반 장소 검색 키워드 생성 함수 불러오기
+from agents.keyword import generate_search_keyword
+```
+
+## ✍️ 2. 샘플 입력 구성
+
+```python
+# 음식 또는 활동 추천 결과를 기반으로 키워드를 생성합니다.
+state = {
+    "user_input": "피자",
+    "intent": "food",
+    "recommended_items": ["피자"]
+}
+```
+
+## 🚀 3. 키워드 생성 실행 및 결과 확인
+
+```python
+# GPT가 추천 항목을 바탕으로 장소 검색 키워드를 생성합니다.
+result = generate_search_keyword(state)
+print("생성된 장소 검색 키워드:", result["search_keyword"])
+```
+
+## ✏️ 4. 다른 추천 항목으로도 실습해보세요
+
+```python
+# 아래 예시처럼 활동 추천 결과로 테스트해볼 수도 있습니다.
+state2 = {
+    "user_input": "책 읽기",
+    "intent": "activity",
+    "recommended_items": ["책 읽기"]
+}
+result2 = generate_search_keyword(state2)
+print("추천 활동 기반 장소 키워드:", result2["search_keyword"])
+```
+# 09. Place Agent 실습 노트북
+
+장소 검색 키워드를 기반으로 Kakao Local API를 이용해 실제 장소를 검색하는 흐름을 실습합니다.
+
+LangGraph 내에서는 음식 또는 활동에 대한 추천 키워드를 받아 실제 장소 정보를 가져오게 됩니다.
+
+`agents/place.py`
+
+```py
+import requests
+from config import KAKAO_API_KEY
+
+def search_place(state: dict) -> dict:
+    """
+    사용자의 지역 정보(location)와 검색 키워드(search_keyword)를 바탕으로
+    Kakao Local API를 호출하여 근처 장소 정보를 가져오는 함수입니다.
+    """
+
+    # 상태에서 검색 키워드 및 지역 정보 추출
+    location = state.get("location", "홍대")               # 예: "홍대"
+    keyword = state.get("search_keyword", "추천")          # 예: "한식", "북카페"
+
+    # 검색어는 '지역 + 키워드' 조합으로 구성
+    query = f"{location} {keyword}"
+    print(">>> GPT 생성 키워드 검색:", query)  # 디버깅용 로그
+
+    # Kakao Local Search API endpoint
+    url = "https://dapi.kakao.com/v2/local/search/keyword.json"
+    headers = {
+        "Authorization": f"KakaoAK {KAKAO_API_KEY}"  # API 키 인증
+    }
+    params = {
+        "query": query,   # 검색어
+        "size": 5         # 최대 5개의 결과 요청
+    }
+
+    # API 요청 전송
+    res = requests.get(url, headers=headers, params=params)
+    res.raise_for_status()  # 요청 실패 시 예외 발생
+
+    # 응답 결과 중 첫 번째 장소만 사용
+    docs = res.json()["documents"]
+
+    if docs:
+        top = docs[0]  # 가장 관련성 높은 장소
+        place = {
+            "name": top["place_name"],               # 장소 이름
+            "address": top["road_address_name"],     # 도로명 주소
+            "url": top["place_url"]                  # 지도 링크
+        }
+    else:
+        # 검색 결과 없을 경우 기본 메시지
+        place = {
+            "name": "추천 장소 없음",
+            "address": "",
+            "url": ""
+        }
+
+    # 추천 장소 정보를 상태에 추가하여 반환
+    return {**state, "recommended_place": place}
+    
+```
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# Kakao API를 이용한 장소 검색 함수 불러오기
+from agents.place import search_place
+```
+
+## ✍️ 2. 샘플 입력 구성
+
+```python
+# 검색 키워드와 지역을 포함한 상태 정보 구성
+state = {
+    "location": "홍대",
+    "search_keyword": "한식"
+}
+```
+
+## 🚀 3. 장소 검색 실행 및 결과 확인
+
+```python
+# Kakao API를 호출하여 추천 장소를 가져옵니다.
+result = search_place(state)
+print("추천된 장소 이름:", result["recommended_place"]["name"])
+print("주소:", result["recommended_place"]["address"])
+print("지도 링크:", result["recommended_place"]["url"])
+```
+
+## ✏️ 4. 다양한 키워드로 테스트해보세요
+
+```python
+state2 = {
+    "location": "신촌",
+    "search_keyword": "북카페"
+}
+result2 = search_place(state2)
+print("추천 장소:", result2["recommended_place"])
+```
+
+# 10. Summary Agent 실습 노트북
+
+추천된 음식/활동과 장소 정보를 바탕으로, GPT를 활용하여 사용자에게 보여줄 요약 메시지를 생성하는 흐름을 실습합니다.
+
+LangGraph의 마지막 단계이며, 사용자에게 감성적인 안내 문장을 생성해주는 역할을 합니다.
+
+`agents/summary.py`
+
+```py
+from langchain_openai import ChatOpenAI
+from config import OPENAI_API_KEY, OPENAI_MODEL
+
+# GPT 기반 최종 요약 메시지 생성 에이전트 구성
+llm = ChatOpenAI(
+    model=OPENAI_MODEL,                     # 사용할 GPT 모델 이름
+    api_key=OPENAI_API_KEY,                # OpenAI API 키
+    temperature=0.7                         # 창의성 높임 (감성적 문장 유도)
+)
+
+def summarize_message(state: dict) -> dict:
+    """
+    추천된 음식/활동, 장소, 시간대 정보를 바탕으로
+    사용자에게 보여줄 감성적인 요약 문장을 생성하는 함수입니다.
+    """
+
+    # 추천 항목 리스트에서 첫 항목 추출
+    items = state.get("recommended_items", ["추천 항목 없음"])
+    if isinstance(items, dict):
+        items = list(items.values())
+    elif not isinstance(items, list):
+        items = [str(items)]
+    item = items[0]  # 요약 문장에 사용할 대표 항목
+
+    # 상태에서 필요한 정보 추출
+    season = state.get("season", "")
+    weather = state.get("weather", "")
+    time_slot = state.get("time_slot", "")
+    intent = state.get("intent", "food")
+    place = state.get("recommended_place", {})
+
+    # 장소 정보 추출
+    place_name = place.get("name", "추천 장소")
+    place_address = place.get("address", "")
+    place_url = place.get("url", "")
+
+    # food 또는 activity에 따라 안내 메시지 스타일 조정
+    category = "음식" if intent == "food" else "활동"
+
+    # GPT 프롬프트 구성
+    prompt = f"""
+사용자의 의도는 '{category}'입니다.
+현재는 {season}이고, 날씨는 {weather}, 시간대는 {time_slot}입니다.
+추천 {category}: {item}
+추천 장소: {place_name} ({place_address})
+지도 링크: {place_url}
+
+이 정보를 바탕으로 사용자에게 감성적이고 따뜻한 문장으로 한 문단의 추천 메시지를 작성해 주세요.
+"""
+
+    # GPT 호출
+    response = llm.invoke([
+        {"role": "system", "content": "너는 음식 또는 활동을 추천하는 친절한 AI야."},
+        {"role": "user", "content": prompt.strip()}
+    ])
+
+    # 최종 문장을 상태에 추가하여 반환
+    return {**state, "final_message": response.content.strip()}
+    
+```
+
+## 📦 1. 라이브러리 및 모듈 불러오기
+
+```python
+# 요약 메시지 생성을 위한 GPT 기반 함수 불러오기
+from agents.summary import summarize_message
+```
+
+## ✍️ 2. 샘플 상태 구성
+
+```python
+# 추천 결과와 장소 정보가 포함된 상태 입력
+state = {
+    "user_input": "배고파",
+    "intent": "food",
+    "season": "봄",
+    "weather": "Rain",
+    "time_slot": "야간",
+    "recommended_items": ["김치찌개", "된장찌개"],
+    "recommended_place": {
+        "name": "홍대 맛집 김치네",
+        "address": "서울 마포구 홍익로 10",
+        "url": "http://place.map.kakao.com/123456"
+    }
+}
+```
+
+## 📝 3. 요약 메시지 생성 실행
+
+```python
+# 요약 메시지를 생성해 봅니다.
+result = summarize_message(state)
+print("생성된 요약 메시지:\n")
+print(result["final_message"])
+```
+
+## ✏️ 4. 활동 추천 버전으로도 테스트해보세요
+
+```python
+state2 = {
+    "user_input": "놀고 싶어",
+    "intent": "activity",
+    "season": "가을",
+    "weather": "Clear",
+    "time_slot": "저녁",
+    "recommended_items": ["전시회 관람", "야경 산책"],
+    "recommended_place": {
+        "name": "서울 전시센터",
+        "address": "서울 중구 세종대로 99",
+        "url": "http://place.map.kakao.com/654321"
+    }
+}
+result2 = summarize_message(state2)
+print("활동 추천 요약 메시지:\n")
+print(result2["final_message"])
+```
+
+# 11. LangGraph 음식/활동 추천 시스템 구현하기
+
+LangGraph를 기반으로 한 음식/활동 추천 서비스를 구성하는 전체 흐름을 단계별로 실습합니다.
+Streamlit 없이 Python 코드만으로 LangGraph 흐름을 실습하고, 각 노드의 동작 결과를 디버깅해보는 데 중점을 둡니다.
+
+## 1. 필수 라이브러리 및 에이전트 함수 불러오기
+
+먼저, 프로젝트에 필요한 모듈과 LangGraph 구성에 사용할 에이전트 함수를 불러옵니다.
+
+```python
+
+# 필요한 라이브러리 불러오기
+from langgraph.graph import StateGraph, END
+from typing_extensions import TypedDict
+
+# 프로젝트에서 정의한 에이전트들 불러오기
+from agents.intent import classify_intent
+from agents.time import get_time_slot
+from agents.season import get_season
+from agents.weather import get_weather
+from agents.food import recommend_food
+from agents.activity import recommend_activity
+from agents.keyword import generate_search_keyword
+from agents.place import search_place
+from agents.summary import summarize_message
+from agents.intent_unsupported import intent_unsupported_handler
+
+```
+
+## 2.  상태 정의하기 (State Type)
+
+LangGraph는 모든 정보를 상태(State)로 전달하며 작동합니다. 여기서 우리가 처리할 정보 항목들을 정의합니다.
+
+```python
+
+# 상태 구조 정의: LangGraph의 흐름을 구성하는 상태값입니다.
+# 각 노드에서는 이 딕셔너리를 입력받고, 일부 키를 업데이트하여 다음 노드로 넘깁니다.
+class State(TypedDict):
+    user_input: str
+    location: str
+    time_slot: str
+    season: str
+    weather: str
+    intent: str
+    recommended_items: list
+    search_keyword: str
+    recommended_place: dict
+    final_message: str
+```
+
+## 3. 그래프 빌더 구성하기
+LangGraph에서 각 노드 함수들을 연결하여 하나의 상태 흐름으로 만듭니다.
+
+```python
+
+# 그래프 빌더 생성
+builder = StateGraph(State)
+
+# 에이전트 노드 추가
+builder.add_node("classify_intent", classify_intent)
+builder.add_node("get_time_slot", get_time_slot)
+builder.add_node("get_season", get_season)
+builder.add_node("get_weather", get_weather)
+builder.add_node("recommend_food", recommend_food)
+builder.add_node("recommend_activity", recommend_activity)
+builder.add_node("generate_search_keyword", generate_search_keyword)
+builder.add_node("search_place", search_place)
+builder.add_node("summarize_message", summarize_message)
+builder.add_node("intent_unsupported", intent_unsupported_handler)
+
+```
+
+## 4. 분기 정의 및 그래프 컴파일
+
+사용자의 의도에 따라 추천 흐름을 음식 / 활동 / 지원불가로 분기 처리합니다.
+```python
+
+# 분기 함수 정의: 의도에 따라 경로를 다르게 설정
+def route_intent(state: State) -> str:
+    intent = state.get("intent", "")
+    if intent == "food":
+        return "recommend_food"
+    elif intent == "activity":
+        return "recommend_activity"
+    return "intent_unsupported"
+
+# 흐름 구성
+builder.set_entry_point("classify_intent")
+builder.add_edge("classify_intent", "get_time_slot")
+builder.add_edge("get_time_slot", "get_season")
+builder.add_edge("get_season", "get_weather")
+builder.add_conditional_edges("get_weather", route_intent, {
+    "recommend_food": "recommend_food",
+    "recommend_activity": "recommend_activity",
+    "intent_unsupported": "intent_unsupported"
+})
+builder.add_edge("recommend_food", "generate_search_keyword")
+builder.add_edge("recommend_activity", "generate_search_keyword")
+builder.add_edge("generate_search_keyword", "search_place")
+builder.add_edge("search_place", "summarize_message")
+builder.add_edge("summarize_message", END)
+builder.add_edge("intent_unsupported", END)
+
+# 그래프 컴파일
+graph = builder.compile()
+
+```
+## 5. 테스트 실행 및 결과 확인
+
+입력 예시를 기반으로 그래프를 실행하고, 각 단계의 출력을 확인합니다.
+
+```python
+
+# 테스트 입력 예시
+test_input = {
+    "user_input": "비 오는 날 따뜻한 거 먹고 싶다",
+    "location": "홍대"
+}
+
+# 그래프 실행
+events = list(graph.stream(test_input))
+print("✅ LangGraph 실행 완료\n")
+for i, e in enumerate(events):
+    print(f"Step {i+1}: {list(e.keys())[0]}")
+    print(e, "\n")
+
+# 최종 상태 출력
+final_state = events[-1].get("__end__") or events[-1].get("summarize_message", {})
+print("📦 최종 추천 메시지:")
+print(final_state.get("final_message", "추천 결과가 없습니다."))
+
+```
+
+```python
+
+실행 결과:
+>>> GPT intent 응답: { "intent": ["food"] }
+>>> OpenWeather API 호출 시작 (서울 기준)
+>>> GPT 생성 키워드 검색: 홍대 한식
+✅ LangGraph 실행 완료
+
+Step 1: classify_intent
+{'classify_intent': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'intent': 'food'}} 
+
+Step 2: get_time_slot
+{'get_time_slot': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'intent': 'food', 'time_slot': '점심'}} 
+
+Step 3: get_season
+{'get_season': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'intent': 'food', 'season': '봄'}} 
+
+Step 4: get_weather
+{'get_weather': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'season': '봄', 'intent': 'food', 'weather': 'Rain'}} 
+
+Step 5: recommend_food
+{'recommend_food': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'season': '봄', 'weather': 'Rain', 'intent': 'food', 'recommended_items': ['김치찌개', '부대찌개']}} 
+
+Step 6: generate_search_keyword
+{'generate_search_keyword': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'season': '봄', 'weather': 'Rain', 'intent': 'food', 'recommended_items': ['김치찌개', '부대찌개'], 'search_keyword': '한식'}} 
+
+Step 7: search_place
+{'search_place': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'season': '봄', 'weather': 'Rain', 'intent': 'food', 'recommended_items': ['김치찌개', '부대찌개'], 'search_keyword': '한식', 'recommended_place': {'name': '홍대 조선시대', 'address': '서울 마포구 홍익로3길 44', 'url': 'http://place.map.kakao.com/1985225055'}}} 
+
+Step 8: summarize_message
+{'summarize_message': {'user_input': '비 오는 날 따뜻한 거 먹고 싶다', 'location': '홍대', 'time_slot': '점심', 'season': '봄', 'weather': 'Rain', 'intent': 'food', 'recommended_items': ['김치찌개', '부대찌개'], 'search_keyword': '한식', 'recommended_place': {'name': '홍대 조선시대', 'address': '서울 마포구 홍익로3길 44', 'url': 'http://place.map.kakao.com/1985225055'}, 'final_message': '봄비가 내리는 오늘 점심, 따뜻한 김치찌개 한 그릇이 그리워지는 순간입니다. 홍대 조선시대에서 깊고 얼큰한 김치찌개를 즐기며, 비 오는 날의 감성을 느껴보세요. 뜨거운 국물 한 입에 마음이 따뜻해지고, 이곳의 아늑한 분위기가 당신의 하루를 더욱 특별하게 만들어 줄 것입니다. 비 오는 날, 맛있는 김치찌개와 함께 소중한 시간을 가져보세요. [지도 링크](http://place.map.kakao.com/1985225055)에서 지금 바로 찾아가 보세요!'}} 
+
+📦 최종 추천 메시지:
+봄비가 내리는 오늘 점심, 따뜻한 김치찌개 한 그릇이 그리워지는 순간입니다. 홍대 조선시대에서 깊고 얼큰한 김치찌개를 즐기며, 비 오는 날의 감성을 느껴보세요. 뜨거운 국물 한 입에 마음이 따뜻해지고, 이곳의 아늑한 분위기가 당신의 하루를 더욱 특별하게 만들어 줄 것입니다. 비 오는 날, 맛있는 김치찌개와 함께 소중한 시간을 가져보세요. [지도 링크](http://place.map.kakao.com/1985225055)에서 지금 바로 찾아가 보세요!
+
+```
+
+## 그래프 시각화
+
+```python
+
+pythonfrom IPython.display import Image, display
+display(Image(graph.get_graph().draw_mermaid_png()))
+
+```
+![](./img/agent_task/agent_task001.png)
+
+`run_graph.py`
+```py
+from langgraph.graph import StateGraph, END
+from typing_extensions import TypedDict
+
+# 각 단계에서 사용할 에이전트 함수들 불러오기
+from agents.intent import classify_intent
+from agents.time import get_time_slot
+from agents.season import get_season
+from agents.weather import get_weather
+from agents.food import recommend_food
+from agents.activity import recommend_activity
+from agents.keyword import generate_search_keyword
+from agents.place import search_place
+from agents.summary import summarize_message
+from agents.intent_unsupported import intent_unsupported_handler
+
+# 상태(State) 타입 정의
+# LangGraph에서 상태는 모든 노드 간에 주고받는 정보를 의미하며,
+# 어떤 정보를 다룰지 명확히 정의해 줍니다.
+class State(TypedDict):
+    user_input: str                # 사용자의 입력 문장
+    location: str                  # 지역 정보 (예: "홍대")
+    time_slot: str                 # 시간대 (예: "아침", "점심", "야간")
+    season: str                    # 계절 (예: "봄", "가을")
+    weather: str                   # 날씨 상태 (예: "Rain", "Clear")
+    intent: str                    # 분류된 의도 ("food", "activity", "unknown")
+    recommended_items: list        # 추천 음식 또는 활동 리스트
+    search_keyword: str            # 장소 검색용 키워드
+    recommended_place: dict        # 장소 추천 결과 (name, address, url)
+    final_message: str             # GPT가 생성한 최종 안내 메시지
+
+# LangGraph builder 생성
+builder = StateGraph(State)
+
+# 각 노드에 이름을 붙여 LangGraph에 등록
+builder.add_node("classify_intent", classify_intent)
+builder.add_node("get_time_slot", get_time_slot)
+builder.add_node("get_season", get_season)
+builder.add_node("get_weather", get_weather)
+builder.add_node("recommend_food", recommend_food)
+builder.add_node("recommend_activity", recommend_activity)
+builder.add_node("generate_search_keyword", generate_search_keyword)
+builder.add_node("search_place", search_place)
+builder.add_node("summarize_message", summarize_message)
+builder.add_node("intent_unsupported", intent_unsupported_handler)
+
+# 의도(intent)에 따라 음식 추천 / 활동 추천 / 종료 노드를 분기하는 함수
+def route_intent(state: State) -> str:
+    intent = state.get("intent", "")
+    if intent == "food":
+        return "recommend_food"
+    elif intent == "activity":
+        return "recommend_activity"
+    return "intent_unsupported"  # intent가 unknown이면 graceful 종료로 분기
+
+# 흐름 연결
+builder.set_entry_point("classify_intent")
+builder.add_edge("classify_intent", "get_time_slot")
+builder.add_edge("get_time_slot", "get_season")
+builder.add_edge("get_season", "get_weather")
+
+# 분기 처리: intent에 따라 추천 경로 달라짐
+builder.add_conditional_edges("get_weather", route_intent, {
+    "recommend_food": "recommend_food",
+    "recommend_activity": "recommend_activity",
+    "intent_unsupported": "intent_unsupported"
+})
+
+# 공통 후처리 흐름
+builder.add_edge("recommend_food", "generate_search_keyword")
+builder.add_edge("recommend_activity", "generate_search_keyword")
+builder.add_edge("generate_search_keyword", "search_place")
+builder.add_edge("search_place", "summarize_message")
+
+# 종료 처리
+builder.add_edge("summarize_message", END)
+builder.add_edge("intent_unsupported", END)
+
+# 그래프 최종 컴파일
+graph = builder.compile()
+
+```
+`test_graph.py`
+```py
+import pytest
+from run_graph import graph
+
+# pytest에서 공통으로 사용할 기본 입력 상태 설정
+@pytest.fixture
+def base_state():
+    # 테스트에 사용할 간단한 상태 값 (입력 문장과 지역 정보)
+    return {
+        "user_input": "배고파",   # 추천 흐름 시작용 입력 문장
+        "location": "홍대"       # 테스트용 지역
+    }
+
+# LangGraph 실행 테스트 함수
+def test_graph_execution(base_state):
+    # LangGraph 실행: 상태를 기반으로 전체 흐름을 순차적으로 실행
+    events = list(graph.stream(base_state))
+
+    # 실행 결과는 리스트 형태여야 하며, 1개 이상 단계가 있어야 함
+    assert isinstance(events, list)
+    assert len(events) > 0
+
+    # 최종 상태 추출 (마지막 단계 또는 __end__ 키 기준)
+    final_state = events[-1].get("__end__") or events[-1]
+    summary = final_state.get("summarize_message", final_state)
+
+    # 최종 메시지가 존재해야 함
+    assert "final_message" in summary
+    assert isinstance(summary["final_message"], str)
+
+    # 결과 메시지 콘솔에 출력
+    print("\n✅ 요약 메시지:")
+    print(summary["final_message"])
+    
+    
+```
+`test_runner.py`
+```py
+from run_graph import graph
+
+# 이 스크립트는 LangGraph 흐름을 터미널에서 테스트하기 위한 테스트 실행기입니다.
+# Streamlit 없이도 상태 입력만으로 추천 전체 흐름을 실행할 수 있습니다.
+
+# 🧪 테스트용 입력 상태 설정
+test_input = {
+    "user_input": "배고파",
+    "location": "홍대"
+}
+
+# LangGraph 실행 및 결과 출력
+print("🧠 LangGraph 실행 시작...\n")
+try:
+    events = list(graph.stream(test_input))  # 그래프 실행
+    print("✅ 실행 완료. 단계별 상태:\n")
+
+    # 각 단계별 상태 출력
+    for i, e in enumerate(events):
+        step_name = list(e.keys())[0]
+        print(f"Step {i+1}: {step_name}")
+        print(e, "\n")
+
+    # 최종 요약 메시지 추출 (summarize_message 내부 또는 마지막 상태)
+    final_state = events[-1].get("__end__") or events[-1]
+    summary = final_state.get("summarize_message", final_state)
+    final_message = summary.get("final_message", "추천 메시지가 없습니다.")
+
+    print("📦 최종 추천 메시지:")
+    print(final_message)
+
+except Exception as e:
+    print("❌ 실행 중 오류 발생:")
+    print(str(e))
+    
+```
