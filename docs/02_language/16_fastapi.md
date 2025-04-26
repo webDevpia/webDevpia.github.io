@@ -75,6 +75,12 @@ pip install fastapi
 pip list | grep fastapi 
 # fastapi   0.115.12
 ```
+conda create --name [env_name]: 지정된 이름([env_name])으로 새로운 conda 가상 환경을 생성.  
+conda activate [env_name]: 지정된 이름의 conda 가상 환경을 활성화.  
+pip install [package_name]: 지정된 파이썬 패키지를 현재 활성화된 환경에 설치.  
+pip list: 현재 환경에 설치된 모든 파이썬 패키지 목록을 출력.  
+| (파이프): 앞 명령어의 출력을 다음 명령어의 입력으로 전달.  
+grep [pattern]: 입력 텍스트에서 지정된 패턴([pattern]을 포함하는 라인을 찾아 출력.  
 
 ### 동작 테스트
 
@@ -129,11 +135,19 @@ http://127.0.0.1:8081/docs로 접속해서 결과 확인
 from fastapi import FastAPI
 
 app = FastAPI()
-@app.get("/",summary="간단한 API",tags=['Simple'],description="매우 간단한 API 연습")
+
+# 경로 작동 데코레이터에 추가 인자를 전달하여 자동 생성되는 API 문서를 상세하게 만듭니다.
+@app.get(
+    "/",  # 처리할 경로
+    summary="간단한 API",  # Swagger UI에서 보여질 API의 요약 설명
+    tags=['Simple'],      # Swagger UI에서 API를 그룹화할 태그 목록
+    description="매우 간단한 API 연습" # Swagger UI에서 보여질 API의 상세 설명
+)
 async def root():
     """
     루트 경로('/')에 대한 GET 요청을 처리하는 함수입니다.
     간단한 JSON 응답을 반환합니다.
+    (이 함수 docstring도 description의 일부로 사용될 수 있습니다)
     """
     return {"message": "Hello World"}
 ```
