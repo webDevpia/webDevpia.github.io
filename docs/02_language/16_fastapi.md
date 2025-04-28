@@ -744,6 +744,7 @@ async def response_json(item_id: int, q: str | None = None):
 
 
 # HTML Response
+# http://127.0.0.1:8081/resp_html/2?item_name=min
 @app.get("/resp_html/{item_id}", response_class=HTMLResponse)
 async def response_html(item_id: int, item_name: str | None = None):
     html_str = f'''
@@ -759,6 +760,8 @@ async def response_html(item_id: int, item_name: str | None = None):
 
 
 # Redirect(Get -> Get)
+# http://127.0.0.1:8081/redirect?comment=min
+
 @app.get("/redirect")
 async def redirect_only(comment: str | None = None):
     print(f"redirect {comment}")
@@ -766,6 +769,7 @@ async def redirect_only(comment: str | None = None):
     return RedirectResponse(url=f"/resp_html/3?item_name={comment}")
 
 # Redirect(Post -> Get)
+# status_code=status.HTTP_302_FOUND 없으면 (Post -> Post)
 @app.post("/create_redirect")
 async def create_item(item_id: int = Form(), item_name: str = Form()):
     print(f"item_id: {item_id} item name: {item_name}")
@@ -969,7 +973,9 @@ async def read_safe(request: Request):
 </body>
 </html>{% endraw %}
 ```
+
 ### 정적 파일(Static file) 다루기
+
 결과값을 동적으로 반환하는 endpoint path와 달리 css, javascript, image, 정적 html 파일들은 그 내용이 변경되지 않는 정적 파일임  
 FastAPI는 이들 Static File들은 Endpoint로 별도로 관리하지 않으며 정적 파일들을 위한 별도의 ASGI서버를 생성하여 관리하며 이를 위하여 StaticFiles클래스를 제공  
 
@@ -1106,7 +1112,7 @@ app.include_router(item.router)
 app.include_router(user.router)
 ```
 
-`Router/routes/item.py'
+`Router/routes/item.py`
 
 ```py
 from fastapi import APIRouter
@@ -1254,8 +1260,8 @@ print(user_dump_02, type(user_dump_02))
 
 ```
 
-
 `Pydantic/pydantic_02.py`
+
 ```py
 from pydantic import BaseModel, ValidationError, ConfigDict, Field, Strict
 from typing import List, Annotated
@@ -1295,6 +1301,7 @@ except ValidationError as e:
 ```
 
 `Pydantic/pydantic_03.py`
+
 ```py
 from pydantic import BaseModel, Field, ValidationError
 from typing import Optional
@@ -1377,6 +1384,7 @@ print(foo)
 ```
 
 `Pydantic/pydantic_04.py`
+
 ```py
 from pydantic import BaseModel, EmailStr, Field
 
@@ -1483,6 +1491,7 @@ print(product)
 ```
 
 `Pydantic/pydantic_05.py`
+
 ```py
 from pydantic import BaseModel,  ValidationError, field_validator, model_validator
 from typing import Optional
@@ -1724,6 +1733,7 @@ user_dump_02 = user.model_dump_json()
 print(user_dump_02, type(user_dump_02))
 
 ```
+
 ## FastAPI의 Async, 멀티 Thread, 멀티 Process 이해
 
 `FastAPI_Async_Thread/main.py`
