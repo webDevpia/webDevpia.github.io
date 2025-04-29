@@ -1137,10 +1137,10 @@ async def create_item(item: Item):
 async def update_item(item_id: int, item: Item):
     return {"item_id": item_id, "item": item}
 ```
-•	APIRouter: FastAPI에서 라우트(경로)를 모듈별로 분리해서 관리할 수 있게 해주는 기능
-•	prefix="/item": 이 라우터에 등록된 모든 경로는 /item으로 시작.  
+•	APIRouter: FastAPI에서 라우트(경로)를 모듈별로 분리해서 관리할 수 있게 해주는 기능  
+•	prefix="/item": 이 라우터에 등록된 모든 경로는 /item으로 시작.    
     예: /item/123, /item/
-•	tags=["item"]: Swagger 문서에서 이 API들을 “item” 그룹으로 묶어서 보여줌.  (자동 문서화할 때 보기 좋게 분류됨)
+•	tags=["item"]: Swagger 문서에서 이 API들을 “item” 그룹으로 묶어서 보여줌.  (자동 문서화할 때 보기 좋게 분류됨)  
 
 `Router/routes/user.py`
 
@@ -1277,13 +1277,13 @@ print(user_dump_02, type(user_dump_02))
 
 ```
 Python에서는
-•	*args : 위치 인자 (positional arguments)를 풀어서 전달.
-•	**kwargs : 키워드 인자 (keyword arguments)를 풀어서 전달.
+• *args : 위치 인자 (positional arguments)를 풀어서 전달.  
+• **kwargs : 키워드 인자 (keyword arguments)를 풀어서 전달.  
 
-즉, **는 딕셔너리 형태의 키-값 쌍을 풀어서 함수 인자처럼 전달할 때 사용하는 연산자.
+즉, **는 딕셔너리 형태의 키-값 쌍을 풀어서 함수 인자처럼 전달할 때 사용하는 연산자.  
 
-user = User(**data)
-✅ 동작: User(id=10, name="Alice", email="alice@example.com", age=30)
+user = User(**data)  
+✅ 동작: User(id=10, name="Alice", email="alice@example.com", age=30). 
 
 `Pydantic/pydantic_02.py`
 
