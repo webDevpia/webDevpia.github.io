@@ -884,7 +884,6 @@ async def read_item_by_gubun(request: Request, gubun: str):
     )
 
 
-
 @app.get("/all_items", response_class=HTMLResponse)
 async def read_all_items(request: Request):
     all_items = [Item(name="test_item_" +str(i), price=i) for i in range(5) ]
@@ -1138,6 +1137,10 @@ async def create_item(item: Item):
 async def update_item(item_id: int, item: Item):
     return {"item_id": item_id, "item": item}
 ```
+•	APIRouter: FastAPI에서 라우트(경로)를 모듈별로 분리해서 관리할 수 있게 해주는 기능
+•	prefix="/item": 이 라우터에 등록된 모든 경로는 /item으로 시작.  
+    예: /item/123, /item/
+•	tags=["item"]: Swagger 문서에서 이 API들을 “item” 그룹으로 묶어서 보여줌.  (자동 문서화할 때 보기 좋게 분류됨)
 
 `Router/routes/user.py`
 
@@ -1193,23 +1196,32 @@ class UserClass:
         self.email = email
         self.age = age
 
+    # 객체가 가진 여러 정보 중 특정 핵심 정보(id, name)만 간단히 보여주는 용도
     def get_info(self):
         return f"id: {self.id}, name: {self.name}"
-    
+
+    # 객체를 print() 하거나, 문자열로 변환하려고 할 때
+    # 자동으로 호출되는 Python 특수 메서드.
     def __str__(self):
         return f"id: {self.id}, name: {self.name}, email: {self.email}, age: {self.age}"
 
+
+# 일반 클래스 객체 생성 - 타입 체크, 유효성 검사 전혀 없음.
 userobj = UserClass(10, 'test_name', 'tname@example.com', 40)
 print("userobj:", userobj, userobj.id)
 
-# Pydantic Model 객체화. 
-#User(10, 'test_name', 'tname@example.com', 40) 하지 않도록 유의
+
+# Pydantic Model 객체화. - 필드를 명시적으로 지정해야 함, 타입 자동 검증
+# User(10, 'test_name', 'tname@example.com', 40) 하지 않도록 유의
+# 매개변수 첫번째 * 정의되어 있음.
 user = User(id=10, name="test_name", email="tname@example.com", age=40)
 print("user:", user, user.id)
+
 
 # dict keyword argument(kwargs)로 Pydantic Model 객체화
 user_from_dict = User(**{"id": 10, "name": "test_name", "email": "tname@example.com", "age": 40})
 print("user_from_dict:", user_from_dict, user_from_dict.id)
+
 
 # json 문자열 기반 Pydantic Model 객체화. 
 json_string = '{"id": 10, "name": "test_name", "email": "tname@example.com", "age": 40}'
@@ -1217,6 +1229,7 @@ json_dict = json.loads(json_string)
 #print("json_dict type:", type(json_dict))
 user_from_json = User(**json_dict)
 print("user_from_json:", user_from_json, user_from_json.id)
+
 
 # Pydantic Model의 상속
 class AdvancedUser(User):
@@ -1237,6 +1250,7 @@ class UserNested(BaseModel):
     age: int
     address: Address
 
+
 # 내포된 Json 문자열에서 생성. 
 json_string_nested = '{"name": "John Doe", "age": 30, "address": {"street": "123 Main St", "city": "Anytown"}}'
 json_dict_nested = json.loads(json_string_nested)
@@ -1244,21 +1258,32 @@ json_dict_nested = json.loads(json_string_nested)
 user_nested_01 = UserNested(**json_dict_nested)
 print("user_nested_01:", user_nested_01, user_nested_01.address, user_nested_01.address.city)
 
+
 # 인자로 전달 시 Nested 된 값을 dict 형태로 전달하여 생성.
 user_nested_02 = UserNested(
     name="test_name", age=40, address = {"street": "123 Main St", "city": "Anytown"}
 )
 print("user_nested_02:", user_nested_02, user_nested_02.address, user_nested_02.address.city)
 
-# python 기반으로 pydantic serialization
+
+# python 기반으로 pydantic serialization <class 'dict'>
 user_dump_01 = user.model_dump()
 print(user_dump_01, type(user_dump_01))
 
-# json 문자열 기반으로 pydantic serialization
+
+# json 문자열 기반으로 pydantic serialization <class 'str'>
 user_dump_02 = user.model_dump_json()
 print(user_dump_02, type(user_dump_02))
 
 ```
+Python에서는
+•	*args : 위치 인자 (positional arguments)를 풀어서 전달.
+•	**kwargs : 키워드 인자 (keyword arguments)를 풀어서 전달.
+
+즉, **는 딕셔너리 형태의 키-값 쌍을 풀어서 함수 인자처럼 전달할 때 사용하는 연산자.
+
+user = User(**data)
+✅ 동작: User(id=10, name="Alice", email="alice@example.com", age=30)
 
 `Pydantic/pydantic_02.py`
 
@@ -1272,6 +1297,7 @@ class Address(BaseModel):
     country: str
 
 class User(BaseModel):
+    # 모델 전체에 엄격한 타입 검사가 적용
     # 문자열->숫자값 자동 파싱을 허용하지 않을 경우 Strict 모드로 설정. 
     #model_config = ConfigDict(strict=True)
 
@@ -1280,6 +1306,7 @@ class User(BaseModel):
     email: str
     addresses: List[Address]
     age: int | None = None # Optional[int] = None
+
     #개별 속성에 Strict 모드 설정 시 Field나 Annotated 이용. None 적용 시 Optional
     #age: int = Field(None, strict=True)
     #age: Annotated[int, Strict()] = None
@@ -1321,6 +1348,7 @@ except ValidationError as e:
     print(e.json())
 
 '''
+
 https://docs.pydantic.dev/2.8/concepts/fields/
 
 gt - greater than
@@ -1329,6 +1357,7 @@ ge - greater than or equal to
 le - less than or equal to
 multiple_of - a multiple of the given number
 allow_inf_nan - allow 'inf', '-inf', 'nan' values
+
 '''
 
 class Foo(BaseModel):
@@ -1501,13 +1530,16 @@ class User(BaseModel):
     username: str
     password: str
     confirm_password: str
-    
+
+    # username 값이 공백이거나 빈 문자열이면 에러 발생, 정상 값이면 그대로 반환
     @field_validator('username')
     def username_must_not_be_empty(cls, value: str):
         if not value.strip():
             raise ValueError("Username must not be empty")
         return value
 
+    # 비밀번호가 8자 이상, 숫자(digit)가 최소 1개, 문자(alpha)가 최소 1개 
+    # 조건 중 하나라도 어기면 에러 발생
     @field_validator('password')
     def password_must_be_strong(cls, value: str):
         if len(value) < 8:
@@ -1517,7 +1549,11 @@ class User(BaseModel):
         if not any(char.isalpha() for char in value):
             raise ValueError('Password must contain at least one letter')
         return value
-    
+
+    # 모델 전체를 본 뒤(mode='after') 
+    # password와 confirm_password가 같은지 검증,
+    # 일치하지 않으면 에러 발생 
+    # 통과하면 모델 인스턴스를 그대로 반환
     @model_validator(mode='after')
     def check_passwords_match(cls, values):
         password = values.password
@@ -1534,6 +1570,8 @@ try:
 except ValidationError as e:
     print(e)
 ```
+
+**종합 테스트**
 
 ``Pydantic/main.py``
 
@@ -1636,102 +1674,6 @@ async def update_item_form_02(
     item: Item = Depends(parse_user_form)
 ):
     return {"item_id": item_id, "q": q, "item": item}
-```
-
-``Pydantic/dataclass.py``
-
-```py
-from pydantic import BaseModel, ValidationError
-from typing import List, Optional
-import json
-
-# Pydantic Model
-class User(BaseModel):
-    id: int
-    name: str
-    email: str
-    age: int | None = None 
-
-user = User(id=10, name="test_name", 
-            email="tname@example.com", 
-            age=40)
-
-# 일반 클래스 선언
-class UserClass:
-    def __init__(self, id: int, name: str, 
-                email: str, age: int):
-        self.id = id
-        self.name = name
-        self.email = email
-        self.age = age
-
-    def get_info(self):
-        return f"id: {self.id}, name: {self.name}"
-    
-    def __str__(self):
-        return f"id: {self.id}, name: {self.name}, email: {self.email}, age: {self.age}"
-
-userobj = UserClass(10, 'test_name', 
-                    'tname@example.com', 40)
-
-print("userobj:", userobj, userobj.id)
-
-# Pydantic Model 객체화. 
-# User(10, 'test_name', 'tname@example.com', 40) 하지 않도록 유의
-user = User(id=10, name="test_name", email="tname@example.com", age=40)
-print("user:", user, user.id)
-
-# dict keyword argument(kwargs)로 Pydantic Model 객체화
-user_from_dict = User(**{"id": 10, "name": "test_name", "email": "tname@example.com", "age": 40})
-print("user_from_dict:", user_from_dict, user_from_dict.id)
-
-# json 문자열 기반 Pydantic Model 객체화. 
-json_string = '{"id": 10, "name": "test_name", "email": "tname@example.com", "age": 40}'
-json_dict = json.loads(json_string)
-#print("json_dict type:", type(json_dict))
-user_from_json = User(**json_dict)
-print("user_from_json:", user_from_json, user_from_json.id)
-
-# Pydantic Model의 상속
-class AdvancedUser(User):
-    advanced_level: int
-
-#AdvancedUser(10, 'test_name', 'tname@example.com', 40, 10) 하지 않도록 유의
-adv_user = AdvancedUser(id=10, name="test_name", email="tname@example.com", age=40, advanced_level=9)
-print("adv_user:", adv_user)
-
-
-# 내포된(Nested 된 Json) 데이터 기반 Pydantic Model 생성. 
-class Address(BaseModel):
-    street: str
-    city: str
-
-class UserNested(BaseModel):
-    name: str
-    age: int
-    address: Address
-
-# 내포된 Json 문자열에서 생성. 
-json_string_nested = '{"name": "John Doe", "age": 30, "address": {"street": "123 Main St", "city": "Anytown"}}'
-json_dict_nested = json.loads(json_string_nested)
-
-user_nested_01 = UserNested(**json_dict_nested)
-print("user_nested_01:", user_nested_01, user_nested_01.address, user_nested_01.address.city)
-
-# 인자로 전달 시 Nested 된 값을 dict 형태로 전달하여 생성.
-user_nested_02 = UserNested(
-    name="test_name", age=40, address = {"street": "123 Main St", "city": "Anytown"}
-)
-print("user_nested_02:", user_nested_02, user_nested_02.address, user_nested_02.address.city)
-
-# python 기반으로 pydantic serialization
-user_dump_01 = user.model_dump()
-print(user_dump_01, type(user_dump_01))
-
-# json 문자열 기반으로 pydantic serialization
-user_dump_02 = user.model_dump_json()
-print(user_dump_02, type(user_dump_02))
-
 ```
 
 ## FastAPI의 Async, 멀티 Thread, 멀티 Process 이해
