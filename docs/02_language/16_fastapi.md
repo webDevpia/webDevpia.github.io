@@ -2159,7 +2159,7 @@ app = FastAPI()
 app.include_router(blog.router)
 ```
 
-**글자의 길이를 150으로 잘라주는 함수와 웹브라우저에서 줄바꿈을 위한 <br>태그로 변환함수**
+**글자의 길이를 150으로 잘라주는 함수와 웹브라우저에서 줄바꿈을 위한 태그로 변환함수**
 
 `Blog_DB_Handling/utils/util.py`
 
