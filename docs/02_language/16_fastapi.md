@@ -1744,9 +1744,6 @@ INSERT INTO blog_db.blog(title, author, content, modified_dt) values('테스트 
 INSERT INTO blog_db.blog(title, author, content, modified_dt) values('테스트 title 4', '희동', '테스트 컨텐츠 4', now());
 
 COMMIT;
-
-/* connection 모니터링 스크립트. root로 수행 필요. */
-select * from sys.session where db='blog_db' order by conn_id;
 ```
 
 `DB_Fundamentals/db_basic.py`
@@ -1790,27 +1787,307 @@ finally:
 
 ```
 
+`DB_Fundamentals/pool_practice.py`
+
+```py
+from sqlalchemy import create_engine, text
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.pool import QueuePool, NullPool
+
+# database connection URL
+DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
+
+# engine = create_engine(DATABASE_CONN)
+engine = create_engine(DATABASE_CONN, 
+                    poolclass=QueuePool,
+                    #poolclass=NullPool, # Connection Pool 사용하지 않음. 
+                    pool_size=10, max_overflow=2
+                    )
+print("#### engine created")
+
+def direct_execute_sleep(is_close: bool = False):
+    conn = engine.connect()
+    query = "select sleep(5)"
+    # text()는 SQLAlchemy에서 SQL 문자열을 안전하게 실행 가능한 객체로 감싸는 함수
+    result = conn.execute(text(query))
+    # rows = result.fetchall()
+    # print(rows)
+    result.close()
+
+    # 인자로 is_close가 True일 때만 connection close()
+    if is_close:
+        conn.close()
+        print("conn closed")
+# is_close=True 값이 True, False 일때 비교
+for ind in range(20):
+    print("loop index:", ind)
+    direct_execute_sleep(is_close=True)
+
+print("end of loop")
+```
+
+`MYSQL Workbench의 root 계정으로 접속해서 확인`
+
+```
+/* connection 모니터링 스크립트. root로 수행 필요. */
+select * from sys.session where db='blog_db' order by conn_id;
+```
+**is_close=True**
+![](./img/fastapi/fastapi015.png)
+
+**is_close=False**
+![](./img/fastapi/fastapi016.png)
+
+`DB_Fundamentals/context_practice.py`
+
+```py
+from sqlalchemy import create_engine, text
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.pool import QueuePool, NullPool
+
+# database connection URL
+DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
+
+engine = create_engine(DATABASE_CONN, 
+                    echo=True, # 내부적으로 동작하는 sql문을 보여줌
+                    poolclass=QueuePool,
+                    #poolclass=NullPool,
+                    pool_size=10, max_overflow=0)
+
+# conn.close() 하지 않아도 with절을 빠져나가면 자동으로 close() 처리
+def context_execute_sleep():
+    with engine.connect() as conn:
+        query = "select sleep(5)"
+        result = conn.execute(text(query))
+        result.close()
+        #conn.close()
+
+for ind in range(20):
+    print("loop index:", ind)
+    context_execute_sleep()
+
+print("end of loop")
+```
+
+**DB엔진 모듈화**
+
+`DB_Fundamentals/database.py`
+
+```py
+from sqlalchemy import create_engine, Connection
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.pool import QueuePool, NullPool
+from contextlib import contextmanager
+
+
+# database connection URL
+DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
+
+engine = create_engine(DATABASE_CONN,
+                    poolclass=QueuePool,
+                    #poolclass=NullPool, # Connection Pool 사용하지 않음. 
+                    pool_size=10, max_overflow=0)
+
+def direct_get_conn():
+    try:
+        conn = engine.connect()
+        return conn
+    except SQLAlchemyError as e:
+        print(e)
+        raise e
+
+
+@contextmanager
+def context_get_conn():
+    try:
+        conn = engine.connect()
+        yield conn
+    except SQLAlchemyError as e:
+        print(e)
+        raise e
+    finally: 
+        conn.close()
+    
+```
+
+
+`DB_Fundamentals/module_direct.py`
+
+```py
+from sqlalchemy import text, Connection
+from sqlalchemy.exc import SQLAlchemyError
+from database import direct_get_conn
+
+def execute_query(conn: Connection):
+    query = "select * from blog"
+    stmt = text(query)
+    # SQL 호출하여 CursorResult 반환. 
+    result = conn.execute(stmt)
+
+    rows = result.fetchall()
+    print(rows)
+    result.close()
+
+def execute_sleep(conn: Connection):
+    query = "select sleep(5)"
+    result = conn.execute(text(query))
+    result.close()
+
+for ind in range(20):
+    try: 
+        conn = direct_get_conn()
+        execute_sleep(conn)
+        print("loop index:", ind)
+    except SQLAlchemyError as e:
+        print(e)
+    finally: 
+        conn.close()
+        print("connection is closed inside finally")
+
+print("end of loop")
+```
+
+
+`DB_Fundamentals/module_context.py`
+
+```py
+from sqlalchemy import text, Connection
+from sqlalchemy.exc import SQLAlchemyError
+from database import context_get_conn
+
+def execute_query(conn: Connection):
+    query = "select * from blog"
+    stmt = text(query)
+    # SQL 호출하여 CursorResult 반환. 
+    result = conn.execute(stmt)
+
+    rows = result.fetchall()
+    print(rows)
+    result.close()
+
+def execute_sleep(conn: Connection):
+    query = "select sleep(5)"
+    result = conn.execute(text(query))
+    result.close()
+
+
+for ind in range(20):
+    try: 
+        with context_get_conn() as conn:
+            execute_sleep(conn)
+            print("loop index:", ind)
+    except SQLAlchemyError as e:
+        print(e)
+    finally: 
+        #conn.close()
+        #print("connection is closed inside finally")
+        pass
+
+
+print("end of loop")
+```
+
+
+`DB_Fundamentals/cursor_fetch.py`
+
+```py
+from sqlalchemy import text, Connection
+from sqlalchemy.exc import SQLAlchemyError
+from database import direct_get_conn
+
+try:
+    # Connection 얻기
+    conn = direct_get_conn()
+
+    # SQL 선언 및 text로 감싸기
+    query = "select id, title from blog"
+    stmt = text(query)
+
+    # SQL 호출하여 CursorResult 반환. 
+    result = conn.execute(stmt)
+    rows = result.fetchall() # row Set을 개별 원소로 가지는 List로 반환. 
+    #rows = result.fetchone() # row Set 단일 원소 반환
+    #rows = result.fetchmany(2) # row Set을 개별 원소로 가지는 List로 반환.
+    # rows = [row for row in result] # List Comprehension으로 row Set을 개별 원소로 가지는 List로 반환
+    print(rows)
+    print(type(rows))
+
+    
+    # 개별 row를 컬럼명를 key로 가지는 dict로 반환하기
+    # row_dict = result.mappings().fetchall()
+    # print(row_dict)
+
+    # 코드레벨에서 컬럼명 명시화
+    # row = result.fetchone()
+    # print(row._key_to_index)
+    # rows = [(row.id, row.title) for row in result]
+    # print(rows)
+
+    result.close()
+except SQLAlchemyError as e:
+    print("############# ", e)
+    #raise e
+finally:
+    # close() 메소드 호출하여 connection 반환.
+    conn.close()
+```
+
+
+`DB_Fundamentals/bind_variable.py`
+
+```py
+from sqlalchemy import text, Connection
+from sqlalchemy.exc import SQLAlchemyError
+from database import direct_get_conn
+from datetime import datetime
+
+try:
+    # Connection 얻기
+    conn = direct_get_conn()
+
+    # SQL 선언 및 text로 감싸기
+    # 1, 2, 3, 4 | '둘리', '길동'
+    query = '''select id, title, author from blog where id = :id and author = :author 
+            and modified_dt < :modified_dt'''
+    stmt = text(query)
+    bind_stmt = stmt.bindparams(id=1, author='둘리', modified_dt=datetime.now())
+
+    # SQL 호출하여 CursorResult 반환. 
+    result = conn.execute(bind_stmt)
+    rows = result.fetchall() # row Set을 개별 원소로 가지는 List로 반환. 
+    print(rows)
+    result.close()
+except SQLAlchemyError as e:
+    print("############# ", e)
+    #raise e
+finally:
+    # close() 메소드 호출하여 connection 반환.
+    conn.close()
+```
+
+
+
 ## Blog 애플리케이션 개발하기
   
 **API 명세서**  
-![](./img/fastapi/fastapi015.png)
+![](./img/fastapi/fastapi017.png)
 
 **Application 모듈 디렉토리 구조**  
 
-![](./img/fastapi/fastapi016.png)
+![](./img/fastapi/fastapi018.png)
 
 **완성된 블로그 화면**
 **블로그 홈페이지**
-![](./img/fastapi/fastapi017.png)
-
-**블로그 content**
-![](./img/fastapi/fastapi018.png)
-
-**블로그 수정**
 ![](./img/fastapi/fastapi019.png)
 
-**블로그 삭제**
+**블로그 content**
 ![](./img/fastapi/fastapi020.png)
+
+**블로그 수정**
+![](./img/fastapi/fastapi021.png)
+
+**블로그 삭제**
+![](./img/fastapi/fastapi022.png)
 
 **데이터베이스 생성하기**
 
