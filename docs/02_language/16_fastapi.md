@@ -1409,7 +1409,7 @@ class Foo(BaseModel):
 
 foo = Foo(precise=Decimal('123.45'))
 print(foo)
-#> precise=Decimal('123.45')
+# > precise=Decimal('123.45')
 ```
 
 `Pydantic/pydantic_04.py`
@@ -1515,7 +1515,7 @@ class Product(BaseModel):
 
 product = Product(made_in="USA")
 print(product)
-#> made_in='USA'
+# > made_in='USA'
 
 ```
 
@@ -1693,15 +1693,15 @@ async def long_running_task():
     await asyncio.sleep(20)        
     return {"status": "long_running task completed"}
     
-@app.get("/task")
-async def run_task():
+@app.get("/async_task")
+async def run_async_task():
     result = await long_running_task()
     return result
 
-# @app.get("/task")
-# async def run_task():
-#     time.sleep(20)
-#     return {"status": "long_running task completed"}
+@app.get("/sync_task")
+async def run_sync_task():
+    time.sleep(20)
+    return {"status": "long_running task completed"}
 
 @app.get("/quick")
 async def quick_response():
