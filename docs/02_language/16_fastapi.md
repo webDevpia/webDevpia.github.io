@@ -2144,7 +2144,7 @@ select * from sys.session where db='blog_db' order by conn_id;
 
 `Blog_DB_Handling/.env`
 
-```env
+```
 DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
 DRIVERNAME="mysql+mysqlconnector"
 USERNAME="root"
@@ -2154,16 +2154,66 @@ PORT="3306"
 DATABASE="blog_db"
 ```
 
-**FastAPI 프로그램 진입점**
+**데이터베이스와 연결함수 작성**
 
-`Blog_DB_Handling/main.py`
+`Blog_DB_Handling/db/database.py`
 
 ```py
-from fastapi import FastAPI
-from routes import blog
+from sqlalchemy import create_engine, Connection, URL
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.pool import QueuePool, NullPool
+from contextlib import contextmanager
+from fastapi import status
+from fastapi.exceptions import HTTPException
+from dotenv import load_dotenv
+import os
 
-app = FastAPI()
-app.include_router(blog.router)
+# database connection URL
+# DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
+load_dotenv()
+
+# DATABASE_CONN = os.getenv("DATABASE_CONN")
+
+DATABASE_CONN = URL.create(
+    drivername=os.getenv('DRIVERNAME'),
+    username=os.getenv('USERNAME'),
+    password=os.getenv('PASSWORD'),  
+    host=os.getenv('HOST'),
+    database=os.getenv('DATABASE'),
+    port=os.getenv('PORT')
+)
+
+engine = create_engine(DATABASE_CONN, 
+                    echo=True,
+                    poolclass=QueuePool,
+                    #poolclass=NullPool, # Connection Pool 사용하지 않음. 
+                    pool_size=10, 
+                    max_overflow=0,
+                    pool_recycle=300)
+
+def direct_get_conn():
+    conn = None
+    try:
+        conn = engine.connect()
+        return conn
+    except SQLAlchemyError as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+
+def context_get_conn():
+    conn = None
+    try:
+        conn = engine.connect()
+        yield conn
+    except SQLAlchemyError as e:
+        print(e)
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
+    finally:
+        if conn:
+            conn.close()
+
 ```
 
 **글자의 길이를 150으로 잘라주는 함수와 웹브라우저에서 줄바꿈을 위한 태그로 변환함수**
@@ -2184,6 +2234,49 @@ def newline_to_br(text_newline: str) -> str:
     if text_newline is not None:
         return text_newline.replace('\n', '<br>')
     return None
+```
+
+**schema 작성**
+
+`Blog_DB_Handling/schemas/blog_schema.py`
+
+```py
+from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import Optional, Annotated
+from pydantic.dataclasses import dataclass
+
+class BlogInput(BaseModel):
+    title: str = Field(..., min_length=2, max_length=200)
+    author: str = Field(..., max_length=100)
+    content: str = Field(..., min_length=2, max_length=4000)
+    image_loc: Optional[str] = Field(None, max_length=400)
+    #image_loc: Annotated[str, Field(None, max_length=400)] = None
+
+class Blog(BlogInput):
+    id: int
+    modified_dt: datetime
+
+@dataclass
+class BlogData:
+    id: int
+    title: str
+    author: str
+    content: str
+    modified_dt: datetime
+    image_loc: str | None = None
+```
+
+**FastAPI 프로그램 진입점**
+
+`Blog_DB_Handling/main.py`
+
+```py
+from fastapi import FastAPI
+from routes import blog
+
+app = FastAPI()
+app.include_router(blog.router)
 ```
 
 **api 명세서에 따른 router**
@@ -2386,98 +2479,6 @@ def delete_blog(request: Request, id: int
                             detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
 ```
 
-**schema 작성**
-
-`Blog_DB_Handling/schemas/blog_schema.py`
-
-```py
-from pydantic import BaseModel, Field
-from datetime import datetime
-from typing import Optional, Annotated
-from pydantic.dataclasses import dataclass
-
-class BlogInput(BaseModel):
-    title: str = Field(..., min_length=2, max_length=200)
-    author: str = Field(..., max_length=100)
-    content: str = Field(..., min_length=2, max_length=4000)
-    image_loc: Optional[str] = Field(None, max_length=400)
-    #image_loc: Annotated[str, Field(None, max_length=400)] = None
-
-class Blog(BlogInput):
-    id: int
-    modified_dt: datetime
-
-@dataclass
-class BlogData:
-    id: int
-    title: str
-    author: str
-    content: str
-    modified_dt: datetime
-    image_loc: str | None = None
-```
-
-**데이터베이스와 연결함수 작성**
-
-`Blog_DB_Handling/db/database.py`
-
-```py
-from sqlalchemy import create_engine, Connection, URL
-from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.pool import QueuePool, NullPool
-from contextlib import contextmanager
-from fastapi import status
-from fastapi.exceptions import HTTPException
-from dotenv import load_dotenv
-import os
-
-# database connection URL
-# DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
-load_dotenv()
-
-# DATABASE_CONN = os.getenv("DATABASE_CONN")
-
-DATABASE_CONN = URL.create(
-    drivername=os.getenv('DRIVERNAME'),
-    username=os.getenv('USERNAME'),
-    password=os.getenv('PASSWORD'),  
-    host=os.getenv('HOST'),
-    database=os.getenv('DATABASE'),
-    port=os.getenv('PORT')
-)
-
-engine = create_engine(DATABASE_CONN, 
-                    echo=True,
-                    poolclass=QueuePool,
-                    #poolclass=NullPool, # Connection Pool 사용하지 않음. 
-                    pool_size=10, 
-                    max_overflow=0,
-                    pool_recycle=300)
-
-def direct_get_conn():
-    conn = None
-    try:
-        conn = engine.connect()
-        return conn
-    except SQLAlchemyError as e:
-        print(e)
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
-
-def context_get_conn():
-    conn = None
-    try:
-        conn = engine.connect()
-        yield conn
-    except SQLAlchemyError as e:
-        print(e)
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                            detail="요청하신 서비스가 잠시 내부적으로 문제가 발생하였습니다.")
-    finally:
-        if conn:
-            conn.close()
-
-```
 
 `Blog_DB_Handling/templates/index.html`
 
