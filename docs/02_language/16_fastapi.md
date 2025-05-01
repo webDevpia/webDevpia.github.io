@@ -1754,6 +1754,7 @@ from sqlalchemy.pool import QueuePool
 from sqlalchemy.exc import SQLAlchemyError
 
 # database connection URL
+# postgresql+pg8000://dbuser:kx%40jj5%2Fg@pghost10/appdb
 DATABASE_CONN = "mysql+mysqlconnector://root:root1234@127.0.0.1:3306/blog_db"
 # Engine 생성
 engine = create_engine(DATABASE_CONN, poolclass=QueuePool,
