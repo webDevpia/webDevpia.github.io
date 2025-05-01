@@ -1754,7 +1754,7 @@ from sqlalchemy.pool import QueuePool
 from sqlalchemy.exc import SQLAlchemyError
 
 # database connection URL
-# postgresql+pg8000://dbuser:kx%40jj5%2Fg@pghost10/appdb
+# dialect+driver://username:password@host:port/database
 DATABASE_CONN = "mysql+mysqlconnector://root:root1234@127.0.0.1:3306/blog_db"
 # Engine 생성
 engine = create_engine(DATABASE_CONN, poolclass=QueuePool,
@@ -2146,6 +2146,12 @@ select * from sys.session where db='blog_db' order by conn_id;
 
 ```env
 DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
+DRIVERNAME="mysql+mysqlconnector"
+USERNAME="root"
+PASSWORD="root1234"
+HOST="localhost"
+PORT="3306"
+DATABASE="blog_db"
 ```
 
 **FastAPI 프로그램 진입점**
@@ -2416,7 +2422,7 @@ class BlogData:
 `Blog_DB_Handling/db/database.py`
 
 ```py
-from sqlalchemy import create_engine, Connection
+from sqlalchemy import create_engine, Connection, URL
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.pool import QueuePool, NullPool
 from contextlib import contextmanager
@@ -2429,12 +2435,23 @@ import os
 # DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
 load_dotenv()
 
-DATABASE_CONN = os.getenv("DATABASE_CONN")
+# DATABASE_CONN = os.getenv("DATABASE_CONN")
 
-engine = create_engine(DATABASE_CONN, #echo=True,
+DATABASE_CONN = URL.create(
+    drivername=os.getenv('DRIVERNAME'),
+    username=os.getenv('USERNAME'),
+    password=os.getenv('PASSWORD'),  
+    host=os.getenv('HOST'),
+    database=os.getenv('DATABASE'),
+    port=os.getenv('PORT')
+)
+
+engine = create_engine(DATABASE_CONN, 
+                    echo=True,
                     poolclass=QueuePool,
                     #poolclass=NullPool, # Connection Pool 사용하지 않음. 
-                    pool_size=10, max_overflow=0,
+                    pool_size=10, 
+                    max_overflow=0,
                     pool_recycle=300)
 
 def direct_get_conn():
@@ -2734,8 +2751,15 @@ import os
 # DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
 load_dotenv()
 
-DATABASE_CONN = os.getenv("DATABASE_CONN")
-
+# DATABASE_CONN = os.getenv("DATABASE_CONN")
+DATABASE_CONN = URL.create(
+    drivername=os.getenv('DRIVERNAME'),
+    username=os.getenv('USERNAME'),
+    password=os.getenv('PASSWORD'),  
+    host=os.getenv('HOST'),
+    database=os.getenv('DATABASE'),
+    port=os.getenv('PORT')
+)
 engine = create_engine(DATABASE_CONN, #echo=True,
                     poolclass=QueuePool,
                     #poolclass=NullPool, # Connection Pool 사용하지 않음. 
@@ -3139,6 +3163,12 @@ pip install python-multipart==0.0.9
 
 ```
 DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
+DRIVERNAME="mysql+mysqlconnector"
+USERNAME="root"
+PASSWORD="root1234"
+HOST="localhost"
+PORT="3306"
+DATABASE="blog_db"
 UPLOAD_DIR = "./static/uploads"
 ```
 
@@ -3339,9 +3369,17 @@ import os
 # DATABASE_CONN = "mysql+mysqlconnector://root:root1234@localhost:3306/blog_db"
 load_dotenv()
 
-DATABASE_CONN = os.getenv("DATABASE_CONN")
-
-engine = create_engine(DATABASE_CONN, #echo=True,
+# DATABASE_CONN = os.getenv("DATABASE_CONN")
+DATABASE_CONN = URL.create(
+    drivername=os.getenv('DRIVERNAME'),
+    username=os.getenv('USERNAME'),
+    password=os.getenv('PASSWORD'),  
+    host=os.getenv('HOST'),
+    database=os.getenv('DATABASE'),
+    port=os.getenv('PORT')
+)
+engine = create_engine(DATABASE_CONN, 
+                    echo=True,
                     poolclass=QueuePool,
                     #poolclass=NullPool, # Connection Pool 사용하지 않음. 
                     pool_size=10, max_overflow=0,
