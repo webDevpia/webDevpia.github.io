@@ -2093,9 +2093,10 @@ finally:
 **데이터베이스 생성하기**
 
 ```sql
+drop database if exists blog_db;
 create database blog_db;
 
-drop table if exists blog;
+use blog_db;
 
 create table blog_db.blog
 (id integer auto_increment primary key,
