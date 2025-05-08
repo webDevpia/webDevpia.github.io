@@ -12,6 +12,8 @@ permalink: /language/react
 
 리액트(react)는 2013년에 페이스북에서 발표한 오픈소스 자바스크립트 프레임워크  
 
+[youtube 강의](https://youtu.be/CgkZ7MvWUAA?si=ahU-R3kP18s7U4oL)
+
 ## 특징
 - 가상 Dom(Virtual Document Object Model)  
 - JSX(javascript XML)  
