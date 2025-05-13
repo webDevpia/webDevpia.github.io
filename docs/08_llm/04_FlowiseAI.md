@@ -14,12 +14,16 @@ permalink: /llm/flowiseai
 
 ```bash
 ollama list
-ollama run llama3.2:3b
+ollama run gemma3
 /bye
 ollama pull nomic-embed-text
 ```
 
-### 2. FlowiseAI 설치
+### 2. Docker, Docker Compose 설치
+
+[Docker Desktop](https://docs.docker.com/desktop/)
+
+### 3. FlowiseAI 설치
 
 [FlowiseAI](https://flowiseai.com/)  
 [github](https://github.com/FlowiseAI/Flowise)
@@ -34,10 +38,18 @@ git clone https://github.com/FlowiseAI/Flowise.git
 
 #### 3) .env.example 파일을 .env 로 복사
 
+.env 파일에서 port 내용 수정  
+CORS_ORIGINS, IFRAME_ORIGINS 주석 해제  
+username, password 본인이 사용할 계정 정보를 지정  
+
 ```bash
 PORT=3030
-FLOWISE_USERNAME=user
-FLOWISE_PASSWORD=1234
+
+CORS_ORIGINS=*
+IFRAME_ORIGINS=*
+
+FLOWISE_USERNAME=user001
+FLOWISE_PASSWORD=qwer1234
 ```
 
 #### 4) docker-compose.yml 수정
@@ -69,46 +81,56 @@ docker-compose stop
 ![](./img/flowise/flowise001.png)
 
 #### 2) Document Store 클릭
-![](./img/flowise/flowise003.png)
+![](./img/flowise/flowise002.png)
 
 #### 3) Add New 클릭하고 Name 입력하고 Add 버튼 클릭
+![](./img/flowise/flowise003.png)
+
+#### 4) 생성된 houshingDB Document Store 클릭
 ![](./img/flowise/flowise004.png)
 
-#### 4) 생성된 Document Store 클릭
+#### 5) Add Document Loader 버튼 클릭
 ![](./img/flowise/flowise005.png)
 
-#### 5) Add Document Loader 버튼 클릭
+#### 6) 문서의 종류에 따라서 선택 후 등록
 ![](./img/flowise/flowise006.png)
 
-#### 6) 문서의 종류에 따라서 선택 후 등록
+#### 7) pdf file upload,One document per page로 선택하고 Preview 클릭
 ![](./img/flowise/flowise007.png)
 
-#### 7) Upset Config 버튼 클릭
+#### 8) Options 클릭, Upsert Chunks 클릭
 ![](./img/flowise/flowise008.png)
 
-#### 8) Select Embeddings 클릭
+#### 9) Select Embeddings, Vector Store는 Faiss 선택
 ![](./img/flowise/flowise009.png)
 
-#### 9) Ollama Embeddings 선택
+#### 10) Ollama Embeddings 선택 
 ![](./img/flowise/flowise010.png)
 
-#### 10) Select Vector Store 클릭 후 Faiss 선택, 항목 입력 후 Upset 버튼 클릭
+#### 11) 정보 입력 후 Upsert 클릭 
+ 
 ![](./img/flowise/flowise011.png)
 
-#### 11) Test Retrieval 버튼 클릭후 테스트, Save Config 버튼 클릭
+#### 12) Test Retrieval 버튼 클릭 
 ![](./img/flowise/flowise012.png)
 
-#### 12) Chatflows 선택 후, Add New 버튼 클릭
+#### 13) 테스트 후 Save Config 버튼 클릭 
+![](./img/flowise/flowise013.png)
+
+#### 14) Chatflows 선택 후, Add New 버튼 클릭.
+
+![](./img/flowise/flowise014.png)
+
+#### 15) Chatflows 저장
 ![](./img/flowise/flowise015.png)
 
-#### 13) 작성
+#### 16) Chatflows 작성 및 저장
 ![](./img/flowise/flowise016.png)
 
+#### 17) 오른쪽 상단 말풍선 아이콘 클릭하고 동작여부 확인
 ![](./img/flowise/flowise017.png)
 
-![](./img/flowise/flowise018.png)
-
-#### 14) streamlit으로 Flowise 연동해서 사용
+#### 18) streamlit으로 Flowise 연동해서 사용
 streamlit_app.py
 ```py
 import streamlit as st
@@ -118,6 +140,7 @@ import json
 # Flowise app base url
 base_url="http://localhost:3030"
 # Chatflow/Agentflow ID
+# 해당 Chatflow의 웹페이지의 주소창을 확인한다.
 flow_id = "fda11deb-e4a5-4a3e-a413-6daf0ab5a527"
 # Show title and description.
 st.title("💬 Flowise Streamlit Chat")

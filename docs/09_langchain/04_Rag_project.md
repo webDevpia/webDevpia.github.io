@@ -42,7 +42,7 @@ ChatOpenAI 연결 테스트
 ```python
 from langchain_openai import ChatOpenAI
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
 ```
 
 소믈리에 페르소나 정의하기
@@ -174,7 +174,7 @@ from openai import OpenAI
 client  = OpenAI()
 
 response = client.chat.completions.create(
-    model="gpt-4o",
+    model="gpt-4o-mini",
     messages=[
         {
             "role": "system", 
@@ -228,7 +228,7 @@ def recommand_dishes(query):
     client  = OpenAI()
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-4o-mini",
         messages=[
             {
                 "role": "system", 
@@ -325,7 +325,7 @@ prompt = ChatPromptTemplate.from_messages([
      ])
 ])
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
 chain = prompt | llm | StrOutputParser()
 response = chain.invoke({
     "text": "이 와인에 어울리는 요리에는 어떤 것들이 있을까?",
@@ -401,7 +401,7 @@ load_dotenv()
 ```python
 from langchain_openai import ChatOpenAI
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
 ```
 
 ```python

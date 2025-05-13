@@ -38,11 +38,8 @@ permalink: /llm/lmstudio
 
 ![](./img/lmstudio/lmstudio007.png)
 
-### 8. exaone instruct LG 검색해서 2.4B모델을 다운로드
 
-![](./img/lmstudio/lmstudio008.png)
-
-### 9. 사용해볼 다른 모델도 다운로드
+### 8. 사용할 모델 다운로드 (gemma-3-1b)
 
 ![](./img/lmstudio/lmstudio009.png)
 
