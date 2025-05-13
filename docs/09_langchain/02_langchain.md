@@ -12,6 +12,7 @@ permalink: /langchain/langchain
 ## 수업전 체크리스트 
 
 ### 기존 설치 환경 제거 시 
+
 1. Microsoft Visual Studio Code, Miniconda3 혹은 Anaconda 제거
 2. 사용자계정 폴더의 .conda, .ipython, .vscode, miniconda3 폴더와 .condarc 파일을 제거.   
    C:\Users\사용자계정\AppData\Roaming\Code 폴더도 제거.  
@@ -19,7 +20,7 @@ permalink: /langchain/langchain
 ### 환경 설정
 [ 실습 환경 설정 ]
 
-1. miniconda3를 설치합니다.
+1. miniconda3를 설치합니다.  
 [Quick command line install](https://docs.anaconda.com/miniconda/install/#quick-command-line-install)
 
 ```bash
@@ -30,7 +31,8 @@ del miniconda.exe
 
 2. 시작 > Miniconda3 (64-bit) > Anaconda Prompt (miniconda)를 실행합니다.
 
-3. 패키지 다운로드를 위한 conda-forge 리포지토리  채널을 추가하고, 채널 우선 순위를 변경합니다.(아나콘다는 비영리기관에서만 무료 사용 가능)
+3. 패키지 다운로드를 위한 conda-forge 리포지토리  채널을 추가하고, 채널 우선 순위를 변경합니다.(아나콘다는 비영리기관에서만 무료 사용 가능) 
+
 ```bash
 conda config --show channels 
 
