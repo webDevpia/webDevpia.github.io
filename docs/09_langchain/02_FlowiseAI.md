@@ -59,6 +59,7 @@ FLOWISE_PASSWORD=qwer1234
         ports:
             - '${PORT}:${PORT}'
             - 11434:11434
+            - 1234:1234
 ```
 
 #### 5) docker compose로 빌드 및 실행

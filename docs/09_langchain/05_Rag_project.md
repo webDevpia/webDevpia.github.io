@@ -14,6 +14,7 @@ permalink: /langchain/lag_proj
 ### 1. LLM을 활용한 AI 소믈리에
 
 가상환경 생성 및 활성화하고, 라이브러리 설치
+
 ```bash
 conda create -n langchain_rag_proj_env python=3.12 -y
 
@@ -111,8 +112,10 @@ def func(x):
         yield str(y)
 
 runnable = RunnableLambda(func)
+
 for res in runnable.stream(range(5)):
     print(type(res), res)
+
 ```
 
 ```python
@@ -145,7 +148,6 @@ chain = RunnablePassthrough.assign(bar=runnable)
 
 chain.invoke({'foo': 2})
 ```
-
 
 ```python
 from langchain_core.runnables import RunnableLambda

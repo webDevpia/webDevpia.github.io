@@ -24,8 +24,10 @@ load_dotenv()
 
 llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
 ```
+
 [ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts)   
 stock으로 검색해서..
+
 ```python
 from langchain.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -53,9 +55,11 @@ print(response)
 ```
 
 ### 2. 데이터 수집
+
 ```bash
 pip install yfinance
 ```
+
 ```python
 import yfinance as yf
 
@@ -97,6 +101,7 @@ historical_data["Volume"]
 ```
 
 ### 3. 사용자 프롬프트 생성
+
 ```python
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
@@ -108,6 +113,7 @@ load_dotenv()
 
 llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
 ```
+
 ```python
 from langchain.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -160,32 +166,40 @@ print(stock.get_financial_statement())
 
 ### 4. 검색 인덱싱
 [Stock Screener](https://www.nasdaq.com/market-activity/stocks/screener)
+
 ```python
 import pandas as pd
 
 df = pd.read_csv("nasdaq_screener_1734240693172.csv", na_filter=False)
 df.head()
 ```
+
 ```python
 df[df['Symbol'].str.contains(r'[/^ ]', regex=True)]
 ```
+
 ```python
 df['id'] = df['Symbol'].str.strip().replace(r'[/^]', '_', regex=True)
 df.head()
 ```
+
 ```python
 result_d = df.to_dict(orient='records')
 result_d
 ```
+
 [install_meilisearch_locally](https://www.meilisearch.com/docs/learn/self_hosted/install_meilisearch_locally)
 
 Windows  
 Direct download -> latest Meilisearch release -> meilisearch-windows-amd64.exe   
 다운로드 받아서 실행
+
 ```bash
 meilisearch-windows-amd64.exe --master-key="aSampleMasterKey"
 ```
+
 MacOS,Linux
+
 ```bash
 # Install Meilisearch (맥, 리눅스)
 curl -L https://install.meilisearch.com | sh
@@ -194,7 +208,9 @@ curl -L https://install.meilisearch.com | sh
 ./meilisearch --master-key="aSampleMasterKey"
 
 ```
+
 meilisearch에 인덱스 데이터 생성
+
 ```python
 import meilisearch
 
@@ -202,7 +218,9 @@ client = meilisearch.Client('http://localhost:7700', 'aSampleMasterKey')
 
 client.index('nasdaq').add_documents(result_d, primary_key='id')
 ```
+
 검색하기
+
 ```python
 client.index('nasdaq').search('Microsoft')
 ```
@@ -346,10 +364,10 @@ with tab2:
             st.success('Done')
         st.write(report)
 ```
+
 ### 6. 실행
+
 ```bash
 meilisearch --master-key="aSampleMasterKey"
 streamlit run app.py
 ```
-
-
