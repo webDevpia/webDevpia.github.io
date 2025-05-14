@@ -1,7 +1,7 @@
 ---
 title: FlowiseAI
 layout: default
-parent: LLM
+parent: LangChain
 nav_order: 1
 permalink: /langchain/flowiseai
 # nav_exclude: true
