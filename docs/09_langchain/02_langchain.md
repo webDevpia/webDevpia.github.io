@@ -129,6 +129,7 @@ print(os.getenv('OPENAI_API_KEY'))
 
 ### 연결테스트
 
+02_hello.py
 ```python
 import langchain
 from langchain_openai import ChatOpenAI
