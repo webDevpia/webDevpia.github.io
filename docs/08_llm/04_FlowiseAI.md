@@ -131,7 +131,7 @@ docker-compose stop
 ![](./img/flowise/flowise017.png)
 
 #### 18) streamlit으로 Flowise 연동해서 사용
-streamlit_app.py
+app.py
 ```py
 import streamlit as st
 from flowise import Flowise, PredictionData
@@ -139,6 +139,7 @@ import json
 
 # Flowise app base url
 base_url="http://localhost:3030"
+
 # Chatflow/Agentflow ID
 # 해당 Chatflow의 웹페이지의 주소창을 확인한다.
 flow_id = "fda11deb-e4a5-4a3e-a413-6daf0ab5a527"
@@ -198,3 +199,10 @@ if prompt := st.chat_input("What is up?"):
 
 ```
 
+streamlit 실행하기
+
+```bash
+pip install streamlit
+pip install flowise
+streamlit run app.py
+```
