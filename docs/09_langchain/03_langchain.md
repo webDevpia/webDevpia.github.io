@@ -13,9 +13,11 @@ permalink: /langchain/langchain
 
 ### 기존 설치 환경 제거 시 
 
-#### 1. Microsoft Visual Studio Code, Miniconda3 혹은 Anaconda 제거
-#### 2. 사용자계정 폴더의 .conda, .ipython, .vscode, miniconda3 폴더와 .condarc 파일을 제거.   
-   C:\Users\사용자계정\AppData\Roaming\Code 폴더도 제거.  
+#### 1. Microsoft Visual Studio Code, Miniconda3 혹은 Anaconda 제거'
+
+#### 2. 폴더 제거
+사용자계정 폴더의 .conda, .ipython, .vscode, miniconda3 폴더와 .condarc 파일을 제거.  
+C:\Users\사용자계정\AppData\Roaming\Code 폴더도 제거.  
 
 ### 환경 설정
 [ 실습 환경 설정 ]
@@ -31,14 +33,18 @@ del miniconda.exe
 
 #### 2. 시작 > Miniconda3 (64-bit) > Anaconda Prompt (miniconda)를 실행합니다.
 
-#### 3. 패키지 다운로드를 위한 conda-forge 리포지토리  채널을 추가하고, 채널 우선 순위를 변경합니다.  (아나콘다는 비영리기관에서만 무료 사용 가능) 
+#### 3. 채널 추가 및 변경 
+패키지 다운로드를 위한 conda-forge 리포지토리 채널을 추가하고, 채널 우선 순위를 변경합니다.  
+(아나콘다는 비영리기관에서만 무료 사용 가능) 
 
 ```bash
 conda config --show channels 
 
 channels:   
   - defaults
-  
+```
+
+```bash  
 conda config --add channels conda-forge && conda config --set channel_priority strict
 
 conda config --show channels
@@ -56,7 +62,7 @@ conda create -n langchain_basic_env python=3.12 -y
 conda info --envs                      
 # conda environments:
 #
-base                              C:\Users\사용자계정\miniconda3
+base                   C:\Users\사용자계정\miniconda3
 langchain_basic_env    C:\Users\사용자계정\miniconda3\envs\langchain_basic_env   
 ```
 
@@ -73,47 +79,34 @@ conda activate langchain_basic_env
 conda install notebook -y
 ```
 
-#### 7. Anaconda Prompt (miniconda) 창을 닫습니다.
-
-#### 8. visual studio code를 설치합니다. 
+#### 7. visual studio code를 설치합니다. 
 
 [visualstudio](https://code.visualstudio.com/Download)
 
-#### 9. visual studio code를 실행합니다. 
-
-#### 10. 확장 탭(CTRL+SHIFT+X)을 선택합니다.
-
-#### 11. Python 확장팩을 설치합니다.
-
-#### 12. Jupyter 확장팩을 설치합니다.
-
-#### 13. 탐색기(CTRL+SHIFT+E)를 선택하고, langchain_basic 폴더를 생성하고 폴더 열기
-
-#### 15. 명령팔레트(CTRL+SHIFT+P)를 실행, Python: Select Interpreter를 선택, Conda 가상환경 (langchain_basic_env)을 선택.  
-
-#### 16. 터미널(CTRL + J)을 엽니다. / Command Prompt를 선택합니다.
-
-#### 17. 터미널에 Conda 가상환경 (langchain_basic_env) 활성화되었는지 확인합니다. 활성화되어 있지 않을 경우 다음 명령으로 활성화합니다. 
+확장 탭(CTRL+SHIFT+X)을 선택,  Python 확장팩, Jupyter 확장팩을 설치.  
+명령팔레트(CTRL+SHIFT+P)를 실행, Python: Select Interpreter를 선택, Conda 가상환경 (langchain_basic_env)을 선택.  
+탐색기(CTRL+SHIFT+E)를 선택하고, langchain_basic 폴더를 생성하고 폴더 열기
+터미널(CTRL + J)을 열고, Command Prompt를 선택.  
+터미널에 Conda 가상환경 (langchain_basic_env) 활성화되었는지 확인.   
+활성화되어 있지 않을 경우 다음 명령으로 활성화합니다. 
 
 ```bash
 conda activate langchain_basic_env
 (langchain_basic_env) C:\Users\사용자계정\langchain_basic>
 ```
 
-#### 18. python-dotenv 패키지를 설치합니다. 
+## env 파일 로드 테스트
 
 ```bash
 conda install python-dotenv -y 
 ```
 
-#### 19. .env 파일에 OpenAI 개발자 플랫폼에서 생성한 API secret key를 OPENAI API_KEY=xxxxxxxxxxxxxxxxxxx 형식으로 등록합니다.
+.env
+```
+OPENAI API_KEY=xxxxxxxxxxxxxxxxxxx
+```
 
-#### 20. VSCode를 재시작 후 터미널에서 echo %OPENAI_API_KEY% 명령으로 API key를 확인합니다.
-
-## env 파일 로드 테스트
-
-env_config_test.py
-
+01_env_config_test.py
 ```python
 from dotenv import load_dotenv
 import os
@@ -129,10 +122,17 @@ print(os.getenv('OPENAI_API_KEY'))
 
 ### 연결테스트
 
+```bash
+pip install langchain
+pip install langchain_openai
+pip install langchain_ollama
+```
+
 02_hello.py
 ```python
 import langchain
 from langchain_openai import ChatOpenAI
+from langchain_ollama import OllamaLLM
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from dotenv import load_dotenv
 import os
@@ -142,7 +142,13 @@ load_dotenv()
 print(f"langchain: {langchain.__version__}")
 print(os.getenv('OPENAI_API_KEY'))
 
-llm = ChatOpenAI(model="gpt-4o")
+ollama_url = "http://127.0.0.1:11434"  
+lmstudio_url = "http://127.0.0.1:1234/v1"
+
+# llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
+# llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
+llm = ChatOpenAI(model="gpt-4.1-nano")
+
 print(llm)
 
 #system(시스템 지시) 및 human(사용자 질문) 메시지를 포함한 메시지 리스트 생성
@@ -158,7 +164,10 @@ messages = [
 ]
 
 ai_message = llm.invoke(messages)
+
+# print(ai_message)
 print(ai_message.content)
+
 ```
 
 ### 기본사용법
@@ -167,13 +176,19 @@ print(ai_message.content)
 ```python
 import langchain
 from langchain_openai import ChatOpenAI
+from langchain_ollama import OllamaLLM
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o")
+ollama_url = "http://127.0.0.1:11434"  
+lmstudio_url = "http://127.0.0.1:1234/v1"
+
+# llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
+# llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
+llm = ChatOpenAI(model="gpt-4.1-nano")
 
 # invoke(): 단일 요청 처리
 # [ INVOKE ]
@@ -218,6 +233,7 @@ for chunk in ai_message:
 ```python
 import langchain
 from langchain_openai import ChatOpenAI
+from langchain_ollama import OllamaLLM
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from dotenv import load_dotenv
 import os
@@ -236,7 +252,12 @@ async def invoke_parallel(llm, messages):
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o")
+ollama_url = "http://127.0.0.1:11434"  
+lmstudio_url = "http://127.0.0.1:1234/v1"
+
+# llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
+# llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
+llm = ChatOpenAI(model="gpt-4.1-nano")
 
 messages = [
     ("system", "당신은 서울의 문화에 대한 전문가입니다."),
@@ -265,6 +286,7 @@ print(f"Elapsed time: {end - start:.2f} seconds")
 
 ```python
 from langchain_openai import ChatOpenAI
+from langchain_ollama import OllamaLLM
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_community.chat_message_histories import ChatMessageHistory
 from dotenv import load_dotenv
@@ -272,7 +294,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o")
+ollama_url = "http://127.0.0.1:11434"  
+lmstudio_url = "http://127.0.0.1:1234/v1"
+
+# llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
+# llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
+llm = ChatOpenAI(model="gpt-4.1-nano")
 
 # 직접 메시지 리스트를 관리하는 방식
 
@@ -320,6 +347,7 @@ for message in history.messages:
 
 ```python
 from langchain_openai import ChatOpenAI
+from langchain_ollama import OllamaLLM
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain.memory import ConversationBufferMemory
@@ -327,7 +355,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o")
+ollama_url = "http://127.0.0.1:11434"  
+lmstudio_url = "http://127.0.0.1:1234/v1"
+
+# llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
+# llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
+llm = ChatOpenAI(model="gpt-4.1-nano")
 
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 memory.clear()
@@ -348,13 +381,19 @@ print(memory.load_memory_variables({}))
 
 ```python
 from langchain_openai import ChatOpenAI
+from langchain_ollama import OllamaLLM
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain.prompts import PromptTemplate, load_prompt
 from dotenv import load_dotenv
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o")
+ollama_url = "http://127.0.0.1:11434"  
+lmstudio_url = "http://127.0.0.1:1234/v1"
+
+# llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
+# llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
+llm = ChatOpenAI(model="gpt-4.1-nano")
 
 # 변수를 포함한 템플릿 정의 및 값 주입
 template = PromptTemplate.from_template("{city}에서 {adjective} {topic}을 알려주세요.")
@@ -378,12 +417,18 @@ print(ai_message.content)
 
 ```python
 from langchain_openai import ChatOpenAI
+from langchain_ollama import OllamaLLM
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from dotenv import load_dotenv
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o")
+ollama_url = "http://127.0.0.1:11434"  
+lmstudio_url = "http://127.0.0.1:1234/v1"
+
+# llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
+# llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
+llm = ChatOpenAI(model="gpt-4.1-nano")
 
 # 파이프라인(|) 연산자를 사용한 간결한 체인 구성
 from langchain.prompts import PromptTemplate
