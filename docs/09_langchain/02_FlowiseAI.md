@@ -3,7 +3,7 @@ title: FlowiseAI
 layout: default
 parent: LLM
 nav_order: 1
-permalink: /llm/flowiseai
+permalink: /langchain/flowiseai
 # nav_exclude: true
 # search_exclude: true
 --- 
