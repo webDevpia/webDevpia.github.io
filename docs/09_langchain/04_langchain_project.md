@@ -15,6 +15,7 @@ permalink: /langchain/langchain_proj
 
 ```python
 from dotenv import load_dotenv
+from langchain_ollama import OllamaLLM
 from langchain_openai import ChatOpenAI
 import os
 
@@ -22,11 +23,16 @@ load_dotenv()
 
 # print(os.getenv("OPENAI_API_KEY"))
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
+ollama_url = "http://127.0.0.1:11434"  
+lmstudio_url = "http://127.0.0.1:1234/v1"
+
+# llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
+# llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
+llm = ChatOpenAI(model="gpt-4.1-nano", temperature=0.2)
 ```
 
 [ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts)   
-stock으로 검색해서..
+stock으로 검색해서 주식 시장 상황에 대한 답변 생성을 위한 프롬프트 복사해서 사용
 
 ```python
 from langchain.prompts import ChatPromptTemplate
@@ -104,6 +110,7 @@ historical_data["Volume"]
 
 ```python
 from dotenv import load_dotenv
+from langchain_ollama import OllamaLLM
 from langchain_openai import ChatOpenAI
 import os
 
@@ -111,7 +118,12 @@ load_dotenv()
 
 # print(os.getenv("OPENAI_API_KEY"))
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
+ollama_url = "http://127.0.0.1:11434"  
+lmstudio_url = "http://127.0.0.1:1234/v1"
+
+# llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
+# llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
+llm = ChatOpenAI(model="gpt-4.1-nano", temperature=0.2)
 ```
 
 ```python
@@ -157,15 +169,20 @@ response = chain.invoke({
 })
 print(response)
 ```
+
 ```python
 print(stock.get_basic_info())
 ```
+
 ```python
 print(stock.get_financial_statement())
 ```
 
 ### 4. 검색 인덱싱
-[Stock Screener](https://www.nasdaq.com/market-activity/stocks/screener)
+[Stock Screener](https://www.nasdaq.com/market-activity/stocks/screener). 
+
+csv 파일 다운로드. 
+![](./img/langchain/langchain001.png)
 
 ```python
 import pandas as pd
@@ -231,6 +248,7 @@ reporting_service.py
 ```python
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
+from langchain_ollama import OllamaLLM
 from langchain.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
@@ -238,7 +256,12 @@ from stock_info import Stock
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0.2)
+ollama_url = "http://127.0.0.1:11434"  
+lmstudio_url = "http://127.0.0.1:1234/v1"
+
+# llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
+# llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
+llm = ChatOpenAI(model="gpt-4.1-nano", temperature=0.2)
 
 def investment_report(company, symbol):
     prompt = ChatPromptTemplate.from_messages([
@@ -305,7 +328,6 @@ class Stock:
 ```
 
 search.py
-
 ```python
 import meilisearch
 
@@ -314,6 +336,7 @@ client = meilisearch.Client('http://localhost:7700', 'aSampleMasterKey')
 def stock_search(query):
     return client.index('nasdaq').search(query)
 ```
+
 app.py
 ```python
 import streamlit as st

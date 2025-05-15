@@ -13,7 +13,7 @@ permalink: /langchain/langchain
 
 ### 기존 설치 환경 제거 시 
 
-#### 1. Microsoft Visual Studio Code, Miniconda3 혹은 Anaconda 제거'
+#### 1. Microsoft Visual Studio Code, Miniconda3 혹은 Anaconda 제거
 
 #### 2. 폴더 제거
 사용자계정 폴더의 .conda, .ipython, .vscode, miniconda3 폴더와 .condarc 파일을 제거.  
