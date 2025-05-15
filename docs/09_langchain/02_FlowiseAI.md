@@ -131,7 +131,19 @@ docker-compose stop
 #### 17) 오른쪽 상단 말풍선 아이콘 클릭하고 동작여부 확인
 ![](./img/flowise/flowise017.png)
 
-#### 18) streamlit으로 Flowise 연동해서 사용
+#### 18) LM Studio 와 연동
+LM Studio 해당 모델 서버 서비스 실행 후, API Usage항목에 모델명과 서버 주소 확인
+![](./img/flowise/flowise018.png)
+
+flowise Chatflows에서 ChatOpenAI Custom 노드 추가하고,  
+Connect Credential에서 -Create New- 선택. 
+NAME 항목에 이름 입력, Api Key는 아무거나 입력
+![](./img/flowise/flowise019.png)
+
+Additional Parameters클릭하고 입력
+![](./img/flowise/flowise020.png)
+
+#### 19) streamlit으로 Flowise 연동해서 사용
 app.py
 ```py
 import streamlit as st
