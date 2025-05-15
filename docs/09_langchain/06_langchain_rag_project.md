@@ -1,8 +1,8 @@
 ---
-title: Rag Project
+title: LangChain Rag Project
 layout: default
 parent: LangChain
-nav_order: 4
+nav_order: 5
 permalink: /langchain/lag_proj
 # nav_exclude: true
 # search_exclude: true
