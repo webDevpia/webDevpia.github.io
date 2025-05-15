@@ -225,6 +225,7 @@ curl -L https://install.meilisearch.com | sh
 ./meilisearch --master-key="aSampleMasterKey"
 
 ```
+![](./img/langchain/langchain002.png)
 
 meilisearch에 인덱스 데이터 생성
 
