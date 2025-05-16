@@ -11,7 +11,7 @@ permalink: /langchain/langchain
 
 ## 수업전 체크리스트 
 
-### 기존 설치 환경 제거 시 
+### 기존 설치 환경에 문제가 있어서 제거할 경우 
 
 #### 1. Microsoft Visual Studio Code, Miniconda3 혹은 Anaconda 제거
 
@@ -22,7 +22,7 @@ C:\Users\사용자계정\AppData\Roaming\Code 폴더도 제거.
 ### 환경 설정
 [ 실습 환경 설정 ]
 
-#### 1. miniconda3를 설치합니다.  
+#### 1. miniconda3를 설치합니다. (비영리기관에서는 Anaconda 설치해도 상관없음.) 
 [Quick command line install](https://docs.anaconda.com/miniconda/install/#quick-command-line-install)
 
 ```bash
