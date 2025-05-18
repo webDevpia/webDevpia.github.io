@@ -243,7 +243,8 @@ import time
 # ainvoke()로 비동기 호출 수행
 async def invoke_async(llm, messages):
     ai_message = await llm.ainvoke(messages)
-    print(ai_message.content)
+    print(ai_message)#ollama
+    print(ai_message.content)#openai,lmstudio
 
 # asyncio.gather()로 여러 요청을 병렬 처리
 async def invoke_parallel(llm, messages):
