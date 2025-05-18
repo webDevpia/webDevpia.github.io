@@ -54,13 +54,22 @@ prompt = ChatPromptTemplate.from_messages([
 
 output_parser = StrOutputParser()
 
+# 체인 구성: 프롬프트 -> 모델 -> 출력 파서
 chain = prompt | llm | output_parser
+
 company = "Microsoft"
 response = chain.invoke({"company": company})
 print(response)
 ```
 
 ### 2. 데이터 수집
+
+yfinance는 Yahoo Finance에서 금융 데이터를 쉽게 다운로드할 수 있게 해주는 파이썬 라이브러리
+**무료 데이터 접근** : Yahoo Finance API를 통해 주식, ETF, 뮤추얼 펀드, 통화, 암호화폐 등의 금융 데이터에 무료로 접근.
+**데이터 다운로드** : 과거 주가, 거래량, 분배금, 기업 실적 등 다양한 금융 데이터를 쉽게 다운로드.
+**간단한 사용법** : 적은 코드로 빠르게 데이터를 가져올 수 있도록 설계.
+**판다스 통합** : 데이터를 판다스(pandas) DataFrame 형태로 반환하여 데이터 분석이 용이.
+**기업 정보** : 주가 데이터 외에도 기업의 기본 정보, 재무제표, 대차대조표, 현금흐름표 등의 데이터도 가져올 수 있음.
 
 ```bash
 pip install yfinance
@@ -102,7 +111,9 @@ print(current_volume)
 ```
 
 ```python
+# 최근 1개월 동안의 데이터를 요청
 historical_data = msft.history(period="1mo")
+# 각 거래일의 거래량(주식이 얼마나 많이 거래되었는지)을 나타냄
 historical_data["Volume"]
 ```
 
@@ -205,17 +216,26 @@ result_d = df.to_dict(orient='records')
 result_d
 ```
 
-[install_meilisearch_locally](https://www.meilisearch.com/docs/learn/self_hosted/install_meilisearch_locally)
+[meilisearch](https://www.meilisearch.com/docs/learn/self_hosted/install_meilisearch_locally)
 
-Windows  
-Direct download -> latest Meilisearch release -> meilisearch-windows-amd64.exe   
-다운로드 받아서 실행
+**Windows**
 
 ```bash
-meilisearch-windows-amd64.exe --master-key="aSampleMasterKey"
-```
+# powershell에서 실행
+# 최신 릴리스 버전 확인
+$latestRelease = Invoke-RestMethod -Uri "https://api.github.com/repos/meilisearch/meilisearch/releases/latest"
+$windowsAsset = $latestRelease.assets | Where-Object { $_.name -like "*windows-amd64*" }
+$downloadUrl = $windowsAsset.browser_download_url
 
-MacOS,Linux
+# 다운로드
+Invoke-WebRequest -Uri $downloadUrl -OutFile "meilisearch.exe"
+
+# 실행
+./meilisearch.exe  --master-key="aSampleMasterKey"
+```
+WSL (Windows Subsystem for Linux)이 설치되어 있다면 WSL 터미널에서 아래의 명령어로 실행해도 됨
+
+**MacOS,Linux**
 
 ```bash
 # Install Meilisearch (맥, 리눅스)
