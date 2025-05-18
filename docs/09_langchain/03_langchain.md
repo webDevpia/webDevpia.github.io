@@ -439,7 +439,8 @@ prompt = PromptTemplate.from_template("{city}에서 가장 유명한 랜드마�
 chain = LLMChain(llm=llm, prompt=prompt)
 chain.invoke({"city": "파리"})
 
-chain = prompt | llm # LCEL
+
+chain = prompt | llm # LCEL 프롬프트 + 모델 
 chain.invoke({"city": "파리"})
 
 

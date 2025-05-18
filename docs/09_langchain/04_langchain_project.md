@@ -265,7 +265,7 @@ client.index('nasdaq').search('Microsoft')
 
 ### 5. 투자보고서 작성 프로그램 작성
 
-reporting_service.py
+`reporting_service.py`
 ```python
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
@@ -308,6 +308,7 @@ def investment_report(company, symbol):
 
     output_parser = StrOutputParser()
 
+    # 프롬프트 + 모델 + 출력 파서
     chain = prompt | llm | output_parser
 
     stock = Stock(symbol)
@@ -321,7 +322,7 @@ def investment_report(company, symbol):
     return response
 ```
 
-stock_info.py
+`stock_info.py`
 ```python
 import yfinance as yf
 import pandas as pd
@@ -348,7 +349,7 @@ class Stock:
         """
 ```
 
-search.py
+`search.py`
 ```python
 import meilisearch
 
@@ -358,7 +359,7 @@ def stock_search(query):
     return client.index('nasdaq').search(query)
 ```
 
-app.py
+`app.py`
 ```python
 import streamlit as st
 
