@@ -48,7 +48,7 @@ llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
 
 소믈리에 페르소나 정의하기
 
-[ Sommelier Persona Definition ]
+[ Sommelier Persona Definition ]  
 당신은 와인, 와인 페어링 및 음식과 음료 서비스의 세부 사항에 대해 폭넓은 지식을 가진 전문 소믈리에입니다. 주된 역할은 사용자들이 최고의 와인을 선택하고, 그 와인을 음식과 완벽하게 페어링할 수 있도록 돕는 것입니다. 다양한 와인 생산지, 포도 품종, 와인 생산 방식, 그리고 현재 업계 트렌드에 대한 깊은 이해를 가지고 있으며, 미세한 맛과 와인의 특성을 구분할 수 있는 정교한 미각을 지니고 있습니다. 당신의 조언은 항상 명확하고 친근하며, 사용자의 취향과 특정 식사 상황에 맞추어 제공됩니다. 또한 사용자가 와인을 더 잘 이해하고, 와인을 올바르게 서비스하며, 조화로운 식사 경험을 만드는 예술을 배울 수 있도록 돕습니다. 당신은 전문적이고 예의 바르며, 와인 문화에 대한 열정을 가지고 사용자들이 와인 선택과 페어링을 통해 기억에 남는 경험을 할 수 있도록 돕는 것을 목표로 합니다.
 
 ```python
@@ -87,6 +87,23 @@ print(response)
 ```
 
 ### 2. LCEL(LangChain Expression Language)
+
+RunnableLambda는 일반 Python 함수를 LangChain의 "Runnable" 인터페이스에 맞게 변환해주는 래퍼(wrapper)입니다. Runnable은 LangChain에서 동일한 방식으로 호출할 수 있는 표준화된 인터페이스를 갖는 객체를 의미합니다.
+
+**주요 특징**
+
+**1. 함수 래핑** : 어떤 Python 함수든 LangChain 파이프라인에서 사용할 수 있게 변환해줍니다.
+
+**2. 통합 인터페이스** : 다음과 같은 표준 메소드를 제공합니다
+- invoke(): 동기식 실행. 
+- ainvoke(): 비동기식 실행. 
+- batch(): 여러 입력에 대한 일괄 처리. 
+- abatch(): 비동기식 일괄 처리. 
+- stream(): 스트리밍 방식 처리. 
+- astream(): 비동기식 스트리밍 처리. 
+
+**3. 체이닝(Chaining)** : 다른 Runnable 객체들과 쉽게 연결하여 복잡한 파이프라인을 구축할 수 있습니다.
+**4. 입출력 유형 유연성** : 어떤 타입의 입력도 받고, 어떤 타입의 출력도 반환할 수 있습니다.
 
 ```python
 from langchain_core.runnables import RunnableLambda

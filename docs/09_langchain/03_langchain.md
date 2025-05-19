@@ -103,7 +103,7 @@ conda install python-dotenv -y
 
 .env
 ```
-OPENAI API_KEY=xxxxxxxxxxxxxxxxxxx
+OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxx
 ```
 
 01_env_config_test.py
@@ -298,48 +298,49 @@ load_dotenv()
 ollama_url = "http://127.0.0.1:11434"  
 lmstudio_url = "http://127.0.0.1:1234/v1"
 
-# llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
+llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
 # llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
-llm = ChatOpenAI(model="gpt-4.1-nano")
+# llm = ChatOpenAI(model="gpt-4.1-nano")
 
 # 직접 메시지 리스트를 관리하는 방식
 
-# messages = [
-#     SystemMessage("당신은 여행 전문가로 고객의 여행 일정에 도움을 줍니다."),
-#     HumanMessage("부산 여행에서 딱 한 곳만을 가봐야 한다면 어떤 곳인지 알려주세요.")
-# ]
+messages = [
+    SystemMessage("당신은 여행 전문가로 고객의 여행 일정에 도움을 줍니다."),
+    HumanMessage("부산 여행에서 딱 한 곳만을 가봐야 한다면 어떤 곳인지 알려주세요.")
+]
 
-# ai_message = llm.invoke(messages)
-# messages.append(ai_message)
-# messages.append(HumanMessage("부산역에서 그 곳에 가는 교통편을 알려주세요. "))
-# ai_message = llm.invoke(messages)
-# messages.append(HumanMessage("그 근처에서 먹을 만한 음식점들을을 추천해해주세요."))
-# ai_message = llm.invoke(messages)
-# messages.append(ai_message)
-# for message in messages:
-#     print(type(message), message)
+ai_message = llm.invoke(messages)
+messages.append(ai_message)
+messages.append(HumanMessage("부산역에서 그 곳에 가는 교통편을 알려주세요. "))
+ai_message = llm.invoke(messages)
+messages.append(ai_message)
+messages.append(HumanMessage("그 근처에서 먹을 만한 음식점들을을 추천해해주세요."))
+ai_message = llm.invoke(messages)
+messages.append(ai_message)
+for message in messages:
+    print(type(message), message)
 
 
 # LangChain의 ChatMessageHistory 클래스를 사용하는 방식
 
-history = ChatMessageHistory()
+# history = ChatMessageHistory()
 
-history.add_message(SystemMessage("당신은 여행 전문가로 고객의 여행 일정에 도움을 줍니다."))
-history.add_user_message("부산 여행에서 딱 한 곳만을 가봐야 한다면 어떤 곳인지 알려주세요.")
-ai_message = llm.invoke(history.messages)
+# history.add_message(SystemMessage("당신은 여행 전문가로 고객의 여행 일정에 도움을 줍니다."))
+# history.add_user_message("부산 여행에서 딱 한 곳만을 가봐야 한다면 어떤 곳인지 알려주세요.")
+# ai_message = llm.invoke(history.messages)
 
-history.add_ai_message(ai_message.content)
-history.add_user_message("부산역에서 그 곳에 가는 교통편을 알려주세요.")
-ai_message = llm.invoke(history.messages)
+# history.add_ai_message(ai_message.content)
+# history.add_user_message("부산역에서 그 곳에 가는 교통편을 알려주세요.")
+# ai_message = llm.invoke(history.messages)
 
-history.add_ai_message(ai_message.content)
-history.add_user_message("그 근처에서 먹을 만한 음식점들을을 추천해해주세요.")
-ai_message = llm.invoke(history.messages)
+# history.add_ai_message(ai_message.content)
+# history.add_user_message("그 근처에서 먹을 만한 음식점들을을 추천해해주세요.")
+# ai_message = llm.invoke(history.messages)
 
-history.add_ai_message(ai_message.content)
+# history.add_ai_message(ai_message.content)
 
-for message in history.messages:
-    print(type(message), message)
+# for message in history.messages:
+#     print(type(message), message)
 ```
 
 ### ConversationBufferMemory를 사용한 대화 기억 관리
@@ -364,6 +365,8 @@ lmstudio_url = "http://127.0.0.1:1234/v1"
 llm = ChatOpenAI(model="gpt-4.1-nano")
 
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+
+# 기존 메모리를 초기화
 memory.clear()
 
 memory.save_context({"human": "안녕하세요, 챗봇님"}, 
@@ -372,7 +375,8 @@ memory.save_context({"human": "음, 전 홍길동입니다."},
                     {"bot": "네, 홍길동님! 만나서 반갑습니다."})
 memory.save_context({"human": "경복궁을 가고 싶은데 혹시 어떻게 가는지 알려 줄 수 있나요?"}, 
                     {"bot": "물론이죠. 경복궁은 지하철 3호선을 타고 가면 편리해요."})
-
+                    
+# 저장된 대화 기록을 불러와 출력
 print(memory.load_memory_variables({}))
 ```
 
