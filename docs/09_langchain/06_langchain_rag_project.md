@@ -141,11 +141,12 @@ from langchain_core.runnables import RunnableLambda, RunnableSequence
 runnable1 = RunnableLambda(lambda x: {"foo": x})
 runnable2 = RunnableLambda(lambda x: [x] * 3)
 
-# chain = RunnableSequence(runnable1, runnable2)
-chain = runnable1 | runnable2
+chain = RunnableSequence(runnable1, runnable2)
+# chain = runnable1 | runnable2
 chain.invoke(2)
 ```
 
+RunnableParallel 여러 Runnable 객체를 병렬로 실행하고 각 결과를 하나의 딕셔너리로 모으는 기능을 제공합니다
 ```python
 from langchain_core.runnables import RunnableLambda, RunnableParallel
 
@@ -153,6 +154,7 @@ runnable1 = RunnableLambda(lambda x: {"foo": x})
 runnable2 = RunnableLambda(lambda x: [x] * 3)
 
 chain = RunnableParallel(r1=runnable1, r2=runnable2)
+#r1에 runnable1의 실행결과를 r2에 runnable2의 결과를 저장해서 딕셔너리로 리턴
 chain.invoke(2)
 ```
 
@@ -161,9 +163,11 @@ from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 
 runnable = RunnableLambda(lambda x: x['foo'] + 5)
 
+# 원래 입력을 그대로 유지하면서 새로운 키('bar')를 추가
 chain = RunnablePassthrough.assign(bar=runnable)
 
 chain.invoke({'foo': 2})
+# 입력이 {'foo': 2}라면, 출력은 {'foo': 2, 'bar': 7}
 ```
 
 ```python
