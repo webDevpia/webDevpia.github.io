@@ -160,7 +160,7 @@ pip install -qU langchain langchain-community langchain-openai langchain-pinecon
 ```
 
 ```python
-pip install -qU pinecone-client
+pip install -qU pinecone
 ```
 
 ```python
