@@ -334,7 +334,7 @@ for ids in index.list(namespace='embedding-3d-ns1'):
 for ids in index.list(namespace='embedding-3d-ns1'):
 # 주어진 ID와 네임스페이스에 해당하는 벡터 데이터를 가져옵니다.
 # 반환된 데이터는 딕셔너리 형태이며, 그 중에서 'vectors' 키에 해당하는 값을 vectors 변수에 저장합니다.
-    vectors = index.fetch(ids, namespace='embedding-3d-ns1')['vectors']
+    vectors = index.fetch(ids, namespace='embedding-3d-ns1').vectors
 
 print(vectors.values())
 ```
