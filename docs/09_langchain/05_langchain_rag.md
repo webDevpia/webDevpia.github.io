@@ -133,8 +133,8 @@ index를 새로 추가한다.
 
 `.env 파일 생성`
 ```
-OPENAI API_KEY=xxxxxxxxxxxxxxxxxxx 
-PINECONE API_KEY=xxxxxxxxxxxxxxxxxxx
+OPENAI_API_KEY=xxxxxxxxxxxxxxxxxxx 
+PINECONE_API_KEY=xxxxxxxxxxxxxxxxxxx
 ```
 
 `00_config_test.py`
