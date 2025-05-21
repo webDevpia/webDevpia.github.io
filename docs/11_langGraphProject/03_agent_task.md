@@ -10,14 +10,15 @@ permalink: /langgraph_prj/agent_task
 
 # 00. 환경설정 파일 작성
 
+## 1. env 파일 생성 및 로드 테스트
 `.env`
 
 ```py
-OPENAI_API_KEY=
-OPENAI_MODEL=gpt-4o-mini
-TAVILY_API_KEY=
-KAKAO_API_KEY=
-WEATHER_API_KEY=
+OPENAI_API_KEY=XXXXXXXXXXXXX
+OPENAI_MODEL=gpt-4.1-nano
+TAVILY_API_KEY=XXXXXXXXXXXXX
+KAKAO_API_KEY=XXXXXXXXXXXXX
+WEATHER_API_KEY=XXXXXXXXXXXXX
 ```
 
 `config.py`
@@ -33,6 +34,16 @@ WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 KAKAO_API_KEY = os.getenv("KAKAO_API_KEY")
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 ```
+
+## 2. 각 사이트 api key 얻기
+
+## TAVILY(타빌리)
+Tavily는 AI 에이전트(특히 LLMs)를 위해 최적화된 선도적인 검색 엔진이다. 이 플랫폼은 실시간, 정확하고, 사실에 기반한 결과를 제공하여 AI의 능력을 향상시키는 것을 목표로 한다. Tavily의 검색 API는 AI 애플리케이션과 LLM을 신뢰할 수 있는 실시간 지식에 연결해주어, 전반적인 편향과 환각을 줄이는 데 도움을 준다. 
+
+
+### WEATHER_API_KEY
+
+### KAKAO_API_KEY
 
 # 01. Intent Agent 실습
 
