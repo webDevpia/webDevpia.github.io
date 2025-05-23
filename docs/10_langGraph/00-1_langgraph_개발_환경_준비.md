@@ -18,8 +18,7 @@ permalink: /langgraph/env
    ```
    conda create -n langgraph_basic python=3.12
    ```  
-   `-n langgraph_basic` 옵션은 환경 이름을 지정하는 것이고, `python=3.12`는 해당 버전의 파이썬을 설치하라는 뜻입니다. 앞서 설정한 conda-forge 채널로부터 Python 3.12 및 기본 패키지들이 설치됩니다.
-
+  
 2. **환경 활성화:** 환경을 생성한 후 아래 명령으로 해당 환경을 활성화합니다.  
    ```
    conda activate langgraph_basic
