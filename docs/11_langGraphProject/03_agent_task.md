@@ -40,10 +40,13 @@ OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 ## TAVILY(타빌리)
 Tavily는 AI 에이전트(특히 LLMs)를 위해 최적화된 선도적인 검색 엔진이다. 이 플랫폼은 실시간, 정확하고, 사실에 기반한 결과를 제공하여 AI의 능력을 향상시키는 것을 목표로 한다. Tavily의 검색 API는 AI 애플리케이션과 LLM을 신뢰할 수 있는 실시간 지식에 연결해주어, 전반적인 편향과 환각을 줄이는 데 도움을 준다. 
 
+### KAKAO_API_KEY
 
 ### WEATHER_API_KEY
+[OpenWeather](https://openweathermap.org/city/1838519)   
 
-### KAKAO_API_KEY
+사이트에 가입하고 apikey 발급 받음.
+![](./img/agent_task/agent_task001.png)
 
 # 01. Intent Agent 실습
 
