@@ -1,6 +1,6 @@
 ---
 layout: default
-title: LangChain Part1
+title: LangChainPart1
 nav_order: 13
 has_children: true
 permalink: /langchainpart1

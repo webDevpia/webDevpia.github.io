@@ -1,7 +1,7 @@
 ---
 title: LangChain Model
 layout: default
-parent: LangChain Part1
+parent: LangChainPart1
 nav_order: 2
 permalink: /langchainpart1/model
 # nav_exclude: true
