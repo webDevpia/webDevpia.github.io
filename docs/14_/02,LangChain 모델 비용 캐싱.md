@@ -1,3 +1,13 @@
+---
+title: LangChain Model
+layout: default
+parent: LangChain Part1
+nav_order: 2
+permalink: /langchainpart1/model
+# nav_exclude: true
+# search_exclude: true
+--- 
+
 # LangChain을 활용한 모델 사용, 비용 모니터링 및 캐싱 전략
 
 LangChain 프레임워크와 OpenAI GPT-4o-mini 모델을 활용하여 LLM(대형 언어 모델)을 효과적으로 호출하고, 토큰 사용량 기반의 과금을 모니터링하며, 응답 결과를 캐싱(caching)하는 전략에 대해 학습합니다.
