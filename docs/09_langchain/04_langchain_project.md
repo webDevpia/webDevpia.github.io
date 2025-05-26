@@ -32,7 +32,7 @@ llm = ChatOpenAI(model="gpt-4.1-nano", temperature=0.2)
 ```
 
 [ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts)   
-stock으로 검색해서 주식 시장 상황에 대한 답변 생성을 위한 프롬프트 복사해서 사용
+stock으로 검색해서 'Act As A Financial Analyst'의 내용을 주식 시장 상황에 대한 답변 생성을 위한 프롬프트 복사해서 사용
 
 ```python
 from langchain.prompts import ChatPromptTemplate
@@ -334,7 +334,7 @@ class Stock:
 
     def get_basic_info(self):
         basic_info = pd.DataFrame.from_dict(self.ticker.info, orient="index", columns=['Value'])
-        return basic_info.loc[["longName", "industry", "sector", "marketCap", "sharesOutstanding"]].to_markdown()
+        return basic_info.loc[["longName", "industry", "sector", "marketCap", "sharesOutstanding"]].to_markdown() # tabluate 설치 해야됨
     
     def get_financial_statement(self):
         return f"""
@@ -415,4 +415,9 @@ with tab2:
 ```bash
 meilisearch --master-key="aSampleMasterKey"
 streamlit run app.py
+```
+### 7. requirements 파일 작성
+
+```
+pip list --format=freeze > requirements.txt
 ```
