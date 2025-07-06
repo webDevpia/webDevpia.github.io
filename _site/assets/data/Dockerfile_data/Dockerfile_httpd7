@@ -1,0 +1,15 @@
+# Dockerfile_httpd7 파일명으로 다음과 같이 작성
+
+FROM ubuntu:18.04
+
+LABEL maintainer="seonjo@site.org"
+LABEL version="1.0.0"
+LABEL description="docker test"
+
+RUN apt-get update 
+RUN apt-get install -y apache2 apt-utils
+
+EXPOSE 80
+COPY ./data /var/www/html
+
+ENTRYPOINT ["/usr/sbin/apache2ctl","-D","FOREGROUND"]
