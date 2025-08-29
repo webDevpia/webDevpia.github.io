@@ -120,8 +120,7 @@ drwxr-xr-x   2 root root 4096 Apr 18  2022 boot
     - 읽고,쓰고,실행하는 권한을 관리
 
 ### ls와 파일 권한
-
-<img src="/img/img001.png" height="250px" width="350px">
+![권한변경](./img/linux/img001.png){:width="500px"}
 
 ### 파일 권한
 
