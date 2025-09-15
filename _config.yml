@@ -25,35 +25,35 @@ theme: jekyll-theme-primer
 permalink: pretty
 
 exclude:
- # from https://github.com/jekyll/jekyll/blob/master/lib/site_template/_config.yml:
-   - .sass-cache/
-   - .jekyll-cache/
-   - gemfiles/
-   - Gemfile
-   - Gemfile.lock
-   - node_modules/
-   - vendor/bundle/
-   - vendor/cache/
-   - vendor/gems/
-   - vendor/ruby/
- # specific to the theme website:
-   - bin/
-   - lib/
-   - "*.gemspec"
-   - "*.gem"
-   - LICENSE.txt
-   - package.json
-   - package-lock.json
-   - Rakefile
-   - README.md
-   - CODE_OF_CONDUCT.md
-   - docker-compose.yml
-   - Dockerfile
- # theme test code
-   - fixtures/
-   - docs/ex/
-   - docs/03_db/
-   - docs/04_cloud/
+# from https://github.com/jekyll/jekyll/blob/master/lib/site_template/_config.yml:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+# specific to the theme website:
+  - bin/
+  - lib/
+  - "*.gemspec"
+  - "*.gem"
+  - LICENSE.txt
+  - package.json
+  - package-lock.json
+  - Rakefile
+  - README.md
+  - CODE_OF_CONDUCT.md
+  - docker-compose.yml
+  - Dockerfile
+# theme test code
+  - fixtures/
+  - docs/ex/
+  - docs/03_db/
+  - docs/04_cloud/
 
 # Set a path/url to a logo that will be displayed instead of the title
 #logo: "/assets/images/just-the-docs.png"
@@ -129,9 +129,9 @@ nav_external_links:
     url: https://icms.pknu.ac.kr/dsbacademy
 
 liquid:
-   error_mode: strict
-   strict_filters: true
-   strict_variables: false  # 변수가 없을 때 오류를 발생시키지 않음
+  error_mode: strict
+  strict_filters: true
+  strict_variables: false  # 변수가 없을 때 오류를 발생시키지 않음
 
 # Footer content
 # appears at the bottom of every page's main content
