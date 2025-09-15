@@ -12,8 +12,6 @@ permalink: /language/react
 
 리액트(react)는 2013년에 페이스북에서 발표한 오픈소스 자바스크립트 프레임워크  
 
-[youtube 강의](https://youtu.be/CgkZ7MvWUAA?si=ahU-R3kP18s7U4oL)
-
 ## 특징
 - 가상 Dom(Virtual Document Object Model)  
 - JSX(javascript XML)  
@@ -50,30 +48,25 @@ npm run dev
 
 - tailwind 설치 및 초기화
 ```bash
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+npm install tailwindcss @tailwindcss/vite
 ```
 
-- tailwind.config.js 파일 설정
+- vite.config.ts 파일 설정
 ```js
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
 ```
 
-- index.css에 @tailwindTailwind의 각 레이어에 대한 지시문을 파일에 추가
+- App.css에 @tailwindcss의 각 레이어에 대한 지시문을 파일에 추가
 ```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 ```
 
 - 빌드 프로세스 시작
@@ -83,13 +76,30 @@ npm run dev
 
 - 프로젝트에서 Tailwind 사용
 ```js
-export default function App() {
+import './App.css'
+
+function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <>
+<div class="flex flex-col items-center gap-6 p-7 md:flex-row rounded-2xl">
+  <div>
+    <img class="size-48 shadow-xl rounded-md" alt="" src="https://picsum.photos/200/300" />
+  </div>
+  <div class="flex items-center">
+    <span class="text-2xl font-medium">Class Warfare</span>
+    <span class="font-medium text-sky-500">The Anti-Patterns</span>
+    <span class="flex gap-2 font-medium text-gray-600 dark:text-gray-400">
+      <span>No. 4</span>
+      <span>·</span>
+      <span>2025</span>
+    </span>
+  </div>
+</div>
+    </>
   )
 }
+
+export default App
 ```
 
 ## 2. React 기본 
@@ -119,16 +129,17 @@ index.html
 
 src/main.jsx
 ```jsx
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
 import './index.css'
+import App from './App.jsx'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
     <App />
-  </React.StrictMode>,
+  </StrictMode>,
 )
+
 ```
 
 다른 컴포넌트에서 import 해서 사용할 컴포넌트는 반드시 export 해야 한다. 
