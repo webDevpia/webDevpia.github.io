@@ -47,22 +47,23 @@ npm run dev
 ### 3. tailwind css 사용시 셋팅
 
 - tailwind 설치 및 초기화
+
 ```bash
 npm install tailwindcss @tailwindcss/vite
 ```
 
 - vite.config.ts 파일 설정
-```js
+
+```js{% raw %}
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
 })
-```
+```{% endraw %}
 
 - App.css에 @tailwindcss의 각 레이어에 대한 지시문을 파일에 추가
 ```css
