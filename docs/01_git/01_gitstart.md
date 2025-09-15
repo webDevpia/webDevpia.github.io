@@ -54,59 +54,69 @@ git --version
 ## 3. git 작업순서
 
 ### 1) git init으로 초기화했을때 
-![git](./img/git/git_3_1.png)
+![](./img/git/git_3_1.png)
 
 ### 2) 스테이지에 추가
-![git](./img/git/git_3_2.png)
+![](./img/git/git_3_2.png)
 
 ### 3) 커밋
-![git](./img/git/git_3_3.png)
+![](./img/git/git_3_3.png)
 
 ## 4. git으로 소스 관리 
 ### 1) 로컬 컴퓨터에서 처음으로 소스코드를 작성하고 github의 리모트 저장소와 연결할 경우
 ```bash
-# 로컬 컴퓨터에 gitbash에서 작성
+## 로컬 컴퓨터에 gitbash에서
 
 # 먼저 작업디렉토리로 이동(경로 꼭 확인!!!)
 cd 작업디렉토리경로
 
-# 설정정보 확인
+# git 초기화
+git init
+
+# git 사용자계정 및 이메일 등록
+git config user.name <github-name>
+git config user.email <github 등록 email>
+
+# 설정정보 확인하고 user.name user.email 항목이 등록되어 있는지 확인
 git config list
 
+# 늘 git의 현재 상태를 확인하면서 작업한다.
+git status
+
+# 스테이지 올림
+git add .
+
+# 저장소에 저장
+git commit -m "first commit"
+
+# 커밋 내용을 확인
+git log    (기본화면으로 돌아갈려면 q)
+#-----------------------------------------
+## 웹브라우저 github사이트에 로그인 후 작업
+# 리파지토리생성 - 리파지토리 이름만 입력하고 만든다. 
+
+#-----------------------------------------
+## 로컬 컴퓨터에 gitbash에서
+# 리모트 등록정보 확인
+git remote -v
+
+# 리모트 등록
+git remote add origin 리파지토리주소
+
+# 리모트 리파지토리로 데이터 올리기
+git push -u origin main
+```
+
+기타 설정 및 필요한 명령어
+```bash
 # 전역 설정정보만 확인해 볼 경우
 git config --global --list
 
-# 전역으로 설정(한번만 설정, 각 작업디렉토리별로 다르게 설정할경우 --glo)
+# 전역으로 설정
 git config --global user.name <github-name>
 git config --global user.email <github 등록 email>
 
-
-
-```
-### 2) github에 저장소에 작업하던 소스 코드가 있을 경우
-
-### 3) 이미 git으로 관리하고 있는 경우
-
-```
-# 설정정보 확인
-git config --list
-git config -l
-
-# 전역 설정정보 확인
-git config --global --list
-
-# 전역 설정정보 에디터에서 확인
-git config --global -e
-
-# 전역으로 설정(한번만 설정)
-git config --global user.name <github-name>
-git config --global user.email <github 등록 email>
-
-# Repository마다 다른 사용자 계정으로 사용시
-git config --local user.name <github-name>
-git config --local user.email <github 등록 email>
-
-# 설정된 계정 정보 삭제
+# 설정된 계정 정보 삭제해야 할 경우
 # global
 git config --unset --global user.name
 git config --unset --global user.email
@@ -114,6 +124,9 @@ git config --unset --global user.email
 # local
 git config --unset user.name
 git config --unset user.email
+
+# Remote 리파지토리 설정 삭제
+git remote rm 리모트이름
 
 # vscode를 기본 에디터로 설정
 # --wait 에디터를 열어서 사용하는동안 터미널에서 대기
@@ -135,11 +148,45 @@ git config --global init.defaultBranch main
 # 현재 브랜치명 수정
 git branch -M main
 
+# 스테이징과 커밋 한꺼번에
+git commit -am "브랜치에서 작업완료1"
+
+# 방금 커밋한 메시지를 수정하려면
+git commit --amend "커밋 메시지 수정"
+```
+### 2) github에 저장소에 작업하던 소스 코드가 있고 로컬 컴퓨터에 처음 받을 경우
+
+```bash
+# 현재 경로에 리파지토리 이름의 폴더를 생성하고 그 밑에 소스 받음.
+git clone 리파지토리주소
+
+# 현재 경로에 소스 받음.
+git clone 리파지토리주소 .
+
+# git 사용자계정 및 이메일 등록
+git config user.name <github-name>
+git config user.email <github 등록 email>
+
+# 코딩 작업진행후
+git add .
+git commit -m "커밋메시지"
+git push
 ```
 
-## 5. 로컬 저장소 만들고 github를 리모트 저장소로 등록하기
+### 3) 로컬에 git으로 관리하고 있는 경우
 
-### 기본적으로 알아둬야할 리눅스 명령어
+```bash
+git pull origin main
+
+# 코딩 작업진행후
+git add .
+git commit -m "커밋메시지"
+git push
+
+```
+
+
+### 4) 기본적으로 알아둬야할 리눅스 명령어
 
 ```bash
 
@@ -169,84 +216,7 @@ mkdir test
 rm -rf test
 ```
 
-### 로컬 저장소 
-```
-# git으로 관리할 경로까지 이동 및 폴더 생성
-
-cd 경로
-mkdir 폴더명
-
-# 초기화(.git 폴더 생성됨 - 숨겨져 있음.)
-# ls -al (숨겨진 파일확인)
-# .git 폴더 삭제(rm -rf .git)
-
-git init
-
-# git 상태확인
-git status
-
-# git 으로 관리하는 파일로 추가
-git add .
-
-# commit(해당 시점을 저장)
-git commit -m "커밋 메시지"
-
-# 스테이징과 커밋 한꺼번에
-git commit -am "브랜치에서 작업완료1"
-
-# 방금 커밋한 메시지를 수정하려면
-git commit --amend "커밋 메시지 수정"
-
-# commit 내용 확인 
-git log
-```
-
-### 리모트 저장소
-로컬 컴퓨터(코드있음)와 github 사이트(비어있음) 연결
-```
-# remote 정보 확인
-git remote
-git remote -v 
-
-# remote 추가
-git remote add 리모트이름 github리파지토리주소
-git remote add origin https://github.com/shimseonjo/project5_work1.git
-
-# remote 삭제
-git remote rm 리모트이름
-git remote rm origin
-
-#  github 데이터 넣기
-git push -u origin main
-git push
-```
-
-## 6. git clone 
-- 내 컴퓨터에 코드가 없는 상태에서 github에 있는 전체 코드를 다운로드 받을 경우
- 
-```
-# 현재 위치에 리파지토리 이름의 폴더를 만들고 파일을 가져온다
-git clone <git-remote-url>
-
-# <디렉토리>위치에 파일을 가져온다.
-git clone <git-remote-url> <디렉토리>
-git clone <git-remote-url> .
-```
-
-## 7. git pull 
-내 컴퓨터에 이미 코드가 있는 상태에서 github쪽 변경 내용만 내려받을 경우 
-github의 최신 변경내용을 내려 받고 수정 작업을 한다
-
-```
-git pull
-
-# 파일 수정 작업 진행
-git add .
-git commit -m "커밋 메시지"
-git push
-```
-
-## 8. branch
+## 4. branch
 
 ```
 # 브랜치 목록보기
@@ -299,7 +269,7 @@ git push origin test01
 git push origin --delete test01
 ```
 
-## 9. .gitignore 파일
+## 5. .gitignore 파일
 작업 디렉토리 최상위에 위치하게 한다.  
 .gitignore 파일을 작성하고, 제외하고자 하는 파일에 대한 내용을 기재한다.
 - 경로는 상관없이 특정파일 제외하기
@@ -309,13 +279,13 @@ git push origin --delete test01
   > /filename.txt  
 
 - 특정 폴더에 있는 파일 제외
-  > 폴더명/  
+  > /폴더명/  
 
 - 특정 경로의 특정 파일 제외
-  > 폴더명/filename.txt  
+  > /폴더명/filename.txt  
 
 - 특정 경로 아래 특정 파일 제외
-  > 폴더명/**/filename.txt
+  > /폴더명/**/filename.txt
  
 - 특정 확장자를 가진 파일 제거
   > *.png
@@ -332,7 +302,7 @@ git push origin --delete test01
     ```
 
 
-## 10. reset
+## 6. reset
 
 ```bash
 git log
@@ -377,7 +347,7 @@ git push -f
 ![git](./img/git/git_6_7.png)
 ![git](./img/git/git_6_6.png)
 
-## 11. reflog
+## 7. reflog
 로컬 저장소에서  HEAD의 업데이트 기록을 확인
 ```bash
 git reflog
@@ -385,7 +355,7 @@ git reflog
 git reflog "branch name"
 ```
 
-## 12. revert
+## 8. revert
 ```
 git revert [되돌리고 싶은 commit의 7자리까지]
 
