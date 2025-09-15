@@ -62,20 +62,23 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-})
-```{% endraw %}
+}){% endraw %}
+```
 
 - App.css에 @tailwindcss의 각 레이어에 대한 지시문을 파일에 추가
+
 ```css
 @import "tailwindcss";
 ```
 
 - 빌드 프로세스 시작
+
 ```bash
 npm run dev
 ```
 
 - 프로젝트에서 Tailwind 사용
+
 ```js{% raw %}
 import './App.css'
 
@@ -100,8 +103,8 @@ function App() {
   )
 }
 
-export default App
-```{% endraw %}
+export default App{% endraw %}
+```
 
 ## 2. React 기본 
 ### 1. 기본구조
@@ -129,7 +132,7 @@ index.html
 - index.html파일의 id값이 root를 찾아서 App컴포넌트를 랜더링해서 넣어준다.
 
 src/main.jsx
-```jsx
+```jsx {% raw %}
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
@@ -140,14 +143,14 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
-
+{% endraw %}
 ```
 
 다른 컴포넌트에서 import 해서 사용할 컴포넌트는 반드시 export 해야 한다. 
 return 함수안에 최상위 태그는 반드시 하나만 존재해야 한다. 
 
 src/App.jsx
-```jsx
+```jsx {% raw %}
 import Header from "./Header"
 import Footer from "./Footer"
 import Food from "./Food";
@@ -162,7 +165,7 @@ function App() {
   );
 }
 
-export default App
+export default App {% endraw %}
 ```
 
 return함수에서 사용한 태그는 html의 태그가 아니다.  
