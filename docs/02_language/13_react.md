@@ -76,7 +76,7 @@ npm run dev
 ```
 
 - 프로젝트에서 Tailwind 사용
-```js
+```js{% raw %}
 import './App.css'
 
 function App() {
@@ -101,7 +101,7 @@ function App() {
 }
 
 export default App
-```
+```{% endraw %}
 
 ## 2. React 기본 
 ### 1. 기본구조
