@@ -460,7 +460,7 @@ function StudentList() {
       <Student name="홍길동" age={30} isStudent={true} />
       <Student name="김철수" age={41} isStudent={false} />
       <Student name="박나리" age={50} isStudent={false} />
-      <Student name="이정인" age={20} isStudent={true} />
+      {/* <Student name="이정인" age="20" isStudent={true} /> */}
       <Student/>
     </>
   )
@@ -479,29 +479,25 @@ npm install prop-types
 
 src/04/Student.jsx
 ```jsx
-import './Student.css'
 import PropTypes from 'prop-types'
-function Student(props){
+import './Student.css'
+function Student({name="Guest", age=0, isStudent=false}){
   return(
     <div className="student">
-      <p>Name : {props.name}</p>
-      <p>Age : {props.age}</p>
-      <p>Student : {props.isStudent ? "Yes" : "No" }</p>
+      <p>Name : {name}</p>
+      <p>Age : {age}</p>
+      <p>Student : {isStudent ? "Yes" : "No" }</p>
     </div>
   )
 }
 // 타입이 안맞을경우 웹브라우저 콘솔에서 오류확인, 실행은 됨.
+// PropTypes 정의
 Student.propTypes = {
-  name: PropTypes.string,
-  age: PropTypes.number,
-  isStudent: PropTypes.bool,
+  name: PropTypes.string,       // 문자열
+  age: PropTypes.number,        // 숫자
+  isStudent: PropTypes.bool,    // 불리언
 }
 
-Student.defaultProps = {
-  name: "Guest",
-  age: 0,
-  isStudent: false,
-}
 export default Student
 ```
 
