@@ -65,7 +65,7 @@ export default defineConfig({
 }){% endraw %}
 ```
 
-- App.css에 @tailwindcss의 각 레이어에 대한 지시문을 파일에 추가
+- index.css에 @tailwindcss의 각 레이어에 대한 지시문을 파일에 추가
 
 ```css
 @import "tailwindcss";
@@ -470,6 +470,12 @@ export default StudentList
 ```
 
 propTypes을 이용하여 값의 타입을 지정, 오류의 확인은 웹브라우저의 콘솔창에서 확인할 수 있다.  
+prop-types는 React의 타입 검사를 위한 별도의 패키지입니다.  
+React 16.4 버전 이후부터는 별도로 설치해야 합니다.  
+
+```bash
+npm install prop-types
+```
 
 src/04/Student.jsx
 ```jsx
