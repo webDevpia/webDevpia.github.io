@@ -626,7 +626,7 @@ src/05/Profile.css
 ```
 
 src/05/Profile.jsx
-```jsx
+```jsx {%raw%}
 import './Profile.css'
 
 function Profile({user,key}) {
@@ -646,7 +646,7 @@ function Profile({user,key}) {
   );
 }
 
-export default Profile
+export default Profile {%endraw%}
 ```
 
 src/05/ConditionTest.jsx
