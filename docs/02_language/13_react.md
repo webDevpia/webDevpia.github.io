@@ -860,6 +860,7 @@ export default function ListTest() {
     <>
       <List items={fruits} category="Fruits"/>
       <List items={vegetables} category="Vegetables"/>
+      <List/>
     </>
   )
 }
@@ -869,12 +870,9 @@ src/06/List.jsx
 ```jsx
 import  './List.css'
 
-export default function List(props){
+export default function List({category="Category",items=[]}){
 
-  const category = props.category;
-  const itemList = props.items;
-
-  const listItem = itemList.map(item => <li key={item.id}>
+  const listItem = items.map(item => <li key={item.id}>
                                           {item.name}: &nbsp; 
                                           <b>{item.calories}</b>
                                         </li>);
@@ -885,6 +883,7 @@ export default function List(props){
     </>
   )
 }
+
 ```
 
 src/06/List.css
@@ -938,19 +937,16 @@ src/06/List.jsx
 import PropTypes from 'prop-types';
 import  './List.css'
 
-export default function List(props){
+export default function List({category="Category",items=[]}){
 
-  const category = props.category;
-  const itemList = props.items;
-
-  const listItem = itemList.map(item => <li key={item.id}>
+  const listItem = items.map(item => <li key={item.id}>
                                           {item.name}: &nbsp; 
                                           <b>{item.calories}</b>
                                         </li>);
   return(
     <>
       <h3 className="list-category">{category}</h3>
-      <ol className="list-items">{listItem}</ol>
+      <ul className="list-items">{listItem}</ul>
     </>
   )
 }
@@ -961,10 +957,7 @@ List.propTypes ={
                                               name: PropTypes.string,
                                               calories: PropTypes.number})),
 }
-List.defaultProps = {
-  category: "Category",
-  item:[],
-}
+
 ```
 
 ### 7. click events
