@@ -629,22 +629,24 @@ src/05/Profile.jsx
 ```jsx
 import './Profile.css'
 
-export default function Profile(prop) {
+function Profile({user,key}) {
   return (
     <>
-      <h1>{prop.user.name}</h1>
+      <h1>{user.name}</h1>
       <img
         className="avatar"
-        src={prop.user.imageUrl}
-        alt={'Photo of ' + prop.user.name}
-        style={ {
-          width: prop.user.imageSize,
-          height: prop.user.imageSize
-        } }
+        src={user.imageUrl}
+        alt={'Photo of ' + user.name}
+        style={{
+          width: user.imageSize,
+          height: user.imageSize
+        }}
       />
     </>
   );
 }
+
+export default Profile
 ```
 
 src/05/ConditionTest.jsx
