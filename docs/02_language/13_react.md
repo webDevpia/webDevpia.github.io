@@ -540,20 +540,40 @@ function App() {
 export default App
 ```
 
+src/05/UserList.jsx
+```jsx
+import UserGreeting from "./UserGreeting"
+
+function UserList() {
+  return (
+    <>
+      <UserGreeting isLoggedIn={true} username="hong"/>
+      <UserGreeting/>
+      <UserGreeting isLoggedIn={true}/>
+    </>
+  )
+}
+
+export default UserList
+```
+
 src/05/UserGreeting.jsx
 ```jsx
 import './UserGreeting.css'
 import PropTypes from 'prop-types'
 function UserGreeting({isLoggedIn = false, username = "Guest"}){
-  // 1.
+  // 1. 
   // if (isLoggedIn){
   //   return <h2>Welcome {username}</h2>
   // }else{
   //   return <h2>Please log in to continue {username}</h2>
   // }
+
   // 2.
   // return(isLoggedIn ? <h2 className="welcome-message">Welcome {username}</h2> :
   //                           <h2 className="login-prompt">Please log in to continue {username}</h2>)
+
+  //3.
   const welcomeMessage =  <h2 className="welcome-message">
                             Welcome {username}
                           </h2>
@@ -568,6 +588,7 @@ function UserGreeting({isLoggedIn = false, username = "Guest"}){
     </>
   )
 }
+
 UserGreeting.propTypes = {
   isLoggedIn: PropTypes.bool,
   username: PropTypes.string,
