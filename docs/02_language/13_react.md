@@ -529,18 +529,11 @@ src/04/Student.css
 ```
 
 ### 5. conditional rendering(조건부 랜더링)
-리액트에서는 조건을 작성하기 위한 특별한 문법이 없다.  
-조건에 따른 분기가 필요하다면 삼항연산자를 이용
- -  조건 ? 참일때 : 거짓일때  
-
-조건에 따른 분기가 필요없다면 단축평가(short-circuit evaluation)를 사용 
-논리식이 false라면 실행구문은 처리되지 않는다.
-- 논리식 && 실행구문
 
 src/App.jsx
 ```jsx
 import UserList from './05/UserList'
-function App() {
+export default function App() {
 
   return (
     <>
@@ -548,15 +541,13 @@ function App() {
     </>
   )
 }
-
-export default App
 ```
 
 src/05/UserList.jsx
 ```jsx
 import UserGreeting from "./UserGreeting"
 
-function UserList() {
+export default function UserList() {
   return (
     <>
       <UserGreeting isLoggedIn={true} username="hong"/>
@@ -565,11 +556,9 @@ function UserList() {
     </>
   )
 }
-
-export default UserList
 ```
 
-#### if/else
+#### **if/else**
 
 src/05/UserGreeting.jsx
 ```jsx
@@ -583,7 +572,7 @@ export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
   }
 ```
 
-#### 삼항연산자
+#### **삼항연산자**
 
 src/05/UserGreeting.jsx
 ```jsx
@@ -605,7 +594,7 @@ export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
   return(isLoggedIn ? welcomeMessage : loginPrompt)
 }
 ```
-#### 논리연산자를 이용한 단축평가
+#### **논리연산자를 이용한 단축평가**
 
 src/05/UserGreeting.jsx
 ```jsx
@@ -641,11 +630,6 @@ export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
 - []
 - 0이 아닌 숫자
 - 비어있지 않은 문자열
-
-JavaScript에서 0은 falsy 값이므로 아무것도 렌더링이 되지 않아야 한다.   
-하지만 아래의 예제에서는 0이 렌더링 되어 보인다.  
-이유는 JavaScript에서 && 연산자는 앞의 조건이 falsy 한 값이라면, 해당 객체를 반환하기 때문에 위의 예제에서는 0이 반환되어 렌더링 되는 것입니다.
-
 
 src/05/Profile.jsx
 ```jsx {%raw%}
@@ -1026,8 +1010,8 @@ export default function Button(){
       <button onClick={handleClick}>Click me 😁</button>
       <button onClick={() => handleClick2("hong")}>Click me 😁</button>
       <button onClick={() => handleClick3("hong")}>Click me 😊</button>
-      {/* <button onClick={(e) => handleClick4(e)}>Click me 😊</button> */}
-      <button onDoubleClick={(e) => handleClick4(e)}>Click me 😊</button>
+      <button onClick={(e) => handleClick4(e)}>Click me 😊</button>
+      {/* <button onDoubleClick={(e) => handleClick4(e)}>Click me 😊</button> */}
     </>
   )
 }
