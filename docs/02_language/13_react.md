@@ -77,17 +77,32 @@ export default defineConfig({
 npm run dev
 ```
 
-- 프로젝트에서 Tailwind 사용
+### 4. 프로젝트에서 Tailwind 사용
 
-```js{% raw %}
+src/App.js
+```js
 import './App.css'
+import CardBox from './01/CardBox'
 
 function App() {
   return (
     <>
+    <CardBox/> 
+    </>
+  )
+}
+
+export default App
+```
+
+src/01/CardBox.js
+```js
+function CardBox() {
+  return (
+    <>
       <div class="flex flex-col items-center gap-6 p-7 md:flex-row md:gap-8 rounded-2xl">
         <div>
-          <img class="size-48 shadow-xl/30 rounded-md" alt="" src="/img/cover.png" />
+          <img class="size-48 shadow-xl/30 rounded-md" alt="" src="src/assets/cover.png" />
         </div>
         <div class="flex flex-col gap-2 items-center md:items-start">
           <span class="text-2xl font-medium">Class Warfare</span>
@@ -99,11 +114,10 @@ function App() {
           </div>
         </div>
       </div>
-    </>
+      </>
   )
 }
-
-export default App{% endraw %}
+export default CardBox
 ```
 
 ## 2. React 기본 
@@ -519,11 +533,9 @@ src/04/Student.css
 조건에 따른 분기가 필요하다면 삼항연산자를 이용
  -  조건 ? 참일때 : 거짓일때  
 
-조건에 따른 분기가 필요없다면 단축평가(short-circuit evaluation)를 사용한다.  
+조건에 따른 분기가 필요없다면 단축평가(short-circuit evaluation)를 사용 
 논리식이 false라면 실행구문은 처리되지 않는다.
 - 논리식 && 실행구문
-
-#### 삼항연산자 이용
 
 src/App.jsx
 ```jsx
@@ -548,8 +560,8 @@ function UserList() {
   return (
     <>
       <UserGreeting isLoggedIn={true} username="hong"/>
+      <UserGreeting isLoggedIn={false}/>
       <UserGreeting/>
-      <UserGreeting isLoggedIn={true}/>
     </>
   )
 }
@@ -557,66 +569,61 @@ function UserList() {
 export default UserList
 ```
 
+#### if/else
+
 src/05/UserGreeting.jsx
 ```jsx
 import './UserGreeting.css'
-import PropTypes from 'prop-types'
-function UserGreeting({isLoggedIn = false, username = "Guest"}){
-  // 1. 
-  // if (isLoggedIn){
-  //   return <h2>Welcome {username}</h2>
-  // }else{
-  //   return <h2>Please log in to continue {username}</h2>
-  // }
 
-  // 2.
-  // return(isLoggedIn ? <h2 className="welcome-message">Welcome {username}</h2> :
-  //                           <h2 className="login-prompt">Please log in to continue {username}</h2>)
+export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
+  if (isLoggedIn){
+    return <h2 className="text-4xl bg-lime-400 rounded-full p-7 m-8">Welcome {username}</h2>
+  }else{
+    return <h2 className="text-4xl bg-pink-500 rounded-full p-7 m-8">Please log in to continue {username}</h2>
+  }
+```
 
-  //3.
-  const welcomeMessage =  <h2 className="welcome-message">
-                            Welcome {username}
-                          </h2>
-  const loginPrompt = <h2 className="login-prompt">
-                        Please log in to continue {username}
-                      </h2>
-  // return(isLoggedIn ? welcomeMessage : loginPrompt)
+#### 삼항연산자
+
+src/05/UserGreeting.jsx
+```jsx
+import './UserGreeting.css'
+
+export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
+  return(isLoggedIn ? <h2 className="text-4xl bg-lime-400 rounded-full p-7 m-8">Welcome {username}</h2> :
+                      <h2 className="text-4xl bg-pink-500 rounded-full p-7 m-8">Please log in to continue {username}</h2>)
+}
+```
+
+src/05/UserGreeting.jsx
+```jsx
+import './UserGreeting.css'
+
+export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
+  const welcomeMessage =  <h2 className="text-4xl bg-lime-400 rounded-full p-7 m-8">Welcome {username}</h2>
+  const loginPrompt = <h2 className="text-4xl bg-pink-500 rounded-full p-7 m-8">Please log in to continue {username}</h2>
+  return(isLoggedIn ? welcomeMessage : loginPrompt)
+}
+```
+#### 논리연산자를 이용한 단축평가
+
+src/05/UserGreeting.jsx
+```jsx
+import './UserGreeting.css'
+
+export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
+  const welcomeMessage =  <h2 className="text-4xl bg-lime-400 rounded-full p-7 m-8">Welcome {username}</h2>
+  const loginPrompt = <h2 className="text-4xl bg-pink-500 rounded-full p-7 m-8">Please log in to continue {username}</h2>
+
    return(
     <>
-      {isLoggedIn && welcomeMessage}
+      {isLoggedIn && welcomeMessage} 
       {isLoggedIn || loginPrompt}
     </>
   )
-}
-
-UserGreeting.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  username: PropTypes.string,
-}
-
-export default UserGreeting
+  }
 ```
 
-src/05/UserGreeting.css
-```css
-.welcome-message{
-  font-size: 2.5em;
-  background-color: hsl(120, 100%, 42%);
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  margin: 0;
-}
-
-.login-prompt{
-  font-size: 2.5em;
-  background-color: hsl(0, 100%, 42%);
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  margin: 0;
-}
-```
 
 #### 단축 평가
 
@@ -639,23 +646,16 @@ JavaScript에서 0은 falsy 값이므로 아무것도 렌더링이 되지 않아
 하지만 아래의 예제에서는 0이 렌더링 되어 보인다.  
 이유는 JavaScript에서 && 연산자는 앞의 조건이 falsy 한 값이라면, 해당 객체를 반환하기 때문에 위의 예제에서는 0이 반환되어 렌더링 되는 것입니다.
 
-src/05/Profile.css
-```css
-.avatar {
-  border-radius: 50%;
-}
-```
 
 src/05/Profile.jsx
 ```jsx {%raw%}
-import './Profile.css'
-
-function Profile({user,key}) {
+export default function Profile({user,key}) {
   return (
-    <>
+    <>  
+    <div className="flex flex-col items-center justify-center">
       <h1>{user.name}</h1>
       <img
-        className="avatar"
+        className="rounded-full m-10 "
         src={user.imageUrl}
         alt={'Photo of ' + user.name}
         style={{
@@ -663,11 +663,10 @@ function Profile({user,key}) {
           height: user.imageSize
         }}
       />
+      </div>
     </>
   );
-}
-
-export default Profile {%endraw%}
+} {%endraw%}
 ```
 
 src/05/ConditionTest.jsx
@@ -675,20 +674,20 @@ src/05/ConditionTest.jsx
 import Profile from './Profile';
 const user = [
   {
-    id: 0,
-    name: "Hedy Lamarr1",
+    id: '1',
+    name: "Hedy Lamarr",
     imageUrl: "https://i.imgur.com/yXOvdOSs.jpg",
-    imageSize: 90
+    imageSize: 120
   },
   {
-    id: "Hedy Lamarr2",
-    name: "Hedy Lamarr2",
-    imageUrl: "https://i.imgur.com/yXOvdOSs.jpg",
-    imageSize: 90
+    id: "2",
+    name: "placehold",
+    imageUrl: "https://placehold.co/800",
+    imageSize: 120
   }
 ];
 
-export default  function ConditionTest() {
+export default function ConditionTest() {
   return (
     <>
       {user.map(
@@ -698,9 +697,73 @@ export default  function ConditionTest() {
     </>
   );
 }
+
 ```
 
 ### 6. render lists
+
+#### 배열 정렬(Array Sort)
+
+```js
+// 기본 문법
+// compareFunction : 정렬 순서를 정의하는 함수.  
+// 반환값 : 정렬한 배열. 원 배열이 정렬됨.  
+arr.sort([compareFunction]);
+```
+
+##### 1. compareFunction 없이 정렬
+
+```js
+const fruits = ['banana', 'cherry', 'apple'];
+fruits.sort(); // ['apple', 'banana', 'cherry']
+```
+- 기본적으로 문자열 유니코드 순서로 정렬됨
+- 숫자는 문자열로 변환되어 정렬되므로 주의 필요
+
+```js
+[9, 80].sort(); // [80, 9] - 문자열로 변환되어 정렬됨
+```
+##### 2. compareFunction으로 정렬
+2.1 숫자 정렬
+
+```js
+const numbers = [1, 30, 4, 21, 100];
+
+// 오름차순
+numbers.sort((a, b) => a - b);  // [1, 4, 21, 30, 100]
+
+// 내림차순
+numbers.sort((a, b) => b - a);  // [100, 30, 21, 4, 1]
+```
+2.2 문자열 정렬
+```js
+const fruits = ['banana', 'cherry', 'Apple'];
+
+// 오름차순 (대소문자 구분)
+fruits.sort((a, b) => a.localeCompare(b));
+
+// 내림차순 (대소문자 구분)
+fruits.sort((a, b) => b.localeCompare(a));
+```
+2.3 객체 배열 정렬
+
+```js
+const items = [
+  { name: 'banana', price: 1000 },
+  { name: 'apple', price: 2000 },
+  { name: 'cherry', price: 1500 }
+];
+
+// 가격 기준 오름차순
+items.sort((a, b) => a.price - b.price);
+
+// 이름 기준 오름차순
+items.sort((a, b) => a.name.localeCompare(b.name));
+```
+**compareFunction 작동 원리**
+- 반환값이 음수(-) → a가 b보다 앞에 위치
+- 반환값이 0 → 순서 변경 없음
+- 반환값이 양수(+) → b가 a보다 앞에 위치
 
 #### 리스트에서 데이터 처리
 
@@ -765,23 +828,7 @@ src/06/List.jsx
                                <li key={index}>{fruit.name}</li>)
 ```
 
-#### 데이터 정렬해서 표시하기
-
-```js
-arr.sort([compareFunction]);
-```
-compareFunction : 정렬 순서를 정의하는 함수.  
-                  생략하면 배열은 각 요소의 문자열 변환에 따라 각 문자의 유니 코드 코드 포인트 값에 따라 정렬  
-반환값 : 정렬한 배열. 원 배열이 정렬됨.  
-
-compareFunction이 제공되지 않으면 요소를 문자열로 변환하고 유니 코드 코드 포인트 순서로 문자열을 비교하여 정렬됩니다. 예를 들어 "바나나"는 "체리"앞에옵니다. 숫자 정렬에서는 9가 80보다 앞에 오지만 숫자는 문자열로 변환되기 때문에 "80"은 유니 코드 순서에서 "9"앞에옵니다.
-
-compareFunction이 제공되면 배열 요소는 compare 함수의 반환 값에 따라 정렬.  
-
-a와 b가 비교되는 두 요소라면,
-compareFunction(a, b)이 0보다 작은 경우 a를 b보다 낮은 색인으로 정렬. 즉, a가 먼저옴.
-compareFunction(a, b)이 0을 반환하면 a와 b를 서로에 대해 변경하지 않고 모든 다른 요소에 대해 정렬. 
-compareFunction(a, b)이 0보다 큰 경우, b를 a보다 낮은 인덱스로 정렬.
+##### 오름차순, 내림차순 정렬
 
 src/06/List.jsx
 ```jsx
@@ -877,10 +924,12 @@ export default function ListTest() {
                       {id:8,name:'carrots',calories:25},
                       {id:9,name:'corn',calories:63},
                       {id:10,name:'broccoli',calories:50}];
+  const item=[];
   return (
     <>
       <List items={fruits} category="Fruits"/>
       <List items={vegetables} category="Vegetables"/>
+      <List items={item} category="Item"/>
       <List/>
     </>
   )
@@ -889,48 +938,27 @@ export default function ListTest() {
 
 src/06/List.jsx
 ```jsx
-import  './List.css'
-
-export default function List({category="Category",items=[]}){
-
-  const listItem = items.map(item => <li key={item.id}>
-                                          {item.name}: &nbsp; 
-                                          <b>{item.calories}</b>
-                                        </li>);
-  return(
+export default function List({category="Category", items=[]}){
+  return (
     <>
-      <h3 className="list-category">{category}</h3>
-      <ul className="list-items">{listItem}</ul>
+      <h2 className="text-4xl font-bold text-gray-800 mb-2.5 text-center border-1 rounded-md bg-blue-400 m-10 p-5">
+        {category}
+      </h2>
+      <ul>
+        {items.map(item => (
+          <li key={item.id} 
+              className="text-3xl list-none text-gray-700 text-center m-0 
+                         hover:text-gray-500 hover:cursor-pointer">
+            {item.name}
+          </li>
+        ))}
+      </ul>
     </>
   )
 }
 
 ```
 
-src/06/List.css
-```css
-.list-category{
-  font-size: 2.5em;
-  font-weight: bold;
-  color: hsl(0, 0%, 20%);
-  margin-bottom: 10px;
-  text-align: center;
-  border: 3px solid;
-  border-radius: 5px;
-  background-color: cornflowerblue;
-}
-.list-items li{
-  font-size: 2em;
-  list-style: none;
-  color: hsl(0, 0%, 25%);
-  text-align: center;
-  margin: 0;
-}
-.list-items li:hover{
-  color: hsl(0, 0%, 45%);
-  cursor: pointer;
-}
-```
 
 #### 데이터가 있을 경우에만 처리
 
@@ -948,37 +976,9 @@ src/06/ListTest.jsx  return() 부분 수정
     <>
       {fruits.length > 0 && <List items={fruits} category="Fruits"/>}
       {vegetables.length > 0 && <List items={vegetables} category="Vegetables"/>}
+      {item.length > 0 && <List items={item} category="Item"/>} 
+      {item.length > 0 || <List items={vegetables} category="Vegetables"/>} 
     </>
-```
-
-#### 자료형 및 기본값 설정
-
-src/06/List.jsx
-```jsx
-import PropTypes from 'prop-types';
-import  './List.css'
-
-export default function List({category="Category",items=[]}){
-
-  const listItem = items.map(item => <li key={item.id}>
-                                          {item.name}: &nbsp; 
-                                          <b>{item.calories}</b>
-                                        </li>);
-  return(
-    <>
-      <h3 className="list-category">{category}</h3>
-      <ul className="list-items">{listItem}</ul>
-    </>
-  )
-}
-
-List.propTypes ={
-  category: PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.shape({  id: PropTypes.number,
-                                              name: PropTypes.string,
-                                              calories: PropTypes.number})),
-}
-
 ```
 
 ### 7. click events
