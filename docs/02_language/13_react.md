@@ -1288,12 +1288,12 @@ export default function ColorPicker() {
   }
   return (
     <div className="color-picker-container">
-      <h1>Color Picker</h1>
-      <div className="color-display" style={ {backgroundColor:color} }>
+      <div className="color-picker-title">Color Picker</div>
+      <div className="color-display" style={{ backgroundColor: color }}>
         <p>Selected Color: {color}</p>
       </div>
-      <label htmlFor="color">Select a Color</label>
-      <input type="color" value={color} onChange={handleColorChange} id="color"/>
+      <label htmlFor="color" className="color-picker-label">Select a Color</label>
+      <input type="color" value={color} onChange={handleColorChange} id="color" className="color-picker-input" />
     </div>
   )
 }
@@ -1301,40 +1301,22 @@ export default function ColorPicker() {
 
 src/10/ColorPicker.css
 ```css
-body{
-  font-family: Arial, Helvetica, sans-serif;
-}
 .color-picker-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @apply flex flex-col items-center;
 }
-h1{
-  margin: 50px;
-  font-size: 3rem;
+.color-picker-title {
+  @apply m-[50px] text-5xl;
 }
 .color-display{
-  width: 300px;
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 5px solid hsl(0, 0%, 80%);
-  border-radius: 25px;
-  margin-bottom: 25px;
-  transition: 0.25s ease;
+  @apply w-[300px] h-[300px] flex justify-center items-center border-[5px] border-gray-300 rounded-[25px] mb-[25px] transition-all duration-250 ease-in-out;
 }
-label{
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
+
+.color-picker-label{
+  @apply text-2xl font-bold mb-[10px];
 }
-input[type="color"]{
-  width: 75px;
-  height: 50px;
-  padding: 5px;
-  border-radius: 10px;
-  border: 3px solid hsl(0, 0%, 80%);
+
+.color-picker-input{
+  @apply w-[75px] h-[50px] p-[5px] rounded-[10px] border-[3px] border-gray-300;
 }
 ```
 
