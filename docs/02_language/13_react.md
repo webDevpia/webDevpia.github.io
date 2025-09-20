@@ -1347,13 +1347,13 @@ export default function MyComponent_11(){
   const increment = () =>{
     setCount(count + 1)
     setCount(count + 1)
-
+    // 1씩 증가
     // setCount(count => count + 1);
     // setCount(count => count + 1);
 
+    // 2씩 증가
     // setCount(c => c + 1);
     // setCount(c => c + 1);
-
   }
   const decrement = () => {
     setCount(count - 1);
@@ -1363,17 +1363,11 @@ export default function MyComponent_11(){
     setCount(0);
   }
   return(
-    <div className="text-center font-sans">
-      <p className="text-[10em] mt-0 mb-12">{count}</p>
-      <button 
-        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
-        onClick={decrement}>Decrement</button>
-      <button 
-        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
-        onClick={reset}>Reset</button>
-      <button 
-        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
-        onClick={increment}>Increment</button>
+    <div>
+      <p>{count}</p>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={reset}>Reset</button>
+      <button onClick={increment}>Increment</button>
     </div>
   );
 }
@@ -1565,7 +1559,6 @@ export default function App() {
 src/15/ToDoList.jsx
 ```jsx
 import { useState } from "react";
-import './ToDoList.css'
 
 export default function ToDoList(){
 
@@ -1607,104 +1600,42 @@ export default function ToDoList(){
   }
 
   return(
-    <div className="to-do-list">
-      <h1>To-Do-List</h1>
-      <div>
-        <input type="text" placeholder="Enter a task..." value={newTask} onChange={handleInputChange} />
-        <button className="add-button" onClick={addTask}>
+    <div className="flex flex-col items-center min-h-screen bg-slate-100 font-sans p-4">
+      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-6 mt-10">
+        <h1 className="text-4xl font-bold text-slate-800 text-center mb-6">To-Do-List</h1>
+        
+        <div className="flex gap-2 mb-6">
+          <input 
+            type="text" 
+            placeholder="Enter a task..." 
+            value={newTask} 
+            onChange={handleInputChange}
+            className="flex-grow p-3 border-2 border-slate-300 rounded-lg focus:outline-none focus:border-cyan-500 transition-colors"
+          />
+          <button 
+            className="px-6 py-3 rounded-lg font-semibold hover:bg-cyan-600 transition-colors disabled:bg-slate-300" 
+            onClick={addTask}
+            disabled={!newTask.trim()}
+          >
           Add
-        </button>
+          </button>
+        </div>
+
+        <ol className="space-y-3">
+          {tasks.map((task,index) =>
+            <li key={index} className="flex items-center bg-slate-50 p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <span className="flex-grow text-slate-700 text-lg">{task}</span>
+              <div className="flex gap-2 ml-4">
+                <button className="text-slate-500 hover:text-slate-700 transition-colors text-xl" onClick={()=> moveTaskUp(index)}>👆</button>
+                <button className="text-slate-500 hover:text-slate-700 transition-colors text-xl" onClick={()=> moveTaskDown(index)}>👇</button>
+                <button className="text-red-500 hover:text-red-700 transition-colors font-bold text-xl" onClick={()=> deleteTask(index)}>🗑️</button>
+              </div>
+            </li>
+          )}
+        </ol>
       </div>
-      <ol>
-        {tasks.map((task,index) =>
-          <li key={index}>
-            <span className="text">{task}</span>
-            <button className="delete-button" onClick={()=> deleteTask(index)}>
-              Delete
-            </button>
-            <button className="move-button" onClick={()=> moveTaskUp(index)}>
-              👆
-            </button>
-            <button className="move-button" onClick={()=> moveTaskDown(index)}>
-              👇
-            </button>
-          </li>
-        )}
-      </ol>
     </div>
   );
-}
-```
-
-src/15/ToDoList.css
-```css
-body{
-  background-color: hsl(0, 0%, 10%);
-}
-.to-do-list{
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
-  margin-top: 100px;
-}
-h1{
-  font-size: 4rem;
-  color: white;
-}
-button{
-  font-size: 1.7rem;
-  font-weight: bold;
-  padding: 10px 20px;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.5s ease;
-}
-.add-button{
-  background-color: hsl(125, 47%, 54%);
-}
-.add-button:hover{
-  background-color: hsl(125, 47%, 44%);
-}
-.delete-button{
-  background-color: hsl(10, 90%, 50%);
-}
-.delete-button:hover{
-  background-color: hsl(10, 90%, 40%);
-}
-.move-button{
-  background-color: hsl(207, 90%, 64%);
-}
-.move-button:hover{
-  background-color: hsl(2-7, 90%, 54%);
-}
-input[type="text"]{
-  font-size: 1.6rem;
-  padding: 10px;
-  border: 2px solid hsla(0, 0%, 80%, 0.5);
-  border-radius: 5px;
-  color: hsla(0, 0%, 0%, 0.5);
-}
-ol{
-  padding: 0;
-}
-li{
-  font-size: 2rem;
-  font-weight: bold;
-  padding: 15px;
-  background-color: hsl(0, 0%, 97%);
-  margin-bottom: 10px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-}
-.text{
-  flex: 1;
-}
-.delete-button, .move-button{
-  padding: 8px 12px;
-  font-size: 1.4rem;
-  margin-left: 10px;
 }
 ```
 
