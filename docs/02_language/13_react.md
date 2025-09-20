@@ -1120,16 +1120,21 @@ src/08/MyComponent.jsx
 import { useState } from "react";
 
 export default function MyComponent_08(){
+  const age_1 = 0
+  const name_1 = "Guest"
+  const isEmployed_1 = false
 
   const [name,setName] = useState("Guest");
   const [age, setAge] = useState(0);
   const [isEmployed,setIsEmployed] = useState(false);
 
   const updateName = () => {
-    setName("홍길동");
+    // setName("홍길동");
+    name_1 ="홍길동"
   }
   const incrementAge = () => {
-    setAge(age+1);
+    // setAge(age+1);
+    age_1 += 1;
   }
   const toggleEmployedStatus = () => {
     setIsEmployed(!isEmployed);
@@ -1168,56 +1173,15 @@ export default function Counter(){
     setCount(0);
   }
   return(
-    <div className="counter-container">
-      <p className="count-display">{count}</p>
-      <button className="counter-button" onClick={decrement}>Decrement</button>
-      <button className="counter-button" onClick={reset}>Reset</button>
-      <button className="counter-button" onClick={increment}>Increment</button>
-    <div className="text-center font-sans">
-      <p className="text-[10em] mt-0 mb-12">{count}</p>
-      <button 
-        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
-        onClick={decrement}>Decrement</button>
-      <button 
-        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
-        onClick={reset}>Reset</button>
-      <button 
-        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
-        onClick={increment}>Increment</button>
+    <div className="">
+      <p className="">{count}</p>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={reset}>Reset</button>
+      <button onClick={increment}>Increment</button>
     </div>
   );
 }
-```
 
-src/08/Counter.css
-```css
-.counter-container{
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.count-display{
-  font-size: 10em;
-  margin-top: 0;
-  margin-bottom: 50px;
-}
-
-.counter-button{
-  width: 150px;
-  height: 50px;
-  font-size: 1.5em;
-  font-weight: bold;
-  margin: 0px 5px;
-  background-color: hsl(197, 100%, 58%);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.counter-button:hover{
-  background-color: hsl(197, 100%, 48%);
-}
 ```
 
 ### 9. onChange event handler
