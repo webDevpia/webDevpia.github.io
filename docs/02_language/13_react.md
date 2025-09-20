@@ -1276,7 +1276,7 @@ export default function App() {
 ```
 
 src/10/ColorPicker.jsx
-```jsx
+```jsx{%raw%}
 import { useState } from "react"
 import './ColorPicker.css'
 
@@ -1296,7 +1296,7 @@ export default function ColorPicker() {
       <input type="color" value={color} onChange={handleColorChange} id="color" className="color-picker-input" />
     </div>
   )
-}
+}{%endraw%}
 ```
 
 src/10/ColorPicker.css
