@@ -1153,7 +1153,6 @@ export default function MyComponent_08(){
 src/08/Counter.jsx
 ```jsx
 import { useState } from "react";
-import './Counter.css'
 
 export default function Counter(){
   
@@ -1173,6 +1172,17 @@ export default function Counter(){
       <button className="counter-button" onClick={decrement}>Decrement</button>
       <button className="counter-button" onClick={reset}>Reset</button>
       <button className="counter-button" onClick={increment}>Increment</button>
+    <div className="text-center font-sans">
+      <p className="text-[10em] mt-0 mb-12">{count}</p>
+      <button 
+        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
+        onClick={decrement}>Decrement</button>
+      <button 
+        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
+        onClick={reset}>Reset</button>
+      <button 
+        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
+        onClick={increment}>Increment</button>
     </div>
   );
 }
@@ -1403,11 +1413,17 @@ export default function MyComponent_11(){
     setCount(0);
   }
   return(
-    <div className="counter-container">
-      <p className="count-display">{count}</p>
-      <button className="counter-button" onClick={decrement}>Decrement</button>
-      <button className="counter-button" onClick={reset}>Reset</button>
-      <button className="counter-button" onClick={increment}>Increment</button>
+    <div className="text-center font-sans">
+      <p className="text-[10em] mt-0 mb-12">{count}</p>
+      <button 
+        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
+        onClick={decrement}>Decrement</button>
+      <button 
+        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
+        onClick={reset}>Reset</button>
+      <button 
+        className="w-[150px] h-[50px] text-[1.5em] font-bold mx-1 bg-blue-500 text-white border-none rounded-md cursor-pointer hover:bg-blue-600" 
+        onClick={increment}>Increment</button>
     </div>
   );
 }
