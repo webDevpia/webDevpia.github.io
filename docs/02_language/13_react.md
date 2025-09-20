@@ -1061,7 +1061,7 @@ export default function ProfilePicture(){
 const [변수명,set함수명] = useState(초깃값)
 ```
 
-![](/assets/img/react/react000.png)
+![](./img/react/react000.png)
 
 src/App.jsx
 ```jsx
@@ -1137,17 +1137,18 @@ export default function MyComponent_08(){
   
   return(
     <div>
-      <p>Name: {name}</p>
-      <button onClick={updateName}>Set Name</button>
+      <span>Name: {name}</span>
+      <button onClick={updateName}>Set Name</button><br/>
 
-      <p>Age: {age}</p>
-      <button onClick={incrementAge}>Increment Age</button>
+      <span>Age: {age}</span>
+      <button onClick={incrementAge}>Increment Age</button><br/>
 
-      <p>Is employed: {isEmployed?"yes":"no"}</p>
+      <span>Is employed: {isEmployed?"yes":"no"}</span>
       <button onClick={toggleEmployedStatus}>Toggle Status</button>
     </div>
   )
 }
+
 ```
 
 src/08/Counter.jsx
