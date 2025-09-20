@@ -1301,6 +1301,8 @@ export default function ColorPicker() {
 
 src/10/ColorPicker.css
 ```css
+@reference "../index.css"; 
+
 .color-picker-container{
   @apply flex flex-col items-center;
 }
@@ -1318,6 +1320,7 @@ src/10/ColorPicker.css
 .color-picker-input{
   @apply w-[75px] h-[50px] p-[5px] rounded-[10px] border-[3px] border-gray-300;
 }
+
 ```
 
 ### 11. updater functions
