@@ -15,7 +15,7 @@ permalink: /language/react_fastapi
 ```sql
 CREATE DATABASE IF NOT EXISTS todoapp;
 ```
-<img src="./img/react/react_fastapi_001.png" alt="디렉토리 구조" width="400" />
+<img src="img/react/react_fastapi_001.png" alt="디렉토리 구조" width="400" />
 
 ## 1. BackEnd
 ```bash
