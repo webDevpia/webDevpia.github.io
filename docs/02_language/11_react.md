@@ -2346,14 +2346,35 @@ deploy 버튼 클릭
 
 #### client
 
-프로젝트 생성
+**프로젝트 생성**
+
 ```bash
-npm create vite
+npm create vite@latest
 # project -> 이름: client, react, javascript 로 생성 
 cd client
 npm i
 npm i axios
+npm i tailwindcss @tailwindcss/vite
 npm run dev
+```
+
+**vite.config.ts 파일 설정**  
+
+```js{% raw %}
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+}){% endraw %}
+```
+
+**index.css에 @tailwindcss의 각 레이어에 대한 지시문을 파일에 추가**
+
+```css
+@import "tailwindcss";
 ```
 
 src/App.jsx
