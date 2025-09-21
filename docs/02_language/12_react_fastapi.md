@@ -15,9 +15,11 @@ permalink: /language/react_fastapi
 ```sql
 CREATE DATABASE IF NOT EXISTS todoapp;
 ```
-<img src="img/react/react_fastapi_001.png" alt="디렉토리 구조" width="400" />
+
+![](./img/react/react_fastapi_001.png){: width="400" height="auto" }
 
 ## 1. BackEnd
+
 ```bash
 conda create -n backend
 conda activate backend
@@ -269,6 +271,7 @@ uvicorn main:app --reload
 ### 1.  node.js 설치
 
 설치 후 버전 확인
+
 ```bash
 node -v
 npm -v
@@ -278,6 +281,7 @@ npm -v
 [vite+react+tailwindcss 프로젝트 생성](https://tailwindcss.com/docs/guides/vite#react)  
 
 - vite로 리액트 프로젝트 생성
+
 ```bash
 npm create vite@latest
 # 프로젝트명 frontend, react, javascript

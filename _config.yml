@@ -218,11 +218,14 @@ plugins:
   - jekyll-commonmark-ghpages
   - jekyll-gist
   - jekyll-paginate
-
+markdown: kramdown
 kramdown:
+  input: GFM
   syntax_highlighter_opts:
     block:
       line_numbers: false
+  parse_block_html: true
+  parse_span_html: true
 
 compress_html:
   clippings: all
