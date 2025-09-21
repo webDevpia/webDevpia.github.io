@@ -26,7 +26,7 @@ pip install -r requirements.txt
 
 **requirements.txt**
 
-```txt
+```python
 fastapi
 uvicorn
 sqlalchemy
