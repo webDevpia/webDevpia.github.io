@@ -534,7 +534,6 @@ src/App.jsx
 ```jsx
 import UserList from './05/UserList'
 export default function App() {
-
   return (
     <>
       <UserList/>
@@ -562,8 +561,6 @@ export default function UserList() {
 
 src/05/UserGreeting.jsx
 ```jsx
-import './UserGreeting.css'
-
 export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
   if (isLoggedIn){
     return <h2 className="text-4xl bg-lime-400 rounded-full p-7 m-8">Welcome {username}</h2>
@@ -576,8 +573,6 @@ export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
 
 src/05/UserGreeting.jsx
 ```jsx
-import './UserGreeting.css'
-
 export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
   return(isLoggedIn ? <h2 className="text-4xl bg-lime-400 rounded-full p-7 m-8">Welcome {username}</h2> :
                       <h2 className="text-4xl bg-pink-500 rounded-full p-7 m-8">Please log in to continue {username}</h2>)
@@ -586,8 +581,6 @@ export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
 
 src/05/UserGreeting.jsx
 ```jsx
-import './UserGreeting.css'
-
 export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
   const welcomeMessage =  <h2 className="text-4xl bg-lime-400 rounded-full p-7 m-8">Welcome {username}</h2>
   const loginPrompt = <h2 className="text-4xl bg-pink-500 rounded-full p-7 m-8">Please log in to continue {username}</h2>
@@ -598,8 +591,6 @@ export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
 
 src/05/UserGreeting.jsx
 ```jsx
-import './UserGreeting.css'
-
 export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
   const welcomeMessage =  <h2 className="text-4xl bg-lime-400 rounded-full p-7 m-8">Welcome {username}</h2>
   const loginPrompt = <h2 className="text-4xl bg-pink-500 rounded-full p-7 m-8">Please log in to continue {username}</h2>
@@ -612,7 +603,6 @@ export default function UserGreeting({isLoggedIn = false, username = "Guest"}){
   )
   }
 ```
-
 
 #### 단축 평가
 
@@ -1137,7 +1127,8 @@ export default function MyComponent_08(){
     age_1 += 1;
   }
   const toggleEmployedStatus = () => {
-    setIsEmployed(!isEmployed);
+    // setIsEmployed(!isEmployed);
+  isEmployed_1 ?  isEmployed_1 = false : isEmployed_1 = true;
   }
   
   return(
@@ -1173,8 +1164,8 @@ export default function Counter(){
     setCount(0);
   }
   return(
-    <div className="">
-      <p className="">{count}</p>
+    <div>
+      <p>{count}</p>
       <button onClick={decrement}>Decrement</button>
       <button onClick={reset}>Reset</button>
       <button onClick={increment}>Increment</button>
@@ -1345,17 +1336,20 @@ import { useState } from "react";
 export default function MyComponent_11(){
   const [count,setCount] = useState(0);
   const increment = () =>{
-    setCount(count + 1)
-    setCount(count + 1)
     // 1씩 증가
+    setCount(count + 1)
+    setCount(count + 1)
+
+    // 2씩 증가
     // setCount(count => count + 1);
     // setCount(count => count + 1);
 
-    // 2씩 증가
     // setCount(c => c + 1);
     // setCount(c => c + 1);
+
   }
   const decrement = () => {
+    setCount(count - 1);
     setCount(count - 1);
     // setCount(count => count - 1);
   }
