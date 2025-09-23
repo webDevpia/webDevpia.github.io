@@ -1095,7 +1095,7 @@ export default function ProfilePicture(){
 
   return(
     <>
-    <img src={imgurl} id="dis"></img>
+    <img src={imgurl} style={styles} id="dis"></img>
     <button onClick={handleClick}>이미지1</button>
     <br/>
     <img src={imgurl} style={styles1}></img>
@@ -1110,40 +1110,41 @@ src/08/MyComponent.jsx
 import { useState } from "react";
 
 export default function MyComponent_08(){
-  const age_1 = 0
-  const name_1 = "Guest"
-  const isEmployed_1 = false
+  let age_1 = 0
+  let name_1 = "Guest"
+  let isEmployed_1 = false
 
   const [name,setName] = useState("Guest");
   const [age, setAge] = useState(0);
   const [isEmployed,setIsEmployed] = useState(false);
 
   const updateName = () => {
-    // setName("홍길동");
+    setName("홍길동");
     name_1 ="홍길동"
   }
   const incrementAge = () => {
-    // setAge(age+1);
+    setAge(age+1);
     age_1 += 1;
   }
   const toggleEmployedStatus = () => {
-    // setIsEmployed(!isEmployed);
-  isEmployed_1 ?  isEmployed_1 = false : isEmployed_1 = true;
+    setIsEmployed(!isEmployed);
   }
   
   return(
     <div>
-      <span>Name: {name}</span>
-      <button onClick={updateName}>Set Name</button><br/>
+      <span>Name_1: {name_1}</span> <span>Name: {name}</span>
+      <button className="border-1" onClick={updateName}>Set Name</button><br/>
 
-      <span>Age: {age}</span>
-      <button onClick={incrementAge}>Increment Age</button><br/>
+      <span>Age_1: {age_1}</span> <span>Age: {age}</span> 
+      <button className="border-1" onClick={incrementAge}>Increment Age</button><br/>
 
       <span>Is employed: {isEmployed?"yes":"no"}</span>
-      <button onClick={toggleEmployedStatus}>Toggle Status</button>
+      <button className="border-1" onClick={toggleEmployedStatus}>Toggle Status</button>
     </div>
   )
 }
+
+
 
 ```
 
