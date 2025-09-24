@@ -393,7 +393,7 @@ export default function App() {
 
   useEffect(() => {
     fetchTodos()
-  }, [])
+  },[])
 
   return (
     <>
@@ -532,9 +532,9 @@ export default function App() {
             )}
           </div>
 
-          {/* ✅ 커스텀 모달 */}
+          {/* 커스텀 모달 */}
           {isModalOpen && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+            <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
               <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
                   정말 삭제하시겠습니까?
