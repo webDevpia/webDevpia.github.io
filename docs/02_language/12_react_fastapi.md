@@ -322,6 +322,10 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  // 모달 상태
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedTodo, setSelectedTodo] = useState(null)
+
   // Todo 목록 조회
   const fetchTodos = async () => {
     try {
@@ -356,13 +360,20 @@ export default function App() {
     }
   }
 
-  // Todo 삭제
-  const deleteTodo = async (id) => {
-    if (!window.confirm('정말 삭제하시겠습니까?')) return
+  // 커스텀 모달 열기
+  const openDeleteModal = (todo) => {
+    setSelectedTodo(todo)
+    setIsModalOpen(true)
+  }
 
+  // 모달에서 삭제 확정
+  const confirmDelete = async () => {
+    if (!selectedTodo) return
     try {
-      await axios.delete(`${API_URL}/todos/${id}`)
-      setTodos(todos.filter(todo => todo.id !== id))
+      await axios.delete(`${API_URL}/todos/${selectedTodo.id}`)
+      setTodos(todos.filter(todo => todo.id !== selectedTodo.id))
+      setSelectedTodo(null)
+      setIsModalOpen(false)
     } catch (err) {
       setError('할 일 삭제에 실패했습니다.')
       console.error(err)
@@ -391,7 +402,6 @@ export default function App() {
           {/* 헤더 */}
           <header className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-2">📝 Todo App</h1>
-          
           </header>
 
           {/* 에러 메시지 */}
@@ -505,9 +515,9 @@ export default function App() {
                         </div>
                       </div>
                       
-                      {/* 삭제 버튼 */}
+                      {/* ✅ 커스텀 모달 열기 버튼 */}
                       <button
-                        onClick={() => deleteTodo(todo.id)}
+                        onClick={() => openDeleteModal(todo)}
                         className="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition duration-200"
                         title="삭제"
                       >
@@ -522,6 +532,34 @@ export default function App() {
             )}
           </div>
 
+          {/* ✅ 커스텀 모달 */}
+          {isModalOpen && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+              <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                  정말 삭제하시겠습니까?
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  "{selectedTodo?.title}" 할 일이 삭제됩니다. 이 작업은 되돌릴 수 없습니다.
+                </p>
+                <div className="flex justify-end space-x-3">
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 transition"
+                  >
+                    취소
+                  </button>
+                  <button
+                    onClick={confirmDelete}
+                    className="px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+                  >
+                    삭제
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* 푸터 */}
           <footer className="mt-12 text-center text-gray-500 text-sm">
             <p>React 19 + JavaScript + Tailwind CSS + Vite 7</p>
@@ -531,7 +569,6 @@ export default function App() {
     </>
   )
 }
-
 
 ```
 
