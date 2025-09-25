@@ -16,7 +16,7 @@ permalink: /language/react_fastapi
 CREATE DATABASE IF NOT EXISTS todoapp;
 ```
 
-![](./img/react/react_fastapi_001.png){: width="400" height="auto" }
+![](./img/react/react_fastapi_001.png){: width="200" height="auto" }
 
 ## 1. BackEnd
 
