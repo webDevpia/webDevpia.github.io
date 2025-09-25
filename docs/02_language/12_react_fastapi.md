@@ -288,6 +288,10 @@ npm create vite@latest
 cd frontend
 npm i
 npm install tailwindcss @tailwindcss/vite
+npm install axios
+```
+
+- 워킹디렉토리로 이동하고 필요한 라이브러리 설치 후 실행
 ```
 
 - vite.config.ts 파일 설정
@@ -309,6 +313,7 @@ export default defineConfig({
 @import "tailwindcss";
 ```
 
+src/main.jsx
 ```js
 import { useState, useEffect } from 'react'
 import axios from 'axios'
