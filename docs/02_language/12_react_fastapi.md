@@ -307,7 +307,7 @@ export default defineConfig({
 }){% endraw %}
 ```
 
-- index.css에 @tailwindcss의 각 레이어에 대한 지시문을 파일에 추가
+- src/index.css에 @tailwindcss의 각 레이어에 대한 지시문을 파일에 추가
 
 ```css
 @import "tailwindcss";
