@@ -292,7 +292,6 @@ npm install axios
 ```
 
 - 워킹디렉토리로 이동하고 필요한 라이브러리 설치 후 실행
-```
 
 - vite.config.ts 파일 설정
 
