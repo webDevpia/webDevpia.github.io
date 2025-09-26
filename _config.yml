@@ -57,12 +57,12 @@ exclude:
   - docs/05_site_Deploy
   - docs/06_MachineLearning
   - docs/07_DeepLearning
-  - docs/08_llm
-  - docs/09_langchain
-  - docs/09_langchain_part1
-  - docs/09_langchain_part2
-  - docs/10_langGraph
-  - docs/11_langGraphProject
+  # - docs/08_llm
+  # - docs/09_langchain
+  # - docs/09_langchain_part1
+  # - docs/09_langchain_part2
+  # - docs/10_langGraph
+  # - docs/11_langGraphProject
   - docs/12_crewAI
   - docs/13_crewAIProject
   - docs/14_llamaindex
@@ -81,7 +81,7 @@ search_enabled: true
 search:
   # Split pages into sections that can be searched individually
   # Supports 1 - 6, default: 2
-  heading_level: 3
+  heading_level: 4
   # Maximum amount of previews per search result
   # Default: 3
   previews: 2

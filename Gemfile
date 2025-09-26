@@ -6,6 +6,8 @@ gem "github-pages", "~> 232", group: :jekyll_plugins
 # 개발용 도구
 group :development do
   gem "html-proofer", "~> 5.0"
+  gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
 end
 
 # GitHub Pages에서 지원하는 플러그인들

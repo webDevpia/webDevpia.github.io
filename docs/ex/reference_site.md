@@ -1,11 +1,4 @@
----
-title: Reference Site
-layout: default
-permalink: /reference_site
-nav_order: 98
-# nav_exclude: true
-# search_exclude: true
----
+
 
 #### napkin
 [https://www.napkin.ai/](https://www.napkin.ai/)

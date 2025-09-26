@@ -38,18 +38,14 @@ git clone https://github.com/FlowiseAI/Flowise.git
 
 #### 3) .env.example 파일을 .env 로 복사
 
-.env 파일에서 port 내용 수정  
+.env 파일에서 port의 기본내용은 3000, 다른 port 번호로 수정해야 할 경우 내용 수정  
 CORS_ORIGINS, IFRAME_ORIGINS 주석 해제  
-username, password 본인이 사용할 계정 정보를 지정  
 
 ```bash
 PORT=3030
 
 CORS_ORIGINS=*
 IFRAME_ORIGINS=*
-
-FLOWISE_USERNAME=user001
-FLOWISE_PASSWORD=qwer1234
 ```
 
 #### 4) docker-compose.yml 수정

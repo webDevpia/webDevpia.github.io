@@ -1,11 +1,11 @@
 ---
 title: React and FastApi
 layout: default
-parent: Language
-nav_order: 12
-permalink: /language/react_fastapi
-# nav_exclude: true
-# search_exclude: true
+grand_parent: Language
+parent: React
+nav_order: 19
+has_children: false
+permalink: /language/react/react_fastapi
 ---
 
 # ToDo App - React FastApi 연동
@@ -16,18 +16,20 @@ permalink: /language/react_fastapi
 CREATE DATABASE IF NOT EXISTS todoapp;
 ```
 
-![](./img/react/react_fastapi_001.png){: width="200" height="auto" }
+![](./img/react_fastapi_001.png){: width="200" height="auto" }
 
 ## 1. BackEnd
 
+**콘다 가상환경 생성하고 라이브러리 설치**
+
 ```bash
-conda create -n backend
-conda activate backend
+conda create -n todoapp
+conda activate todoapp
 conda install pip
-pip install -r requirements.txt
+cd backend/
 ```
 
-**requirements.txt**
+**/backend/requirements.txt 생성**
 
 ```python
 fastapi
@@ -39,8 +41,47 @@ pydantic
 python-multipart
 fastapi-cors
 ```
+**라이브러리 설치**
 
-**models.py**
+```bash
+pip install -r requirements.txt
+```
+
+**/backend/database.py**
+
+```python
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+# MySQL 데이터베이스 URL
+# 형식: mysql+pymysql://username:password@host:port/database_name
+DATABASE_URL = "mysql+pymysql://root:1234@localhost:3306/todoapp"
+
+# SQLAlchemy 엔진 생성
+engine = create_engine(
+    DATABASE_URL,
+    echo=True,  # SQL 쿼리 로그 출력 (개발 시에만 True)
+    pool_pre_ping=True,  # 연결 확인
+    pool_recycle=300,  # 연결 재활용 시간
+)
+
+# 세션 로컬 클래스 생성
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Base 클래스 생성
+Base = declarative_base()
+
+# 데이터베이스 세션 의존성
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+```
+
+**/backend/models.py**
 
 ```python
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
@@ -61,7 +102,7 @@ class Todo(Base):
         return f"<Todo(id={self.id}, title='{self.title}', completed={self.completed})>"
 ```
 
-**schemas.py**
+**/backend/schemas.py**
 
 ```python
 from pydantic import BaseModel, Field
@@ -98,42 +139,7 @@ class TodoListResponse(BaseModel):
 
 ```
 
-**database.py**
-
-```python
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-
-# MySQL 데이터베이스 URL
-# 형식: mysql+pymysql://username:password@host:port/database_name
-DATABASE_URL = "mysql+pymysql://root:qwer1234@localhost:3306/todoapp"
-
-# SQLAlchemy 엔진 생성
-engine = create_engine(
-    DATABASE_URL,
-    echo=True,  # SQL 쿼리 로그 출력 (개발 시에만 True)
-    pool_pre_ping=True,  # 연결 확인
-    pool_recycle=300,  # 연결 재활용 시간
-)
-
-# 세션 로컬 클래스 생성
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# Base 클래스 생성
-Base = declarative_base()
-
-# 데이터베이스 세션 의존성
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-```
-
-
-**main.py**
+**/backend/main.py**
 
 ```python
 from fastapi import FastAPI, Depends, HTTPException, status
@@ -280,7 +286,7 @@ npm -v
 ### 2. 프로젝트 생성
 [vite+react+tailwindcss 프로젝트 생성](https://tailwindcss.com/docs/guides/vite#react)  
 
-- vite로 리액트 프로젝트 생성
+**vite로 리액트 프로젝트 생성, 워킹디렉토리로 이동, 라이브러리 설치**
 
 ```bash
 npm create vite@latest
@@ -291,9 +297,7 @@ npm install tailwindcss @tailwindcss/vite
 npm install axios
 ```
 
-- 워킹디렉토리로 이동하고 필요한 라이브러리 설치 후 실행
-
-- vite.config.ts 파일 설정
+**vite.config.js 파일 설정**
 
 ```js{% raw %}
 import { defineConfig } from 'vite'
@@ -306,13 +310,13 @@ export default defineConfig({
 }){% endraw %}
 ```
 
-- src/index.css에 @tailwindcss의 각 레이어에 대한 지시문을 파일에 추가
+**src/index.css에 기존 내용 제거 후 추가**
 
 ```css
 @import "tailwindcss";
 ```
 
-src/main.jsx
+**src/main.jsx**
 ```js
 import { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -519,7 +523,7 @@ export default function App() {
                         </div>
                       </div>
                       
-                      {/* ✅ 커스텀 모달 열기 버튼 */}
+                      {/* 커스텀 모달 열기 버튼 */}
                       <button
                         onClick={() => openDeleteModal(todo)}
                         className="text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition duration-200"
@@ -576,7 +580,7 @@ export default function App() {
 
 ```
 
-- 빌드 프로세스 시작
+**빌드 프로세스 시작**
 
 ```bash
 npm run dev

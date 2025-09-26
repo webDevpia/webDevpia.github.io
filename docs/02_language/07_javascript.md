@@ -4,8 +4,6 @@ layout: default
 parent: Language
 nav_order: 8
 permalink: /language/js
-# nav_exclude: true
-# search_exclude: true
 ---
 
 ## 20. 간단한 터미널 프로그램 작성
