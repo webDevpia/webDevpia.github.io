@@ -55,19 +55,21 @@ exclude:
   - docs/03_db/
   - docs/04_cloud/
   - docs/05_site_Deploy
+  - docs/02_language/00_basic
+  - docs/02_language/java
   - docs/06_MachineLearning
   - docs/07_DeepLearning
   # - docs/08_llm
-  # - docs/09_langchain
-  # - docs/09_langchain_part1
-  # - docs/09_langchain_part2
-  # - docs/10_langGraph
-  # - docs/11_langGraphProject
-  - docs/12_crewAI
-  - docs/13_crewAIProject
-  - docs/14_llamaindex
-  - docs/15_RegRetrieval
-  - docs/16_RegPrompting
+  - docs/08_llm/03_crewAI
+  - docs/08_llm/04_llamaindex
+  - docs/08_llm/05_RegRetrieval
+  - docs/08_llm/06_RegPrompting
+  - docs/08_llm/01_langchain
+  # - docs/08_llm/01_langchain_part1
+  # - docs/08_llm/01_langchain_part2
+  - docs/08_llm/02_langGraph
+  - docs/08_llm/07_mcp
+
 
 
 

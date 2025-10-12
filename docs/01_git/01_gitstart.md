@@ -28,6 +28,26 @@ Adjusting the name of the initial branch in new repositories에서
 **[Override the default branch anme for new repositories]**  
 의 내용을 'main'으로 변경한다.
 
+![](./img/git/git_001.png)
+
+![](./img/git/git_002.png)
+
+![](./img/git/git_003.png)
+
+![](./img/git/git_004.png)
+
+![](./img/git/git_005.png)
+
+![](./img/git/git_006.png)
+
+![](./img/git/git_007.png)
+
+![](./img/git/git_008.png)
+
+![](./img/git/git_009.png)
+
+![](./img/git/git_010.png)
+
 ### 2) git 프로그램 설치(mac)
 
 #### HomeBrew(미설치시 설치)
