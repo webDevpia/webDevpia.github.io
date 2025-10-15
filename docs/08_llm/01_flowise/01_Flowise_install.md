@@ -47,7 +47,7 @@ git clone https://github.com/FlowiseAI/Flowise.git
 CORS_ORIGINS, IFRAME_ORIGINS 주석 해제  
 
 ```bash
-PORT=3030
+PORT=3000
 
 CORS_ORIGINS=*
 IFRAME_ORIGINS=*

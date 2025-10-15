@@ -1,8 +1,8 @@
 ---
 layout: default
 title: LangChain
+nav_order: 10
 parent: LLM
-nav_order: 2
 has_children: true
 permalink: /llm/langchain
 ---

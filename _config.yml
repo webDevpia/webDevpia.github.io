@@ -51,6 +51,7 @@ exclude:
   - Dockerfile
 # theme test code
   - fixtures/
+# 배포시에 제외하고 싶은 폴더 경로 추가
   - docs/ex/
   - docs/03_db/
   - docs/04_cloud/
@@ -60,14 +61,12 @@ exclude:
   - docs/06_MachineLearning
   - docs/07_DeepLearning
   # - docs/08_llm
+  # - docs/08_llm/01_langchain
+  - docs/08_llm/02_langGraph
   - docs/08_llm/03_crewAI
   - docs/08_llm/04_llamaindex
   - docs/08_llm/05_RegRetrieval
   - docs/08_llm/06_RegPrompting
-  - docs/08_llm/01_langchain
-  # - docs/08_llm/01_langchain_part1
-  # - docs/08_llm/01_langchain_part2
-  - docs/08_llm/02_langGraph
   - docs/08_llm/07_mcp
 
 
