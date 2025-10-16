@@ -22,7 +22,7 @@ LangChain은 동일한 요청에 대해 결과를 **자동으로 저장(Cache)**
 
 ## 2. LangChain의 캐싱 구조
 
-LangChain의 캐싱은 `langchain_core.caches` 모듈에 구현되어 있습니다.
+LangChain의 캐싱은 `langchain_community.cache` 모듈에 구현되어 있습니다.
 
 | 캐시 클래스 | 설명 | 저장 위치 |
 |--------------|------|-------------|

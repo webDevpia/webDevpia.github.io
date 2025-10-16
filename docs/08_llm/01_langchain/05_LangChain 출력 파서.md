@@ -212,7 +212,7 @@ print("✅ 파싱된 결과:", result)
 LLM 출력의 형식을 **엄격하게 보장**합니다.
 
 ```python
-ffrom pydantic import BaseModel, Field
+from pydantic import BaseModel, Field
 from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
