@@ -5,8 +5,6 @@ grand_parent: LLM
 parent: LangGraph
 nav_order: 6
 permalink: /llm/langgraph/chat_human
-# nav_exclude: true
-# search_exclude: true
 --- 
 # LangGraph 챗봇에 사람의 개입 통합하기
 
@@ -32,19 +30,12 @@ permalink: /llm/langgraph/chat_human
 
 ## 1. 환경 설정
 
-### 라이브러리 설치
-
-다음 명령어를 실행하여 필요한 라이브러리를 설치합니다.
-```bash
-pip install -U python-dotenv notebook langgraph langchain_openai tavily-python langchain_community
-
-```
 
 ### 환경변수 설정
 환경변수 파일 `.env`를 생성하여 다음의 내용을 설정합니다.
 ```bash
 OPENAI_API_KEY=본인의_OpenAI_API키
-OPENAI_MODEL=gpt-4o-mini
+OPENAI_MODEL=gpt-5-nano
 TAVILY_API_KEY=본인의_tavily_api_key
 ```
 환경변수를 로드하기 위해 Python의 `python-dotenv` 라이브러리를 사용합니다.

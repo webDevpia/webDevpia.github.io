@@ -1,5 +1,5 @@
 ---
-title: 1. 기본 설정
+title: 1. LangChain 개발환경
 layout: default
 grand_parent: LLM
 parent: LangChain

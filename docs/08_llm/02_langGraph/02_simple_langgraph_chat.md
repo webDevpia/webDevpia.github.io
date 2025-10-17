@@ -1,183 +1,135 @@
 ---
-title: 2. LangGraph를 활용한 챗봇
+title: 2. LangGraph 기본 개념
 layout: default
 grand_parent: LLM
 parent: LangGraph
 nav_order: 2
-permalink: /llm/langgraph/chat
+permalink: /llm/langgraph/preview
 # nav_exclude: true
 # search_exclude: true
 --- 
+# 🧩 LangGraph 개념과 그래프 접근법
 
-# LangGraph를 활용한 간단한 챗봇 구현
+## 1️⃣ LangGraph란?
 
-## 학습 목표
-- LangGraph의 기본 개념과 사용 방법 이해하기
-- OpenAI 모델을 이용한 간단한 챗봇 구현 이해하기
-- 상태 관리 및 그래프 구조의 기초 학습하기
-- LangGraph 그래프 시각화하기
+**LangGraph**는 LangChain 팀이 개발한 **멀티 에이전트 오케스트레이션 프레임워크**입니다.  
+복잡한 문제를 여러 **전문화된 LLM 에이전트**가 협력해 해결할 수 있도록  
+**그래프 기반 구조**로 설계된 것이 특징입니다.
 
-## 1. 환경 설정
+| 핵심 개념 | 설명 |
+|------------|------|
+| 🎯 목적 | 여러 에이전트를 그래프 형태로 연결해 복잡한 워크플로우를 자동화 |
+| 🧠 철학 | “한 명의 천재보다 협력하는 팀이 강하다” — 에이전트 분업과 협업 |
+| ⚙️ 구조 | 상태(State) + 노드(Node) + 엣지(Edge)를 기반으로 흐름 제어 |
 
-### 라이브러리 설치
-필요한 라이브러리를 설치합니다.
-```bash
-pip install -U python-dotenv notebook langgraph langchain-openai
-```
+---
 
-### 환경변수 설정
-환경변수 파일 `.env`를 생성하여 OpenAI API 키와 OpenAI 모델을 설정합니다.
+## 2️⃣ 왜 LangGraph인가?
 
-```bash
-OPENAI_API_KEY=본인의_OpenAI_API키
-OPENAI_MODEL=gpt-4.1-nano
-```
+### 🔹 기존 LLM 한계
+하나의 LLM이 모든 일을 처리하면 다음과 같은 문제가 생깁니다:
+- 과도한 토큰 소비
+- 컨텍스트 누락
+- 역할 혼선
 
-환경변수를 로드하기 위해 Python의 `python-dotenv` 라이브러리를 사용합니다.
+### 🔹 LangGraph의 철학
+LangGraph는 **상태 기반(State-based)** 구조를 통해 문제를 해결합니다.
 
-## 2. 코드 설명
+- **각 에이전트가 독립된 역할**을 맡음  
+- **공유 상태(shared state)** 를 통해 협업  
+- **그래프 전이(logic)** 로 대화 흐름 제어  
 
-### 라이브러리 임포트
+예를 들어:
+> 사용자의 질문 → 검색 에이전트 → 요약 에이전트 → 답변 에이전트  
+이 흐름 전체가 하나의 그래프로 정의됩니다.
 
-```python
-from langchain_openai import ChatOpenAI
-from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
-from typing_extensions import TypedDict
-from typing import Annotated, List
-from dotenv import load_dotenv
-import os
-```
+---
 
-- `StateGraph`, `START`, `END`: LangGraph의 상태 기반 그래프 구조를 구성하는 데 사용됩니다.
-- `add_messages`: LangGraph의 메시지 관리 기능을 자동화하는 역할을 수행합니다.
-- `TypedDict`, `Annotated`, `List`: 상태 정의를 위한 타입 힌트 도구입니다.
+## 3️⃣ LangGraph의 구조
 
-### 환경변수 로딩
+### 🧱 ① 노드(Node)
+- 하나의 **에이전트(Agent)** 또는 **처리 단계**를 의미합니다.  
+- 예시: “검색(Searcher)”, “요약(Summarizer)”, “응답(Response)”  
+- 각 노드는 자신만의 LLM, 프롬프트, 툴을 가집니다.
 
-```python
-load_dotenv()
+### 🔀 ② 엣지(Edge)
+- 노드 간 **전이(Transition)** 를 담당합니다.  
+- 한 노드의 결과가 조건에 따라 다음 노드로 이동합니다.  
+- 조건부 로직(if/else)을 쉽게 표현할 수 있습니다.  
+  - 예: `if state['done']: → END`  
+  - 예: `if sender == "Researcher": → "Reviewer"`
 
-openai_model = os.getenv("OPENAI_MODEL", "gpt-4.1-nano")
-```
+### 💾 ③ 상태(State)
+- LangGraph의 핵심!  
+- **모든 에이전트가 공유하는 메모리** 역할을 합니다.  
+- 예: 대화 기록, 검색 결과, 처리 진행 상태 등  
 
-### 상태(State) 정의
+---
 
-```python
-class State(TypedDict):
-    messages: Annotated[List, add_messages]
-```
+## 4️⃣ 동작 방식 이해하기
 
-#### 구성 요소 설명
-- **`class State(TypedDict)`**
-  - Python의 `TypedDict`를 사용해 명시적인 타입이 있는 딕셔너리를 정의합니다.
-  - 이를 통해 상태(State)의 구조와 타입을 명확히 지정하여 코드의 가독성과 안정성을 높입니다.
+### 💬 메시지 흐름 (Message Flow)
+1. 사용자 입력이 **엔트리 노드**로 전달됩니다.  
+2. 해당 노드가 작업을 수행하고 상태를 업데이트합니다.  
+3. 조건에 따라 다음 노드로 이동합니다.  
+4. 최종적으로 **END 노드**에서 결과를 반환합니다.
 
-- **`messages`**
-  - 상태에 저장되는 주요 데이터입니다. 여기서는 대화 중 주고받은 메시지를 담고 있는 리스트입니다.
-  - LangGraph는 대화의 문맥을 유지하기 위해 메시지의 리스트를 관리합니다.
+### ⚙️ 제어 흐름 (Control Flow)
+- 그래프는 **조건부 분기**, **반복**, **병렬 처리**를 지원합니다.  
+- 예시:  
+  - “Router” 노드가 다음 이동 경로를 결정  
+  - “Checker” 노드가 “더 필요함/완료됨”을 판단해 반복 제어
 
-- **`Annotated[List, add_messages]`**
-  - `Annotated` 타입 힌트를 사용하여 메시지 리스트가 특정한 규칙(`add_messages`)을 따르도록 합니다.
-  - 여기서 `add_messages`는 LangGraph에서 제공하는 특별한 주석(annotation)으로, 메시지 리스트를 다룰 때 자동으로 관리(추가)를 돕는 기능을 수행합니다.
+---
 
-이 상태 정의를 통해 챗봇은:
-- 대화의 각 단계를 명확히 관리할 수 있습니다.
-- 사용자의 메시지와 모델의 응답 메시지를 체계적으로 기록하고 관리합니다.
-- 명시적인 타입과 자동 관리 기능을 활용하여 코드의 오류를 최소화하고 유지보수를 쉽게 합니다.
+## 5️⃣ 설계 시 유의사항
 
-이러한 방식을 통해, LangGraph는 상태 기반의 복잡한 챗봇 애플리케이션에서도 효율적이고 명확한 데이터 관리와 흐름 제어를 가능하게 합니다.
+| 항목 | 설명 |
+|------|------|
+| ✅ **종료 조건 설정** | 무한 루프 방지를 위해 END 조건을 명확히 정의 |
+| 🧠 **프롬프트 설계** | 각 에이전트가 자신의 역할만 수행하도록 명확히 지시 |
+| 💸 **비용 관리** | 다중 LLM 호출은 API 비용이 증가하므로 효율적 구성 필요 |
+| 🧾 **로깅/모니터링** | 실행 경로와 상태를 시각화하여 디버깅 용이 (예: Langfuse) |
+| ⚠️ **모델 한계 고려** | 잘못된 판단 방지를 위해 검증 단계나 휴먼 인터벤션 추가 |
 
-### LLM 모델 설정
+---
 
-```python
-llm = ChatOpenAI(model=openai_model)
-```
+## 6️⃣ 주요 활용 사례
 
-### 챗봇 노드 정의
+### 🔹 1. QA 시스템
+- 검색 에이전트 → 답변 생성 에이전트 → 응답 반환  
+- 예: “서울 인구는?” → 검색 → 요약 → 답변
 
-```python
-def chatbot(state: State):
-    response = llm.invoke(state["messages"])
-    return {"messages": [response]}
-```
+### 🔹 2. 코드 협업
+- 코드 작성 에이전트 ↔ 코드 리뷰 에이전트  
+- 반복 루프 구조로 품질 개선 가능
 
-- 이 함수는 챗봇 노드를 정의합니다.
-- 입력 인자인 `state`는 앞서 정의한 상태(State)로, 사용자와 챗봇 간의 이전 메시지들을 포함하고 있습니다.
-- `llm.invoke(state["messages"])`는 현재 상태에 있는 메시지를 기반으로 LLM 모델(`llm`)이 새로운 응답을 생성하도록 요청합니다.
-- LLM 모델로부터 받은 응답을 다시 상태에 포함하여 `{ "messages": [response] }` 형태로 반환합니다. 이로 인해 챗봇이 생성한 메시지가 그래프의 다음 단계 또는 최종 출력에 반영됩니다.
+### 🔹 3. 문서 요약 파이프라인
+- 분할 요약 → 통합 요약 → 결과 출력  
+- 긴 텍스트를 단계별로 효율적으로 처리
 
-### 그래프 구성 및 컴파일
+### 🔹 4. 대화형 비서
+- 일정, 이메일, 검색 등 전문 에이전트를 조합  
+- 상황에 따라 라우터가 자동으로 역할 전환
 
-```python
-workflow = StateGraph(State)
+---
 
-workflow.add_node("chatbot", chatbot)
+## 7️⃣ LangGraph의 장점 요약
 
-workflow.add_edge(START, "chatbot")
-workflow.add_edge("chatbot", END)
+| 장점 | 설명 |
+|------|------|
+| 🧩 **모듈성** | 각 노드(에이전트)를 독립적으로 설계 및 재사용 가능 |
+| 🔁 **유연한 흐름 제어** | 조건 분기, 반복, 병렬 처리 가능 |
+| 💡 **가시성** | 그래프 기반 구조로 실행 흐름 시각화 용이 |
+| 🚀 **확장성** | 새로운 에이전트나 기능을 쉽게 추가 가능 |
 
-graph = workflow.compile()
-```
+---
 
-- 먼저 `StateGraph(State)`를 통해 상태 기반 그래프를 생성합니다.
-- `workflow.add_node("chatbot", chatbot)`은 그래프에 "chatbot"이라는 이름의 노드를 추가하며, 이 노드는 앞에서 정의한 `chatbot` 함수를 실행합니다.
-- `workflow.add_edge(START, "chatbot")`은 시작점(START)에서 "chatbot" 노드로 연결하는 엣지를 정의합니다. 즉, 챗봇이 실행되는 첫 단계로 설정됩니다.
-- `workflow.add_edge("chatbot", END)`은 "chatbot" 노드에서 종료점(END)으로 연결하는 엣지를 정의합니다. 이로써 챗봇이 메시지를 생성한 후 작업이 종료됩니다.
-- 이 과정을 통해 LangGraph의 작업 흐름을 명확하게 구조화할 수 있습니다.
-- `workflow.compile()` 메서드는 앞서 정의한 노드와 엣지를 기반으로 실행 가능한 애플리케이션을 생성합니다.
-- 컴파일 과정에서 상태의 전환과 데이터 흐름을 최적화하여 실행 속도를 향상시키고, 그래프 구조 내의 노드 및 상태 변경 규칙을 명확히 합니다.
-- 컴파일된 그래프는 사용자가 정의한 노드와 엣지 설정대로 동작하여 정확한 작업 흐름을 제공합니다.
+## 📘 마무리
 
+LangGraph는 “멀티 에이전트 협업”을 **구조적·안정적**으로 구현할 수 있게 해줍니다.  
+단순한 체인보다 강력한 **그래프형 워크플로우**를 통해  
+복잡한 AI 시스템을 확장성과 유지보수성을 모두 확보한 형태로 설계할 수 있습니다.
 
-### 그래프 시각화
-LangGraph는 컴파일된 그래프를 시각화할 수 있는 기능을 제공합니다.
-
-```python
-from IPython.display import Image, display
-
-display(Image(graph.get_graph().draw_mermaid_png()))
-```
-
-- 위 코드는 컴파일된 그래프를 mermaid 형식의 PNG 이미지로 생성하여 IPython 환경에서 출력합니다.
-- 그래프의 흐름과 노드 간 관계를 직관적으로 파악할 수 있습니다.
-- **`__start__` → `chatbot` (직선)**  
-- **`chatbot` → `__end__` (직선)**  
-
-이러한 직선 화살표는 모두 **명시적으로 추가된 엣지(edge)**를 나타내며,  
-즉, 다음의 코드 라인들이 직접적으로 시각화된 것입니다.
-
-```python
-workflow.add_edge(START, "chatbot")
-workflow.add_edge("chatbot", END)
-```
-
-#### 직선 화살표의 의미
-- 직선 화살표는 **조건 없이** 항상 실행되는, **일반적인 엣지**입니다.
-- 위 코드에서는 `__start__` 노드에서 `chatbot` 노드를 실행하고,  
-  챗봇 노드가 완료되면 바로 `__end__`로 이동하여 그래프를 종료합니다.
-
-#### 화살표의 종류
-
-| 화살표 종류 | 의미                                    | 사용 예시                     |
-|-------------|----------------------------------------|-------------------------------|
-| **직선 화살표** | 조건 없는 일반 흐름 (항상 실행됨)          | 단순 시작-종료 흐름 (현재 코드) |
-| 점선 화살표  | 조건부 흐름 (조건 만족 시 실행됨)         | 도구 호출 여부와 같은 조건 판단 시 |
-
-이번 코드에서 모든 화살표가 직선으로 나타난 이유는 **조건을 판단할 함수나 조건부 처리를 하지 않고 명시적으로 단순히 노드를 연결**했기 때문입니다.
-
-## 3. 챗봇 실행
-
-```python
-from langchain_core.messages import HumanMessage
-
-user_input = "LangGraph가 무엇인가요?"
-state = {"messages": [HumanMessage(content=user_input)]}
-response = graph.invoke(state)
-
-print(response["messages"][-1].content)
-```
-
-- 메인 스크립트에서 사용자의 질문을 입력받아 챗봇을 실행합니다.
-- 입력된 메시지는 `HumanMessage` 형식으로 LangGraph 상태로 전달됩니다.
-- 실행된 챗봇의 응답은 화면에 출력됩니다.
+> 🎓 실습에서는 직접 그래프를 설계하고,  
+> 각 노드(에이전트)가 협력하여 문제를 해결하는 구조를 구현해봅니다.
