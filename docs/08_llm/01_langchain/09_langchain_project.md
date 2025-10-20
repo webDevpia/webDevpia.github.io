@@ -355,6 +355,19 @@ class Stock:
         basic_info = pd.DataFrame.from_dict(self.ticker.info, orient="index", columns=['Value'])
         return basic_info.loc[["longName", "industry", "sector", "marketCap", "sharesOutstanding"]].to_markdown() # tabluate 설치 해야됨
     
+    def get_basic_info(self):
+        basic_info = pd.DataFrame.from_dict(self.ticker.info, orient="index", columns=['Value'])
+        return basic_info.loc[["longName", "industry", "sector", "marketCap", "sharesOutstanding"]].to_markdown() # tabluate 설치 해야됨
+    
+    def get_income(self):
+        return self.ticker.quarterly_income_stmt.loc[["Total Revenue", "Gross Profit", "Operating Income", "Net Income"]]
+    
+    def get_Balance(self):
+        return self.ticker.quarterly_balance_sheet.loc[['Total Assets', 'Total Liabilities Net Minority Interest', 'Stockholders Equity']]
+    
+    def get_CashFlow(self):
+        return self.ticker.quarterly_cash_flow.loc[['Operating Cash Flow', 'Investing Cash Flow', 'Financing Cash Flow']]
+
     def get_financial_statement(self):
         return f"""
         ### Quarterly Income Statement
@@ -402,7 +415,7 @@ class SearchResult:
         return f"{self.symbol}: {self.name}"
 
 
-st.title("서학 개미를 위한 AI 투자보고서 생성 서비스")
+st.title("AI 투자보고서 생성 서비스")
 
 query = st.text_input("회사명", "Apple")
 hits = stock_search(query)['hits']
