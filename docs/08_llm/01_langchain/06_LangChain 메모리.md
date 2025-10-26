@@ -7,7 +7,6 @@ nav_order: 6
 permalink: /llm/langchain/memory
 --- 
 # LangChain 메모리
-
 ---
 
 ## 1. 메모리의 개념
@@ -29,7 +28,7 @@ LangChain의 “메모리”는 LLM이 **이전 대화 맥락을 유지**하고 
 | **ConversationSummaryBufferMemory** | 최근 대화는 그대로 유지하고, 오래된 대화는 요약본으로 대체. <br>→ 실무에서 가장 많이 사용되는 하이브리드 방식. |
 
 
-### 최신 버전 (LangChain 0.3 이상)변화 포인트
+### 최신 버전 변화 포인트
 
 | 항목 | 기존 방식 | 최신 방식 |
 |------|------------|------------|
@@ -40,49 +39,37 @@ LangChain의 “메모리”는 LLM이 **이전 대화 맥락을 유지**하고 
 
 ---
 
-## 3. 예시: ConversationBufferMemory
+## 3. 예시: ChatMessageHistory
 
 ```python
-from langchain.memory import ConversationBufferMemory
-from langchain_openai import ChatOpenAI
+from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain_core.messages import HumanMessage, AIMessage
 
-llm = ChatOpenAI(model="gpt-4o-mini")
-memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+# 1️⃣ 메모리(히스토리) 객체 생성
+history = ChatMessageHistory()
 
-memory.save_context({"input": "안녕!"}, {"output": "안녕하세요!"})
-memory.save_context({"input": "오늘 날씨 어때?"}, {"output": "서울은 맑아요."})
+# 2️⃣ 대화 저장
+history.add_message(HumanMessage(content="안녕!"))
+history.add_message(AIMessage(content="안녕하세요!"))
+history.add_message(HumanMessage(content="오늘 날씨 어때?"))
+history.add_message(AIMessage(content="서울은 맑아요."))
 
-print(memory.load_memory_variables({}))
+# 3️⃣ 대화 불러오기
+for msg in history.messages:
+    print(f"[{msg.type}] {msg.content}")
 ```
 
 출력:
 ```
-{'chat_history': [HumanMessage(content='안녕!'), AIMessage(content='안녕하세요!'), ...]}
+[human] 안녕!
+[ai] 안녕하세요!
+[human] 오늘 날씨 어때?
+[ai] 서울은 맑아요.
 ```
 
 ---
 
-## 4. 예시: ConversationSummaryBufferMemory
-
-요약 기반 메모리는 LLM을 통해 오래된 대화를 축약합니다.
-
-```python
-from langchain.memory import ConversationSummaryBufferMemory
-from langchain_openai import ChatOpenAI
-
-llm = ChatOpenAI(model="gpt-4o-mini")
-
-memory = ConversationSummaryBufferMemory(llm=llm, memory_key="chat_history", max_token_limit=100)
-
-memory.save_context({"input": "나는 홍길동이야."}, {"output": "반가워요, 홍길동님."})
-memory.save_context({"input": "내 이름을 기억하나요?"}, {"output": "물론이죠, 홍길동님."})
-
-print(memory.load_memory_variables({}))
-```
-
----
-
-## 5. RunnableWithMessageHistory 사용
+## 4. RunnableWithMessageHistory 사용
 
 ### 🧩 1️⃣ 공통점
 
@@ -97,9 +84,9 @@ print(memory.load_memory_variables({}))
 ### 코드 ① — 단일 세션 / 단일 메모리 구조
 ```python
 from langchain_openai import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables import RunnableWithMessageHistory
-from langchain.memory import ChatMessageHistory
+from langchain_community.chat_message_histories import ChatMessageHistory
 
 llm = ChatOpenAI(model="gpt-4o-mini")
 prompt = ChatPromptTemplate.from_messages([

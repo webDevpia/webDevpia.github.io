@@ -95,6 +95,7 @@ Level 1: ●──●──●──●──●
 - **하위 레벨:** 세밀한 지역 탐색 (정확한 최근접 검색)
 
 ### 🔹 주요 파라미터
+
 | 파라미터 | 설명 | 권장값 |
 |-----------|------|--------|
 | `M` | 각 노드가 연결할 최대 이웃 수 | 16~64 |
@@ -119,6 +120,106 @@ D, I = index.search(query, 5)
 print(I)
 ```
 
+```
+[[57110 49005 68694 83587 36059]]
+```
+
+```py
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_core.documents import Document
+
+# 1️⃣ 임베딩 모델 초기화
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+
+# 2️⃣ 문서 생성
+documents = [
+    Document(page_content="LangChain을 이용해 AI 프로젝트를 구축 중입니다.", metadata={"source": "tweet"}),
+    Document(page_content="내일 날씨는 맑고 따뜻할 예정입니다.", metadata={"source": "news"}),
+    Document(page_content="오늘은 팬케이크와 커피를 먹었어요.", metadata={"source": "personal"}),
+]
+
+# 3️⃣ numpy, faiss 직접 안 쓰고 LangChain이 내부 처리
+vector_store = FAISS.from_documents(documents=documents, embedding=embeddings)
+
+print("✅ 문서 임베딩 및 벡터 저장 완료!")
+
+# 4️⃣ 검색 테스트
+query = "LangChain 관련 프로젝트"
+results = vector_store.similarity_search(query, k=2)
+
+print("\n🔍 검색 결과:")
+for r in results:
+    print(f"• {r.page_content} ({r.metadata})")
+```
+
+```
+✅ 문서 임베딩 및 벡터 저장 완료!
+
+🔍 검색 결과:
+• LangChain을 이용해 AI 프로젝트를 구축 중입니다. ({'source': 'tweet'})
+• 내일 날씨는 맑고 따뜻할 예정입니다. ({'source': 'news'})
+```
+
+```py
+import faiss
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_community.docstore.in_memory import InMemoryDocstore
+from langchain_core.documents import Document
+import numpy as np
+
+# 1️⃣ OpenAI 임베딩 초기화
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+
+# 2️⃣ 샘플 문서 생성
+documents = [
+    Document(page_content="LangChain을 이용해 AI 프로젝트를 구축 중입니다.", metadata={"source": "tweet"}),
+    Document(page_content="내일 날씨는 맑고 따뜻할 예정입니다.", metadata={"source": "news"}),
+    Document(page_content="오늘은 팬케이크와 커피를 먹었어요.", metadata={"source": "personal"}),
+]
+
+# 3️⃣ 샘플 벡터로 차원 확인
+sample_vec = np.array(embeddings.embed_query("hello world"), dtype="float32")
+dim = len(sample_vec)
+
+print(f"✅ 벡터 차원: {dim}")
+
+# 4️⃣ HNSW 인덱스 생성
+index = faiss.IndexHNSWFlat(dim, 32)  # 32개의 neighbor 링크
+index.hnsw.efConstruction = 200
+print("✅ HNSW Index 생성 완료!")
+
+# 5️⃣ LangChain용 VectorStore 초기화
+vector_store = FAISS(
+    embedding_function=embeddings,
+    index=index,
+    docstore=InMemoryDocstore(),
+    index_to_docstore_id={}
+)
+
+# 6️⃣ 문서 추가 (numpy 직접 사용 X)
+vector_store.add_documents(documents)
+print("✅ 문서가 HNSW 기반 벡터 DB에 추가되었습니다!")
+
+# 7️⃣ 검색 테스트
+query = "LangChain 관련 프로젝트"
+results = vector_store.similarity_search(query, k=2)
+
+print("\n🔍 검색 결과:")
+for r in results:
+    print(f"• {r.page_content} ({r.metadata})")
+```
+
+```
+✅ 벡터 차원: 1536
+✅ HNSW Index 생성 완료!
+✅ 문서가 HNSW 기반 벡터 DB에 추가되었습니다!
+
+🔍 검색 결과:
+• LangChain을 이용해 AI 프로젝트를 구축 중입니다. ({'source': 'tweet'})
+• 내일 날씨는 맑고 따뜻할 예정입니다. ({'source': 'news'})
+```
 ---
 
 ## 5️⃣ KNN, ANN, HNSW 비교표

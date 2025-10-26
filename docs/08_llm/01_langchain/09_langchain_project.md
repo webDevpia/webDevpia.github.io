@@ -35,7 +35,7 @@ llm = ChatOpenAI(model="gpt-4.1-nano", temperature=0.2)
 stock으로 검색해서 'Act As A Financial Analyst'의 내용을 주식 시장 상황에 대한 답변 생성을 위한 프롬프트 복사해서 사용
 
 ```python
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
 prompt = ChatPromptTemplate.from_messages([
@@ -147,7 +147,7 @@ class Stock:
 ### 3. 사용자 프롬프트 생성
 
 ```python
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
 prompt = ChatPromptTemplate.from_messages([
@@ -291,7 +291,7 @@ client.index('nasdaq').search('Microsoft')
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_ollama import OllamaLLM
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
 from stock_info import Stock
