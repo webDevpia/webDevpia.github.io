@@ -431,7 +431,9 @@ with tab1:
     st.header(selected)
 
     st.write(stock.get_basic_info())
-    st.write(stock.get_financial_statement())
+    st.write(stock.get_income())
+    st.write(stock.get_Balance())
+    st.write(stock.get_CashFlow())
 
 with tab2:
     st.header("AI 투자 보고서")
