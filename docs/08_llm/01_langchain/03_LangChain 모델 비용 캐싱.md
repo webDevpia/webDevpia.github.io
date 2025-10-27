@@ -6,7 +6,7 @@ parent: LangChain
 nav_order: 3
 permalink: /llm/langchain/cache
 --- 
-# LangChain 모델 비용 & 캐싱 (v1 기준)
+# LangChain 모델 비용 & 캐싱
 
 ---
 

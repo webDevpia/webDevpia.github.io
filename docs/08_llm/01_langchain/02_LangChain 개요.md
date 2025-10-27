@@ -7,7 +7,7 @@ nav_order: 2
 permalink: /llm/langchain/preview
 --- 
 
-# LangChain 개요 (v1 기준)
+# LangChain 개요
 
 ---
 

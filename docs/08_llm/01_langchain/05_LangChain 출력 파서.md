@@ -6,7 +6,7 @@ parent: LangChain
 nav_order: 5
 permalink: /llm/langchain/parser
 --- 
-# LangChain 출력 파서 (v1)
+# LangChain 출력 파서
 
 ## 1. 출력 파서(Output Parser)란?
 

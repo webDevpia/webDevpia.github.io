@@ -6,7 +6,7 @@ parent: LangChain
 nav_order: 4
 permalink: /llm/langchain/template
 --- 
-# LangChain 프롬프트 템플릿 (v0.3.x 기준)
+# LangChain 프롬프트 템플릿
 
 ## 1. 프롬프트 템플릿이란?
 
