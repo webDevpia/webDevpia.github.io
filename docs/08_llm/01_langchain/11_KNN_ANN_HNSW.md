@@ -15,64 +15,55 @@ permalink: /llm/langchain/knn-ann-hnsw
 
 ## 1️⃣ 벡터 검색이란?
 
-| 구분 | 키워드 검색 | 벡터 검색 |
-|------|---------------|------------|
-| 기준 | 단어 일치 | 의미적 유사도 (cosine similarity 등) |
-| 예시 | “AI 강의” → AI 포함된 문서 | “인공지능 교육” → 의미적으로 유사한 문서 |
-| 핵심 기술 | TF-IDF, BM25 | Embedding, Vector Similarity |
-
-> 💡 **비유:** 키워드 검색은 “정확히 같은 단어를 찾는 것”, 벡터 검색은 “비슷한 뜻을 가진 친구를 찾는 것”입니다.
+벡터 공간에 여러 개의 점(=데이터)이 있을 때,
+어떤 쿼리 벡터에 가장 가까운 점을 찾는 것을 말합니다.
 
 ---
 
-## 2️⃣ KNN (K-Nearest Neighbors)
+## 2️⃣ 최근접 탐색 (KNN : K-Nearest Neighbors)
 
 > **KNN은 ‘모든 점과의 거리를 직접 계산’하여 가장 가까운 K개를 찾는 방식입니다.**
 
-### 🔹 동작 원리
-1. 쿼리 벡터를 하나 받음.
-2. 데이터셋의 모든 벡터와 거리 계산 (L2 거리 또는 코사인 유사도).
-3. 거리순으로 정렬하여 상위 K개 반환.
+| ID | 임베딩(embedding) |
+|----|-------------------|
+| A  | [0.1, 0.2, 0.8]   |
+| B  | [0.2, 0.1, 0.7]   |
+| C  | [0.9, 0.8, 0.2]   |
 
-```python
-from sklearn.neighbors import NearestNeighbors
-import numpy as np
+→ 쿼리 [0.1, 0.3, 0.7] 에 가장 가까운 벡터 찾기
 
-X = np.random.random((100, 5))  # 100개의 5차원 벡터
-query = np.random.random((1, 5))
+이때 사용하는 대표 거리 척도:
+- L2 거리(Euclidean) → 실제 거리 기반
+- Cosine Similarity → 방향(각도) 기반
 
-knn = NearestNeighbors(n_neighbors=3, metric="cosine")
-knn.fit(X)
-distances, indices = knn.kneighbors(query)
-print(indices)
-```
 
-### ⚖️ 특징
-- **정확도:** 100%
-- **속도:** 매우 느림 (데이터 전체 비교)
-- **적합한 상황:** 소규모 데이터, 실험용, 정확도 최우선인 경우
+벡터가 수백만 개라면,
+하나하나 거리 계산(L2 or Cosine)하는 데 시간이 너무 오래 걸립니다.
+이때 등장하는 개념이 바로 ANN (Approximate Nearest Neighbor)
 
 ---
 
-## 3️⃣ ANN (Approximate Nearest Neighbor)
+## 3️⃣ 근사 최근접 탐색 (ANN : Approximate Nearest Neighbor)
 
-> **ANN은 “속도를 위해 일부 정확도를 희생”하는 근사 최근접 탐색 알고리즘입니다.**
+> **“정확히 가장 가까운 벡터를 찾지 않아도 되니까,대신 빠르게 ‘거의 비슷한 것’을 찾아줘!”**
 
-### 🔹 왜 필요할까?
-KNN은 1억 개의 벡터가 있을 때 모든 벡터를 비교해야 합니다 → **검색 시간이 너무 오래 걸림.**
+즉,
+- 정확도(Accuracy) 를 약간 포기하는 대신
+- 속도(Speed) 를 엄청나게 높이는 방법입니다.
 
-ANN은 다음 세 가지 접근으로 이를 개선합니다:
 
-| 유형 | 방식 | 대표 알고리즘 |
-|------|------|---------------|
-| 해싱 기반 | 비슷한 벡터를 같은 버킷에 저장 | LSH (Locality Sensitive Hashing) |
-| 클러스터 기반 | 유사한 벡터끼리 묶어 탐색 | IVF, PQ (FAISS) |
-| 그래프 기반 | 벡터 간 연결 관계를 그래프로 표현 | HNSW |
+**대표 알고리즘**
 
-### ⚖️ 특징
-- **정확도:** 90~99%
-- **속도:** 매우 빠름 (100~1000배 향상)
-- **적합한 상황:** 대규모 실시간 검색 서비스
+| 알고리즘 | 핵심 구조 | 특징 |
+|----------|-----------|------|
+| HNSW (Hierarchical Navigable Small World) | 그래프 기반 | 정확도 높고 빠름 (요즘 가장 많이 사용됨) |
+| IVF (Inverted File Index) | 군집 기반 | 대용량에서도 빠름 |
+| PQ (Product Quantization) | 압축 기반 | 메모리 절약 |
+| LSH (Locality Sensitive Hashing) | 해시 기반 | 고차원에서도 빠름, 다만 정확도 낮음 |
+
+**HNSW 예시 (가장 인기 있는 방식)**
+
+FAISS, Pinecone, Weaviate, Milvus 등 대부분의 벡터 DB는 HNSW 방식을 사용합니다.
 
 ---
 
@@ -80,86 +71,16 @@ ANN은 다음 세 가지 접근으로 이를 개선합니다:
 
 > **HNSW는 그래프 기반 ANN 알고리즘으로, 현재 가장 널리 사용되는 방식입니다.**
 
-### 🔹 핵심 아이디어
-벡터를 **계층적 그래프(hierarchical graph)**로 구성하여, **멀리서 시작해 점점 가까운 이웃으로 탐색**합니다.
+- 상위 레벨: 대표 벡터 (적게 존재)
+- 하위 레벨: 실제 모든 데이터 (가득 존재)
 
-```
-Level 3: ●───●
-           │   \
-Level 2:  ●──●──●
-           │   │
-Level 1: ●──●──●──●──●
-```
-
-- **상위 레벨:** 전체 공간을 거칠게 훑음 (빠른 시작점 탐색)
-- **하위 레벨:** 세밀한 지역 탐색 (정확한 최근접 검색)
-
-### 🔹 주요 파라미터
-
-| 파라미터 | 설명 | 권장값 |
-|-----------|------|--------|
-| `M` | 각 노드가 연결할 최대 이웃 수 | 16~64 |
-| `efConstruction` | 인덱스 구축 시 탐색 폭 | 100~200 |
-| `efSearch` | 검색 시 탐색 폭 | 50~100 |
 
 ### ⚙️ 코드 예시 (FAISS)
 
-```python
-import faiss
-import numpy as np
-
-# 128차원 벡터 10만 개
-data = np.random.random((100000, 128)).astype('float32')
-
-index = faiss.IndexHNSWFlat(128, 32)  # HNSW 인덱스 생성
-index.hnsw.efConstruction = 200
-index.add(data)
-
-query = np.random.random((1, 128)).astype('float32')
-D, I = index.search(query, 5)
-print(I)
-```
-
-```
-[[57110 49005 68694 83587 36059]]
-```
-
-```py
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
-from langchain_core.documents import Document
-
-# 1️⃣ 임베딩 모델 초기화
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-
-# 2️⃣ 문서 생성
-documents = [
-    Document(page_content="LangChain을 이용해 AI 프로젝트를 구축 중입니다.", metadata={"source": "tweet"}),
-    Document(page_content="내일 날씨는 맑고 따뜻할 예정입니다.", metadata={"source": "news"}),
-    Document(page_content="오늘은 팬케이크와 커피를 먹었어요.", metadata={"source": "personal"}),
-]
-
-# 3️⃣ numpy, faiss 직접 안 쓰고 LangChain이 내부 처리
-vector_store = FAISS.from_documents(documents=documents, embedding=embeddings)
-
-print("✅ 문서 임베딩 및 벡터 저장 완료!")
-
-# 4️⃣ 검색 테스트
-query = "LangChain 관련 프로젝트"
-results = vector_store.similarity_search(query, k=2)
-
-print("\n🔍 검색 결과:")
-for r in results:
-    print(f"• {r.page_content} ({r.metadata})")
-```
-
-```
-✅ 문서 임베딩 및 벡터 저장 완료!
-
-🔍 검색 결과:
-• LangChain을 이용해 AI 프로젝트를 구축 중입니다. ({'source': 'tweet'})
-• 내일 날씨는 맑고 따뜻할 예정입니다. ({'source': 'news'})
-```
+> ⚠️ 참고
+    FAISS는 내부적으로 “거리(distance)”를 반환합니다.  
+    즉, 값이 작을수록 더 유사함을 의미합니다.  
+    (Cosine Similarity가 아닌 L2 거리 기반이기 때문.)  
 
 ```py
 import faiss
@@ -168,6 +89,10 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_core.documents import Document
 import numpy as np
+from dotenv import load_dotenv
+
+# 환경변수 불러오기
+load_dotenv()
 
 # 1️⃣ OpenAI 임베딩 초기화
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
@@ -187,7 +112,6 @@ print(f"✅ 벡터 차원: {dim}")
 
 # 4️⃣ HNSW 인덱스 생성
 index = faiss.IndexHNSWFlat(dim, 32)  # 32개의 neighbor 링크
-index.hnsw.efConstruction = 200
 print("✅ HNSW Index 생성 완료!")
 
 # 5️⃣ LangChain용 VectorStore 초기화
@@ -203,12 +127,12 @@ vector_store.add_documents(documents)
 print("✅ 문서가 HNSW 기반 벡터 DB에 추가되었습니다!")
 
 # 7️⃣ 검색 테스트
-query = "LangChain 관련 프로젝트"
-results = vector_store.similarity_search(query, k=2)
+query = "랭체인"
+results = vector_store.similarity_search_with_score(query, k=3)
 
 print("\n🔍 검색 결과:")
-for r in results:
-    print(f"• {r.page_content} ({r.metadata})")
+for r,score in results:
+    print(f"•[{score:.6f}] {r.page_content} ({r.metadata})")
 ```
 
 ```
@@ -217,71 +141,7 @@ for r in results:
 ✅ 문서가 HNSW 기반 벡터 DB에 추가되었습니다!
 
 🔍 검색 결과:
-• LangChain을 이용해 AI 프로젝트를 구축 중입니다. ({'source': 'tweet'})
-• 내일 날씨는 맑고 따뜻할 예정입니다. ({'source': 'news'})
+•[1.494898] LangChain을 이용해 AI 프로젝트를 구축 중입니다. ({'source': 'tweet'})
+•[1.737423] 오늘은 팬케이크와 커피를 먹었어요. ({'source': 'personal'})
+•[1.787256] 내일 날씨는 맑고 따뜻할 예정입니다. ({'source': 'news'})
 ```
----
-
-## 5️⃣ KNN, ANN, HNSW 비교표
-
-| 항목 | KNN | ANN | HNSW |
-|------|-----|-----|------|
-| **정확도** | 100% | 90~99% | 95~99% |
-| **속도** | 매우 느림 | 빠름 | 매우 빠름 |
-| **메모리 사용량** | 적음 | 중간 | 많음 |
-| **인덱스 필요** | ❌ | ✅ | ✅ |
-| **적합한 규모** | 소규모 | 중~대규모 | 대규모 (100만+) |
-| **대표 구현체** | scikit-learn | FAISS, ScaNN | FAISS, Milvus, Pinecone |
-
----
-
-## 6️⃣ LangChain + Pinecone 연동 예시
-
-```python
-from langchain_openai import OpenAIEmbeddings
-from langchain_pinecone import PineconeVectorStore
-from pinecone import Pinecone
-import os
-
-# 1. Pinecone 클라이언트 설정
-pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
-
-# 2. 임베딩 모델 설정
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-
-# 3. 벡터스토어 생성
-index_name = "semantic-search-demo"
-vectorstore = PineconeVectorStore(index_name=index_name, embedding=embeddings)
-
-# 4. 질의 및 검색
-query = "인공지능의 윤리적 문제는?"
-docs = vectorstore.similarity_search(query, k=3)
-
-for i, doc in enumerate(docs, 1):
-    print(f"{i}. {doc.page_content}")
-```
-
-> ✅ LangChain은 내부적으로 HNSW 기반의 ANN 검색을 수행합니다.  
-> Pinecone, Weaviate, FAISS 모두 HNSW 인덱스를 기반으로 빠른 의미 검색을 지원합니다.
-
----
-
-## 7️⃣ 실무 선택 가이드
-
-| 상황 | 추천 알고리즘 | 이유 |
-|------|----------------|------|
-| 데이터가 작고 정확도가 중요 | **KNN** | 구현 단순, 100% 정확도 |
-| 대규모 데이터, 실시간 검색 | **ANN (HNSW)** | 빠른 검색 속도, 확장성 높음 |
-| GPU 사용 환경, 벡터 압축 필요 | **FAISS IVF+PQ** | 고차원 벡터 효율적 관리 |
-| 클라우드 환경 (SaaS) | **Pinecone, Milvus, Weaviate** | 관리형 벡터 데이터베이스 |
-
----
-
-## 💬 정리
-- **KNN** → 정확하지만 느림. (모든 점과 거리 계산)
-- **ANN** → 빠르지만 근사값 사용. (정확도 약간 손실)
-- **HNSW** → 그래프 기반 ANN으로 현재 가장 많이 사용됨.
-
-> 💡 **요약:**  
-> HNSW는 “빠른 근사 이웃 검색의 사실상 표준 알고리즘”으로,  
-> LangChain, Pinecone, FAISS 등 대부분의 최신 LLM 검색 엔진이 채택하고 있습니다.
