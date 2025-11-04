@@ -62,12 +62,12 @@ exclude:
   - docs/07_DeepLearning
   # - docs/08_llm
   # - docs/08_llm/01_langchain
-  - docs/08_llm/02_langGraph
+  # - docs/08_llm/02_langGraph
   - docs/08_llm/03_crewAI
   - docs/08_llm/04_llamaindex
   - docs/08_llm/05_RegRetrieval
   - docs/08_llm/06_RegPrompting
-  - docs/08_llm/07_mcp
+  # - docs/08_llm/07_mcp
 
 
 
