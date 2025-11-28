@@ -58,6 +58,8 @@ exclude:
   - docs/05_site_Deploy
   - docs/02_language/00_basic
   - docs/02_language/java
+  - docs/02_language/03_1_react
+  - docs/02_language/05_spring
   - docs/06_MachineLearning
   - docs/07_DeepLearning
   # - docs/08_llm
