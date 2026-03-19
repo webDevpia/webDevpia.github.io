@@ -829,4 +829,23 @@ function TabContent({tap}){
 }
 ```
 
-### 12 상세페이지 클릭시,  하단 sub 탭 UI 클릭 시 애니메이션(Transition) 넣기
+### 12. 상세페이지 클릭시,  하단 sub 탭 UI 클릭 시 애니메이션(Transition) 넣기
+
+**Detail.js**
+① 애니메이션 동작 전 스타일을 담을 className 만들기 
+② 애니메이션 동작 후 스타일을 담을 className 만들기 
+③ transition 속성도 추가
+④ 원할 때 ②번 탈부착
+
+**index.css**
+요소의 크기가 0과 1로 커지는 scalecss
+
+```css
+.start {
+transform: scale(0);
+}
+.end {
+transform: scale(1); 
+transition :all 0.5s; 
+}
+```

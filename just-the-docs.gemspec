@@ -3,8 +3,8 @@
 Gem::Specification.new do |spec|
   spec.name          = "just"
   spec.version       = "0.8.2"
-  spec.authors       = ["Patrick Marsceill", "Matthew Wang"]
-  spec.email         = ["patrick.marsceill@gmail.com", "matt@matthewwang.me"]
+  spec.authors       = ["shimseonjo"]
+  spec.email         = ["shimseonjo@gmail.com"]
 
   spec.summary       = %q{A modern, highly customizable, and responsive Jekyll theme for documentation with built-in search.}
   spec.homepage      = "https://shimseonjo.github.io"

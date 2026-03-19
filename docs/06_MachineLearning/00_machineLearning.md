@@ -8,7 +8,7 @@ permalink: /machinelearning
 # search_exclude: true
 ---
 
-# DeepLearning
+# Machine Learning
 {: .no_toc }
 
 
