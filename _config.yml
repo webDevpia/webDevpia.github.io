@@ -13,10 +13,10 @@
 # you will see them accessed via {{ site.title }}, {{ site.github_repo }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: AI
-description: 
-baseurl: "/home" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site
+title: Digital Smart Academy
+description: 부경대학교 디지털 스마트 아카데미
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://shimseonjo.github.io" # the base hostname & protocol for your site
 repository: shimseonjo/shimseonjo.github.io # for github-metadata
 
 # 테마 설정
@@ -53,29 +53,21 @@ exclude:
   - fixtures/
 # 배포시에 제외하고 싶은 폴더 경로 추가
   - docs/ex/
-  - docs/01_git/
-  - docs/02_language/
   - docs/03_db/
   - docs/04_cloud/
-  - docs/05_site_Deploy/
-  - docs/09_sdd/
+  - docs/05_site_Deploy
   - docs/02_language/00_basic
   - docs/02_language/java
-  - docs/02_language/03_1_react
-  - docs/02_language/05_spring
-  # - docs/06_MachineLearning
-  # - docs/07_DeepLearning
-  - docs/07_DeepLearning/09_labelstudio
-  - docs/07_DeepLearning/08_natural_language_processing
+  - docs/06_MachineLearning
+  - docs/07_DeepLearning
   # - docs/08_llm
   # - docs/08_llm/01_langchain
-  # - docs/08_llm/02_langGraph
-  # - docs/08_llm/03_crewAI
-  # - docs/08_llm/04_llamaindex
-  # - docs/08_llm/05_RegRetrieval
-  # - docs/08_llm/06_RegPrompting
-  # - docs/08_llm/07_mcp
-
+  - docs/08_llm/02_langGraph
+  - docs/08_llm/03_crewAI
+  - docs/08_llm/04_llamaindex
+  - docs/08_llm/05_RegRetrieval
+  - docs/08_llm/06_RegPrompting
+  - docs/08_llm/07_mcp
 
 
 
@@ -135,8 +127,8 @@ heading_anchors: true
 
 # Aux links for the upper right navigation
 aux_links:
-  # "shimseonjo.github.io":
-  #   - "https://shimseonjo.github.io/"
+  "Digital Smart Academy Busan":
+    - "https://icms.pknu.ac.kr/dsbacademy"
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false
@@ -151,10 +143,8 @@ nav_sort: case_sensitive # Capital letters sorted before lowercase
 
 # External navigation links
 nav_external_links:
-  # - title: "shimseonjo.github.io"
-  #   url: https://shimseonjo.github.io/
-  - title: ""
-    url: 
+  - title: "Digital Smart Academy Busan"
+    url: https://icms.pknu.ac.kr/dsbacademy
 
 liquid:
   error_mode: strict
@@ -168,8 +158,7 @@ liquid:
 back_to_top: true
 back_to_top_text: "Back to top"
 
-# footer_content: "shimseonjo.github.io"
-footer_content: ""
+footer_content: "Digital Smart Academy Busan."
 #"Copyright &copy; 2017-2020 Patrick Marsceill. Distributed by an <a href=\"https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt\">MIT license.</a> <a href=\"https://www.netlify.com/\">This site is powered by Netlify.</a>"
 
 # Footer last edited timestamp
