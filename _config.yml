@@ -13,8 +13,8 @@
 # you will see them accessed via {{ site.title }}, {{ site.github_repo }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Digital Smart Academy
-description: 부경대학교 디지털 스마트 아카데미
+title: AI 학습자료
+description: 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://shimseonjo.github.io" # the base hostname & protocol for your site
 repository: shimseonjo/shimseonjo.github.io # for github-metadata
@@ -58,8 +58,8 @@ exclude:
   - docs/05_site_Deploy
   - docs/02_language/00_basic
   - docs/02_language/java
-  - docs/06_MachineLearning
-  - docs/07_DeepLearning
+  # - docs/06_MachineLearning
+  # - docs/07_DeepLearning
   # - docs/08_llm
   # - docs/08_llm/01_langchain
   - docs/08_llm/02_langGraph
