@@ -8,10 +8,3 @@ permalink: /deeplearning/natural_language_processing
 # search_exclude: true
 ---
 # 자연어 처리
-## 1. 텍스트 전처리
-## 2. 워드 임베딩
-## 3. 
-##
-##
-##
-##
