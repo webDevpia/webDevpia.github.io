@@ -53,21 +53,25 @@ exclude:
   - fixtures/
 # 배포시에 제외하고 싶은 폴더 경로 추가
   - docs/ex/
+  - docs/01_git
+  - docs/02_language
+  - docs/02_language/00_basic
+  - docs/02_language/java
   - docs/03_db/
   - docs/04_cloud/
   - docs/05_site_Deploy
-  - docs/02_language/00_basic
-  - docs/02_language/java
   # - docs/06_MachineLearning
   # - docs/07_DeepLearning
-  # - docs/08_llm
-  # - docs/08_llm/01_langchain
+  - docs/07_DeepLearning/99_labelstudio
+  - docs/08_llm
+  - docs/08_llm/01_langchain
   - docs/08_llm/02_langGraph
   - docs/08_llm/03_crewAI
   - docs/08_llm/04_llamaindex
   - docs/08_llm/05_RegRetrieval
   - docs/08_llm/06_RegPrompting
   - docs/08_llm/07_mcp
+  - docs/09_sdd
 
 
 
