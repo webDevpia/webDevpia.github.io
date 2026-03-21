@@ -131,8 +131,10 @@ heading_anchors: true
 
 # Aux links for the upper right navigation
 aux_links:
-  "Digital Smart Academy Busan":
-    - "https://icms.pknu.ac.kr/dsbacademy"
+  # "Digital Smart Academy Busan":
+  #   - "https://icms.pknu.ac.kr/dsbacademy"
+  "":
+    - ""
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false
@@ -147,8 +149,10 @@ nav_sort: case_sensitive # Capital letters sorted before lowercase
 
 # External navigation links
 nav_external_links:
-  - title: "Digital Smart Academy Busan"
-    url: https://icms.pknu.ac.kr/dsbacademy
+  # - title: "Digital Smart Academy Busan"
+  #   url: https://icms.pknu.ac.kr/dsbacademy
+  - title: ""
+    url: 
 
 liquid:
   error_mode: strict
@@ -162,7 +166,8 @@ liquid:
 back_to_top: true
 back_to_top_text: "Back to top"
 
-footer_content: "Digital Smart Academy Busan."
+# footer_content: "Digital Smart Academy Busan."
+footer_content: ""
 #"Copyright &copy; 2017-2020 Patrick Marsceill. Distributed by an <a href=\"https://github.com/just-the-docs/just-the-docs/tree/main/LICENSE.txt\">MIT license.</a> <a href=\"https://www.netlify.com/\">This site is powered by Netlify.</a>"
 
 # Footer last edited timestamp
