@@ -32,7 +32,82 @@ Deep Learning CNN은 Filter값을 사용자가 직접 만들거나 선택할 필
 
 ![](./img/cnn/cnn006.gif)
 
-## 7. 다중 채널 일때 Convolution Layer 
+### Conv2d 파라미터 이해
+
+PyTorch에서 `nn.Conv2d`의 주요 파라미터는 다음과 같습니다.
+
+| 파라미터 | 의미 |
+|---------|------|
+| `in_channels` | 받게 될 channel의 갯수 (흑백=1, RGB=3) |
+| `out_channels` | 보내고 싶은 channel의 갯수 (= 필터 갯수) |
+| `kernel_size` | 만들고 싶은 kernel(weight)의 사이즈 |
+| `stride` | 필터가 이동하는 간격 |
+
+```py
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Conv2d Layer 생성: 1채널 입력 → 20채널 출력, 5x5 커널
+layer = nn.Conv2d(in_channels=1, out_channels=20, kernel_size=5, stride=1)
+layer
+```
+
+### Convolution Weight 시각화
+
+Conv Layer의 weight는 학습 가능한 상태이므로 `detach()`로 gradient 그래프에서 분리한 뒤 numpy로 변환해야 합니다.
+
+```py
+# weight shape 확인: (out_channels, in_channels, H, W)
+weight = layer.weight
+print(weight.shape)  # torch.Size([20, 1, 5, 5])
+
+# detach()로 gradient 그래프에서 분리 후 numpy 변환
+weight = weight.detach().numpy()
+
+# 첫 번째 필터 시각화
+plt.imshow(weight[0, 0, :, :], 'jet')
+plt.colorbar()
+plt.title('Conv Filter Weight')
+plt.show()
+```
+
+### Conv Layer Input → Weight → Output 비교 시각화
+
+MNIST 이미지 1장을 Conv Layer에 통과시켜 입력/필터/출력을 나란히 비교합니다.
+
+```py
+from torchvision import datasets, transforms
+
+# MNIST 이미지 1장 로드
+train_loader = torch.utils.data.DataLoader(
+    datasets.MNIST('dataset', train=True, download=True,
+                   transform=transforms.Compose([transforms.ToTensor()])),
+    batch_size=1)
+image, label = next(iter(train_loader))
+
+# Conv Layer 통과
+output_data = layer(image)
+output = output_data.data.cpu().numpy()
+image_arr = image.numpy()
+
+# Input / Weight / Output 3분할 비교
+plt.figure(figsize=(15, 5))
+plt.subplot(131)
+plt.title('Input')
+plt.imshow(np.squeeze(image_arr), 'gray')
+plt.subplot(132)
+plt.title('Weight (Filter #0)')
+plt.imshow(weight[0, 0, :, :], 'jet')
+plt.subplot(133)
+plt.title('Output (Feature Map #0)')
+plt.imshow(output[0, 0, :, :], 'gray')
+plt.show()
+```
+
+## 7. 다중 채널 일때 Convolution Layer
 여러 채널(예: RGB)이 있는 이미지의 경우 커널은 입력 이미지의 깊이와 동일한 깊이입니다.  
 Kn과 In 스택([K1, I1]; [K2, I2]; [K3, I3]) 사이에서 행렬 곱셈이 수행되고 모든 결과를 바이어스와 합산하여 한 개의 깊이 채널로 압축된 복잡한 특징 출력을 얻는다.
 
@@ -61,15 +136,75 @@ Filter를 적용하여 Conv 연산 수행 시 출력 Feature Map이 입력 Featu
 Conv 적용된 Feature map의 일정 영역 별로 하나의 값을 추출하여(주로 Max 또는 Average 적용) Feature map의 사이즈를 줄입니다.(sub sampling).  
 일반적으로 Pooling 크기와 Stride를 동일하게 부여하여 모든 값이 한번만 처리 될 수 있도록 합니다.   
 일정 영역에서 가장 큰 값 또는 평균 값을 추출하므로 위치의 변화에 따른 feature 값의 변화를 일정 수준 중화 시킬 수 있습니다.   
-보통은 Conv->ReLU activation 들을 연속 적용 후 Feature Map에 Pooling 적용합니다. 
-![](./img/cnn/cnn012.png)  
+보통은 Conv->ReLU activation 들을 연속 적용 후 Feature Map에 Pooling 적용합니다.
+![](./img/cnn/cnn012.png)
+
+### Pooling 시각화
+
+`F.max_pool2d`는 입력을 넣고 kernel 사이즈와 stride를 순서대로 지정합니다.
+MaxPool Layer는 **학습할 weight가 없기 때문에** 바로 `numpy()`로 변환할 수 있습니다.
+
+```py
+# MaxPooling 적용: 2x2 커널, stride 2
+pool = F.max_pool2d(image, 2, 2)
+print(f"입력: {image.shape} → 출력: {pool.shape}")
+
+# Input vs Pooled Output 비교 시각화
+pool_arr = pool.numpy()
+
+plt.figure(figsize=(10, 5))
+plt.subplot(121)
+plt.title("Input (28x28)")
+plt.imshow(np.squeeze(image_arr), 'gray')
+plt.subplot(122)
+plt.title('After MaxPool2d (14x14)')
+plt.imshow(np.squeeze(pool_arr), 'gray')
+plt.show()
+```
 
 ## 11. Dropout
 Fully Connected Layer의 너무 촘촘한 연결로 인한 많은 파라미터(weight) 생성은 오히려 오버 피팅을 가져 올 수 있음.   
-Dropout을 통해 Layer간 연결을 줄일 수 있으며 오버 피팅 개선을 가져 올 수 있음. 
-![](./img/cnn/cnn013.png)  
+Dropout을 통해 Layer간 연결을 줄일 수 있으며 오버 피팅 개선을 가져 올 수 있음.
+![](./img/cnn/cnn013.png)
 
-## 12. conv 연산 적용 후 출력 피처맵의 크기(size) 구하기 
+## 12. Linear Layer 시각화
+
+`nn.Linear`는 2D 이미지를 직접 받을 수 없으므로, `.view()`로 1D로 펼쳐야(flatten) 합니다.
+
+```py
+# 28x28 이미지 → 784 길이의 1D 벡터로 변환
+flatten = image.view(1, 28 * 28)
+print(f"변환 전: {image.shape} → 변환 후: {flatten.shape}")
+
+# Linear Layer 통과: 784 → 10 (클래스 수)
+lin = nn.Linear(784, 10)(flatten)
+print(f"Linear 출력: {lin.shape}")
+
+# Linear 출력 시각화 (10개 클래스에 대한 점수)
+plt.imshow(lin.detach().numpy(), 'jet')
+plt.colorbar()
+plt.title('Linear Output (10 classes)')
+plt.show()
+```
+
+## 13. Softmax 시각화
+
+Linear Layer의 출력을 확률로 변환하는 것이 Softmax입니다.
+결과를 numpy로 꺼내기 위해서는 `torch.no_grad()`로 gradient 계산을 비활성화해야 합니다.
+
+```py
+with torch.no_grad():
+    flatten = image.view(1, 28 * 28)
+    lin = nn.Linear(784, 10)(flatten)
+    softmax = F.softmax(lin, dim=1)
+
+print(softmax)
+print(f"확률 합계: {np.sum(softmax.numpy())}")  # 1.0
+```
+
+> Softmax 출력값의 합은 항상 1.0이 됩니다. 각 값은 해당 클래스일 확률을 의미합니다.
+
+## 14. conv 연산 적용 후 출력 피처맵의 크기(size) 구하기 
 ![](./img/cnn/cnn014.png) 
 
 ### Stride가 1이고, padding이 없는 경우
@@ -201,6 +336,16 @@ first_batch     | <class 'list'>            | 2
 first_batch[0]  | <class 'torch.Tensor'>    | torch.Size([50, 1, 28, 28])
 first_batch[1]  | <class 'torch.Tensor'>    | torch.Size([50])
 
+
+### nn과 nn.functional의 차이
+
+| 구분 | `nn` (예: `nn.Conv2d`) | `nn.functional` (예: `F.relu`) |
+|------|----------------------|-------------------------------|
+| 학습 파라미터 | **있음** (weight, bias 포함) | **없음** |
+| 사용 위치 | `__init__`에서 정의 | `forward`에서 호출 |
+| 예시 | `nn.Conv2d`, `nn.Linear`, `nn.Dropout2d` | `F.relu`, `F.max_pool2d`, `F.log_softmax` |
+
+> 간단히 정리하면: `nn`은 학습 파라미터가 담긴 레이어, `nn.functional`은 학습 파라미터가 없는 연산 함수입니다.
 
 모델 정의
 ```py
