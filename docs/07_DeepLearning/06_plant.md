@@ -2,29 +2,54 @@
 title: 6. 전이학습 - 작물 잎 사진으로 질병 분류
 layout: default
 parent: DeepLearning
-nav_order: 6
+nav_order: 7
 permalink: /deeplearning/plant
 # nav_exclude: true
 # search_exclude: true
 ---
 
-# 작물 잎 사진으로 질병 분류
+# 6. 전이학습 - 작물 잎 사진으로 질병 분류
 
-이미지 분류 모델을 활용하여 작물 잎 사진의 종류와 질병 유무를 분류하는 프로젝트.     
-프로젝트에서 사용하는 총 데이터의 수는 약 40,000개  
-각 클래스의 이름은 작물의 종류와 질병 종류를 나타냄.   
-질병 이름이 ‘healthy’인 경우는 해당 작물이 건강함을 의미.   
-예를 들어, Potato의 경우 세 가지 클래스 Potato_Early_ blight, Potato_Late_blight, Potato_healthy  
-이 중에서 Potato_healthy로 분류된 경우가 질병이 없는 Potato를 의미.  
+## 학습 목표
+1. 이미지 분류 데이터셋을 train / val / test로 분리할 수 있다
+2. CNN 기본 구조로 베이스라인 모델을 설계하고 학습할 수 있다
+3. 사전학습된 모델(ResNet50)을 활용한 전이학습의 원리를 설명할 수 있다
+4. Layer Freeze와 Fine-tuning의 역할을 이해할 수 있다
+5. 베이스라인 모델과 전이학습 모델의 성능을 비교할 수 있다
+
+<a id="toc"></a>
+
+## 진행 순서
+
+1. [데이터 준비](#part1) - 데이터 다운로드 및 train / val / test 분리
+2. [베이스라인 모델 학습](#part2) - CNN 기본 구조로 학습 파이프라인 구성
+3. [Transfer Learning 모델 학습](#part3) - ResNet50 Fine-tuning
+4. [모델 평가](#part4) - 베이스라인 vs 전이학습 성능 비교
+5. [통합 정리](#part5) - 해석 가이드와 확장 과제
+
+### 프로젝트 개요
+
+이미지 분류 모델을 활용하여 작물 잎 사진의 종류와 질병 유무를 분류하는 프로젝트.
+프로젝트에서 사용하는 총 데이터의 수는 약 40,000개
+각 클래스의 이름은 작물의 종류와 질병 종류를 나타냄.
+질병 이름이 'healthy'인 경우는 해당 작물이 건강함을 의미.
+예를 들어, Potato의 경우 세 가지 클래스 Potato_Early_ blight, Potato_Late_blight, Potato_healthy
+이 중에서 Potato_healthy로 분류된 경우가 질병이 없는 Potato를 의미.
+
+두 가지의 모델을 구축한 후 성능 평가
+CNN 기본 구조를 이용한 베이스 라인 모델
+미리 학습된 모델을 이용한 전이학습(Transfer Learning)
+
+---
+
+<a id="part1"></a>
+
+## 1. 데이터 준비 [↑](#toc)
+
+**학습목표**: 이미지 분류 데이터셋을 ImageFolder 형식의 train / val / test로 분리할 수 있다.
 
 ### 분류 클래스와 각 클래스별 데이터수, 데이터 예시
 ![](./img/plant/plant001.png)
-
-두 가지의 모델을 구축한 후 성능 평가  
-CNN 기본 구조를 이용한 베이스 라인 모델  
-미리 학습된 모델을 이용한 전이학습(Transfer Learning)  
-
-## 1. 데이터 준비
 
 ### 학습 데이터 이해
 학습에 사용할 데이터는 각 이미지의 분류 클래스가 폴더로 구분되어 있는 형태로 각 폴더 안에는 Train, Validation, Test 데이터가 구별되지 않은 상태로 저장되어 있음.
@@ -34,8 +59,8 @@ CNN 기본 구조를 이용한 베이스 라인 모델
 Train, Validation, Test 데이터로 나누고 각각의 클래스에 해당하는 폴더에 저장
 ![](./img/plant/plant003.png)
 
-데이터 파일을 구글 드라이브에서 다운로드 받기 위한 함수 정의  
-다운로드 받은 파일을 저장할 폴더 생성 및 기존 폴더가 있을 경우 삭제 후 생성  
+데이터 파일을 구글 드라이브에서 다운로드 받기 위한 함수 정의
+다운로드 받은 파일을 저장할 폴더 생성 및 기존 폴더가 있을 경우 삭제 후 생성
 
 ```py
 import gdown
@@ -138,7 +163,15 @@ for cls in classes_list:
         shutil.copyfile(src, dst)
 ```
 
-## 2. 베이스라인 모델 학습
+**핵심**: 데이터를 클래스별 폴더 구조로 나누면 ImageFolder가 자동으로 라벨을 인식한다. train:60%, val:20%, test:20%로 분리하여 공정한 평가를 보장한다.
+
+---
+
+<a id="part2"></a>
+
+## 2. 베이스라인 모델 학습 [↑](#toc)
+
+**학습목표**: CNN 기본 구조로 베이스라인 모델을 설계하고 학습 파이프라인을 구성할 수 있다.
 
 ### 운영체제별 디바이스 확인
 각 운영체제별로 cpu, gpu 사용 여부를 체크
@@ -188,7 +221,7 @@ BATCH_SIZE = 256
 EPOCH = 30
 ```
 
-.ipynb_checkpoints 디렉토리의 값 때문에 문제가 생길 경우에만 
+.ipynb_checkpoints 디렉토리의 값 때문에 문제가 생길 경우에만
 ```py
 import shutil
 import os
@@ -359,21 +392,29 @@ def train_baseline(model ,train_loader, val_loader, optimizer, num_epochs = 30):
     return model
 
 
-base = train_baseline(model_base, train_loader, val_loader, optimizer, EPOCH)  	 
+base = train_baseline(model_base, train_loader, val_loader, optimizer, EPOCH)
 ```
 
-학습된 모델을 저장한다.  
+학습된 모델을 저장한다.
 저장 경로를 구글 드라이브로 할 경우 인스턴스가 종료되더라도 구글 드라이브에 남아 있음.
 ```py
 torch.save(base,'baseline.pt')
 ```
 
-## 3. Transfer Learning 모델 학습
+**핵심**: 작은 CNN으로 베이스라인을 만들면, 이후 전이학습과의 성능 차이를 명확히 비교할 수 있다. best validation accuracy 기준으로 모델을 저장한다.
 
-높은 성능의 이미지 분류 모델을 구축하기 위해서는 많은 수의 질 좋은 데이터 셋이 필요.  
-많은 경우에 양질의 데이터셋을 대량으로 구하기는 어려움.  
+---
+
+<a id="part3"></a>
+
+## 3. Transfer Learning 모델 학습 [↑](#toc)
+
+**학습목표**: 사전학습된 ResNet50을 불러와 Layer Freeze 후 Fine-tuning할 수 있다.
+
+높은 성능의 이미지 분류 모델을 구축하기 위해서는 많은 수의 질 좋은 데이터 셋이 필요.
+많은 경우에 양질의 데이터셋을 대량으로 구하기는 어려움.
 대량의 데이터셋으로 미리 학습된 모델을 재활용한 후, 일부를 조정하여 다른 주제의 이미지 분류 모델에 사용이 효과적일수 있음.
-미리 학습된 모델은 Pre-Trained Model, 이 모델을 조정하는 과정을 Fine-Tuning이라함.  
+미리 학습된 모델은 Pre-Trained Model, 이 모델을 조정하는 과정을 Fine-Tuning이라함.
 이러한 기법을 통틀어서 전이학습(Transfer Learning)이라고함.
 
 ![](./img/plant/plant004.png)
@@ -406,7 +447,7 @@ class_names = image_datasets['train'].classes
 ```py
 from torchvision import models
 
-resnet = models.resnet50(pretrained=True) 
+resnet = models.resnet50(pretrained=True)
 # print(resnet) 으로 구성 레이어를 확인할 수 있다.
 #  (fc): Linear(in_features=2048, out_features=1000, bias=True)
 # 마지막 레이어인 분류기 쪽에 출력값을 33으로 조정한다.
@@ -507,7 +548,15 @@ model_resnet50 = train_resnet(resnet, criterion, optimizer_ft, exp_lr_scheduler,
 torch.save(model_resnet50, 'resnet50.pt')
 ```
 
-##  4. 모델 평가
+**핵심**: 사전학습된 ResNet50의 앞쪽 레이어는 freeze하고 마지막 분류기만 교체하여 학습한다. 학습률 스케줄러를 함께 사용하면 안정적인 수렴에 도움이 된다.
+
+---
+
+<a id="part4"></a>
+
+## 4. 모델 평가 [↑](#toc)
+
+**학습목표**: 동일한 테스트 데이터로 베이스라인 모델과 전이학습 모델의 성능을 비교할 수 있다.
 
 ### 베이스라인 모델 평가를 위한 전처리하기
 
@@ -516,7 +565,7 @@ transform_base = transforms.Compose([transforms.Resize([64,64]),transforms.ToTen
 test_base = datasets.ImageFolder(root='./splitted/test',transform=transform_base)
 test_loader_base = torch.utils.data.DataLoader(test_base, batch_size=BATCH_SIZE, shuffle=True)
 ```
-### Transfer Learning모델 평가를 위한 전처리하기
+### Transfer Learning 모델 평가를 위한 전처리하기
 
 ```py
 transform_resNet = transforms.Compose([
@@ -548,3 +597,33 @@ test_loss, test_accuracy = evaluate(resnet50, test_loader_resNet)
 
 print('ResNet test acc:  ', test_accuracy)
 ```
+
+**핵심**: 동일한 테스트 데이터로 두 모델을 비교하면, 전이학습의 효과를 정량적으로 확인할 수 있다. 전이학습 모델은 사전학습된 특징 표현 덕분에 베이스라인보다 높은 정확도를 보인다.
+
+---
+
+<a id="part5"></a>
+
+## 5. 통합 정리 [↑](#toc)
+
+아래 질문에 답해 보세요.
+
+1. 베이스라인 CNN과 전이학습 모델의 test accuracy 차이는 얼마나 되었나요?
+2. ResNet50의 앞쪽 레이어를 freeze한 이유는 무엇인가요?
+3. 전이학습에서 증강(RandomHorizontalFlip, RandomVerticalFlip, RandomCrop)을 적용한 이유는 무엇인가요?
+4. 베이스라인 모델에서는 증강을 사용하지 않았는데, 증강을 추가하면 어떤 변화가 있을까요?
+5. 작물 질병 분류처럼 도메인이 특수한 경우, ImageNet 사전학습 모델이 효과적인 이유는 무엇인가요?
+6. Layer Freeze 범위를 바꾸면 (예: layer 7까지만 freeze) 성능에 어떤 영향이 있을까요?
+
+#### 선택 확장 과제
+
+- 베이스라인 모델에도 증강을 적용해서 성능 변화 확인해 보기
+- ResNet50 대신 ResNet18이나 EfficientNet으로 바꿔 보기
+- Freeze 범위를 조정하여 성능 차이 비교해 보기
+- 클래스별 정확도(classification report)를 출력하여 어떤 질병이 분류하기 어려운지 확인해 보기
+
+#### 참고
+
+- PyTorch Transfer Learning Tutorial
+- Torchvision ImageFolder
+- Torchvision models (ResNet50)

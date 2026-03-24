@@ -2,30 +2,58 @@
 title: 7. 객체 탐지(Object Detection)
 layout: default
 parent: DeepLearning
-nav_order: 7
+nav_order: 8
 permalink: /deeplearning/objectdetection
 # nav_exclude: true
 # search_exclude: true
 ---
-# 객체 탐지(Object Detection)
+# 7. 객체 탐지(Object Detection)와 YOLO
+
+## 학습 목표
+
+1. 객체 탐지의 개념과 Bounding Box, IOU를 설명할 수 있다
+2. NMS의 동작 과정과 필요성을 이해할 수 있다
+3. 정밀도, 재현율, AP, mAP 지표를 해석할 수 있다
+4. 객체 탐지 모델의 발전 흐름(RCNN → YOLO)을 설명할 수 있다
+5. Ultralytics YOLO를 사용하여 커스텀 데이터셋으로 모델을 학습할 수 있다
+6. 웹캠을 활용한 실시간 객체 탐지를 구현할 수 있다
+
+<a id="toc"></a>
+## 진행 순서
+
+1. [객체 탐지 개요](#part1)
+2. [NMS와 모델 성능 평가](#part2)
+3. [데이터셋](#part3)
+4. [객체 탐지의 역사](#part4)
+5. [YOLO 실습: Ultralytics](#part5)
+6. [YOLO 실습: 웹캠 객체 탐지](#part6)
+7. [통합 정리](#part7)
+
+---
+
+<a id="part1"></a>
+## 1. 객체 탐지 개요 [↑](#toc)
+
+**학습목표**: 객체 탐지의 개념과 Bounding Box, IOU를 설명할 수 있다
+
 - 한 이미지에서 객체와 그 경계 상자(bounding box)를 탐지
 - 객체 탐지 알고리즘은 일반적으로 이미지를 입력으로 받고, 경계 상자와 객체 클래스 리스트를 출력
 - 경계 상자에 대해 그에 대응하는 예측 클래스와 클래스의 신뢰도(confidence)를 출력
 
-## 활용분야
+### 활용분야
 
 - 자율 주행 자동차에서 다른 자동차와 보행자를 찾을 때
 - 의료 분야에서 방사선 사진을 사용해 종양이나 위험한 조직을 찾을 때
 - 제조업에서 조립 로봇이 제품을 조립하거나 수리할 때
 - 보안 산업에서 위협을 탐지하거나 사람 수를 셀 때
 
-## Bounding Box
+### Bounding Box
 
 - 이미지에서 하나의 객체 전체를 포함하는 가장 작은 직사각형
 
 ![](./img/yolo/object_detaction001.png)
 
-## IOU(Intersection Over Union)
+### IOU(Intersection Over Union)
 
 - 실측값(Ground Truth)과 모델이 예측한 값이 얼마나 겹치는지를 나타내는 지표
   ![](./img/yolo/object_detaction002.png)
@@ -39,7 +67,16 @@ permalink: /deeplearning/objectdetection
 
   ![](./img/yolo/object_detaction004.png)
 
-## NMS(Non-Maximum Suppression, 비최댓값 억제)
+**핵심**: 객체 탐지는 이미지에서 객체의 위치(Bounding Box)와 클래스를 동시에 예측한다. IOU는 예측과 실측의 겹침 비율로, 탐지 품질을 측정하는 핵심 지표이다.
+
+---
+
+<a id="part2"></a>
+## 2. NMS와 모델 성능 평가 [↑](#toc)
+
+**학습목표**: NMS의 동작 과정과 필요성을 이해하고, 정밀도, 재현율, AP, mAP 지표를 해석할 수 있다
+
+### NMS(Non-Maximum Suppression, 비최댓값 억제)
 
 - 확률이 가장 높은 상자와 겹치는 상자들을 제거하는 과정
 - 최댓값을 갖지 않는 상자들을 제거
@@ -49,9 +86,10 @@ permalink: /deeplearning/objectdetection
   3. 특정 임곗값을 넘는 상자는 제거
 
   ![](./img/yolo/object_detaction005.png)
-## 모델 성능 평가
 
-### 정밀도(Precision)와 재현율(Recall)
+### 모델 성능 평가
+
+#### 정밀도(Precision)와 재현율(Recall)
 
 - 일반적으로 객체 탐지 모델 평가에 사용되지는 않지만, 다른 지표를 계산하는 기본 지표 역할을 함
 
@@ -69,27 +107,25 @@ permalink: /deeplearning/objectdetection
   - 모델이 안정적이지 않은 특징을 기반으로 객체 존재를 예측하면 거짓긍정(FP)이 많아져서 정밀도가 낮아짐
   - 모델이 너무 엄격해서 정확한 조건을 만족할 때만 객체가 탐지된 것으로 간주하면 거짓부정(FN)이 많아져서 재현율이 낮아짐
 
-
-### 정밀도-재현율 곡선(Precision-Recall Curve) 
+#### 정밀도-재현율 곡선(Precision-Recall Curve)
 
 - 신뢰도 임계값마다 모델의 정밀도와 재현율을 시각화
 - 모든 bounding box와 함께 모델이 예측의 정확성을 얼마나 확실하는지 0 ~ 1사이의 숫자로 나타내는 신뢰도를 출력
 - 임계값 T에 따라 정밀도와 재현율이 달라짐
   - 임계값 T 이하의 예측은 제거함
-  - T가 1에 가까우면 정밀도는 높지만 재현율은 낮음  
+  - T가 1에 가까우면 정밀도는 높지만 재현율은 낮음
   - 놓치는 객체가 많아져서 재현율이 낮아짐. 즉, 신뢰도가 높은 예측만 유지하기때문에 정밀도는 높아짐
-  - T가 0에 가까우면 정밀도는 낮지만 재현율은 높음  
+  - T가 0에 가까우면 정밀도는 낮지만 재현율은 높음
   - 대부분의 예측을 유지하기때문에 재현율은 높아지고, 거짓긍정(FP)이 많아져서 정밀도가 낮아짐
 - 예를 들어, 모델이 보행자를 탐지하고 있으면 특별한 이유없이 차를 세우더라도 어떤 보행자도 놓치지 않도록 재현율을 높여야 함
 - 모델이 투자 기회를 탐지하고 있다면 일부 기회를 놓치게 되더라도 잘못된 기회에 돈을 거는 일을 피하기 위해 정밀도를 높여야 함
 
 ![](./img/yolo/object_detaction006.png)
 
-
-### AP (Average Precision, 평균 정밀도) 와 mAP(mean Average Precision)
+#### AP (Average Precision, 평균 정밀도) 와 mAP(mean Average Precision)
 
 - 곡선의 아래 영역에 해당
-- 항상 1x1 정사각형으로 구성되어 있음  
+- 항상 1x1 정사각형으로 구성되어 있음
   즉, 항상 0 ~ 1 사이의 값을 가짐
 - 단일 클래스에 대한 모델 성능 정보를 제공
 - 전역 점수를 얻기위해서 mAP를 사용
@@ -101,7 +137,14 @@ permalink: /deeplearning/objectdetection
 
     ![](./img/yolo/object_detaction007.png)
 
-## 데이터셋
+**핵심**: NMS는 중복된 예측 상자를 제거하여 최종 탐지 결과를 정리한다. mAP는 모든 클래스의 AP 평균으로, 객체 탐지 모델의 종합 성능을 나타낸다.
+
+---
+
+<a id="part3"></a>
+## 3. 데이터셋 [↑](#toc)
+
+**학습목표**: 객체 탐지의 대표적인 벤치마크 데이터셋을 이해할 수 있다
 
 ### VOC Dataset
 
@@ -118,15 +161,21 @@ permalink: /deeplearning/objectdetection
 ### COCO Dataset
 
 - Common Objects in Context
-- 200,000개의 이미지 
-- 80개의 카테고리에 500,000개 이상의 객체 Annotation이 존재  
-      
+- 200,000개의 이미지
+- 80개의 카테고리에 500,000개 이상의 객체 Annotation이 존재
+
 - https://cocodataset.org/
 
 ![](./img/yolo/object_detaction009.png)
 
+**핵심**: VOC(20 클래스)와 COCO(80 클래스)는 객체 탐지의 대표적인 벤치마크 데이터셋이다.
 
-## 객체 탐지 (Object Detection)의 역사
+---
+
+<a id="part4"></a>
+## 4. 객체 탐지의 역사 [↑](#toc)
+
+**학습목표**: 객체 탐지 모델의 발전 흐름(RCNN → YOLO)을 설명할 수 있다
 
 ![](./img/yolo/object_detaction010.png)
 
@@ -205,37 +254,45 @@ permalink: /deeplearning/objectdetection
 
 * YOLOv6 (2022)
 
-	•	BYD에 의해 발표된 YOLO 버전으로, 산업용 컴퓨터 비전 작업에 최적화된 모델.  
-	•	Anchor-Free 구조를 도입하여 더 빠르고 정확한 탐지가 가능.  
-	•	Nano, Tiny, Small, Medium 모델 크기 제공으로 다양한 컴퓨팅 환경에 대응 가능.  
-	•	MobileNet 기반의 백본을 사용하여 경량화 및 효율성 향상.  
-	•	TensorRT 및 ONNX 지원으로, 엣지 장치와 임베디드 시스템에서 효율적인 배포 가능.  
-	•	YOLOv5와 비교했을 때, 작은 객체 탐지에 더 우수한 성능을 보임.  
-	•	고정밀한 산업 애플리케이션에서의 속도와 정확도를 동시에 달성.  
+	•	BYD에 의해 발표된 YOLO 버전으로, 산업용 컴퓨터 비전 작업에 최적화된 모델.
+	•	Anchor-Free 구조를 도입하여 더 빠르고 정확한 탐지가 가능.
+	•	Nano, Tiny, Small, Medium 모델 크기 제공으로 다양한 컴퓨팅 환경에 대응 가능.
+	•	MobileNet 기반의 백본을 사용하여 경량화 및 효율성 향상.
+	•	TensorRT 및 ONNX 지원으로, 엣지 장치와 임베디드 시스템에서 효율적인 배포 가능.
+	•	YOLOv5와 비교했을 때, 작은 객체 탐지에 더 우수한 성능을 보임.
+	•	고정밀한 산업 애플리케이션에서의 속도와 정확도를 동시에 달성.
 
 * YOLOv7 (2022)
- 
-	•	Wang, Bochkovskiy, Liao에 의해 발표된 YOLO 버전으로, 속도와 정확도 측면에서 가장 우수한 성능을 보여주는 모델.  
-	•	계층적 가중치 학습(Extended-ELAN)을 통해 효율적인 학습 및 성능 향상.  
-	•	다중 스케일 학습(Multiple Scale Learning) 기능으로 작은 객체 탐지 능력이 크게 향상됨.  
-	•	YOLO 시리즈 중 가장 높은 속도-정확도 균형을 자랑하며, SOTA (State-of-the-Art) 성능 달성.  
-	•	YOLOv5보다 더 작은 모델 크기와 더 빠른 속도를 제공하며, 다양한 크기 모델 제공 (YOLOv7-tiny, YOLOv7-large).  
-	•	기존 YOLO 모델에 비해 레이어 간 연결이 개선되어 네트워크 효율성이 증가.  
-	•	객체 탐지, 이미지 분류, 이미지 분할 등 다양한 작업에서 뛰어난 성능을 보임.  
- 
+
+	•	Wang, Bochkovskiy, Liao에 의해 발표된 YOLO 버전으로, 속도와 정확도 측면에서 가장 우수한 성능을 보여주는 모델.
+	•	계층적 가중치 학습(Extended-ELAN)을 통해 효율적인 학습 및 성능 향상.
+	•	다중 스케일 학습(Multiple Scale Learning) 기능으로 작은 객체 탐지 능력이 크게 향상됨.
+	•	YOLO 시리즈 중 가장 높은 속도-정확도 균형을 자랑하며, SOTA (State-of-the-Art) 성능 달성.
+	•	YOLOv5보다 더 작은 모델 크기와 더 빠른 속도를 제공하며, 다양한 크기 모델 제공 (YOLOv7-tiny, YOLOv7-large).
+	•	기존 YOLO 모델에 비해 레이어 간 연결이 개선되어 네트워크 효율성이 증가.
+	•	객체 탐지, 이미지 분류, 이미지 분할 등 다양한 작업에서 뛰어난 성능을 보임.
+
 * YOLOv8 (2023)
 
-	•	이전 버전들과 비교했을 때 더 가볍고 더 나은 정확도 제공.  
-	•	모듈화된 디자인: 다양한 작업에 쉽게 적용할 수 있도록 설계됨. 객체 탐지, 분할, 분류 등을 단일 프레임워크에서 지원.  
-	•	다중 태스크 지원: 객체 탐지뿐 아니라, **이미지 분할(Image Segmentation)**과 이미지 분류(Image Classification) 작업도 지원.  
-	•	자동 하이퍼파라미터 튜닝: 학습 중 최적의 하이퍼파라미터를 자동으로 설정해 성능 극대화.  
-	•	다양한 형식으로 모델 배포 가능: PyTorch, TensorRT, ONNX, CoreML 등 여러 플랫폼에서 실행 가능.  
-	•	백본 아키텍처가 최적화되어, 모바일 기기와 임베디드 장치에서도 빠르고 효율적으로 동작.  
-	•	사용자 친화적인 API 제공으로, 개발자들이 쉽게 모델을 배포하고 응용할 수 있음.  
- 
-# YOLO (You Only Look Once)
+	•	이전 버전들과 비교했을 때 더 가볍고 더 나은 정확도 제공.
+	•	모듈화된 디자인: 다양한 작업에 쉽게 적용할 수 있도록 설계됨. 객체 탐지, 분할, 분류 등을 단일 프레임워크에서 지원.
+	•	다중 태스크 지원: 객체 탐지뿐 아니라, **이미지 분할(Image Segmentation)**과 이미지 분류(Image Classification) 작업도 지원.
+	•	자동 하이퍼파라미터 튜닝: 학습 중 최적의 하이퍼파라미터를 자동으로 설정해 성능 극대화.
+	•	다양한 형식으로 모델 배포 가능: PyTorch, TensorRT, ONNX, CoreML 등 여러 플랫폼에서 실행 가능.
+	•	백본 아키텍처가 최적화되어, 모바일 기기와 임베디드 장치에서도 빠르고 효율적으로 동작.
+	•	사용자 친화적인 API 제공으로, 개발자들이 쉽게 모델을 배포하고 응용할 수 있음.
 
-## Ultralytics
+**핵심**: 객체 탐지는 2-stage(RCNN 계열)에서 1-stage(SSD, YOLO)로 발전하며 속도와 정확도의 균형을 개선해 왔다.
+
+---
+
+<a id="part5"></a>
+## 5. YOLO 실습: Ultralytics [↑](#toc)
+
+**학습목표**: Ultralytics YOLO를 사용하여 커스텀 데이터셋으로 모델을 학습할 수 있다
+
+### Ultralytics
+
 Ultralytics는 YOLOv5부터 YOLO 모델의 개발과 지원을 시작.
 Ultralytics YOLO 모델을 사용하여 다양한 작업(객체 탐지, 분류, 분할,)을 수행할 수 있습니다. YOLO 모델의 각 모드는 주로 4가지로 구분되며, 각 모드는 목적에 따라 다른 방식으로 모델을 사용할 수 있습니다.
 
@@ -324,10 +381,19 @@ drive.mount('/content/drive')
 %cp runs/detect/train/weights/best.pt '/content/drive/MyDrive/Colab Notebooks/pytorch_test/pothole'
 ```
 
-## colab에서 웹캠 사용하여 객체 탐지
+**핵심**: Ultralytics YOLO는 간단한 명령으로 학습, 검증, 예측을 수행할 수 있다. 커스텀 데이터셋(포트홀 등)으로 Fine-tuning이 가능하다.
+
+---
+
+<a id="part6"></a>
+## 6. YOLO 실습: 웹캠 객체 탐지 [↑](#toc)
+
+**학습목표**: 웹캠을 활용한 실시간 객체 탐지를 구현할 수 있다
+
+### Colab에서 웹캠 사용하여 객체 탐지
 
 ```py
-from ultralytics import YOLO 
+from ultralytics import YOLO
 from IPython.display import display, Javascript
 from google.colab.output import eval_js
 from base64 import b64decode
@@ -422,7 +488,8 @@ else:
     print("탐지된 객체가 없습니다.")
 ```
 
-## YOLO 개체 탐지 모델을 사용
+### YOLO 실시간 웹캠 탐지
+
 YOLO 개체 탐지 모델을 사용하여 실시간 웹캠을 통해 객체를 감지하고 감지된 객체의 경계 상자와 라벨을 화면에 표시
 
 ```py
@@ -474,29 +541,29 @@ category_dict = {
 def process_webcam():
     # 기본 웹캠에 접근하여 비디오 스트림을 읽습니다
     cap = cv2.VideoCapture(0)  # 0 is typically the default webcam
-    
+
     # 웹캠을 열지 못한 경우 오류 메시지를 출력하고 함수를 종료
     if not cap.isOpened():
         print("Error: Could not open webcam.")
         return
 
-    # 객체 감지 결과를 시각화할 수 있도록 경계 상자와 라벨을 추가하는 도구인 
+    # 객체 감지 결과를 시각화할 수 있도록 경계 상자와 라벨을 추가하는 도구인
     # BoundingBoxAnnotator와 LabelAnnotator를 초기화합니다.
     bounding_box_annotator = sv.BoundingBoxAnnotator()
     label_annotator = sv.LabelAnnotator()
 
     while True:
-        # 웹캠으로부터 비디오 프레임을 읽어옴 
-        # ret은 프레임이 제대로 읽혔는지 여부를 나타내고, 
+        # 웹캠으로부터 비디오 프레임을 읽어옴
+        # ret은 프레임이 제대로 읽혔는지 여부를 나타내고,
         # frame은 실제 이미지 데이터를 가집니다.
         ret, frame = cap.read()
         if not ret:
             break
-            
+
         results = model(frame)[0]
         # YOLO 모델의 감지 결과를 sv.Detections 객체로 변환하여 후처리하기 쉽게 만듭니다.
         detections = sv.Detections.from_ultralytics(results)
-        # 감지된 객체마다 경계 상자(cv2.rectangle)와 객체 이름 및 신뢰도(cv2.putText)를 프레임에 그립니다. 
+        # 감지된 객체마다 경계 상자(cv2.rectangle)와 객체 이름 및 신뢰도(cv2.putText)를 프레임에 그립니다.
         # 클래스 ID는 category_dict를 사용하여 객체의 이름(예: person)으로 변환됩니다.
         for box, class_id, confidence in zip(detections.xyxy, detections.class_id, detections.confidence):
             class_name = category_dict[class_id]
@@ -514,3 +581,24 @@ def process_webcam():
 if __name__ == "__main__":
     process_webcam()
 ```
+
+**핵심**: YOLO 모델을 웹캠과 연결하면 실시간 객체 탐지를 구현할 수 있다. OpenCV와 supervision 라이브러리로 결과를 시각화한다.
+
+---
+
+<a id="part7"></a>
+## 7. 통합 정리 [↑](#toc)
+
+**복습 질문**
+
+1. Bounding Box와 IOU는 각각 무엇을 의미하는가?
+2. NMS가 없으면 탐지 결과가 어떻게 달라지는가?
+3. 1-stage detector와 2-stage detector의 차이는 무엇인가?
+4. YOLO가 실시간 탐지에 적합한 이유는 무엇인가?
+5. mAP 점수가 높다고 항상 좋은 모델인가?
+
+**심화 과제**
+
+- 다른 데이터셋(COCO 부분집합, 자체 데이터)으로 YOLO 학습해 보기
+- YOLOv8 대신 YOLOv11 등 최신 모델로 교체해 보기
+- 탐지 결과를 영상 파일로 저장해 보기

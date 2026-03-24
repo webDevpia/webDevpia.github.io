@@ -7,27 +7,64 @@ permalink: /deeplearning/cnn
 # nav_exclude: true
 # search_exclude: true
 ---
-# CNN(Convolutional Neural Network)
+# 5. CNN(Convolutional Neural Network)
 
-## 1. Linear Layer 기반의 Image Classification 시 문제점
+## 학습 목표
+1. CNN의 핵심 구조(Convolution, Pooling, FC)를 설명할 수 있다
+2. Conv2d의 주요 파라미터(in_channels, out_channels, kernel_size, stride, padding)를 이해할 수 있다
+3. Feature Map이 CNN을 통과하며 변환되는 과정을 시각화로 확인할 수 있다
+4. CNN을 이용한 MNIST 숫자 인식 모델을 학습하고 평가할 수 있다
+5. 학습된 모델을 저장하고 Flask 웹 서비스로 배포할 수 있다
+
+<a id="toc"></a>
+
+## 진행 순서
+
+1. [CNN 개요](#part1) - Linear Layer 문제점, Feature Extraction, CNN 구조, Layer별 Feature
+2. [Convolution 연산](#part2) - 이미지 필터, Filter/kernel, Conv2d 파라미터, Weight 시각화
+3. [다중 채널, Stride, Padding, Pooling](#part3) - 공간 해상도를 결정하는 세 가지 요소
+4. [분류기 구조 요소](#part4) - Dropout, Linear, Softmax, 출력 크기 계산
+5. [MNIST 모델 학습과 평가](#part5) - 구글 드라이브 연결, 모델 생성, 학습, 평가
+6. [모델 활용과 웹 서비스](#part6) - 모델 사용하기, Flask 웹 서비스
+7. [통합 정리](#part7) - 복습 문제와 심화 과제
+
+---
+
+<a id="part1"></a>
+
+## 1. CNN 개요 [↑](#toc)
+
+**학습목표**: Linear Layer만으로 이미지 분류가 어려운 이유와 CNN 구조의 기본 원리를 설명할 수 있다.
+
+### Linear Layer 기반의 Image Classification 시 문제점
 ![](./img/cnn/cnn001.png)
 
-## 2. Feature Extraction 기반의 Image 분류 매커니즘
+### Feature Extraction 기반의 Image 분류 매커니즘
 ![](./img/cnn/cnn002.png)
 
-## 3. Deep Learning CNN 구조
+### Deep Learning CNN 구조
 ![](./img/cnn/cnn003.webp)
 
-## 4. CNN Layer 별 Feature 학습
+### CNN Layer 별 Feature 학습
 ![](./img/cnn/cnn004.png)
 
-## 5. 이미지 필터
+**핵심**: Linear Layer만으로는 이미지의 공간적 구조를 활용하기 어렵다. CNN은 Convolution을 통해 이미지의 특징을 자동으로 추출하고, 낮은 층에서는 단순한 특징을, 높은 층에서는 복잡한 특징을 학습한다.
+
+---
+
+<a id="part2"></a>
+
+## 2. Convolution 연산 [↑](#toc)
+
+**학습목표**: Conv Filter가 이미지를 슬라이딩하며 특징을 추출하는 원리와 Conv2d의 주요 파라미터를 이해할 수 있다.
+
+### 이미지 필터
 ![](./img/cnn/cnn005.png)
 
-## 6. Convolution Layer Filter(kernel)
-필터는 전체 너비를 파싱할 때까지 특정 보폭 값으로 오른쪽으로 이동합니다.  
-계속해서 전체 이미지가 탐색될 때까지 이 과정을 반복해서 처리합니다.   
-Kernel Size(크기)라고 하면 면적(가로x세로)을 의미하며 가로와 세로는 서로 다를 수 있지만 보통은 일치 합니다. (3 X 3, 5 X 5, 7 X 7)  
+### Convolution Layer Filter(kernel)
+필터는 전체 너비를 파싱할 때까지 특정 보폭 값으로 오른쪽으로 이동합니다.
+계속해서 전체 이미지가 탐색될 때까지 이 과정을 반복해서 처리합니다.
+Kernel Size(크기)라고 하면 면적(가로x세로)을 의미하며 가로와 세로는 서로 다를 수 있지만 보통은 일치 합니다. (3 X 3, 5 X 5, 7 X 7)
 Deep Learning CNN은 Filter값을 사용자가 직접 만들거나 선택할 필요는 없고, Deep Learning Network 구성을 통해 이미지 분류 등의 목적에 부합하는 최적의 filter 값을 학습을 통해 스스로 최적화 합니다.
 
 ![](./img/cnn/cnn006.gif)
@@ -107,35 +144,45 @@ plt.imshow(output[0, 0, :, :], 'gray')
 plt.show()
 ```
 
-## 7. 다중 채널 일때 Convolution Layer
-여러 채널(예: RGB)이 있는 이미지의 경우 커널은 입력 이미지의 깊이와 동일한 깊이입니다.  
+**핵심**: Conv Filter는 이미지를 슬라이딩하며 특징을 추출한다. Deep Learning CNN은 최적의 필터 값을 학습을 통해 스스로 찾는다.
+
+---
+
+<a id="part3"></a>
+
+## 3. 다중 채널, Stride, Padding, Pooling [↑](#toc)
+
+**학습목표**: Stride, Padding, Pooling의 역할과 출력 Feature Map 크기에 미치는 영향을 이해할 수 있다.
+
+### 다중 채널 일때 Convolution Layer
+여러 채널(예: RGB)이 있는 이미지의 경우 커널은 입력 이미지의 깊이와 동일한 깊이입니다.
 Kn과 In 스택([K1, I1]; [K2, I2]; [K3, I3]) 사이에서 행렬 곱셈이 수행되고 모든 결과를 바이어스와 합산하여 한 개의 깊이 채널로 압축된 복잡한 특징 출력을 얻는다.
 
 ![](./img/cnn/cnn007.webp)
 ![](./img/cnn/cnn008.gif)
 ![](./img/cnn/cnn008.png)
 
-## 8. Stride
-stride는 입력 데이터(원본 image또는 입력 feature map)에 Conv Filter를 적용할 때 Sliding Window가 이동하는 간격을 의미하고,   
-기본은 1이지만, 2를(2 pixel 단위로 Sliding window 이동) 적용하여 입력 feature map 대비 출력 feature map의 크기를 대략 절반으로 줄일수 있습니다.  
-stride를 키우면 공간적인 feature 특성을 손실할 가능성이 높아지지만, 이것이 중요 feature들의 손실을 반드시 의미하지는 않습니다.  
-오히려 불필요한 특성을 제거하는 효과를 가져 올 수 있습니다.   
-또한 Convolution 연산 속도가 향상됩니다.  
+### Stride
+stride는 입력 데이터(원본 image또는 입력 feature map)에 Conv Filter를 적용할 때 Sliding Window가 이동하는 간격을 의미하고,
+기본은 1이지만, 2를(2 pixel 단위로 Sliding window 이동) 적용하여 입력 feature map 대비 출력 feature map의 크기를 대략 절반으로 줄일수 있습니다.
+stride를 키우면 공간적인 feature 특성을 손실할 가능성이 높아지지만, 이것이 중요 feature들의 손실을 반드시 의미하지는 않습니다.
+오히려 불필요한 특성을 제거하는 효과를 가져 올 수 있습니다.
+또한 Convolution 연산 속도가 향상됩니다.
 
 Stride = 1
 ![](./img/cnn/cnn010.gif)
 
 Stride = 2
-![](./img/cnn/cnn009.gif)  
+![](./img/cnn/cnn009.gif)
 
-## 9. padding
+### Padding
 Filter를 적용하여 Conv 연산 수행 시 출력 Feature Map이 입력 Feature Map 대비 계속적으로 작아지는 것을 막기 위해 적용합니다.
-![](./img/cnn/cnn011.png)  
+![](./img/cnn/cnn011.png)
 
-## 10. Pooling
-Conv 적용된 Feature map의 일정 영역 별로 하나의 값을 추출하여(주로 Max 또는 Average 적용) Feature map의 사이즈를 줄입니다.(sub sampling).  
-일반적으로 Pooling 크기와 Stride를 동일하게 부여하여 모든 값이 한번만 처리 될 수 있도록 합니다.   
-일정 영역에서 가장 큰 값 또는 평균 값을 추출하므로 위치의 변화에 따른 feature 값의 변화를 일정 수준 중화 시킬 수 있습니다.   
+### Pooling
+Conv 적용된 Feature map의 일정 영역 별로 하나의 값을 추출하여(주로 Max 또는 Average 적용) Feature map의 사이즈를 줄입니다.(sub sampling).
+일반적으로 Pooling 크기와 Stride를 동일하게 부여하여 모든 값이 한번만 처리 될 수 있도록 합니다.
+일정 영역에서 가장 큰 값 또는 평균 값을 추출하므로 위치의 변화에 따른 feature 값의 변화를 일정 수준 중화 시킬 수 있습니다.
 보통은 Conv->ReLU activation 들을 연속 적용 후 Feature Map에 Pooling 적용합니다.
 ![](./img/cnn/cnn012.png)
 
@@ -162,12 +209,22 @@ plt.imshow(np.squeeze(pool_arr), 'gray')
 plt.show()
 ```
 
-## 11. Dropout
-Fully Connected Layer의 너무 촘촘한 연결로 인한 많은 파라미터(weight) 생성은 오히려 오버 피팅을 가져 올 수 있음.   
+**핵심**: Stride는 필터 이동 간격, Padding은 출력 크기 유지, Pooling은 Feature Map 축소를 담당한다. 이 세 요소의 조합이 CNN의 공간 해상도를 결정한다.
+
+---
+
+<a id="part4"></a>
+
+## 4. 분류기 구조 요소 [↑](#toc)
+
+**학습목표**: Dropout, Linear Layer, Softmax의 역할과 출력 Feature Map 크기 계산 방법을 이해할 수 있다.
+
+### Dropout
+Fully Connected Layer의 너무 촘촘한 연결로 인한 많은 파라미터(weight) 생성은 오히려 오버 피팅을 가져 올 수 있음.
 Dropout을 통해 Layer간 연결을 줄일 수 있으며 오버 피팅 개선을 가져 올 수 있음.
 ![](./img/cnn/cnn013.png)
 
-## 12. Linear Layer 시각화
+### Linear Layer 시각화
 
 `nn.Linear`는 2D 이미지를 직접 받을 수 없으므로, `.view()`로 1D로 펼쳐야(flatten) 합니다.
 
@@ -187,7 +244,7 @@ plt.title('Linear Output (10 classes)')
 plt.show()
 ```
 
-## 13. Softmax 시각화
+### Softmax 시각화
 
 Linear Layer의 출력을 확률로 변환하는 것이 Softmax입니다.
 결과를 numpy로 꺼내기 위해서는 `torch.no_grad()`로 gradient 계산을 비활성화해야 합니다.
@@ -204,28 +261,34 @@ print(f"확률 합계: {np.sum(softmax.numpy())}")  # 1.0
 
 > Softmax 출력값의 합은 항상 1.0이 됩니다. 각 값은 해당 클래스일 확률을 의미합니다.
 
-## 14. conv 연산 적용 후 출력 피처맵의 크기(size) 구하기 
-![](./img/cnn/cnn014.png) 
+### conv 연산 적용 후 출력 피처맵의 크기(size) 구하기
+![](./img/cnn/cnn014.png)
 
-### Stride가 1이고, padding이 없는 경우
-![](./img/cnn/cnn015.png)  
+#### Stride가 1이고, padding이 없는 경우
+![](./img/cnn/cnn015.png)
 
-### Stride가 1이고, padding이 1인 경우
-![](./img/cnn/cnn016.png)  
+#### Stride가 1이고, padding이 1인 경우
+![](./img/cnn/cnn016.png)
 
-### Stride가 2이고, padding이 없는 경우
-![](./img/cnn/cnn017.png)  
+#### Stride가 2이고, padding이 없는 경우
+![](./img/cnn/cnn017.png)
 
-### Stride가 1이고, padding이 1인 경우
-![](./img/cnn/cnn018.png)   
+#### Stride가 1이고, padding이 1인 경우
+![](./img/cnn/cnn018.png)
 
-# CNN을 이용한 숫자 인식 모델 만들기
+**핵심**: Feature Extraction(Conv+Pool) 이후 Flatten → Linear → Softmax로 분류를 수행한다. Dropout은 과적합을 방지하고, Softmax는 출력을 확률로 변환한다.
 
-## 1. 모델생성 및 학습 및 평가
+---
 
-### 1. 구글 드라이브와 연결
+<a id="part5"></a>
 
-데이터 파일 및 결과 파일을 구글 드라이브에 저장하기 위해 구글 드라이브를 연결 
+## 5. MNIST 모델 학습과 평가 [↑](#toc)
+
+**학습목표**: CNN 모델을 정의하고 MNIST 데이터셋으로 학습·평가한 뒤 모델을 저장할 수 있다.
+
+### 구글 드라이브와 연결
+
+데이터 파일 및 결과 파일을 구글 드라이브에 저장하기 위해 구글 드라이브를 연결
 ```py
 from google.colab import drive
 drive.mount('/content/drive')
@@ -236,7 +299,7 @@ drive.mount('/content/drive')
 root_dir = '/content/drive/MyDrive/Colab Notebooks/pytorch_test/mnist'
 ```
 
-### 2. 모델 생성
+### 모델 생성
 
 필요한 라이브러리 import
 ```py
@@ -254,7 +317,7 @@ is_cuda = torch.cuda.is_available()
 is_cuda
 ```
 
-gpu 사용 여부에 따라 device에 값을 셋팅 
+gpu 사용 여부에 따라 device에 값을 셋팅
 ```py
 device = torch.device('cuda' if is_cuda else 'cpu')
 device
@@ -330,8 +393,8 @@ print(f"{'first_batch[0]':15s} | {str(type(first_batch[0])):<25s} | {first_batch
 print(f"{'first_batch[1]':15s} | {str(type(first_batch[1])):<25s} | {first_batch[1].shape}")
 ```
 
-name            | type                      | size  
-num of batch    |                           | 1200  
+name            | type                      | size
+num of batch    |                           | 1200
 first_batch     | <class 'list'>            | 2
 first_batch[0]  | <class 'torch.Tensor'>    | torch.Size([50, 1, 28, 28])
 first_batch[1]  | <class 'torch.Tensor'>    | torch.Size([50])
@@ -384,7 +447,7 @@ criterion = nn.CrossEntropyLoss()
 print(model)
 ```
 
-### 3. 모델 학습
+### 모델 학습
 
 생성된 모델 학습모드로 설정하고 학습 진행
 ```py
@@ -405,7 +468,7 @@ for epoch in range(epoch_num):
 
 ```
 
-### 4. 모델 평가 및 모델 저장
+### 모델 평가 및 모델 저장
 
 테스트 데이터로 모델 평가
 ```py
@@ -436,7 +499,17 @@ print(100*correct/len(test_loader.dataset))
 torch.save(model.state_dict(),root_dir+'/model/mnist_cnn.pt')
 ```
 
-## 2. 생성된 모델 사용하기
+**핵심**: Conv → ReLU → Conv → ReLU → Pool → Dropout → FC → Softmax 구조로 MNIST를 학습한다. best accuracy 기준으로 모델을 저장하여 이후 활용할 수 있다.
+
+---
+
+<a id="part6"></a>
+
+## 6. 모델 활용과 웹 서비스 [↑](#toc)
+
+**학습목표**: 저장된 모델을 로드하여 새 이미지에 적용하고, Flask로 웹 서비스로 배포할 수 있다.
+
+### 생성된 모델 사용하기
 
 ```py
 from PIL import Image
@@ -486,7 +559,7 @@ for path in files:
   plt.show()
 ```
 
-## 3. 웹으로 서비스 하기
+### 웹으로 서비스 하기
 
 model.py
 ```py
@@ -522,7 +595,7 @@ class CNN(nn.Module):
         output = F.log_softmax(x, dim=1)
         return output
 
-    
+
 # 이미지 전처리 (MNIST와 동일하게 처리하고 색상 반전 추가)
 def preprocess_image(img_path):
     # 이미지 불러오기
@@ -534,13 +607,13 @@ def preprocess_image(img_path):
         transforms.Resize((28, 28)),  # 크기 조정
         transforms.ToTensor()  # 텐서로 변환
     ])
-    
+
     # 이미지 반전 (검은 바탕에 흰 글씨로 만들기)
     image = TF.invert(image)
 
     # 전처리 적용
     image = preprocess(image).unsqueeze(0)  # 배치 차원 추가 (1, 1, 28, 28)
-    
+
     return image
 
 ```
@@ -568,7 +641,7 @@ def fileupload():
     f = request.files['imgfile']
     img_path=os.path.dirname(__file__)+'/static/uploads/'+f.filename
     f.save(img_path)
-    
+
     # 이미지 전처리 및 예측
     image = m.preprocess_image(img_path)
 
@@ -605,7 +678,7 @@ if __name__ == '__main__':
     </head>
     <body>
     {% raw %}
-        {% include 'menu.html' %} 
+        {% include 'menu.html' %}
         {% block content %}{% endblock %}
     {% endraw %}
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
@@ -703,8 +776,30 @@ if __name__ == '__main__':
 <br>
 <div class="container">
 <h1>숫자 판독 결과는 {% raw %}{{data}}{% endraw %}입니다.</h1>
-<img width="100" height="100"  
+<img width="100" height="100"
   {% raw %}src="{{url_for('static',filename=img_path)}}"{% endraw %} alt="">
 </div>
 {% raw %}{% endblock %}{% endraw %}
 ```
+
+**핵심**: 학습된 모델을 저장·로드하여 새로운 이미지에 적용할 수 있다. Flask와 결합하면 웹 브라우저에서 숫자 이미지를 업로드하고 예측 결과를 받을 수 있다.
+
+---
+
+<a id="part7"></a>
+
+## 7. 통합 정리 [↑](#toc)
+
+### 복습 문제
+
+1. CNN에서 Convolution Layer의 역할은 무엇인가?
+2. Stride와 Padding을 조절하면 출력 Feature Map 크기가 어떻게 변하는가?
+3. Pooling은 왜 필요한가?
+4. Dropout은 학습 시와 평가 시 동작이 어떻게 다른가?
+5. 모델을 저장하고 불러올 때 `state_dict()`을 쓰는 이유는 무엇인가?
+
+### 심화 과제
+
+- 다른 이미지 데이터셋(Fashion-MNIST, CIFAR-10)으로 바꿔 보기
+- Conv Layer 수를 늘리거나 줄여서 성능 변화 확인하기
+- 학습률이나 배치 크기를 변경해서 학습 곡선 비교하기
