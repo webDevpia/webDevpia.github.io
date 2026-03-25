@@ -61,9 +61,9 @@ exclude:
   - docs/04_cloud/
   - docs/05_site_Deploy
   # - docs/06_MachineLearning
-  - docs/07_DeepLearning/06_cnn
-  - docs/07_DeepLearning/07_Dogs_vs_Cats_CNN_증강_전이학습
-  - docs/07_DeepLearning/08_plant
+  # - docs/07_DeepLearning/06_cnn
+  # - docs/07_DeepLearning/07_Dogs_vs_Cats_CNN_증강_전이학습
+  # - docs/07_DeepLearning/08_plant
   - docs/07_DeepLearning/09_yolo
   - docs/07_DeepLearning/10_텍스트AI
   - docs/07_DeepLearning/11_임베딩모델
