@@ -2,7 +2,7 @@
 title: Label Studio
 layout: default
 parent: DeepLearning
-nav_order: 9
+nav_order: 10
 permalink: /deeplearning/labelstudio
 # nav_exclude: true
 # search_exclude: true

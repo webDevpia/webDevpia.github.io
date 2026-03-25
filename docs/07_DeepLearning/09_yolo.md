@@ -1,13 +1,13 @@
 ---
-title: 7. 객체 탐지(Object Detection)
+title: 9. 객체 탐지(Object Detection)
 layout: default
 parent: DeepLearning
-nav_order: 8
+nav_order: 9
 permalink: /deeplearning/objectdetection
 # nav_exclude: true
 # search_exclude: true
 ---
-# 7. 객체 탐지(Object Detection)와 YOLO
+# 9. 객체 탐지(Object Detection)와 YOLO
 
 ## 학습 목표
 

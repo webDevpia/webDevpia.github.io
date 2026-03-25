@@ -1,13 +1,13 @@
 ---
-title: 4. 모델 성능 평가
+title: 5. 모델 성능 평가
 layout: default
 parent: DeepLearning
-nav_order: 4
+nav_order: 5
 permalink: /deeplearning/evaluation
 # nav_exclude: true
 # search_exclude: true
 ---
-# 4. 모델 성능 평가
+# 5. 모델 성능 평가
 
 ## 학습 목표
 

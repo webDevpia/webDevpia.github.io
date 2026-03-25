@@ -1,13 +1,13 @@
 ---
-title: 6. 전이학습 - Dogs vs Cats 실전 분류
+title: 7. 전이학습 - Dogs vs Cats 실전 분류
 layout: default
 parent: DeepLearning
-nav_order: 6
+nav_order: 7
 permalink: /deeplearning/DogsVsCats
 # nav_exclude: true
 # search_exclude: true
 ---
-# 6. 전이학습 - Dogs vs Cats 실전 분류
+# 7. 전이학습 - Dogs vs Cats 실전 분류
 
 ## 학습 목표
 1. Kaggle 데이터셋을 PyTorch ImageFolder 형식으로 준비할 수 있다

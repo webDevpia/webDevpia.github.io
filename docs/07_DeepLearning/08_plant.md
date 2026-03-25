@@ -1,14 +1,14 @@
 ---
-title: 6. 전이학습 - 작물 잎 사진으로 질병 분류
+title: 8. 전이학습 - 작물 잎 사진으로 질병 분류
 layout: default
 parent: DeepLearning
-nav_order: 7
+nav_order: 8
 permalink: /deeplearning/plant
 # nav_exclude: true
 # search_exclude: true
 ---
 
-# 6. 전이학습 - 작물 잎 사진으로 질병 분류
+# 8. 전이학습 - 작물 잎 사진으로 질병 분류
 
 ## 학습 목표
 1. 이미지 분류 데이터셋을 train / val / test로 분리할 수 있다

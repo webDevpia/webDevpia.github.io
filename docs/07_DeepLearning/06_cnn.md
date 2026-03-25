@@ -1,13 +1,13 @@
 ---
-title: 5. CNN
+title: 6. CNN
 layout: default
 parent: DeepLearning
-nav_order: 5
+nav_order: 6
 permalink: /deeplearning/cnn
 # nav_exclude: true
 # search_exclude: true
 ---
-# 5. CNN(Convolutional Neural Network)
+# 6. CNN(Convolutional Neural Network)
 
 ## 학습 목표
 1. CNN의 핵심 구조(Convolution, Pooling, FC)를 설명할 수 있다
