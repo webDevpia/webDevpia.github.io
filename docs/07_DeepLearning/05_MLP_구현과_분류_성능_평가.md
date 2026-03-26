@@ -32,17 +32,21 @@ permalink: /deeplearning/evaluation
 ## 1. 기본 환경 확인 및 한글 폰트 셋팅 [↑](#toc)
 
 ```python
-import torch
-import torch.nn as nn
+import torch                    # 딥러닝 프레임워크
+import torch.nn as nn           # 신경망 레이어 모음 (Linear, ReLU 등)
 from torch.utils.data import DataLoader, TensorDataset, random_split
-from torchvision import datasets, transforms
-import matplotlib.pyplot as plt
+# DataLoader: 데이터를 배치 단위로 나눠주는 도구
+# TensorDataset: 텐서를 묶어 데이터셋으로 만드는 도구
+# random_split: 데이터셋을 학습/검증용으로 나누는 도구
+from torchvision import datasets, transforms  # 이미지 데이터셋과 변환 도구
+import matplotlib.pyplot as plt  # 그래프 그리기 도구
 import os, subprocess
 
-torch.manual_seed(42)
+torch.manual_seed(42)  # 난수 고정: 실행할 때마다 같은 결과가 나오도록 설정
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# GPU가 있으면 GPU 사용, 없으면 CPU 사용
 
-# Colab 한글 폰트 설정
+# [설정] Colab 한글 폰트 — 실행만 하세요, 내용 이해는 불필요합니다
 if 'COLAB_RELEASE_TAG' in os.environ:
     subprocess.run(['apt-get', '-qq', '-y', 'install', 'fonts-nanum'],
                    capture_output=True)
@@ -50,17 +54,100 @@ if 'COLAB_RELEASE_TAG' in os.environ:
     for f in fm.findSystemFonts(['/usr/share/fonts/truetype/nanum']):
         fm.fontManager.addfont(f)
     plt.rcParams['font.family'] = 'NanumGothic'
-plt.rcParams['axes.unicode_minus'] = False
+    plt.rcParams['axes.unicode_minus'] = False
 
 print("PyTorch version:", torch.__version__)
 print("Device:", device)
 ```
 
 **출력:**
-```
+```text
 PyTorch version: 2.10.0+cpu
 Device: cpu
 ```
+
+```python
+# ===== 공통 유틸리티 =====
+
+class Squeeze(nn.Module):
+    """(N, 1) → (N,) 출력 차원을 줄이는 레이어"""
+    def forward(self, x):
+        return x.squeeze(-1)
+
+def train_model(model, train_loader, val_loader, loss_fn, optimizer, epochs, print_every=2):
+    """
+    모델 학습 함수 — 다중 분류, 이진 분류, 회귀 모두에 사용합니다.
+    학습/검증 손실을 기록하고 반환합니다.
+    """
+    history = {'train_loss': [], 'val_loss': []}
+    for epoch in range(1, epochs + 1):
+        # 학습
+        model.train()
+        t_loss, t_n = 0.0, 0
+        for xb, yb in train_loader:
+            xb, yb = xb.to(device), yb.to(device)
+            optimizer.zero_grad()
+            loss = loss_fn(model(xb), yb)
+            loss.backward()
+            optimizer.step()
+            t_loss += loss.item() * len(xb)
+            t_n += len(xb)
+
+        # 검증
+        model.eval()
+        v_loss, v_n = 0.0, 0
+        with torch.inference_mode():
+            for xb, yb in val_loader:
+                xb, yb = xb.to(device), yb.to(device)
+                loss = loss_fn(model(xb), yb)
+                v_loss += loss.item() * len(xb)
+                v_n += len(xb)
+
+        history['train_loss'].append(t_loss / t_n)
+        history['val_loss'].append(v_loss / v_n)
+        if epoch % print_every == 0:
+            print(f"Epoch {epoch:2d} | train_loss={t_loss/t_n:.4f} val_loss={v_loss/v_n:.4f}")
+    return history
+
+def plot_loss_curve(history, title='Loss Curve'):
+    """학습/검증 손실 곡선을 그립니다."""
+    epochs = range(1, len(history['train_loss']) + 1)
+    plt.figure(figsize=(7, 4))
+    plt.plot(epochs, history['train_loss'], 'b-o', label='Train Loss')
+    plt.plot(epochs, history['val_loss'], 'r-o', label='Val Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title(title)
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.show()
+```
+
+#### train_model 함수에서 사용한 모드 전환 정리
+
+위 `train_model()` 함수 안에서 `model.train()`, `model.eval()`, `torch.inference_mode()`를 사용합니다. 각각의 역할은 다음과 같습니다:
+
+| 코드 | 역할 | 영향 |
+|------|------|------|
+| `model.train()` | **학습 모드**로 전환 | Dropout 활성화, BatchNorm이 현재 배치 통계 사용 |
+| `model.eval()` | **평가 모드**로 전환 | Dropout 비활성화, BatchNorm이 누적 통계 사용 → 출력 안정 |
+| `torch.inference_mode()` | **기울기 계산 비활성화** | 메모리 절약 + 속도 향상 (역전파 불필요한 구간) |
+
+> **`eval()`과 `inference_mode()`는 서로 다른 일을 합니다.**
+> - `eval()` → 레이어 동작 변경 (Dropout, BatchNorm)
+> - `inference_mode()` → 기울기 추적 끄기 (메모리/속도)
+>
+> 검증·테스트 시에는 **둘 다** 사용해야 합니다.
+
+**참고 — `inference_mode()` vs `no_grad()`:**
+
+| 항목 | `torch.inference_mode()` | `torch.no_grad()` |
+|------|--------------------------|---------------------|
+| 속도 | 더 빠름 | 약간 느림 |
+| 메모리 | 더 절약 | 절약 |
+| 텐서 수정 | 불가 (읽기 전용) | 가능 |
+| 권장 상황 | 순수 추론 (검증, 테스트) | 추론 + 텐서 수정 필요 시 |
 
 ---
 
@@ -70,7 +157,7 @@ Device: cpu
 
 | 문제 유형 | 핵심 질문 | 주요 지표 |
 |----------|----------|----------|
-| **분류** | 정답 클래스를 맞혔는가? | Accuracy, Precision, Recall, F1, Confusion Matrix, ROC-AUC |
+| **분류** | 정답 클래스를 맞혔는가? | Accuracy, Precision, Recall, F1, 혼동 행렬(Confusion Matrix), ROC-AUC |
 | **회귀** | 예측값이 실제값에 얼마나 가까운가? | MAE, MSE, RMSE, R² |
 
 ### 왜 Accuracy만으로는 부족한가?
@@ -81,32 +168,74 @@ Device: cpu
 
 높은 Accuracy가 좋은 모델을 의미하지 않습니다. 이것이 **다양한 평가 지표가 필요한 이유**입니다.
 
+> **생각해보기:** 99% 정확도의 암 진단 모델을 바로 병원에 도입해도 될까요? 어떤 추가 정보가 필요할까요?
+
+```python
+# ===== 불균형 데이터에서 Accuracy 함정 시연 =====
+# 1,000명 중 양성(암 환자) 10명인 상황을 시뮬레이션
+dummy_targets = torch.cat([torch.ones(10), torch.zeros(990)])  # 실제: 양성 10명, 음성 990명
+dummy_preds   = torch.zeros(1000)                               # 예측: 전부 "음성(정상)"
+
+accuracy = (dummy_preds == dummy_targets).float().mean()
+tp = ((dummy_preds == 1) & (dummy_targets == 1)).sum()          # 양성을 양성으로 맞힌 수
+recall = tp.float() / dummy_targets.sum()                       # 실제 양성 중 찾아낸 비율
+
+print(f"Accuracy: {accuracy:.1%}  → 높아 보이지만...")
+print(f"Recall:   {recall:.1%}    → 암 환자를 하나도 못 찾았다!")
+```
+
+**출력:**
+```text
+Accuracy: 99.0%  → 높아 보이지만...
+Recall:   0.0%    → 암 환자를 하나도 못 찾았다!
+```
+
 ---
 
 <a id="part3"></a>
 
 ## 3. 분류 모델 평가 [↑](#toc)
 
+> 이전 시간에 MNIST 데이터로 모델을 학습해봤습니다. 그런데 그 모델이 **정말 좋은 모델인지** 어떻게 판단할까요? 이번 시간에는 모델의 성능을 다양한 관점에서 평가하는 방법을 배웁니다.
+
 **FashionMNIST** 데이터셋을 사용합니다.
 
 - **B1. 다중 분류 (10클래스)**: Accuracy, Per-class Recall, Confusion Matrix
-- **B2. 이진 분류 (2클래스)**: Precision, Recall, F1, Threshold 분석, ROC-AUC
+- **B2. 이진 분류 (2클래스)**: Precision, Recall, F1, 임계값(Threshold) 분석, ROC-AUC
+
+### 분류 평가의 기본 용어
+
+모델의 예측 결과는 4가지로 나눌 수 있습니다:
+
+|  | 예측: 양성 | 예측: 음성 |
+|---|---|---|
+| **실제: 양성** | **TP** (True Positive) 맞힘 | **FN** (False Negative) 놓침 |
+| **실제: 음성** | **FP** (False Positive) 오판 | **TN** (True Negative) 맞힘 |
+
+**암 진단 사례로 이해하기:**
+- **TP**: 실제 암 환자를 암이라고 맞힌 경우
+- **FN**: 실제 암 환자를 정상이라고 놓친 경우 (위험!)
+- **FP**: 정상인을 암이라고 오판한 경우 (불필요한 추가 검사)
+- **TN**: 정상인을 정상이라고 맞힌 경우
 
 ```python
 # ===== FashionMNIST 데이터 로드 =====
 transform = transforms.ToTensor()  # [0, 255] -> [0.0, 1.0]
 
 train_full = datasets.FashionMNIST(root='./data', train=True, download=True, transform=transform)
+# 학습용 데이터 60,000장 다운로드
 test_dataset = datasets.FashionMNIST(root='./data', train=False, download=True, transform=transform)
+# 테스트용 데이터 10,000장 다운로드
 
-# Train / Val 분할 (50,000 / 10,000)
+# Train / Val 분할: 학습 50,000장 + 검증 10,000장
+# 검증 데이터 = 학습 중간에 모델 성능을 확인하는 용도 (시험 전 모의고사 역할)
 cls_train, cls_val = random_split(
     train_full, [50000, 10000],
-    generator=torch.Generator().manual_seed(42)
+    generator=torch.Generator().manual_seed(42)  # 분할 결과 고정
 )
 
-cls_train_loader = DataLoader(cls_train, batch_size=128, shuffle=True)
-cls_val_loader = DataLoader(cls_val, batch_size=256, shuffle=False)
+cls_train_loader = DataLoader(cls_train, batch_size=128, shuffle=True)   # 128장씩 묶어서 섞어 전달 (학습용)
+cls_val_loader = DataLoader(cls_val, batch_size=256, shuffle=False)      # 256장씩 순서대로 전달 (검증용)
 cls_test_loader = DataLoader(test_dataset, batch_size=256, shuffle=False)
 
 class_names = ['T-shirt', 'Trouser', 'Pullover', 'Dress', 'Coat',
@@ -117,10 +246,10 @@ print(f"Train: {len(cls_train)}, Val: {len(cls_val)}, Test: {len(test_dataset)}"
 # 클래스별 샘플 이미지
 fig, axes = plt.subplots(2, 5, figsize=(12, 5))
 for i, ax in enumerate(axes.flat):
-    idx = (train_full.targets == i).nonzero(as_tuple=True)[0][0].item()
-    image, label = train_full[idx]
+    indices = (train_full.targets == i).nonzero(as_tuple=False)  # 클래스 i의 인덱스 목록
+    image, _ = train_full[indices[0].item()]                     # 첫 번째 샘플
     ax.imshow(image.squeeze(), cmap='gray')
-    ax.set_title(class_names[label])
+    ax.set_title(class_names[i])
     ax.axis('off')
 plt.suptitle('FashionMNIST Classes', fontsize=14)
 plt.tight_layout()
@@ -128,15 +257,17 @@ plt.show()
 ```
 
 **출력:**
-```
+```text
 Train: 50000, Val: 10000, Test: 10000
 ```
-
+![](./img/evaluation/evaluation01.png)
 ---
 
 ### B1. 다중 분류 평가 (10클래스)
 
 FashionMNIST 전체 10개 클래스를 분류하는 MLP를 학습하고 평가합니다.
+
+> **logits(로짓)란?** 모델이 출력하는 원시 점수입니다. 아직 확률로 변환되기 전의 값으로, 값이 클수록 해당 클래스일 가능성이 높다는 의미입니다.
 
 ```python
 # ===== 다중 분류 모델 정의 =====
@@ -147,82 +278,29 @@ cls_model = nn.Sequential(
     nn.Linear(128, 10)                    # 출력층 (10클래스)
 ).to(device)
 
-cls_loss_fn = nn.CrossEntropyLoss()
+cls_loss_fn = nn.CrossEntropyLoss()       # 다중 분류용 손실 함수 (내부에 softmax 포함 → 모델 출력에 별도 softmax 불필요)
 cls_optimizer = torch.optim.Adam(cls_model.parameters(), lr=0.001)
 
-# ===== 학습 =====
-cls_history = {'train_loss': [], 'val_loss': [], 'val_acc': []}
-
-for epoch in range(1, 11):
-    # --- 학습 ---
-    cls_model.train()
-    train_loss, train_count = 0.0, 0
-    for xb, yb in cls_train_loader:
-        xb, yb = xb.to(device), yb.to(device)
-        cls_optimizer.zero_grad()
-        logits = cls_model(xb)
-        loss = cls_loss_fn(logits, yb)
-        loss.backward()
-        cls_optimizer.step()
-        train_loss += loss.item() * len(xb)
-        train_count += len(xb)
-
-    # --- 검증 ---
-    cls_model.eval()
-    val_loss, val_count, val_correct = 0.0, 0, 0
-    with torch.inference_mode():
-        for xb, yb in cls_val_loader:
-            xb, yb = xb.to(device), yb.to(device)
-            logits = cls_model(xb)
-            loss = cls_loss_fn(logits, yb)
-            val_loss += loss.item() * len(xb)
-            val_count += len(xb)
-            val_correct += (logits.argmax(1) == yb).sum().item()
-
-    cls_history['train_loss'].append(train_loss / train_count)
-    cls_history['val_loss'].append(val_loss / val_count)
-    cls_history['val_acc'].append(val_correct / val_count)
-
-    if epoch % 2 == 0:
-        print(f"Epoch {epoch:2d} | "
-              f"train_loss={train_loss/train_count:.4f} "
-              f"val_loss={val_loss/val_count:.4f} "
-              f"val_acc={val_correct/val_count:.4f}")
+# ===== 학습 (공통 함수 사용) =====
+cls_history = train_model(cls_model, cls_train_loader, cls_val_loader,
+                          cls_loss_fn, cls_optimizer, epochs=10, print_every=2)
 ```
 
 **출력:**
-```
-Epoch  2 | train_loss=0.4015 val_loss=0.3758 val_acc=0.8660
-Epoch  4 | train_loss=0.3271 val_loss=0.3403 val_acc=0.8770
-Epoch  6 | train_loss=0.2900 val_loss=0.3049 val_acc=0.8859
-Epoch  8 | train_loss=0.2655 val_loss=0.3191 val_acc=0.8815
-Epoch 10 | train_loss=0.2423 val_loss=0.2893 val_acc=0.8946
+```text
+Epoch  2 | train_loss=0.4015 val_loss=0.3758
+Epoch  4 | train_loss=0.3271 val_loss=0.3403
+Epoch  6 | train_loss=0.2900 val_loss=0.3049
+Epoch  8 | train_loss=0.2655 val_loss=0.3191
+Epoch 10 | train_loss=0.2423 val_loss=0.2893
 ```
 
 ```python
-# ===== 학습 곡선 =====
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
-
-epochs = range(1, len(cls_history['train_loss']) + 1)
-ax1.plot(epochs, cls_history['train_loss'], 'b-o', label='Train Loss')
-ax1.plot(epochs, cls_history['val_loss'], 'r-o', label='Val Loss')
-ax1.set_xlabel('Epoch')
-ax1.set_ylabel('Loss')
-ax1.set_title('Loss Curve')
-ax1.legend()
-ax1.grid(True, alpha=0.3)
-
-ax2.plot(epochs, cls_history['val_acc'], 'g-o', label='Val Accuracy')
-ax2.set_xlabel('Epoch')
-ax2.set_ylabel('Accuracy')
-ax2.set_title('Validation Accuracy')
-ax2.legend()
-ax2.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.show()
+# ===== 학습 곡선 (공통 함수 사용) =====
+# train_loss와 val_loss의 차이로 과적합 여부를 판단할 수 있음
+plot_loss_curve(cls_history, title='Multi-class Classification Loss Curve')
 ```
-
+![](./img/evaluation/evaluation02.png)
 ---
 
 #### 다중 분류 평가 지표
@@ -251,35 +329,43 @@ with torch.inference_mode():
 all_logits = torch.cat(all_logits)
 all_targets = torch.cat(all_targets)
 all_preds = all_logits.argmax(dim=1)
+# 각 샘플에 대해 10개 클래스 중 가장 높은 점수의 인덱스 = 예측 클래스 번호
 
 # --- Accuracy ---
 accuracy = (all_preds == all_targets).float().mean().item()
 print(f"Test Accuracy: {accuracy:.4f}")
 
-# --- Confusion Matrix ---
+# --- Confusion Matrix (혼동 행렬) ---
+# 10x10 표: cm[i][j] = 실제 클래스 i인데 클래스 j로 예측한 횟수
+# 대각선(cm[i][i])이 클수록 좋음 = 정확히 맞힌 경우
 num_classes = 10
 cm = torch.zeros(num_classes, num_classes, dtype=torch.int64)
 for t, p in zip(all_targets, all_preds):
-    cm[t.long(), p.long()] += 1
+    cm[t.long(), p.long()] += 1  # 실제t, 예측p 위치에 1 추가
 
 # --- Per-class Precision / Recall / F1 ---
-print(f"\nMacro Recall: {(cm.diag().float() / cm.sum(dim=1).clamp(min=1).float()).mean().item():.4f}")
+# Macro Recall: 클래스별 Recall을 구한 뒤 평균
+correct_per_class = cm.diag().float()                  # 각 클래스의 정답 수 (대각선)
+total_per_class   = cm.sum(dim=1).clamp(min=1).float() # 각 클래스의 전체 수 (행 합)
+recall_per_class  = correct_per_class / total_per_class # 클래스별 Recall
+macro_recall      = recall_per_class.mean().item()      # 전체 평균
+print(f"\nMacro Recall: {macro_recall:.4f}")
 print(f"\n{'Class':<12} {'Precision':>10} {'Recall':>10} {'F1':>10} {'Support':>10}")
 print("-" * 57)
 
 for c in range(num_classes):
-    tp = cm[c, c].item()
-    fn = (cm[c, :].sum() - tp).item()
-    fp = (cm[:, c].sum() - tp).item()
-    support = cm[c, :].sum().item()
-    prec = tp / max(tp + fp, 1)
-    rec  = tp / max(tp + fn, 1)
-    f1   = 2 * prec * rec / max(prec + rec, 1e-8)
+    tp = cm[c, c].item()              # True Positive: 클래스 c를 c로 맞힌 수
+    fn = (cm[c, :].sum() - tp).item() # False Negative: 실제 c인데 다른 클래스로 예측한 수
+    fp = (cm[:, c].sum() - tp).item() # False Positive: 다른 클래스인데 c로 잘못 예측한 수
+    support = cm[c, :].sum().item()   # 실제 클래스 c의 전체 샘플 수
+    prec = tp / max(tp + fp, 1)       # Precision: 양성 예측 중 실제 양성 비율
+    rec  = tp / max(tp + fn, 1)       # Recall: 실제 양성 중 찾아낸 비율
+    f1   = 2 * prec * rec / max(prec + rec, 1e-8)  # F1: 조화평균
     print(f"{class_names[c]:<12} {prec:>10.4f} {rec:>10.4f} {f1:>10.4f} {support:>10.0f}")
 ```
 
 **출력:**
-```
+```text
 Test Accuracy: 0.8878
 
 Macro Recall: 0.8878
@@ -301,7 +387,7 @@ Ankle boot       0.9618     0.9570     0.9594       1000
 ```python
 # ===== Confusion Matrix 시각화 =====
 fig, ax = plt.subplots(figsize=(9, 7))
-im = ax.imshow(cm.float(), cmap='Blues')
+im = ax.imshow(cm.float(), cmap='Blues')  # 혼동 행렬을 히트맵으로 표시 (값이 클수록 진한 파랑)
 
 ax.set_xticks(range(num_classes))
 ax.set_yticks(range(num_classes))
@@ -311,9 +397,11 @@ ax.set_xlabel('Predicted')
 ax.set_ylabel('True')
 ax.set_title('FashionMNIST Confusion Matrix')
 
+# 각 칸에 숫자 표시
 for i in range(num_classes):
     for j in range(num_classes):
         val = cm[i, j].item()
+        # 배경이 진하면(값이 큰 칸) 흰색 글씨, 밝으면 검은 글씨
         color = 'white' if val > cm.max().item() * 0.5 else 'black'
         ax.text(j, i, str(val), ha='center', va='center', color=color, fontsize=8)
 
@@ -321,7 +409,7 @@ plt.colorbar(im)
 plt.tight_layout()
 plt.show()
 ```
-
+![](./img/evaluation/evaluation03.png)
 ---
 
 #### 다중 분류 해석 가이드
@@ -335,6 +423,8 @@ plt.show()
 - Sneaker ↔ Ankle boot : 신발류끼리 유사
 
 > 특정 클래스의 Recall이 낮다면, 해당 클래스 데이터를 더 수집하거나 모델 구조를 개선하는 방향을 검토합니다.
+
+> **확인 질문:** 위 Confusion Matrix에서 Shirt가 가장 많이 혼동되는 클래스는 무엇인가요? 왜 그럴까요?
 
 ---
 
@@ -357,16 +447,20 @@ FashionMNIST에서 시각적으로 유사한 **Sneaker(7)**와 **Ankle boot(9)**
 
 ```python
 # ===== 이진 분류 데이터 준비 =====
-# FashionMNIST에서 Sneaker(7)와 Ankle boot(9)만 추출
+# FashionMNIST 전체 10클래스 중 Sneaker(7)와 Ankle boot(9)만 골라서
+# "이것은 Sneaker인가 Ankle boot인가?"를 맞히는 이진(2개) 분류 문제를 만듦
+# 참고: 다중 분류에서는 random_split으로 데이터를 나눴지만,
+#       여기서는 특정 클래스만 필터링해야 하므로 텐서 인덱싱을 사용합니다
 
-# train_full.data / .targets 로 raw 텐서에 직접 접근
 mask_train = (train_full.targets == 7) | (train_full.targets == 9)
+# 클래스가 7(Sneaker) 또는 9(Ankle boot)인 데이터만 선택
 bin_x_all = train_full.data[mask_train].float().unsqueeze(1) / 255.0
-bin_y_all = (train_full.targets[mask_train] == 9).long()  # Sneaker=0, Ankle boot=1
+# .unsqueeze(1): (N, 28, 28) → (N, 1, 28, 28) 채널 차원 추가 / 255.0: 0~1 정규화
+bin_y_all = (train_full.targets[mask_train] == 9).float()  # Sneaker=0(음성), Ankle boot=1(양성)
 
 mask_test = (test_dataset.targets == 7) | (test_dataset.targets == 9)
 bin_x_test = test_dataset.data[mask_test].float().unsqueeze(1) / 255.0
-bin_y_test = (test_dataset.targets[mask_test] == 9).long()
+bin_y_test = (test_dataset.targets[mask_test] == 9).float()
 
 # Train / Val 분할 (80 / 20)
 n = len(bin_x_all)
@@ -386,60 +480,25 @@ bin_test_loader = DataLoader(
 print(f"Sneaker(0): {(bin_y_all == 0).sum().item()}, Ankle boot(1): {(bin_y_all == 1).sum().item()}")
 print(f"Train: {n_train}, Val: {n - n_train}, Test: {len(bin_x_test)}")
 
-# ===== 이진 분류 모델 =====
-class BinaryMLP(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Flatten(),
-            nn.Linear(784, 128), nn.ReLU(),
-            nn.Linear(128, 64), nn.ReLU(),
-            nn.Linear(64, 1)
-        )
-    def forward(self, x):
-        return self.net(x).squeeze(1)  # (N,) logits
+# ===== 이진 분류 모델 (다중 분류와 동일한 nn.Sequential 방식) =====
+bin_model = nn.Sequential(
+    nn.Flatten(),                    # (N, 1, 28, 28) → (N, 784)
+    nn.Linear(784, 128), nn.ReLU(),  # 은닉층 1
+    nn.Linear(128, 64), nn.ReLU(),   # 은닉층 2
+    nn.Linear(64, 1),                # 출력: 1개 값 (양성일 확률의 원시 점수)
+    Squeeze()                        # (N, 1) → (N,) 차원 줄이기
+).to(device)
 
-bin_model = BinaryMLP().to(device)
-bin_loss_fn = nn.BCEWithLogitsLoss()
+bin_loss_fn = nn.BCEWithLogitsLoss()      # 이진 분류용 손실 함수 (내부에 sigmoid 포함 → 모델 출력에 별도 sigmoid 불필요)
 bin_optimizer = torch.optim.Adam(bin_model.parameters(), lr=0.001)
 
-# ===== 학습 =====
-bin_history = {'train_loss': [], 'val_loss': []}
-
-for epoch in range(1, 11):
-    bin_model.train()
-    train_loss, train_count = 0.0, 0
-    for xb, yb in bin_train_loader:
-        xb, yb = xb.to(device), yb.to(device).float()
-        bin_optimizer.zero_grad()
-        logits = bin_model(xb)
-        loss = bin_loss_fn(logits, yb)
-        loss.backward()
-        bin_optimizer.step()
-        train_loss += loss.item() * len(xb)
-        train_count += len(xb)
-
-    bin_model.eval()
-    val_loss, val_count = 0.0, 0
-    with torch.inference_mode():
-        for xb, yb in bin_val_loader:
-            xb, yb = xb.to(device), yb.to(device).float()
-            logits = bin_model(xb)
-            loss = bin_loss_fn(logits, yb)
-            val_loss += loss.item() * len(xb)
-            val_count += len(xb)
-
-    bin_history['train_loss'].append(train_loss / train_count)
-    bin_history['val_loss'].append(val_loss / val_count)
-
-    if epoch % 2 == 0:
-        print(f"Epoch {epoch:2d} | "
-              f"train_loss={train_loss/train_count:.4f} "
-              f"val_loss={val_loss/val_count:.4f}")
+# ===== 학습 (공통 함수 사용) =====
+bin_history = train_model(bin_model, bin_train_loader, bin_val_loader,
+                          bin_loss_fn, bin_optimizer, epochs=10, print_every=2)
 ```
 
 **출력:**
-```
+```text
 Sneaker(0): 6000, Ankle boot(1): 6000
 Train: 9600, Val: 2400, Test: 2000
 Epoch  2 | train_loss=0.1294 val_loss=0.1257
@@ -449,21 +508,13 @@ Epoch  8 | train_loss=0.0790 val_loss=0.1075
 Epoch 10 | train_loss=0.0785 val_loss=0.1131
 ```
 
-```python
-# ===== 이진 분류 학습 곡선 =====
-plt.figure(figsize=(6, 3))
-epochs = range(1, len(bin_history['train_loss']) + 1)
-plt.plot(epochs, bin_history['train_loss'], 'b-o', label='Train Loss')
-plt.plot(epochs, bin_history['val_loss'], 'r-o', label='Val Loss')
-plt.xlabel('Epoch')
-plt.ylabel('BCE Loss')
-plt.title('Binary Classification Loss Curve')
-plt.legend()
-plt.grid(True, alpha=0.3)
-plt.tight_layout()
-plt.show()
-```
+> **관찰:** Epoch 8(val_loss=0.1075) → Epoch 10(val_loss=0.1131)으로 검증 손실이 올라갔습니다. train_loss는 계속 줄어드는데 val_loss가 올라가는 것은 종합 정리에서 다룰 **과적합 신호**일 수 있습니다.
 
+```python
+# ===== 이진 분류 학습 곡선 (공통 함수 사용) =====
+plot_loss_curve(bin_history, title='Binary Classification Loss Curve')
+```
+![](./img/evaluation/evaluation04.png)
 ```python
 # ===== 이진 분류 테스트 평가 =====
 bin_model.eval()
@@ -479,14 +530,17 @@ with torch.inference_mode():
 bin_all_logits = torch.cat(bin_all_logits)
 bin_all_targets = torch.cat(bin_all_targets)
 bin_all_probs = torch.sigmoid(bin_all_logits)
+# sigmoid: 원시 점수(logits)를 0~1 사이의 확률값으로 변환
+# 예: logits=2.0 → prob=0.88, logits=-1.0 → prob=0.27
 
 # --- 이진 분류 지표 계산 함수 ---
 def binary_metrics(probs, targets, threshold=0.5):
-    preds = (probs >= threshold).long()
-    tp = ((preds == 1) & (targets == 1)).sum().item()
-    tn = ((preds == 0) & (targets == 0)).sum().item()
-    fp = ((preds == 1) & (targets == 0)).sum().item()
-    fn = ((preds == 0) & (targets == 1)).sum().item()
+    """주어진 임계값(threshold)으로 양성/음성을 판정하고 각종 지표를 계산"""
+    preds = (probs >= threshold).long()  # 확률 >= threshold이면 양성(1), 미만이면 음성(0)
+    tp = ((preds == 1) & (targets == 1)).sum().item()  # True Positive: 양성을 양성으로 맞힘
+    tn = ((preds == 0) & (targets == 0)).sum().item()  # True Negative: 음성을 음성으로 맞힘
+    fp = ((preds == 1) & (targets == 0)).sum().item()  # False Positive: 음성을 양성으로 오판
+    fn = ((preds == 0) & (targets == 1)).sum().item()  # False Negative: 양성을 음성으로 놓침
 
     accuracy  = (tp + tn) / max(tp + tn + fp + fn, 1)
     precision = tp / max(tp + fp, 1)
@@ -514,7 +568,7 @@ for t in [0.3, 0.4, 0.5, 0.6, 0.7]:
 ```
 
 **출력:**
-```
+```text
 Accuracy:  0.9645
 Precision: 0.9567
 Recall:    0.9730
@@ -562,20 +616,25 @@ TP=973  FP=44  FN=27  TN=956
 # ===== ROC-AUC 계산 (순수 PyTorch) =====
 
 def compute_roc_auc(probs, targets, n_thresholds=500):
-    """ROC 곡선과 AUC를 계산합니다."""
-    thresholds = torch.linspace(1.0, 0.0, n_thresholds)
-    num_pos = (targets == 1).sum().float()
-    num_neg = (targets == 0).sum().float()
+    """
+    ROC 곡선과 AUC를 계산합니다.
+    임계값을 1.0→0.0까지 500단계로 바꿔가며
+    각 임계값에서의 TPR(=Recall)과 FPR을 계산합니다.
+    """
+    thresholds = torch.linspace(1.0, 0.0, n_thresholds)  # 500개 임계값 생성
+    num_pos = (targets == 1).sum().float()  # 전체 양성(Ankle boot) 수
+    num_neg = (targets == 0).sum().float()  # 전체 음성(Sneaker) 수
     tprs, fprs = [], []
 
     for t in thresholds:
-        preds = (probs >= t).long()
+        preds = (probs >= t).long()  # 현재 임계값으로 양성/음성 판정
         tp = ((preds == 1) & (targets == 1)).sum().float()
         fp = ((preds == 1) & (targets == 0)).sum().float()
-        tprs.append((tp / num_pos).item() if num_pos > 0 else 0.0)
-        fprs.append((fp / num_neg).item() if num_neg > 0 else 0.0)
+        tprs.append((tp / num_pos).item() if num_pos > 0 else 0.0)  # TPR = Recall
+        fprs.append((fp / num_neg).item() if num_neg > 0 else 0.0)  # FPR
 
-    # AUC (사다리꼴 공식)
+    # AUC: ROC 곡선 아래 면적 (사다리꼴 공식으로 근사)
+    # 1에 가까울수록 좋은 모델, 0.5면 랜덤 수준
     auc = 0.0
     for i in range(1, len(fprs)):
         auc += (fprs[i] - fprs[i-1]) * (tprs[i] + tprs[i-1]) / 2
@@ -595,8 +654,9 @@ plt.tight_layout()
 plt.show()
 
 print(f"AUC: {auc_score:.4f}")
+# 실무에서는 sklearn.metrics.roc_auc_score 또는 torchmetrics.AUROC를 사용합니다
 ```
-
+![](./img/evaluation/evaluation05.png)
 ---
 
 ### 분류 평가 정리
@@ -621,21 +681,23 @@ print(f"AUC: {auc_score:.4f}")
 ```python
 # ===== California Housing 데이터 로드 =====
 from sklearn.datasets import fetch_california_housing
+# sklearn은 데이터 다운로드에만 사용 (평가 지표는 PyTorch로 직접 계산)
 
 data = fetch_california_housing()
-X = torch.tensor(data.data, dtype=torch.float32)
-y = torch.tensor(data.target, dtype=torch.float32)
+X = torch.tensor(data.data, dtype=torch.float32)   # 입력 특성 (8개 변수)
+y = torch.tensor(data.target, dtype=torch.float32)  # 정답: 주택 가격 (단위: $100,000)
 
-# 특성 정규화 (StandardScaler를 PyTorch로 직접 구현)
-X_mean = X.mean(dim=0)
-X_std  = X.std(dim=0)
-X = (X - X_mean) / (X_std + 1e-8)
-
-# Train / Val / Test 분할 (60 / 20 / 20)
+# Train / Val / Test 분할 (60 / 20 / 20) — 정규화보다 먼저 분할해야 data leakage 방지
 n = len(X)
 idx = torch.randperm(n, generator=torch.Generator().manual_seed(42))
 n_train = int(n * 0.6)
 n_val   = int(n * 0.2)
+
+# 특성 정규화: train set에서만 평균/표준편차를 계산 (val/test 정보 유출 방지)
+# 특성마다 단위가 다르므로 (예: 인구수 vs 위도) 스케일을 통일해야 학습이 안정됨
+X_mean = X[idx[:n_train]].mean(dim=0)  # train에서만 계산
+X_std  = X[idx[:n_train]].std(dim=0)   # train에서만 계산
+X = (X - X_mean) / (X_std + 1e-8)      # 전체에 동일 기준 적용
 
 reg_train_loader = DataLoader(
     TensorDataset(X[idx[:n_train]], y[idx[:n_train]]),
@@ -654,7 +716,7 @@ print(f"Train: {n_train}, Val: {n_val}, Test: {n - n_train - n_val}")
 ```
 
 **출력:**
-```
+```text
 Features: 8  (MedInc, HouseAge, AveRooms, AveBedrms, Population, AveOccup, Latitude, Longitude)
 Target: median house value ($100,000 units)
 Target range: 0.15 ~ 5.00
@@ -662,91 +724,47 @@ Train: 12384, Val: 4128, Test: 4128
 ```
 
 ```python
-# ===== 회귀 모델 정의 =====
-class RegressionMLP(nn.Module):
-    def __init__(self, input_dim):
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(input_dim, 64), nn.ReLU(),
-            nn.Linear(64, 32), nn.ReLU(),
-            nn.Linear(32, 1)
-        )
-    def forward(self, x):
-        return self.net(x).squeeze(1)  # (N,)
+# ===== 회귀 모델 정의 (nn.Sequential 방식으로 통일) =====
+reg_model = nn.Sequential(
+    nn.Linear(8, 64), nn.ReLU(),   # 은닉층 1: 8→64
+    nn.Linear(64, 32), nn.ReLU(),  # 은닉층 2: 64→32
+    nn.Linear(32, 1),              # 출력: 1개 값 (주택 가격 예측)
+    # 회귀 문제이므로 출력에 활성화 함수 없음 (값의 범위 제한이 없어야 함)
+    Squeeze()                      # (N, 1) → (N,) 차원 줄이기
+).to(device)
 
-reg_model = RegressionMLP(input_dim=8).to(device)
-reg_loss_fn = nn.MSELoss()
+reg_loss_fn = nn.MSELoss()  # 회귀용 손실 함수: 예측값과 실제값의 차이를 제곱한 평균
 reg_optimizer = torch.optim.Adam(reg_model.parameters(), lr=0.001)
 
-# ===== 학습 =====
-reg_history = {'train_loss': [], 'val_loss': []}
-
-for epoch in range(1, 51):
-    reg_model.train()
-    train_loss, train_count = 0.0, 0
-    for xb, yb in reg_train_loader:
-        xb, yb = xb.to(device), yb.to(device)
-        reg_optimizer.zero_grad()
-        preds = reg_model(xb)
-        loss = reg_loss_fn(preds, yb)
-        loss.backward()
-        reg_optimizer.step()
-        train_loss += loss.item() * len(xb)
-        train_count += len(xb)
-
-    reg_model.eval()
-    val_loss, val_count = 0.0, 0
-    with torch.inference_mode():
-        for xb, yb in reg_val_loader:
-            xb, yb = xb.to(device), yb.to(device)
-            preds = reg_model(xb)
-            loss = reg_loss_fn(preds, yb)
-            val_loss += loss.item() * len(xb)
-            val_count += len(xb)
-
-    reg_history['train_loss'].append(train_loss / train_count)
-    reg_history['val_loss'].append(val_loss / val_count)
-
-    if epoch % 10 == 0:
-        print(f"Epoch {epoch:2d} | "
-              f"train_mse={train_loss/train_count:.4f} "
-              f"val_mse={val_loss/val_count:.4f}")
+# ===== 학습 (공통 함수 사용) =====
+reg_history = train_model(reg_model, reg_train_loader, reg_val_loader,
+                          reg_loss_fn, reg_optimizer, epochs=50, print_every=10)
 ```
 
 **출력:**
-```
-Epoch 10 | train_mse=0.3701 val_mse=0.3721
-Epoch 20 | train_mse=0.3235 val_mse=0.3311
-Epoch 30 | train_mse=0.2985 val_mse=0.3136
-Epoch 40 | train_mse=0.2900 val_mse=0.3013
-Epoch 50 | train_mse=0.2781 val_mse=0.2966
+```text
+Epoch 10 | train_loss=0.3701 val_loss=0.3721
+Epoch 20 | train_loss=0.3235 val_loss=0.3311
+Epoch 30 | train_loss=0.2985 val_loss=0.3136
+Epoch 40 | train_loss=0.2900 val_loss=0.3013
+Epoch 50 | train_loss=0.2781 val_loss=0.2966
 ```
 
 ```python
-# ===== 회귀 학습 곡선 =====
-plt.figure(figsize=(7, 4))
-epochs = range(1, len(reg_history['train_loss']) + 1)
-plt.plot(epochs, reg_history['train_loss'], 'b-', label='Train MSE')
-plt.plot(epochs, reg_history['val_loss'], 'r-', label='Val MSE')
-plt.xlabel('Epoch')
-plt.ylabel('MSE')
-plt.title('Regression Loss Curve')
-plt.legend()
-plt.grid(True, alpha=0.3)
-plt.tight_layout()
-plt.show()
+# ===== 회귀 학습 곡선 (공통 함수 사용) =====
+plot_loss_curve(reg_history, title='Regression Loss Curve (MSE)')
 ```
-
+![](./img/evaluation/evaluation06.png)
 ---
 
 #### 회귀 평가 지표
 
-| 지표 | 수식 | 의미 | 단위 |
-|------|------|------|------|
-| **MAE** | mean(\|y - ŷ\|) | 평균 절대 오차 | 타겟과 동일 |
-| **MSE** | mean((y - ŷ)²) | 평균 제곱 오차 | 타겟의 제곱 |
-| **RMSE** | √MSE | MSE에 루트를 씌운 값 | 타겟과 동일 |
-| **R²** | 1 - SS_res / SS_tot | 모델이 설명하는 분산의 비율 | 없음 (0 ~ 1) |
+| 지표 | 수식 | 의미 |
+|------|------|------|
+| **MAE** | $$MAE = \frac{1}{n} \sum \lvert y - \hat{y} \rvert $$ | 평균 절대 오차 |
+| **MSE** | $$MSE = \frac{1}{n} \sum (y - \hat{y})^2$$| 평균 제곱 오차 |
+| **RMSE** | $$RMSE = \sqrt{\frac{1}{n} \sum (y - \hat{y})^2}$$ | MSE에 루트를 씌운 값 |
+| **R²** | $$R^2 = 1 - \frac{\sum(y - \hat{y})^2}{\sum(y - \bar{y})^2}$$ | 1에서 (잔차 제곱합 / 전체 편차 제곱합)을 뺀 값. 1에 가까울수록 예측 정확도가 높음. |
 
 - **R² = 1.0**: 완벽한 예측
 - **R² = 0.0**: 평균값만 예측하는 것과 동일
@@ -769,11 +787,15 @@ reg_all_targets = torch.cat(reg_all_targets)
 
 # --- 지표 계산 ---
 mae  = torch.abs(reg_all_preds - reg_all_targets).mean().item()
+# MAE: 예측 오차의 절대값 평균 ("평균적으로 이만큼 틀렸다")
 mse  = ((reg_all_preds - reg_all_targets) ** 2).mean().item()
+# MSE: 예측 오차를 제곱한 평균 (큰 오차에 더 큰 페널티)
 rmse = mse ** 0.5
-ss_res = ((reg_all_targets - reg_all_preds) ** 2).sum()
-ss_tot = ((reg_all_targets - reg_all_targets.mean()) ** 2).sum()
+# RMSE: MSE에 루트를 씌운 값 (단위가 원래 데이터와 같아져서 해석이 쉬움)
+ss_res = ((reg_all_targets - reg_all_preds) ** 2).sum()   # 잔차 제곱합
+ss_tot = ((reg_all_targets - reg_all_targets.mean()) ** 2).sum()  # 전체 편차 제곱합
 r2 = (1 - ss_res / ss_tot).item()
+# R²: 모델이 데이터 변동의 몇 %를 설명하는지 (1.0=완벽, 0.0=평균만 예측)
 
 print(f"MAE  : {mae:.4f}  (평균 ${mae * 100000:,.0f} 오차)")
 print(f"MSE  : {mse:.4f}")
@@ -782,12 +804,14 @@ print(f"R²   : {r2:.4f}  (분산의 {r2*100:.1f}%를 설명)")
 ```
 
 **출력:**
-```
+```text
 MAE  : 0.3602  (평균 $36,016 오차)
 MSE  : 0.2788
 RMSE : 0.5280  (평균 $52,802 오차)
 R²   : 0.7967  (분산의 79.7%를 설명)
 ```
+
+> **생각해보기:** MAE가 \$36,016이고 RMSE가 \$52,802입니다. 이 차이가 의미하는 것은 무엇일까요? (힌트: 아래 표를 확인해보세요)
 
 ---
 
@@ -804,31 +828,35 @@ R²   : 0.7967  (분산의 79.7%를 설명)
 
 ```python
 # ===== 잔차(Residual) 분석 =====
-residuals = (reg_all_preds - reg_all_targets).numpy()
+residuals = (reg_all_preds - reg_all_targets).detach().numpy()
+# 잔차 = 예측값 - 실제값 (0에 가까울수록 좋은 예측)
 targets_np = reg_all_targets.numpy()
 preds_np = reg_all_preds.detach().numpy()
 
 fig, axes = plt.subplots(1, 3, figsize=(16, 4))
 
-# 1. True vs Predicted
+# 1. True vs Predicted (실제값 vs 예측값 산점도)
+# 점들이 빨간 대각선에 가까울수록 예측이 정확함
 axes[0].scatter(targets_np, preds_np, alpha=0.3, s=10)
 val_min = min(targets_np.min(), preds_np.min())
 val_max = max(targets_np.max(), preds_np.max())
-axes[0].plot([val_min, val_max], [val_min, val_max], 'r-', linewidth=2)
+axes[0].plot([val_min, val_max], [val_min, val_max], 'r-', linewidth=2)  # 완벽한 예측선
 axes[0].set_xlabel('True')
 axes[0].set_ylabel('Predicted')
 axes[0].set_title('True vs Predicted')
 axes[0].grid(True, alpha=0.3)
 
-# 2. Residual vs Predicted
+# 2. Residual vs Predicted (잔차 산점도)
+# 0선 주위에 무작위로 퍼져 있으면 정상, 패턴이 보이면 모델이 놓치는 관계가 있다는 신호
 axes[1].scatter(preds_np, residuals, alpha=0.3, s=10)
-axes[1].axhline(0, color='red', linestyle='--', linewidth=2)
+axes[1].axhline(0, color='red', linestyle='--', linewidth=2)  # 잔차=0 기준선
 axes[1].set_xlabel('Predicted')
 axes[1].set_ylabel('Residual')
 axes[1].set_title('Residual Plot')
 axes[1].grid(True, alpha=0.3)
 
-# 3. Residual Distribution
+# 3. Residual Distribution (잔차 분포)
+# 0을 중심으로 좌우 대칭이면 이상적, 한쪽으로 치우치면 체계적 과대/과소 예측
 axes[2].hist(residuals, bins=50, edgecolor='black', alpha=0.7)
 axes[2].axvline(0, color='red', linestyle='--', linewidth=2)
 axes[2].set_xlabel('Residual')
@@ -838,7 +866,7 @@ axes[2].set_title('Residual Distribution')
 plt.tight_layout()
 plt.show()
 ```
-
+![](./img/evaluation/evaluation07.png)
 ---
 
 #### 잔차 분석 해석 가이드
