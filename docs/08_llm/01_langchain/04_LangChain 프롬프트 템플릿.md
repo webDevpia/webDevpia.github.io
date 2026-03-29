@@ -67,7 +67,7 @@ LangChain v0.3 이후부터는 **LCEL (LangChain Expression Language)** 문법�
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
-llm = ChatOpenAI(model="gpt-5-nano")
+llm = ChatOpenAI(model="gpt-4o-mini")
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", "당신은 서울 여행 전문가입니다."),
@@ -112,7 +112,7 @@ print(prompt.format(topic="인공지능"))
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 
-llm = ChatOpenAI(model="gpt-5-nano")
+llm = ChatOpenAI(model="gpt-4o-mini")
 
 # 첫 번째 프롬프트: 음식 찾기
 p1 = PromptTemplate.from_template("{city}의 가장 유명한 음식은?")

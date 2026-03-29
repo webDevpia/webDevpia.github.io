@@ -15,7 +15,7 @@ permalink: /llm/langgraph/agent_task
 
 ```py
 OPENAI_API_KEY=XXXXXXXXXXXXX
-OPENAI_MODEL=gpt-5-nano
+OPENAI_MODEL=gpt-4o-mini
 TAVILY_API_KEY=XXXXXXXXXXXXX
 KAKAO_API_KEY=XXXXXXXXXXXXX
 WEATHER_API_KEY=XXXXXXXXXXXXX
@@ -32,7 +32,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
 KAKAO_API_KEY = os.getenv("KAKAO_API_KEY")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-5-nano")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 ```
 
 ## 2. 각 사이트 api key 얻기

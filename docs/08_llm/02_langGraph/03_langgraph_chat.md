@@ -29,7 +29,7 @@ pip install -U python-dotenv notebook langgraph langchain-openai
 
 ```bash
 OPENAI_API_KEY=본인의_OpenAI_API키
-OPENAI_MODEL=gpt-5-nano
+OPENAI_MODEL=gpt-4o-mini
 ```
 
 ## 2. 코드 설명
@@ -44,7 +44,7 @@ load_dotenv()
 
 print(f"OPENAI_API_KEY: {os.getenv('OPENAI_API_KEY') is not None}")
 
-openai_model = os.getenv("OPENAI_MODEL", "gpt-5-nano")
+openai_model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 ```
 
 ### 상태(State) 정의

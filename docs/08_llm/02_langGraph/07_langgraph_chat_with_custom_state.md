@@ -60,10 +60,10 @@ import os
 
 load_dotenv()
 
-openai_model = os.getenv("OPENAI_MODEL", "gpt-4.1-nano")
+openai_model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 KAKAO_API_KEY = os.getenv("KAKAO_API_KEY")
 # OpenAI 챗 모델 초기화
-llm = ChatOpenAI(model="gpt-4.1-nano")
+llm = ChatOpenAI(model="gpt-4o-mini")
 ```
 
 ## 2단계: 상태(State) 및 데이터 구조 정의

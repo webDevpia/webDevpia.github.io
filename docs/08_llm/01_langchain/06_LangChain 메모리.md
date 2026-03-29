@@ -1,13 +1,16 @@
 ---
-title: 6. Memory
+title: 7. Memory
 layout: default
 grand_parent: LLM
 parent: LangChain
-nav_order: 6
+nav_order: 7
 permalink: /llm/langchain/memory
 --- 
 # LangChain 메모리
 ---
+
+{: .warning }
+> **v1.0 참고**: LangChain v1.0에서 `ConversationBufferMemory`, `ConversationSummaryMemory` 등 레거시 메모리 클래스는 `langchain-classic` 패키지로 이동되었습니다. 이 교안에서 실습하는 `RunnableWithMessageHistory`와 `InMemoryChatMessageHistory`는 **v1.0에서도 동일하게 사용**됩니다. 에이전트 수준의 메모리 관리는 [LangGraph](/langgraph)의 `MemorySaver`를 참고하세요.
 
 ## 1. 메모리의 개념
 

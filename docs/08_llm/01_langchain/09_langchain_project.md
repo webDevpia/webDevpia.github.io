@@ -28,7 +28,7 @@ lmstudio_url = "http://127.0.0.1:1234/v1"
 
 # llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
 # llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
-llm = ChatOpenAI(model="gpt-4.1-nano", temperature=0.2)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
 ```
 
 [ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts)   
@@ -303,7 +303,7 @@ lmstudio_url = "http://127.0.0.1:1234/v1"
 
 # llm = OllamaLLM(model="gemma3:1b", base_url=ollama_url)
 # llm = ChatOpenAI(model="gemma-3-1b-it", base_url=lmstudio_url, api_key="dummy")
-llm = ChatOpenAI(model="gpt-4.1-nano", temperature=0.2)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
 
 def investment_report(company, symbol):
     prompt = ChatPromptTemplate.from_messages([

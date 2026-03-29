@@ -1,9 +1,9 @@
 ---
-title: 7. LCEL
+title: 3. LCEL
 layout: default
 grand_parent: LLM
 parent: LangChain
-nav_order: 7
+nav_order: 3
 permalink: /llm/langchain/lcel
 ---
 
@@ -23,7 +23,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-llm = ChatOpenAI(model="gpt-5-nano")
+llm = ChatOpenAI(model="gpt-4o-mini")
 prompt = ChatPromptTemplate.from_template("{topic}에 대해 한 줄로 설명해 주세요.")
 parser = StrOutputParser()
 
@@ -65,7 +65,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
 prompt = ChatPromptTemplate.from_template("{topic}에 대해 설명해 주세요.")
-llm = ChatOpenAI(model="gpt-5-nano")
+llm = ChatOpenAI(model="gpt-4o-mini")
 parser = StrOutputParser()
 
 # ✅ 최신 문법
@@ -87,8 +87,8 @@ print(result)
 from langchain_core.runnables import RunnableParallel
 
 multi_chain = RunnableParallel({
-    "요약": ChatPromptTemplate.from_template("{topic}을(를) 한 문장으로 요약해 주세요.") | ChatOpenAI(model="gpt-5-nano") | StrOutputParser(),
-    "키워드": ChatPromptTemplate.from_template("{topic}의 핵심 키워드 3개를 알려주세요.") | ChatOpenAI(model="gpt-5-nano") | StrOutputParser()
+    "요약": ChatPromptTemplate.from_template("{topic}을(를) 한 문장으로 요약해 주세요.") | ChatOpenAI(model="gpt-4o-mini") | StrOutputParser(),
+    "키워드": ChatPromptTemplate.from_template("{topic}의 핵심 키워드 3개를 알려주세요.") | ChatOpenAI(model="gpt-4o-mini") | StrOutputParser()
 })
 
 result = multi_chain.invoke({"topic": "생성형 AI"})
@@ -119,7 +119,7 @@ def make_uppercase(text: str):
     return text.upper()
 
 prompt = ChatPromptTemplate.from_template("{topic}에 대해 설명해 주세요.")
-llm = ChatOpenAI(model="gpt-5-nano")
+llm = ChatOpenAI(model="gpt-4o-mini")
 parser = StrOutputParser()
 
 custom_chain = prompt | llm | parser | RunnableLambda(make_uppercase)
@@ -144,7 +144,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 
-llm = ChatOpenAI(model="gpt-5-nano", temperature=0)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 parser = StrOutputParser()
 
 # 조건 분기용 Runnable들

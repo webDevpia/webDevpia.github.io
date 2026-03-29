@@ -35,7 +35,7 @@ permalink: /llm/langgraph/chat_human
 환경변수 파일 `.env`를 생성하여 다음의 내용을 설정합니다.
 ```bash
 OPENAI_API_KEY=본인의_OpenAI_API키
-OPENAI_MODEL=gpt-5-nano
+OPENAI_MODEL=gpt-4o-mini
 TAVILY_API_KEY=본인의_tavily_api_key
 ```
 환경변수를 로드하기 위해 Python의 `python-dotenv` 라이브러리를 사용합니다.
@@ -59,7 +59,7 @@ import os
 ```python
 load_dotenv()
 
-openai_model = os.getenv("OPENAI_MODEL", "gpt-4.1-nano")
+openai_model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 ```
 
 ### 도구 정의

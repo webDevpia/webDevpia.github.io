@@ -28,7 +28,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
-llm = ChatOpenAI(model="gpt-5-nano")
+llm = ChatOpenAI(model="gpt-4o-mini")
 prompt = ChatPromptTemplate.from_template("{topic}에 대해 한 줄로 설명해 주세요.")
 parser = StrOutputParser()
 
@@ -96,7 +96,7 @@ class Landmark(BaseModel):
     description: str = Field(description="짧은 설명")
 
 # ✅ 2️⃣ LLM 정의
-llm = ChatOpenAI(model="gpt-5-nano", temperature=0)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 # ✅ 3️⃣ with_structured_output() 사용
 structured_llm = llm.with_structured_output(Landmark)

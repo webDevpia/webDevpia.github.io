@@ -1,9 +1,9 @@
 ---
-title: 3. Cache
+title: 8. Cache
 layout: default
 grand_parent: LLM
 parent: LangChain
-nav_order: 3
+nav_order: 8
 permalink: /llm/langchain/cache
 --- 
 # LangChain 모델 비용 & 캐싱
@@ -45,7 +45,7 @@ import time
 cache = InMemoryCache()
 set_llm_cache(cache)
 
-llm = ChatOpenAI(model="gpt-5-nano", temperature=0)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 prompt = "서울의 수도는 어디인가요?"
 
@@ -86,7 +86,7 @@ from langchain_openai import ChatOpenAI
 cache = SQLiteCache(database_path=".langchain_cache.db")
 set_llm_cache(cache)
 
-llm = ChatOpenAI(model="gpt-5-nano", temperature=0)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 prompt = "서울의 수도는 어디인가요?"
 
@@ -170,7 +170,7 @@ class MyCache(BaseCache):
 set_llm_cache(MyCache())
 
 # 🔹 테스트용 LLM
-llm = ChatOpenAI(model="gpt-5-nano", temperature=0)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 prompt = "서울의 수도는 어디인가요?"
 

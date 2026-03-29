@@ -14,7 +14,7 @@ permalink: /deeplearning/cnn
 2. Conv2d의 주요 파라미터(in_channels, out_channels, kernel_size, stride, padding)를 이해할 수 있다
 3. Feature Map이 CNN을 통과하며 변환되는 과정을 시각화로 확인할 수 있다
 4. CNN을 이용한 MNIST 숫자 인식 모델을 학습하고 평가할 수 있다
-5. 학습된 모델을 저장하고 Flask 웹 서비스로 배포할 수 있다
+5. 학습된 모델을 저장하고 불러와 활용할 수 있다
 
 <a id="toc"></a>
 
@@ -25,7 +25,7 @@ permalink: /deeplearning/cnn
 3. [다중 채널, Stride, Padding, Pooling](#part3) - 공간 해상도를 결정하는 세 가지 요소
 4. [분류기 구조 요소](#part4) - Dropout, Linear, Softmax, 출력 크기 계산
 5. [MNIST 모델 학습과 평가](#part5) - 구글 드라이브 연결, 모델 생성, 학습, 평가
-6. [모델 활용과 웹 서비스](#part6) - 모델 사용하기, Flask 웹 서비스
+6. [모델 활용](#part6) - 저장된 모델 불러오기, 새 이미지 예측
 7. [통합 정리](#part7) - 복습 문제와 심화 과제
 
 ---
@@ -276,6 +276,41 @@ print(f"확률 합계: {np.sum(softmax.numpy())}")  # 1.0
 #### Stride가 1이고, padding이 1인 경우
 ![](./img/cnn/cnn018.png)
 
+#### 코드로 출력 크기 확인하기
+
+공식을 외우지 않아도, **가짜 데이터를 통과시키면** 출력 크기를 바로 확인할 수 있습니다.
+
+```py
+# 방법 1: 더미 데이터 통과 (가장 실용적)
+test_model = nn.Sequential(
+    nn.Conv2d(1, 32, 3, 1),    # 28→26
+    nn.ReLU(),
+    nn.Conv2d(32, 64, 3, 1),   # 26→24
+    nn.ReLU(),
+    nn.MaxPool2d(2),           # 24→12
+)
+
+dummy = torch.randn(1, 1, 28, 28)  # 가짜 입력 1장
+output = test_model(dummy)
+print(output.shape)  # torch.Size([1, 64, 12, 12])
+print(f"Flatten 후 크기: {64 * 12 * 12} = 9216")
+# → 이것이 nn.Linear(9216, 128)에서 9216의 근거입니다
+```
+
+```py
+# 방법 2: torchinfo 사용 (전체 구조를 한눈에)
+# pip install torchinfo
+from torchinfo import summary
+
+summary(test_model, input_size=(1, 1, 28, 28))
+```
+
+| 방법 | 장점 | 추천 상황 |
+|------|------|----------|
+| **공식 계산** | 도구 불필요, 원리 이해 | 시험, 면접 |
+| **더미 데이터 통과** | 간단, 확실, 설치 불필요 | 코딩 중 빠른 확인 |
+| **torchinfo** | 전체 레이어별 크기 + 파라미터 수 | 모델 설계, 디버깅 |
+
 **핵심**: Feature Extraction(Conv+Pool) 이후 Flatten → Linear → Softmax로 분류를 수행한다. Dropout은 과적합을 방지하고, Softmax는 출력을 확률로 변환한다.
 
 ---
@@ -505,9 +540,9 @@ torch.save(model.state_dict(),root_dir+'/model/mnist_cnn.pt')
 
 <a id="part6"></a>
 
-## 6. 모델 활용과 웹 서비스 [↑](#toc)
+## 6. 모델 활용 [↑](#toc)
 
-**학습목표**: 저장된 모델을 로드하여 새 이미지에 적용하고, Flask로 웹 서비스로 배포할 수 있다.
+**학습목표**: 저장된 모델을 불러와 새로운 이미지에 대해 예측을 수행할 수 있다.
 
 ### 생성된 모델 사용하기
 
@@ -559,230 +594,9 @@ for path in files:
   plt.show()
 ```
 
-### 웹으로 서비스 하기
+**핵심**: 학습한 모델을 `torch.save()`로 저장하고, `torch.load()`로 불러온 뒤 `model.eval()`로 평가 모드로 전환하면 새로운 이미지에 대해 예측할 수 있다.
 
-model.py
-```py
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from PIL import Image
-from torchvision import transforms
-import torchvision.transforms.functional as TF
-
-class CNN(nn.Module):
-    def __init__(self):
-        super(CNN, self).__init__()
-        self.conv1 = nn.Conv2d(1, 32, 3, 1)
-        self.conv2 = nn.Conv2d(32, 64, 3, 1)
-        self.dropout1 = nn.Dropout2d(0.25)
-        self.dropout2 = nn.Dropout2d(0.5)
-        self.fc1 = nn.Linear(9216, 128)
-        self.fc2 = nn.Linear(128, 10)
-
-    def forward(self, x):
-        x = self.conv1(x)
-        x = F.relu(x)
-        x = self.conv2(x)
-        x = F.relu(x)
-        x = F.max_pool2d(x, 2)
-        x = self.dropout1(x)
-        x = torch.flatten(x, 1)
-        x = self.fc1(x)
-        x = F.relu(x)
-        x = self.dropout2(x)
-        x = self.fc2(x)
-        output = F.log_softmax(x, dim=1)
-        return output
-
-
-# 이미지 전처리 (MNIST와 동일하게 처리하고 색상 반전 추가)
-def preprocess_image(img_path):
-    # 이미지 불러오기
-    image = Image.open(img_path).convert('RGB')
-
-    # 전처리: 흑백으로 변환, 크기 조정, 텐서 변환, 정규화
-    preprocess = transforms.Compose([
-        transforms.Grayscale(num_output_channels=1),  # 흑백 변환
-        transforms.Resize((28, 28)),  # 크기 조정
-        transforms.ToTensor()  # 텐서로 변환
-    ])
-
-    # 이미지 반전 (검은 바탕에 흰 글씨로 만들기)
-    image = TF.invert(image)
-
-    # 전처리 적용
-    image = preprocess(image).unsqueeze(0)  # 배치 차원 추가 (1, 1, 28, 28)
-
-    return image
-
-```
-
-app.py
-```py
-from flask import Flask, redirect, render_template,request
-import os
-import model as m
-import torch
-
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/mnist',methods=['get'])
-def mnist():
-    return render_template('mnist_upload.html')
-
-
-@app.route('/mnist',methods=['post'])
-def fileupload():
-    f = request.files['imgfile']
-    img_path=os.path.dirname(__file__)+'/static/uploads/'+f.filename
-    f.save(img_path)
-
-    # 이미지 전처리 및 예측
-    image = m.preprocess_image(img_path)
-
-    # 모델 불러오기
-    model = m.CNN()
-    model.load_state_dict(torch.load('mnist_cnn.pt',map_location='cpu'))
-
-    # 모델 재평가
-    model.eval()
-
-    # 예측
-    output = model(image)
-    predicted = torch.argmax(output, dim=1)  # 가장 높은 확률을 가진 클래스를 예측
-
-    # 예측 결과 출력
-    print(f'Predicted class: {predicted.item()}')
-    return render_template('mnist_result.html',data=predicted.item(),img_path='uploads/'+f.filename)
-
-if __name__ == '__main__':
-    app.run(debug=True,port=8088)
-```
-
-/templates/default.html
-```html
-<!DOCTYPE html>
-<html>
-    <head>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <title>
-            {% raw %}
-            {% block title %}{% endblock %}
-            {% endraw %}
-        </title>
-    </head>
-    <body>
-    {% raw %}
-        {% include 'menu.html' %}
-        {% block content %}{% endblock %}
-    {% endraw %}
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
-    </body>
-</html>
-```
-/templates/menu.html
-```html
-<nav class="navbar navbar-expand-lg" style="background-color:rgb(2, 2, 2);">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">부경대학교 디지털 스마트 6기</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/mnist">숫자인식</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
-```
-
-/templates/index.html
-```html
-{% raw %}
-{% extends "default.html" %}
-{% block title %}홈페이지{% endblock %}
-{% block content %}
-{% endraw %}
-<h1>홈페이지</h1>
-{% raw %}
-{% endblock %}
-{% endraw %}
-```
-
-/templates/mnist_upload.html
-```html
-{% raw %}
-{% extends "default.html" %}
-{% block title %}숫자 이미지 입력{% endblock %}
-{% block content %}
-{% endraw %}
-<br>
-<br>
-<br>
-<div class="container">
-  <form action="/mnist" method="post" enctype="multipart/form-data">
-    <div>
-      <label for="formFileLg" class="form-label">판독할 숫자 이미지를 선택하세요</label>
-      <input class="form-control form-control-lg" id="formFileLg" name="imgfile" type="file">
-    </div>
-    <br>
-    <div class="col-auto">
-      <button type="submit" class="btn btn-primary mb-3">숫자판독시작</button>
-    </div>
-  </form>
-</div>
-{% raw %}{% endblock %}{% endraw %}
-```
-
-/templates/mnist_result.html
-```html
-{% raw %}
-{% extends "default.html" %}
-{% block title %}숫자 분석 결과 페이지{% endblock %}
-{% block content %}
-{% endraw %}
-<br>
-<br>
-<br>
-<div class="container">
-<h1>숫자 판독 결과는 {% raw %}{{data}}{% endraw %}입니다.</h1>
-<img width="100" height="100"
-  {% raw %}src="{{url_for('static',filename=img_path)}}"{% endraw %} alt="">
-</div>
-{% raw %}{% endblock %}{% endraw %}
-```
-
-**핵심**: 학습된 모델을 저장·로드하여 새로운 이미지에 적용할 수 있다. Flask와 결합하면 웹 브라우저에서 숫자 이미지를 업로드하고 예측 결과를 받을 수 있다.
+> **확인**: 모델을 불러올 때 `map_location='cpu'`를 쓰는 이유는 무엇일까요? GPU에서 학습한 모델을 CPU 환경에서 실행할 때 왜 필요한지 생각해 보세요.
 
 ---
 
@@ -792,14 +606,45 @@ if __name__ == '__main__':
 
 ### 복습 문제
 
-1. CNN에서 Convolution Layer의 역할은 무엇인가?
-2. Stride와 Padding을 조절하면 출력 Feature Map 크기가 어떻게 변하는가?
-3. Pooling은 왜 필요한가?
-4. Dropout은 학습 시와 평가 시 동작이 어떻게 다른가?
-5. 모델을 저장하고 불러올 때 `state_dict()`을 쓰는 이유는 무엇인가?
+**1. CNN에서 Convolution Layer의 역할은 무엇인가?**
+
+Convolution Layer는 학습 가능한 필터(커널)를 이미지 위에 슬라이딩하며 **특징(Feature)을 자동으로 추출**합니다. 낮은 층에서는 엣지, 선 같은 단순한 특징을, 높은 층으로 갈수록 눈, 코, 얼굴 같은 복잡한 특징을 학습합니다. Linear Layer만으로는 이미지의 공간적 구조(인접 픽셀 간의 관계)를 활용할 수 없지만, Conv Layer는 커널 크기만큼의 지역적 패턴을 인식하므로 이미지 처리에 효과적입니다.
+
+**2. Stride와 Padding을 조절하면 출력 Feature Map 크기가 어떻게 변하는가?**
+
+- **Stride를 키우면** 필터가 더 넓게 건너뛰므로 출력 크기가 **줄어듭니다**. Stride=2이면 출력은 대략 입력의 절반이 됩니다.
+- **Padding을 추가하면** 입력 가장자리에 0을 채워 출력 크기가 **덜 줄거나 유지**됩니다. Padding=1, Kernel=3, Stride=1이면 입력과 출력 크기가 동일합니다.
+- 출력 크기 공식: `(입력 크기 - 커널 크기 + 2×Padding) / Stride + 1`
+
+**3. Pooling은 왜 필요한가?**
+
+Pooling은 Feature Map의 공간 크기를 줄여서 세 가지 효과를 얻습니다:
+1. **계산량 감소**: 뒤따르는 레이어의 파라미터 수와 연산량이 줄어듭니다
+2. **과적합 방지**: 정보를 압축하여 불필요한 세부 사항에 대한 민감도를 낮춥니다
+3. **위치 불변성**: MaxPooling은 영역 내 최대값을 취하므로, 객체가 약간 이동해도 같은 특징을 인식할 수 있습니다
+
+**4. 모델을 저장하고 불러올 때 `state_dict()`을 쓰는 이유는 무엇인가?**
+
+`torch.save(model)`로 모델 전체를 저장할 수도 있지만, 이 방식은 Python 클래스 구조까지 pickle로 저장하므로 **코드 구조가 변경되면 로드에 실패**합니다. 반면 `state_dict()`는 모델의 **학습된 가중치(weight, bias)만 딕셔너리로 저장**하므로:
+- 파일 크기가 더 작고
+- 모델 클래스를 별도로 정의한 뒤 가중치만 로드하면 되어 유연하고
+- PyTorch 공식 권장 방식입니다
+
+**5. `model.eval()`을 호출하지 않으면 예측 결과가 어떻게 달라질 수 있는가?**
+
+`model.eval()`은 **Dropout과 BatchNorm의 동작 모드를 변경**합니다:
+- **Dropout**: 학습 모드에서는 뉴런을 랜덤으로 끄지만(0.25, 0.5 확률), eval 모드에서는 모든 뉴런을 사용합니다. eval 없이 예측하면 매번 결과가 **랜덤하게 달라지고** 정확도가 떨어집니다.
+- **BatchNorm**: 학습 모드에서는 현재 배치의 통계를 사용하지만, eval 모드에서는 학습 중 축적된 전체 통계를 사용합니다.
+- 따라서 예측/추론 시에는 반드시 `model.eval()`을 호출해야 **일관되고 정확한 결과**를 얻을 수 있습니다.
 
 ### 심화 과제
 
 - 다른 이미지 데이터셋(Fashion-MNIST, CIFAR-10)으로 바꿔 보기
 - Conv Layer 수를 늘리거나 줄여서 성능 변화 확인하기
 - 학습률이나 배치 크기를 변경해서 학습 곡선 비교하기
+
+### 다음 시간 예고
+
+이번 시간에 만든 MNIST 모델을 **누구나 사용할 수 있는 웹 앱**으로 만들어 봅니다. 먼저 Streamlit이라는 도구를 배운 뒤, 이 모델을 웹에 올려 서비스합니다.
+
+→ [6-2. Streamlit 기초](/deeplearning/streamlit-basics) → [6-3. 웹서비스 배포: MNIST](/deeplearning/streamlit-mnist-deploy)
