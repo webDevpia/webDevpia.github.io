@@ -75,6 +75,12 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uv --version
 ```
 
+```
+# 보안 오류 발생 시: 
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process 
+# 입력 후 실행
+```
+
 > 설치가 안 되면 대안: `winget install astral-sh.uv` (Windows) 또는 `brew install uv` (Mac)
 
 #### Step 2: 프로젝트 생성
@@ -82,6 +88,7 @@ uv --version
 ```bash
 uv init streamlit-basics
 cd streamlit-basics
+uv sync
 ```
 
 이 명령으로 다음이 자동 생성됩니다:

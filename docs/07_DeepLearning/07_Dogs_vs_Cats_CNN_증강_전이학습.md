@@ -86,7 +86,7 @@ print(f'device: {device}  |  torch: {torch.__version__}')
 
 **학습목표**: Kaggle Dogs vs Cats 데이터를 Colab 환경에 올리고 사용 가능하게 준비할 수 있다.
 
-강사가 Google Drive에 공유해 둔 `train.zip`을 `gdown`으로 자동 다운로드합니다. 별도의 Kaggle 가입이나 수동 업로드 없이, 아래 셀을 실행하기만 하면 됩니다.
+Google Drive에 공유해 둔 `train.zip`을 `gdown`으로 자동 다운로드합니다. 별도의 Kaggle 가입이나 수동 업로드 없이, 아래 셀을 실행하기만 하면 됩니다.
 
 > **참고**: `test1.zip`은 라벨이 없으므로 이 노트북에서는 사용하지 않습니다. labeled train 이미지만 사용합니다.
 
