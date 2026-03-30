@@ -121,6 +121,8 @@ st.write("Streamlit으로 만든 첫 번째 웹 앱입니다.")
 
 ```bash
 uv run streamlit run hello.py
+# 또는
+streamlit run hello.py
 ```
 
 > `uv run` = "이 프로젝트 환경에서 실행하라"는 의미입니다. 뒤의 `streamlit run`은 Streamlit 실행 명령입니다.
@@ -156,7 +158,7 @@ st.write(pd.DataFrame({  # 데이터프레임도 되고
 }))
 ```
 
-**핵심**: Streamlit은 Python 코드만으로 웹 앱을 만든다. `uv add streamlit` → 코드 작성 → `uv run streamlit run app.py`가 전부다.
+**핵심**: Streamlit은 Python 코드만으로 웹 앱을 만든다. `uv add streamlit` → 코드 작성 → `streamlit run app.py`가 전부다.
 
 > **확인**: `st.title()`과 `st.write("# 제목")`의 결과가 같아 보입니다. 차이가 있을까요? 직접 실행해서 비교해 보세요.
 
