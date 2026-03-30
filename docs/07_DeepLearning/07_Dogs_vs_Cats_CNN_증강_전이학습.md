@@ -99,6 +99,7 @@ import gdown
 # 아래 FILE_ID를 Google Drive 공유 링크의 파일 ID로 바꾸세요.
 # 예: https://drive.google.com/file/d/1AbCdEfGhIjKlMnOp/view?usp=sharing
 #     → FILE_ID = '1AbCdEfGhIjKlMnOp'
+#1EkAhsqncZjS_0IqQprw1OpkzGq_urtGi
 GDRIVE_FILE_ID = 'YOUR_FILE_ID_HERE'
 # ─────────────────────────────────────────────────────────────
 
