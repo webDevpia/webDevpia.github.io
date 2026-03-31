@@ -918,6 +918,189 @@ print("✅ ONNX 모델 Drive 저장 완료")
 
 ---
 
+### 4-B. Classification 학습 (ImageNet10)
+
+Classification은 커스텀 학습이 **가장 쉬운** 태스크입니다. 라벨 파일이 필요 없고, **폴더 이름이 곧 클래스**입니다.
+
+#### 데이터 구조 — 폴더 분류만 하면 됨
+
+```
+my_cls_dataset/
+├── train/
+│   ├── dog/           ← 폴더 이름 = 클래스 이름
+│   │   ├── img001.jpg
+│   │   └── img002.jpg
+│   └── cat/
+│       ├── img003.jpg
+│       └── img004.jpg
+└── val/
+    ├── dog/
+    │   └── img005.jpg
+    └── cat/
+        └── img006.jpg
+```
+
+> **Detection과의 차이**: Detection은 `labels/` 폴더에 좌표가 적힌 `.txt` 파일이 필요했지만, Classification은 **이미지를 클래스별 폴더에 넣기만 하면 됩니다.** `data.yaml`도 필요 없습니다.
+
+#### ImageNet10 데이터셋
+
+`imagenet10`은 Ultralytics가 제공하는 **ImageNet의 미니 버전**입니다. 학습 코드에서 `data="imagenet10"`으로 지정하면 자동 다운로드됩니다.
+
+| 항목 | 내용 |
+|------|------|
+| **클래스 수** | 10개 (tench, goldfish, shark, hen, ostrich, brambling, goldfinch, house finch, junco, indigo bunting) |
+| **이미지 수** | 클래스당 약 수십 장 |
+| **용도** | Classification 학습 테스트용 소규모 데이터셋 |
+| **원본** | ImageNet (1000 클래스) 중 10개만 추출 |
+
+#### 실습: ImageNet10 분류 모델 학습
+
+```python
+from ultralytics import YOLO
+
+# 1) Classification 사전학습 모델 로드
+model = YOLO("yolo26n-cls.pt")
+
+# 2) 학습 — data에 데이터셋 이름만 지정! (yaml 불필요, 자동 다운로드)
+results = model.train(
+    data="imagenet10",     # 10개 클래스 미니 데이터셋 (자동 다운로드)
+    epochs=10,             # 간단 테스트용 10 에폭
+    imgsz=224,             # Classification은 보통 224x224 크기 사용
+    batch=64,              # Classification은 이미지가 작아 배치를 크게 잡아도 됨
+    device="",             # 자동 감지 (GPU 있으면 GPU, 없으면 CPU)
+)
+```
+
+```python
+# 3) 학습 곡선 확인
+from IPython.display import Image as IPImage
+display(IPImage(filename='runs/classify/train/results.png', width=800))
+```
+
+```python
+# 4) 학습된 모델로 추론
+best_model = YOLO("runs/classify/train/weights/best.pt")
+results = best_model("https://ultralytics.com/images/bus.jpg")
+r = results[0]
+
+# 분류 결과 이미지 출력
+annotated = r.plot()
+display(Image.fromarray(cv2.cvtColor(annotated, cv2.COLOR_BGR2RGB)))
+
+# 상위 5개 결과 막대 그래프
+import matplotlib.pyplot as plt
+
+top5_names = [r.names[int(idx)] for idx in r.probs.top5]
+top5_confs = r.probs.top5conf.cpu().numpy()
+
+plt.barh(top5_names[::-1], top5_confs[::-1], color='steelblue')
+plt.xlabel("신뢰도")
+plt.title(f"분류 결과: {top5_names[0]} ({top5_confs[0]:.1%})")
+plt.xlim(0, 1)
+plt.tight_layout()
+plt.show()
+```
+
+> **내 데이터로 학습하려면**: 위 폴더 구조대로 `train/클래스명/이미지` 형태로 정리한 뒤, `data="내폴더경로"`로 지정하면 됩니다.
+
+---
+
+### 4-C. Segmentation 학습
+
+Segmentation의 학습 코드는 Detection과 **완전히 동일**합니다. 차이점은 **모델 파일(`-seg.pt`)**과 **라벨 형식(폴리곤 좌표)**뿐입니다.
+
+#### 라벨 형식 차이
+
+```
+# Detection 라벨 — 사각형 좌표 4개
+class  x_center  y_center  width  height
+0      0.52      0.38      0.28   0.42
+
+# Segmentation 라벨 — 윤곽을 따라가는 폴리곤 좌표 (점 여러 개)
+class  x1  y1  x2  y2  x3  y3  x4  y4  ...
+0      0.38 0.20  0.45 0.18  0.55 0.25  0.60 0.35  ...
+```
+
+> Segmentation 라벨은 객체의 윤곽을 따라 점을 찍은 좌표입니다. [Roboflow](https://roboflow.com/)에서 "Instance Segmentation" 형식으로 라벨링하면 자동 생성됩니다.
+
+#### 학습 코드 — Detection과 거의 동일
+
+```python
+from ultralytics import YOLO
+
+# 모델 파일만 -seg.pt로 변경! 나머지 코드는 Detection과 동일
+model = YOLO("yolo26n-seg.pt")
+
+# Ultralytics가 coco8-seg 샘플 데이터를 자동 다운로드합니다
+results = model.train(
+    data="coco8-seg.yaml",   # Segmentation용 미니 데이터셋 (자동 다운로드)
+    epochs=10,               # 간단 테스트용
+    imgsz=640,
+    batch=16,
+    device="",
+)
+```
+
+```python
+# 학습 곡선 확인
+from IPython.display import Image as IPImage
+display(IPImage(filename='runs/segment/train/results.png', width=800))
+```
+
+```python
+# 학습된 Segmentation 모델로 추론
+best_model = YOLO("runs/segment/train/weights/best.pt")
+results = best_model("https://ultralytics.com/images/bus.jpg")
+r = results[0]
+
+# 결과 시각화 (마스크가 오버레이된 이미지)
+annotated = r.plot()
+display(Image.fromarray(cv2.cvtColor(annotated, cv2.COLOR_BGR2RGB)))
+
+# 마스크 정보 확인
+if r.masks is not None:
+    print(f"탐지 객체: {len(r.masks.data)}개")
+    for i, box in enumerate(r.boxes):
+        cls_name = r.names[int(box.cls[0])]
+        area = int(r.masks.data[i].sum())
+        print(f"  {cls_name}: 마스크 면적 {area}px")
+```
+
+---
+
+### 4-D. 다른 태스크 학습 (Pose, OBB) — 참고
+
+Pose와 OBB도 **학습 코드는 동일**합니다. 차이는 라벨 형식과 라벨링 도구뿐입니다.
+
+#### 태스크별 라벨 형식 비교
+
+| 태스크 | 라벨 형식 | 예시 | 라벨링 도구 |
+|--------|---------|------|-----------|
+| **Detection** | `cls x y w h` | `0 0.52 0.38 0.28 0.42` | Roboflow, LabelImg |
+| **Segmentation** | `cls x1 y1 x2 y2 ...` | `0 0.38 0.20 0.45 0.18 ...` | Roboflow (Polygon) |
+| **Pose** | `cls x y w h kp1x kp1y kp1v ...` | `0 0.52 0.38 0.28 0.42 0.5 0.3 2 ...` | CVAT, Roboflow |
+| **OBB** | `cls x1 y1 x2 y2 x3 y3 x4 y4` | `0 0.1 0.2 0.3 0.1 0.4 0.3 0.2 0.4` | Roboflow (OBB) |
+
+> **kp1v** = keypoint visibility (0: 안보임, 1: 가려짐, 2: 보임)
+
+#### 학습 명령어 — 모델 파일만 변경
+
+```python
+# Pose 학습 (COCO8-pose 자동 다운로드)
+model = YOLO("yolo26n-pose.pt")
+model.train(data="coco8-pose.yaml", epochs=10, imgsz=640, device="")
+
+# OBB 학습 (DOTA8 자동 다운로드)
+model = YOLO("yolo26n-obb.pt")
+model.train(data="dota8.yaml", epochs=10, imgsz=640, device="")
+```
+
+> **핵심**: 5가지 태스크 모두 **학습 코드 구조는 동일**합니다. 차이는 모델 파일(`.pt` / `-seg.pt` / `-cls.pt` 등)과 라벨 형식뿐입니다.
+
+> **확인**: Classification과 Detection의 데이터 구조에서 가장 큰 차이는 무엇인가요?
+
+---
+
 <a id="part5"></a>
 ## 5. 웹캠 실시간 인식 [↑](#toc)
 
@@ -1062,6 +1245,7 @@ import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
 import numpy as np
+import cv2
 
 # ===== 모델 캐싱 (앱 시작 시 1회만 로드) =====
 # @st.cache_resource: 데코레이터(@)로 함수에 캐싱 기능을 추가
@@ -1098,8 +1282,8 @@ if uploaded:
         st.image(image, use_container_width=True)
     with col2:
         st.subheader("탐지 결과")
-        # channels="BGR": OpenCV가 BGR 순서로 저장한 이미지임을 Streamlit에 알려줌
-        st.image(r.plot(), channels="BGR", use_container_width=True)
+        # r.plot()은 BGR 순서 → RGB로 변환하여 Streamlit에 전달
+        st.image(cv2.cvtColor(r.plot(), cv2.COLOR_BGR2RGB), use_container_width=True)
 
     # 상세 정보
     st.subheader("탐지 상세")
@@ -1121,6 +1305,7 @@ import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
 import numpy as np
+import cv2
 
 @st.cache_resource
 def load_model():
@@ -1137,7 +1322,7 @@ if camera_image:
     image = Image.open(camera_image)
     results = model(np.array(image), conf=confidence)
 
-    st.image(results[0].plot(), channels="BGR", use_container_width=True)
+    st.image(cv2.cvtColor(results[0].plot(), cv2.COLOR_BGR2RGB), use_container_width=True)
 
     for box in results[0].boxes:
         cls = model.names[int(box.cls[0])]
@@ -1152,6 +1337,7 @@ import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
 import numpy as np
+import cv2
 
 TASKS = {
     "Detection": "yolo26n.pt",
@@ -1201,8 +1387,8 @@ if uploaded:
         with col1:
             st.image(image, caption="원본", use_container_width=True)
         with col2:
-            st.image(r.plot(), caption=f"{task} 결과", channels="BGR",
-                     use_container_width=True)
+            st.image(cv2.cvtColor(r.plot(), cv2.COLOR_BGR2RGB),
+                     caption=f"{task} 결과", use_container_width=True)
 
         if task == "Pose" and r.keypoints is not None:
             st.subheader(f"탐지된 사람: {r.keypoints.xy.shape[0]}명")
