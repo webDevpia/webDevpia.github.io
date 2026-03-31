@@ -139,6 +139,9 @@ streamlit run hello.py
 | `uv add 패키지명` | 패키지 설치 (가상환경에 자동 격리) |
 | `uv run 명령어` | 프로젝트 환경에서 명령어 실행 |
 | `uv remove 패키지명` | 패키지 제거 |
+| `uv pip freeze > requirements.txt` | 파일 생성 |
+| `uv add -r requirements.txt` | 패키지 설치 |
+
 
 > **Colab 실습과의 차이**: DeepLearning 수업에서는 Colab(클라우드)에서 실습했습니다. Streamlit은 **로컬 PC**에서 실행해야 하므로, uv로 로컬 환경을 직접 만듭니다.
 
