@@ -502,27 +502,23 @@ for person_idx in range(r.keypoints.xy.shape[0]):
 ```python
 model = YOLO("yolo26n-obb.pt")
 
-# DOTA8 미니 데이터셋으로 검증 (항공 영상 자동 다운로드)
-metrics = model.val(data="dota8.yaml")
-print(f"OBB mAP50: {metrics.box.map50:.4f}")
+# 내 이미지로 OBB 추론 — 항공/위성 사진을 업로드하거나 URL을 지정하세요
 
-# 검증 결과 이미지 확인 (회전된 박스가 표시됨)
-display(Image.open("runs/obb/val/val_batch0_pred.jpg"))
-```
+img_path = "https://image.kmib.co.kr/online_image/2020/0902/611211110014971423_1.jpg"  # ← 여기에 항공 영상 URL 또는 파일 경로
 
-```python
-# 다운로드된 항공 영상으로 개별 예측 테스트
-from glob import glob
+results = model(img_path)
+r = results[0]
 
-val_images = glob("datasets/dota8/images/val/*")
-if val_images:
-    results = model(val_images[0])
-    r = results[0]
+# OBB 결과 이미지 출력
+annotated = r.plot()
+display(Image.fromarray(cv2.cvtColor(annotated, cv2.COLOR_BGR2RGB)))
 
-    # OBB 결과 이미지 출력
-    annotated = r.plot()
-    display(Image.fromarray(cv2.cvtColor(annotated, cv2.COLOR_BGR2RGB)))
+# 탐지 결과 확인
+if r.obb is not None and len(r.obb) > 0:
     print(f"탐지된 객체: {len(r.obb)}개")
+else:
+    print("탐지된 객체가 없습니다.")
+    print("💡 OBB는 항공/위성 영상에서 작동합니다. 위에서 내려다본 이미지를 사용해보세요.")
 ```
 
 **`r.obb` — 회전 박스 결과:**
