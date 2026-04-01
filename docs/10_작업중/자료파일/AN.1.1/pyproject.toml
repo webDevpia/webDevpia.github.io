@@ -1,0 +1,15 @@
+[project]
+name = "todo-manager"
+version = "0.1.0"
+description = "AN.1.1 과정 실습 프로젝트 - Todo Manager"
+requires-python = ">=3.11"
+packages = [{include = "todo", from = "src"}]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
