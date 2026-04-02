@@ -77,7 +77,7 @@ uv --version
 
 ```
 # 보안 오류 발생 시: 
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process 
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope currentuser 
 # 입력 후 실행
 ```
 

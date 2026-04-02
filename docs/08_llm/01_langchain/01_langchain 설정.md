@@ -4,167 +4,285 @@ layout: default
 grand_parent: LLM
 parent: LangChain
 nav_order: 1
-permalink: llm/langchain/install
+permalink: /llm/langchain/install
 ---
-# LangChain
 
-## 수업전 체크리스트 
 
-### 기존 설치 환경에 문제가 있어서 제거할 경우 
+## 학습 목표
 
-#### 1. Microsoft Visual Studio Code, Miniconda3 혹은 Anaconda 제거
+- uv를 사용하여 LangChain 개발환경을 구축할 수 있다
+- requirements.txt로 패키지를 관리할 수 있다
 
-#### 2. 폴더 제거
-사용자계정 폴더의 .conda, .ipython, .vscode, miniconda3 폴더와 .condarc 파일을 제거.  
-C:\Users\사용자계정\AppData\Roaming\Code 폴더도 제거.  
+<a id="toc"></a>
 
-### 환경 설정
-[ 실습 환경 설정 ]
+## 진행 순서
 
-#### 1. miniconda3를 설치합니다. (비영리기관에서는 Anaconda 설치해도 상관없음.) 
-[Quick command line install](https://docs.anaconda.com/miniconda/install/#quick-command-line-install)
+1. [uv 설치](#1-uv-설치)
+2. [프로젝트 생성](#2-프로젝트-생성)
+3. [Python 버전 설정](#3-python-버전-설정)
+4. [패키지 설치](#4-패키지-설치)
+5. [자주 쓰는 uv 명령어](#5-자주-쓰는-uv-명령어)
+6. [VS Code 설정](#6-vs-code-설정)
+7. [Ollama / LM Studio 설치](#7-ollama--lm-studio-설치-로컬-모델용)
+8. [API 키 발급](#8-api-키-발급)
+9. [환경변수 설정](#9-환경변수-설정)
 
-```bash
-curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe -o miniconda.exe
-start /wait "" .\miniconda.exe /S
-del miniconda.exe
-```
 
-#### 2. 시작 > Miniconda3 (64-bit) > Anaconda Prompt (miniconda)를 실행합니다.
+---
 
-#### 3. 채널 추가 및 변경 
-패키지 다운로드를 위한 conda-forge 리포지토리 채널을 추가하고, 채널 우선 순위를 변경합니다.  
-(아나콘다는 비영리기관에서만 무료 사용 가능) 
+# LangChain 개발환경 설정
 
-```bash
-conda config --show channels 
+## uv란?
 
-channels:   
-  - defaults
-```
+[uv](https://docs.astral.sh/uv/)는 Astral(ruff 개발사)이 만든 **Rust 기반 초고속 Python 패키지 매니저**다.
+pip, pip-tools, virtualenv, pyenv를 하나로 통합하며, 기존 도구 대비 10~100배 빠르다.
 
-```bash  
-conda config --add channels conda-forge && conda config --set channel_priority strict
+---
 
-conda config --show channels
+## 1. uv 설치
 
-channels:
-  - conda-forge
-  - defaults
-```
-
-#### 4. Conda 가상 환경(langchain_env)을 만들고 확인합니다.
+### macOS / Linux
 
 ```bash
-conda create -n langchain_env python=3.12 -y
-
-conda env list          
-# conda environments:
-#
-base             C:\Users\사용자계정\miniconda3
-langchain_env    C:\Users\사용자계정\miniconda3\envs\langchain_env   
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-#### 5. Conda 가상 환경(langchain_basic_env)을 활성화 합니다.
+### Windows
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+```
+# 보안 오류 발생 시: 
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope currentuser 
+# 입력 후 실행
+```
+
+### 설치 확인
 
 ```bash
-conda activate langchain_env
-(langchain_env) C:\Users\사용자계정>
+uv --version
 ```
 
-#### 6. Jupyter Notebook을 설치합니다.
+---
+
+## 2. 프로젝트 생성
 
 ```bash
-conda install notebook -y
+# 프로젝트 디렉터리 생성 및 초기화
+uv init langchain_project #프로젝트 폴더를 만듬
+uv init .                 #현재경로에 프로젝트 생성
+uv init . --python 3.12   #파이썬 버전을 정해서 프로젝트 생성
 ```
 
-#### 7. visual studio code를 설치합니다. 
+생성되는 파일 구조:
 
-[visualstudio](https://code.visualstudio.com/Download)
+```
+langchain_project/
+├── .python-version    # Python 버전 고정
+├── pyproject.toml     # 프로젝트 설정 및 의존성
+├── README.md
+└── main.py
+```
 
-- 확장 탭(CTRL+SHIFT+X)을 선택,  Python 확장팩, Jupyter 확장팩을 설치.  
-- 명령팔레트(CTRL+SHIFT+P)를 실행, Python: Select Interpreter를 선택, Conda 가상환경 (langchain_basic_env)을 선택.  
-- 탐색기(CTRL+SHIFT+E)를 선택하고, langchain_basic 폴더를 생성하고 폴더 열기
-- 터미널(CTRL + J)을 열고, Command Prompt를 선택.  
-- 터미널에 Conda 가상환경 (langchain_basic_env) 활성화되었는지 확인.   
-- 활성화되어 있지 않을 경우 다음 명령으로 활성화합니다. 
+---
+
+## 3. Python 버전 설정
 
 ```bash
-conda activate langchain_env
-(langchain_env) C:\Users\사용자계정\langchain_basic>
+# Python 3.12 설치 및 고정
+uv python install 3.12
+uv python pin 3.12
 ```
 
-#### 8. conda 환경 제거 할 경우 명령어
+`.python-version` 파일이 자동으로 생성/업데이트됩니다.
+
+---
+
+## 4. 패키지 설치
+
+프로젝트 루트에 `requirements.txt` 파일을 생성하고, 필요한 패키지를 작성합니다.
+
+### requirements.txt 예시 (Ollama + FAISS 기반 RAG)
+
+```text
+langchain
+langchain-core
+langchain-text-splitters
+langchain-community
+langchain-ollama
+faiss-cpu
+pymupdf
+python-dotenv
+streamlit
+```
+
+### requirements.txt 예시 (OpenAI + Pinecone 기반 RAG)
+
+```text
+langchain
+langchain-core
+langchain-text-splitters
+langchain-community
+langchain-openai
+langchain-pinecone
+pymupdf
+python-dotenv
+streamlit
+```
+
+### 설치 명령어
 
 ```bash
-conda remove --name langchain_env --all
-#  --all 옵션은 해당 환경의 모든 패키지 및 설정을 포함해 완전 삭제
+# 둘 다 동작
+uv pip install -r requirements.txt
+uv add -r requirements.txt
 ```
 
+`requirements.txt`에 패키지를 추가/삭제한 후 다시 위 명령어를 실행하면 됩니다.
 
-### 맥에서 제거 후 재설치
+---
 
-#### 1. 아나콘다 경로 확인
-```bash
-where conda
-```
+## 5. 자주 쓰는 uv 명령어
 
-#### 2. 아나콘다 폴더 삭제
-```bash
-rm -rf ~/anaconda3
-# 또는
-rm -rf /opt/homebrew/anaconda3
-```
+| 명령어 | 설명 |
+|---|---|
+| `uv add 패키지명` | 패키지 설치 및 pyproject.toml에 기록 |
+| `uv remove 패키지명` | 패키지 제거 |
+| `uv sync` | pyproject.toml 기반으로 환경 동기화 |
+| `uv run python main.py` | 가상환경에서 스크립트 실행 |
+| `uv run streamlit run app.py` | 가상환경에서 streamlit 실행 |
+| `uv lock` | 의존성 잠금 파일 갱신 |
+| `uv tree` | 의존성 트리 확인 |
+| `uv pip list` | 설치된 패키지 목록 |
 
-#### 3. 쉘 환경설정에서 관련 내용 제거
-```bash
-# zsh
-nano ~/.zshrc
+---
 
-# bash
-nano ~/.bash_profile
-```
+## 6. VS Code 설정
 
-다음과 같은 내용 삭제
-```bash
-# >>> conda initialize >>>
-__conda_setup="$('/Users/username/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-eval "$__conda_setup"
-# <<< conda initialize <<<
-```
+### 확장 설치
 
-수정 후 저장(Ctrl + O, Enter, Ctrl + X) 하고 반영
-```bash
-source ~/.zshrc
-```
+1. **Python** (Microsoft) — 필수
+2. **Jupyter** (Microsoft) — 노트북 사용 시
+3. **Even Better TOML** — pyproject.toml 편집
 
-#### 4. 캐시 및 환경 설정 파일 제거
+### 인터프리터 선택
 
-```bash
-rm -rf ~/.conda
-rm -rf ~/.continuum
-rm -rf ~/.anaconda_backup
-```
+1. `Ctrl+Shift+P` (Mac: `Cmd+Shift+P`) → `Python: Select Interpreter`
+2. `.venv` 경로의 Python 선택 (예: `./langchain_project/.venv/bin/python`)
 
-#### 5. 제거확인
-```bash
-conda --version
-```
+> uv는 프로젝트 디렉터리 내 `.venv` 폴더에 가상환경을 자동 생성합니다. VS Code가 자동으로 감지하는 경우가 많습니다.
 
-#### 6. Homebrew로 아나콘다 설치
+### 터미널에서 가상환경 활성화
+
+uv 명령어(`uv run`)를 사용하면 가상환경 활성화 없이 실행 가능하지만, 직접 활성화하려면:
 
 ```bash
-brew install --cask anaconda
-# 혹은 미니콘다
-brew install --cask miniconda
+# macOS / Linux
+source .venv/bin/activate
+
+# Windows
+.venv\Scripts\activate
 ```
 
+---
+
+## 7. Ollama / LM Studio 설치 (로컬 모델용)
+
+이 교재의 예제에서는 OpenAI(유료) 외에 **로컬 LLM**도 사용합니다. 로컬 모델을 쓰려면 아래 중 하나를 설치합니다.
+
+### Ollama 설치
+
+[Ollama 공식 사이트](https://ollama.com)에서 운영체제에 맞는 설치 파일을 다운로드합니다.
+
 ```bash
-# 설치 후 PATH에 자동 등록되지 않는 경우가 많으므로, 다음 명령으로 환경 변수를 추가
-echo 'export PATH="/usr/local/anaconda3/bin:$PATH"' >> ~/.zshrc
-# M1/M2 Mac인 경우
-echo 'export PATH="/opt/homebrew/anaconda3/bin:$PATH"' >> ~/.zshrc
-# 미니콘다인 경우
-echo 'export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
+# 설치 확인
+ollama --version
+
+# 모델 다운로드 (예시)
+ollama pull llama3.1
+ollama pull gemma3:1b
+ollama pull nomic-embed-text   # 임베딩 모델 (15장에서 사용)
 ```
+
+> Ollama는 설치 후 백그라운드에서 자동 실행됩니다. `http://127.0.0.1:11434`에서 API를 제공합니다.
+
+### LM Studio 설치 (선택)
+
+[LM Studio 공식 사이트](https://lmstudio.ai)에서 다운로드 후 설치합니다. GUI에서 모델을 검색/다운로드할 수 있으며, OpenAI 호환 API를 `http://127.0.0.1:1234/v1`에서 제공합니다.
+
+---
+
+## 8. API 키 발급
+
+### OpenAI API 키
+
+1. [OpenAI Platform](https://platform.openai.com) 접속 → 회원가입/로그인
+2. 좌측 메뉴 **API keys** → **Create new secret key**
+3. 생성된 키를 복사하여 `.env` 파일에 저장
+
+### Google AI API 키 (Gemini용)
+
+1. [Google AI Studio](https://aistudio.google.com) 접속 → 로그인
+2. **Get API key** → **Create API key**
+3. 생성된 키를 복사하여 `.env` 파일에 저장
+
+---
+
+## 9. 환경변수 설정
+
+프로젝트 루트에 `.env` 파일을 생성합니다.
+
+```
+OPENAI_API_KEY=sk-...
+GOOGLE_API_KEY=AI...
+OLLAMA_URL=http://127.0.0.1:11434
+```
+
+Python 코드에서 로드:
+
+```python
+from dotenv import load_dotenv
+load_dotenv()
+```
+
+> `.env` 파일은 `.gitignore`에 반드시 추가하여 API 키가 공개 저장소에 올라가지 않도록 합니다.
+
+---
+
+## 10. 자주 발생하는 에러
+
+| 에러 | 원인 | 해결 |
+|---|---|---|
+| `AuthenticationError` | API 키 미설정 또는 잘못됨 | `.env` 파일 확인, `load_dotenv()` 호출 여부 확인 |
+| `ConnectionRefusedError` | Ollama/LM Studio 서버 미실행 | `ollama serve` 또는 LM Studio 실행 확인 |
+| `ModuleNotFoundError` | 패키지 미설치 | `uv pip install -r requirements.txt` 재실행 |
+| `openai.RateLimitError` | API 호출 한도 초과 | 잠시 기다린 후 재시도, 또는 유료 플랜 확인 |
+
+---
+
+## 11. 환경 제거
+
+```bash
+# 가상환경 제거 (프로젝트 디렉터리 내)
+rm -rf .venv
+
+# 다시 생성
+uv sync
+```
+
+---
+
+## uv vs Conda 비교
+
+| | uv | Conda |
+|---|---|---|
+| **속도** | 매우 빠름 (Rust 기반) | 느림 |
+| **Python 버전 관리** | `uv python install` | `conda create -n env python=3.12` |
+| **패키지 소스** | PyPI | conda-forge / defaults |
+| **의존성 파일** | `pyproject.toml` + `uv.lock` | `environment.yml` |
+| **가상환경 위치** | 프로젝트 내 `.venv/` | `~/miniconda3/envs/` |
+| **non-Python 패키지** | 미지원 (시스템 패키지 매니저 필요) | 지원 (CUDA, MKL 등) |
+
+> **참고:** CUDA 드라이버나 시스템 레벨 라이브러리가 필요한 경우(GPU 학습 등)에는 Conda가 여전히 유용하다. 일반적인 LangChain 개발에는 uv가 더 간편하다.

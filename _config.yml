@@ -235,8 +235,14 @@ plugins:
 markdown: kramdown
 kramdown:
   input: GFM
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+  syntax_highlighter: rouge
   syntax_highlighter_opts:
     block:
+      line_numbers: false
+    span:
+      line_numbers: false
+    table:
       line_numbers: false
   parse_block_html: true
   parse_span_html: true
@@ -250,16 +256,3 @@ compress_html:
   profile: false
   # ignore:
   #   envs: all
-
-# Markdown 설정
-markdown: kramdown
-kramdown:
-  input: GFM
-  syntax_highlighter: rouge
-  syntax_highlighter_opts:
-    block:
-      line_numbers: false
-    span:
-      line_numbers: false
-    table:
-      line_numbers: false

@@ -7,6 +7,22 @@ nav_order: 9
 
 permalink: /llm/langchain/langchain_proj
 ---
+
+
+## 학습 목표
+
+- LangChain으로 데이터 수집부터 Streamlit 배포까지 전체 파이프라인을 구현할 수 있다
+- yfinance와 meilisearch를 활용하여 투자보고서를 생성할 수 있다
+
+<a id="toc"></a>
+
+## 진행 순서
+
+1. [llm 투자보고서](#llm-투자보고서) - LLM 연결, 데이터 수집, 검색 인덱싱, 보고서 작성, 배포까지 전체 파이프라인
+
+
+---
+
 # LangChain Project
 
 ## llm 투자보고서
@@ -353,11 +369,7 @@ class Stock:
 
     def get_basic_info(self):
         basic_info = pd.DataFrame.from_dict(self.ticker.info, orient="index", columns=['Value'])
-        return basic_info.loc[["longName", "industry", "sector", "marketCap", "sharesOutstanding"]].to_markdown() # tabluate 설치 해야됨
-    
-    def get_basic_info(self):
-        basic_info = pd.DataFrame.from_dict(self.ticker.info, orient="index", columns=['Value'])
-        return basic_info.loc[["longName", "industry", "sector", "marketCap", "sharesOutstanding"]].to_markdown() # tabluate 설치 해야됨
+        return basic_info.loc[["longName", "industry", "sector", "marketCap", "sharesOutstanding"]].to_markdown() # tabulate 설치 해야됨
     
     def get_income(self):
         return self.ticker.quarterly_income_stmt.loc[["Total Revenue", "Gross Profit", "Operating Income", "Net Income"]]

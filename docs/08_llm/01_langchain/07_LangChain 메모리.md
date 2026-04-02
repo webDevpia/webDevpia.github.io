@@ -5,8 +5,46 @@ grand_parent: LLM
 parent: LangChain
 nav_order: 7
 permalink: /llm/langchain/memory
---- 
+---
+
+
+## 학습 목표
+
+- RunnableWithMessageHistory로 대화 맥락을 유지할 수 있다
+- 세션 기반 히스토리를 관리할 수 있다
+
+<a id="toc"></a>
+
+## 진행 순서
+
+1. [메모리의 개념](#1-메모리의-개념) - LangChain 메모리 구조 이해
+2. [기본 구성 요소](#2-기본-구성-요소) - ChatMessageHistory 및 메모리 클래스 비교
+3. [예시: ChatMessageHistory](#3-예시-chatmessagehistory) - 기본 메모리 사용법
+4. [RunnableWithMessageHistory 사용](#4-runnablewithmessagehistory-사용) - 단일/다중 세션 구현
+5. [비교 요약](#비교-요약) - 코드① vs 코드② 정리
+6. [정리 — 어떤 걸 써야 할까?](#정리--어떤-걸-써야-할까) - 상황별 추천
+
+
+---
+
 # LangChain 메모리
+
+이전 챕터에서 도구(Tool)로 LLM이 외부 세계와 상호작용하게 만들었습니다. 그런데 한 가지 문제가 있습니다 — **LLM은 기본적으로 이전 대화를 기억하지 못합니다.**
+
+### 메모장 비유로 이해하기
+
+> 메모리는 **비서의 메모장**과 같습니다. 대화할 때마다 비서가 내용을 메모장에 적어두고, 다음 대화 때 꺼내봅니다. 메모장 없이는 매번 "처음 만나는 것처럼" 대화하게 됩니다.
+
+```
+❌ 메모리 없는 챗봇:
+사용자: "가을 여행지 추천해줘"  → AI: "경주를 추천합니다!"
+사용자: "거기서 뭐 먹으면 좋아?" → AI: "어디를 말씀하시는 건가요?" 😱
+
+✅ 메모리 있는 챗봇:
+사용자: "가을 여행지 추천해줘"  → AI: "경주를 추천합니다!"
+사용자: "거기서 뭐 먹으면 좋아?" → AI: "경주에서는 황남빵을 꼭 드셔보세요!" 👍
+```
+
 ---
 
 {: .warning }
@@ -14,7 +52,7 @@ permalink: /llm/langchain/memory
 
 ## 1. 메모리의 개념
 
-LangChain의 “메모리”는 LLM이 **이전 대화 맥락을 유지**하고 **상태를 관리**하도록 돕는 핵심 구성 요소  
+LangChain의 "메모리"는 LLM이 **이전 대화 맥락을 유지**하고 **상태를 관리**하도록 돕는 핵심 구성 요소  
 최근 버전에서는 메모리가 **`ChatMessageHistory` 기반의 전통적 방식**과  
 **LCEL(`RunnableWithMessageHistory`) 기반의 현대적 방식**으로 구분됩니다.
 
@@ -116,12 +154,24 @@ resp = chain_with_memory.invoke(
 print(resp.content)
 ```
 
+출력 예:
+```
+안녕하세요! 무엇을 도와드릴까요?
+```
+
 저장된 메시지 확인
 
 ```py
 for msg in history.messages:
     print(f"{msg.type}: {msg.content}")
 ```
+
+출력 예:
+```
+human: 안녕하세요?
+ai: 안녕하세요! 무엇을 도와드릴까요?
+```
+
 추가적인 질문
 
 ```py
@@ -179,11 +229,15 @@ for msg in history.messages:
 from langchain_openai import ChatOpenAI
 from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.runnables import RunnableWithMessageHistory
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-# ✅ LLM과 프롬프트 정의
+# ✅ LLM과 프롬프트 정의 (MessagesPlaceholder로 대화 기록 삽입 위치 지정)
 llm = ChatOpenAI(model="gpt-4o-mini")
-prompt = ChatPromptTemplate.from_template("사용자 질문: {input}")
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "당신은 친절한 비서입니다."),
+    MessagesPlaceholder("chat_history"),
+    ("human", "{input}")
+])
 
 # ✅ 사용자별 메모리 생성
 store = {}  # 세션별 메모리 저장소
@@ -199,30 +253,33 @@ chain_with_memory = RunnableWithMessageHistory(
     runnable=prompt | llm,
     get_session_history=get_session_history,
     input_messages_key="input",
+    history_messages_key="chat_history",
 )
 
 # 세션 ID 지정
 session_id = "user1"
 
-# ✅ 대화 실행
+# ✅ 대화 실행 — user1
 response = chain_with_memory.invoke(
     {"input": "가을 여행지 추천해줘"},
     config={"configurable": {"session_id": session_id}}
 )
+print("user1 응답:", response.content)
 
 response = chain_with_memory.invoke(
     {"input": "첫번째 여행지에서 반드시 먹어야할 음식 추천도 부탁해"},
     config={"configurable": {"session_id": session_id}}
 )
+print("user1 후속 응답:", response.content)
 
-# 세션 ID 지정
+# 세션 ID 변경 — user2 (user1과 독립된 대화)
 session_id = "user2"
 
-# 대화 실행
 response = chain_with_memory.invoke(
     {"input": "겨울 여행지 추천해줘"},
     config={"configurable": {"session_id": session_id}}
 )
+print("user2 응답:", response.content)
 
 # ✅ 세션별 저장된 메시지 확인
 for sid, history in store.items():
@@ -280,3 +337,11 @@ for sid, history in store.items():
 | 챗봇 서비스, 멀티 유저 환경 | **코드②** | 세션별 메모리 분리, 확장성 높음 |
 | LCEL 기반 최신 설계 | **코드②** | `InMemoryChatMessageHistory`는 공식 권장 클래스 |
 | Redis/DB 연동 고려 | **코드② 기반 확장** | 구조적으로 쉽게 교체 가능 |
+
+---
+
+### 실습 과제
+
+- **기본**: 코드 ①을 실행하고, 3번 연속 대화한 뒤 `history.messages`로 전체 대화 기록을 확인해 보세요
+- **중급**: 코드 ②로 "user1"과 "user2" 두 세션을 만들고, 각 세션이 서로의 대화를 기억하지 않는 것을 확인해 보세요
+- **심화**: 코드 ②에서 system 메시지를 "당신은 영어 선생님입니다"로 바꾸고, 영어 회화 연습 챗봇을 만들어 보세요
