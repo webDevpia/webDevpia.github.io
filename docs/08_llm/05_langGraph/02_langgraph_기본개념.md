@@ -10,7 +10,22 @@ permalink: /llm/langgraph/preview
 --- 
 # 🧩 LangGraph 개념과 그래프 접근법
 
-## 1️⃣ LangGraph란?
+<a id="toc"></a>
+
+## 진행 순서
+
+1. [LangGraph란?](#part1)
+2. [왜 LangGraph인가?](#part2)
+3. [LangGraph의 구조](#part3)
+4. [동작 방식 이해하기](#part4)
+5. [설계 시 유의사항](#part5)
+6. [주요 활용 사례](#part6)
+7. [LangGraph의 장점 요약](#part7)
+8. [직접 해보기: 미니 그래프 실습](#part8)
+
+<a id="part1"></a>
+
+## 1️⃣ LangGraph란? [↑](#toc)
 
 **LangGraph**는 LangChain 팀이 개발한 **멀티 에이전트 오케스트레이션 프레임워크**입니다.  
 복잡한 문제를 여러 **전문화된 LLM 에이전트**가 협력해 해결할 수 있도록  
@@ -24,7 +39,9 @@ permalink: /llm/langgraph/preview
 
 ---
 
-## 2️⃣ 왜 LangGraph인가?
+<a id="part2"></a>
+
+## 2️⃣ 왜 LangGraph인가? [↑](#toc)
 
 ### 🔹 기존 LLM 한계
 하나의 LLM이 모든 일을 처리하면 다음과 같은 문제가 생깁니다:
@@ -45,7 +62,9 @@ LangGraph는 **상태 기반(State-based)** 구조를 통해 문제를 해결합
 
 ---
 
-## 3️⃣ LangGraph의 구조
+<a id="part3"></a>
+
+## 3️⃣ LangGraph의 구조 [↑](#toc)
 
 ### 🧱 ① 노드(Node)
 - 하나의 **에이전트(Agent)** 또는 **처리 단계**를 의미합니다.  
@@ -66,7 +85,9 @@ LangGraph는 **상태 기반(State-based)** 구조를 통해 문제를 해결합
 
 ---
 
-## 4️⃣ 동작 방식 이해하기
+<a id="part4"></a>
+
+## 4️⃣ 동작 방식 이해하기 [↑](#toc)
 
 ### 💬 메시지 흐름 (Message Flow)
 1. 사용자 입력이 **엔트리 노드**로 전달됩니다.  
@@ -82,7 +103,9 @@ LangGraph는 **상태 기반(State-based)** 구조를 통해 문제를 해결합
 
 ---
 
-## 5️⃣ 설계 시 유의사항
+<a id="part5"></a>
+
+## 5️⃣ 설계 시 유의사항 [↑](#toc)
 
 | 항목 | 설명 |
 |------|------|
@@ -94,7 +117,9 @@ LangGraph는 **상태 기반(State-based)** 구조를 통해 문제를 해결합
 
 ---
 
-## 6️⃣ 주요 활용 사례
+<a id="part6"></a>
+
+## 6️⃣ 주요 활용 사례 [↑](#toc)
 
 ### 🔹 1. QA 시스템
 - 검색 에이전트 → 답변 생성 에이전트 → 응답 반환  
@@ -114,7 +139,9 @@ LangGraph는 **상태 기반(State-based)** 구조를 통해 문제를 해결합
 
 ---
 
-## 7️⃣ LangGraph의 장점 요약
+<a id="part7"></a>
+
+## 7️⃣ LangGraph의 장점 요약 [↑](#toc)
 
 | 장점 | 설명 |
 |------|------|
@@ -131,5 +158,161 @@ LangGraph는 “멀티 에이전트 협업”을 **구조적·안정적**으로 
 단순한 체인보다 강력한 **그래프형 워크플로우**를 통해  
 복잡한 AI 시스템을 확장성과 유지보수성을 모두 확보한 형태로 설계할 수 있습니다.
 
-> 🎓 실습에서는 직접 그래프를 설계하고,  
+> 🎓 실습에서는 직접 그래프를 설계하고,
 > 각 노드(에이전트)가 협력하여 문제를 해결하는 구조를 구현해봅니다.
+
+---
+
+<a id="part8"></a>
+
+## 8️⃣ 직접 해보기: 미니 그래프 실습 [↑](#toc)
+
+이론으로 배운 노드, 엣지, 상태를 직접 코드로 확인해봅니다. **API 키 없이** 실행할 수 있습니다.
+
+### 예제 1: 가장 간단한 그래프
+
+```python
+from typing import TypedDict
+from langgraph.graph import StateGraph, START, END
+
+# 1. 상태 정의
+class State(TypedDict):
+    message: str
+
+# 2. 노드 함수 정의
+def greeting(state: State):
+    return {"message": f"안녕하세요! '{state['message']}'라고 하셨군요."}
+
+# 3. 그래프 구성
+graph = StateGraph(State)
+graph.add_node("greeting", greeting)       # 노드 추가
+graph.add_edge(START, "greeting")          # 시작 → greeting
+graph.add_edge("greeting", END)            # greeting → 종료
+
+# 4. 컴파일 및 실행
+app = graph.compile()
+result = app.invoke({"message": "LangGraph"})
+print(result)
+```
+
+**실행 결과:**
+```
+{'message': "안녕하세요! 'LangGraph'라고 하셨군요."}
+```
+
+이 예제의 구조를 그래프로 표현하면 다음과 같습니다:
+
+```mermaid
+graph TD
+    __start__([시작]) --> greeting[greeting 노드]
+    greeting --> __end__([종료])
+```
+
+### 예제 2: 두 개의 노드를 연결하기
+
+```python
+from typing import TypedDict
+from langgraph.graph import StateGraph, START, END
+
+class State(TypedDict):
+    text: str
+    length: int
+
+def measure(state: State):
+    return {"length": len(state["text"])}
+
+def report(state: State):
+    return {"text": f"'{state['text']}'의 길이는 {state['length']}글자입니다."}
+
+graph = StateGraph(State)
+graph.add_node("measure", measure)
+graph.add_node("report", report)
+graph.add_edge(START, "measure")
+graph.add_edge("measure", "report")
+graph.add_edge("report", END)
+
+app = graph.compile()
+result = app.invoke({"text": "LangGraph는 재미있다", "length": 0})
+print(result)
+```
+
+**실행 결과:**
+```
+{'text': "'LangGraph는 재미있다'의 길이는 12글자입니다.", 'length': 12}
+```
+
+```mermaid
+graph TD
+    __start__([시작]) --> measure[measure 노드]
+    measure --> report[report 노드]
+    report --> __end__([종료])
+```
+
+> 핵심 포인트: `measure` 노드가 `length`를 계산하고, `report` 노드가 그 값을 사용합니다. 이것이 **공유 상태(State)** 를 통한 노드 간 협업입니다.
+
+### 예제 3: 조건부 분기 (Conditional Edge)
+
+```python
+from typing import TypedDict, Literal
+from langgraph.graph import StateGraph, START, END
+
+class State(TypedDict):
+    score: int
+    result: str
+
+def evaluate(state: State):
+    if state["score"] >= 60:
+        return {"result": "합격"}
+    else:
+        return {"result": "불합격"}
+
+def pass_node(state: State):
+    return {"result": f"축하합니다! {state['score']}점으로 합격입니다 🎉"}
+
+def fail_node(state: State):
+    return {"result": f"{state['score']}점입니다. 다음 기회에 도전하세요 💪"}
+
+def route_by_result(state: State) -> Literal["pass_node", "fail_node"]:
+    return "pass_node" if state["result"] == "합격" else "fail_node"
+
+graph = StateGraph(State)
+graph.add_node("evaluate", evaluate)
+graph.add_node("pass_node", pass_node)
+graph.add_node("fail_node", fail_node)
+
+graph.add_edge(START, "evaluate")
+graph.add_conditional_edges("evaluate", route_by_result)
+graph.add_edge("pass_node", END)
+graph.add_edge("fail_node", END)
+
+app = graph.compile()
+
+# 테스트 1: 합격
+print(app.invoke({"score": 85, "result": ""})["result"])
+
+# 테스트 2: 불합격
+print(app.invoke({"score": 45, "result": ""})["result"])
+```
+
+**실행 결과:**
+```
+축하합니다! 85점으로 합격입니다 🎉
+45점입니다. 다음 기회에 도전하세요 💪
+```
+
+```mermaid
+graph TD
+    __start__([시작]) --> evaluate[evaluate]
+    evaluate -->|합격| pass_node[pass_node]
+    evaluate -->|불합격| fail_node[fail_node]
+    pass_node --> __end__([종료])
+    fail_node --> __end__
+```
+
+> 핵심 포인트: `add_conditional_edges`를 사용하면 **조건에 따라 다른 노드로 이동**할 수 있습니다. 이것이 단순 체인과 그래프의 가장 큰 차이입니다.
+
+### 🎯 실습 미션
+
+1. 예제 1의 `greeting` 노드를 수정하여 현재 시간을 포함한 인사말을 출력해보세요.
+2. 예제 3의 합격 기준을 70점으로 변경하고, 점수대별로 A/B/C/F 등급을 분류하는 노드를 추가해보세요.
+3. 노드를 3개 이상 사용하는 자신만의 그래프를 설계하고 실행해보세요.

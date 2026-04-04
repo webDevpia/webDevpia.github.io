@@ -26,9 +26,19 @@ permalink: /llm/langgraph/chat_human
 3. **체크포인팅을 통한 상태 관리:**
    - 인간의 입력을 기다리는 동안 현재 상태를 저장하여, 이후 실행을 원활하게 재개할 수 있도록 합니다.
 
-이러한 방식을 통해, 챗봇은 자동화된 응답과 인간의 개입을 효과적으로 결합하여 보다 정확하고 신뢰성 있는 서비스를 제공할 수 있습니다. 
+이러한 방식을 통해, 챗봇은 자동화된 응답과 인간의 개입을 효과적으로 결합하여 보다 정확하고 신뢰성 있는 서비스를 제공할 수 있습니다.
 
-## 1. 환경 설정
+<a id="toc"></a>
+
+## 진행 순서
+
+1. [환경 설정](#part1)
+2. [코드 설명](#part2)
+3. [챗봇 실행](#part3)
+
+<a id="part1"></a>
+
+## 1. 환경 설정 [↑](#toc)
 
 
 ### 환경변수 설정
@@ -40,7 +50,9 @@ TAVILY_API_KEY=본인의_tavily_api_key
 ```
 환경변수를 로드하기 위해 Python의 `python-dotenv` 라이브러리를 사용합니다.
 
-## 2. 코드 설명
+<a id="part2"></a>
+
+## 2. 코드 설명 [↑](#toc)
 ### 라이브러리 임포트
 
 ```python
@@ -67,9 +79,9 @@ openai_model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 Tavily 검색 도구를 설정합니다.
 
 ```python
-from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_tavily import TavilySearch
 
-search_tool = TavilySearchResults(max_results=2)
+search_tool = TavilySearch(max_results=2)
 search_tool.invoke("LangGraph가 무엇인가요?")
 ```
 
@@ -171,6 +183,8 @@ tools = [search_tool, human_assist]
 llm_with_tools = llm.bind_tools(tools)
 ```
 
+> 💡 **Ollama 사용 시:** `from langchain_ollama import ChatOllama` 후 `llm = ChatOllama(model="llama3.2")`로 교체할 수 있습니다.
+
 ① 도구 목록 준비 (`tools`)
 
 ```python
@@ -200,12 +214,12 @@ def chatbot(state: State):
 체크포인팅을 위한 메모리 체크포인터를 생성합니다.
 
 ```python
-from langgraph.checkpoint.memory import MemorySaver
+from langgraph.checkpoint.memory import InMemorySaver
 
-memory = MemorySaver()
+memory = InMemorySaver()
 ```
 
-- `MemorySaver`: 메모리 기반의 체크포인터로, 각 대화의 상태를 메모리에 임시로 저장하고 관리합니다. 이를 통해 챗봇은 이전 대화 내용을 기억하고 다음 번 상호작용 시에도 맥락을 유지한 상태로 대화를 진행할 수 있습니다. 실제 운영 환경에서는 더 영구적인 상태 관리를 위해 데이터베이스 기반 체크포인터(예: SqliteSaver 또는 PostgresSaver)를 사용하는 것이 권장됩니다.
+- `InMemorySaver`: 메모리 기반의 체크포인터로, 각 대화의 상태를 메모리에 임시로 저장하고 관리합니다. 이를 통해 챗봇은 이전 대화 내용을 기억하고 다음 번 상호작용 시에도 맥락을 유지한 상태로 대화를 진행할 수 있습니다. 실제 운영 환경에서는 더 영구적인 상태 관리를 위해 데이터베이스 기반 체크포인터(예: SqliteSaver 또는 PostgresSaver)를 사용하는 것이 권장됩니다.
 
 ### 그래프 구성 및 컴파일
 LangGraph의 ToolNode와 tools_condition을 사용하여 조건부로 도구 노드를 호출합니다.
@@ -227,36 +241,10 @@ workflow.add_edge(START, "chatbot")
 graph = workflow.compile(checkpointer=memory)
 ```
 
-`ToolNode`는 LangGraph에서 미리 만들어져 제공되는 **도구 실행 전용 노드**입니다.
-- LLM이 **도구(tool)를 호출**하겠다고 요청할 때, 실제 도구를 실행하는 역할을 합니다.
-- 도구 호출 요청 메시지를 입력으로 받아 도구를 실행하고, 그 결과를 다시 LLM에 전달할 수 있는 형태로 반환합니다.
-- 사용자가 별도의 복잡한 로직을 구현하지 않고, **간단하게 도구를 처리할 수 있도록 미리 만들어진 클래스**입니다.
-- ToolNode 생성시 도구를 리스트 형태로 전달합니다.
-
-**작동 원리**
-
-`ToolNode`의 내부 구조는 다음과 같은 순서로 동작합니다:
-
-1. 챗봇(LLM) 노드가 도구 호출을 요청한 메시지를 생성합니다.
-2. `ToolNode`가 이 메시지를 입력으로 받아 메시지에 포함된 **도구 호출(`tool_calls`)**을 실행합니다.
-3. 도구 실행 결과를 `ToolMessage` 형태로 변환하여 다시 챗봇(LLM) 노드가 이해할 수 있게 반환합니다.
-
-`tools_condition`은 LangGraph에서 미리 만들어 제공하는 **조건부 엣지(conditional edge)를 위한 조건 함수**입니다.
-- 챗봇 노드의 출력 메시지에 **도구 호출 요청**이 포함되어 있는지 확인합니다.
-- 도구 호출 요청이 있다면, 도구 노드(`ToolNode`)를 실행하도록 조건을 설정해주는 기능입니다.
-- 별도로 조건 로직을 구현하지 않아도, 도구 호출의 필요성을 쉽게 판단할 수 있도록 미리 만들어진 편의 함수입니다.
-
-**작동 원리**
-
-`tools_condition` 함수는 다음 로직을 수행합니다:
-
-1. 입력 상태에서 가장 최근 메시지를 확인합니다.
-2. 최근 메시지에 `tool_calls`가 포함되어 있는지 확인합니다.
-3. 만약 메시지에 하나 이상의 도구 호출 요청이 존재하면(`tool_calls`가 존재하면), 다음 노드를 `'tools'`로 설정합니다.
-4. 도구 호출 요청이 없다면 자동으로 종료(`END`) 노드로 설정하여 그래프를 종료합니다.
+> `ToolNode`와 `tools_condition`의 작동 원리는 [4단원 도구 사용](/llm/langgraph/chat_tool)에서 학습한 것과 동일합니다.
 
 ### 그래프 시각화
-컴파일된 그래프를 이용해 시각화봅니다.
+컴파일된 그래프를 이용해 시각화해봅니다.
 
 ```python
 from IPython.display import Image, display
@@ -264,7 +252,17 @@ from IPython.display import Image, display
 display(Image(graph.get_graph().draw_mermaid_png()))
 ```
 
-## 3. 챗봇 실행 
+```mermaid
+graph TD
+    __start__([__start__]) --> chatbot[chatbot]
+    chatbot -.->|도구 호출| tools[tools]
+    chatbot -.->|응답 완료| __end__([__end__])
+    tools --> chatbot
+```
+
+<a id="part3"></a>
+
+## 3. 챗봇 실행 [↑](#toc)
 동일한 thread_id를 사용하여 이전 대화 맥락을 유지하는 예시입니다. 이 예시에서는 두 개의 서로 다른 thread_id를 사용하여 두 개의 독립된 대화를 관리하는 방법을 보여줍니다.
 
 ```python
@@ -304,6 +302,12 @@ response1 = graph.invoke(state1, config)
 print(response1["messages"][-1].content)
 ```
 
+**실행 결과 (예시):**
+```
+LangGraph는 AI 에이전트 개발을 위한 프레임워크로, 다음과 같은 특징이 있습니다:
+1. 상태 기반 그래프 구조로 복잡한 워크플로우 관리...
+```
+
 ```python
 snapshot = graph.get_state(config)
 if 'messages' in snapshot.values:
@@ -330,6 +334,14 @@ else:
 print(snapshot.next)
 ```
 
+**실행 결과 (예시):**
+```
+[기존 메시지들...]
+('tools',)
+```
+
+> 📌 `snapshot.next`가 `('tools',)`를 반환하면 그래프가 **tools 노드에서 중단(interrupt)**된 상태입니다. 이 상태에서 사람의 입력을 받아 `Command(resume=...)`로 재개할 수 있습니다. `()`이 반환되면 그래프가 정상 종료된 상태입니다.
+
 ```python
 from langgraph.types import Command
 
@@ -342,6 +354,12 @@ human_response = (
 human_command = Command(resume={"data": human_response})
 response = graph.invoke(human_command, config)
 print(response["messages"][-1].content)
+```
+
+**실행 결과 (예시):**
+```
+네, LangGraph를 AI 에이전트 개발에 사용하는 것은 좋은 선택입니다.
+전문가의 의견에 따르면, LangGraph는 상태 관리와 워크플로우 제어에 강점이 있어...
 ```
 
 ```python
@@ -398,3 +416,9 @@ snapshot = graph.get_state(config)
 pprint(snapshot.values['messages'])
 print(snapshot.next)
 ```
+
+### 🎯 실습 미션
+
+1. `interrupt` 후 `snapshot.next`를 출력하여 `('tools',)` 상태를 직접 확인해보세요. 정상 응답 후에도 출력하여 `()`과 비교해보세요.
+2. `Command(resume={"data": "다른 응답"})`에서 `"data"` 키 대신 다른 키(예: `"answer"`)를 사용하면 어떤 에러가 발생하는지 확인해보세요.
+3. `human_assist` 도구의 docstring을 수정하여 LLM이 더 자주/드물게 사람에게 도움을 요청하도록 유도해보세요.

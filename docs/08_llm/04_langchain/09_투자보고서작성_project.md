@@ -18,14 +18,16 @@ permalink: /llm/langchain/langchain_proj
 
 ## 진행 순서
 
-1. [llm 투자보고서](#llm-투자보고서) - LLM 연결, 데이터 수집, 검색 인덱싱, 보고서 작성, 배포까지 전체 파이프라인
+1. [llm 투자보고서](#part1) - LLM 연결, 데이터 수집, 검색 인덱싱, 보고서 작성, 배포까지 전체 파이프라인
 
 
 ---
 
 # LangChain Project
 
-## llm 투자보고서
+<a id="part1"></a>
+
+## llm 투자보고서 [↑](#toc)
 
 ### 1. llm 연결 테스트 및 프롬프트 작성
 

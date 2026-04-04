@@ -17,12 +17,12 @@ permalink: /llm/langchain/example
 
 ## 진행 순서
 
-1. [환경 구성](#환경-구성)
-2. [Ollama 모델](#1-ollama-모델)
-3. [LM Studio 모델 (OpenAI 호환)](#2-lm-studio-모델-openai-호환)
-4. [OpenAI 모델](#3-openai-모델)
-5. [Gemini 모델](#4-gemini-모델)
-6. [공통 패턴 정리](#공통-패턴-정리)
+1. [환경 구성](#part1)
+2. [Ollama 모델](#part2)
+3. [LM Studio 모델 (OpenAI 호환)](#part3)
+4. [OpenAI 모델](#part4)
+5. [Gemini 모델](#part5)
+6. [공통 패턴 정리](#part6)
 
 
 ---
@@ -33,7 +33,9 @@ permalink: /llm/langchain/example
 
 ---
 
-## 환경 구성
+<a id="part1"></a>
+
+## 환경 구성 [↑](#toc)
 
 프로젝트 디렉토리에 `.env` 파일을 만들고 API 키를 저장합니다 (따옴표 없이 입력):
 
@@ -60,7 +62,9 @@ GOOGLE_API_KEY: True
 
 ---
 
-## 1) Ollama 모델
+<a id="part2"></a>
+
+## 1) Ollama 모델 [↑](#toc)
 
 ```python
 from langchain_ollama import ChatOllama
@@ -87,7 +91,9 @@ print(response)
 
 ---
 
-## 2) LM Studio 모델 (OpenAI 호환)
+<a id="part3"></a>
+
+## 2) LM Studio 모델 (OpenAI 호환) [↑](#toc)
 
 ```python
 from langchain_openai import ChatOpenAI
@@ -108,7 +114,9 @@ print(response)
 
 ---
 
-## 3) OpenAI 모델
+<a id="part4"></a>
+
+## 3) OpenAI 모델 [↑](#toc)
 
 ```python
 from langchain_openai import ChatOpenAI
@@ -131,7 +139,9 @@ print(response)
 
 ---
 
-## 4) Gemini 모델
+<a id="part5"></a>
+
+## 4) Gemini 모델 [↑](#toc)
 
 ```python
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -157,7 +167,9 @@ print(result)
 
 ---
 
-## 공통 패턴 정리
+<a id="part6"></a>
+
+## 공통 패턴 정리 [↑](#toc)
 
 모든 예제는 동일한 LCEL 패턴을 따릅니다:
 

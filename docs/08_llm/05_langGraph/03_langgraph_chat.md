@@ -16,7 +16,19 @@ permalink: /llm/langgraph/chat
 - 상태 관리 및 그래프 구조의 기초 학습하기
 - LangGraph 그래프 시각화하기
 
-## 1. 환경 설정
+<a id="toc"></a>
+
+## 진행 순서
+
+1. [환경 설정](#part1)
+2. [코드 설명](#part2)
+3. [챗봇 실행](#part3)
+4. [스트리밍 출력](#part4)
+5. [대화형 챗봇 만들기](#part5)
+
+<a id="part1"></a>
+
+## 1. 환경 설정 [↑](#toc)
 
 ### 라이브러리 설치
 필요한 라이브러리를 설치합니다.
@@ -32,7 +44,9 @@ OPENAI_API_KEY=본인의_OpenAI_API키
 OPENAI_MODEL=gpt-4o-mini
 ```
 
-## 2. 코드 설명
+<a id="part2"></a>
+
+## 2. 코드 설명 [↑](#toc)
 
 ### 환경변수 로딩
 
@@ -84,6 +98,8 @@ class State(TypedDict):
 from langchain_openai import ChatOpenAI
 llm = ChatOpenAI(model=openai_model)
 ```
+
+> 💡 **Ollama 사용 시:** `from langchain_ollama import ChatOllama` 후 `llm = ChatOllama(model="llama3.2")`로 교체하면 무료로 실습할 수 있습니다.
 
 ### 챗봇 노드 정의
 
@@ -160,7 +176,17 @@ workflow.add_edge("chatbot", END)
 
 이번 코드에서 모든 화살표가 직선으로 나타난 이유는 **조건을 판단할 함수나 조건부 처리를 하지 않고 명시적으로 단순히 노드를 연결**했기 때문입니다.
 
-## 3. 챗봇 실행
+아래는 이 그래프의 구조입니다:
+
+```mermaid
+graph TD
+    __start__([__start__]) --> chatbot[chatbot]
+    chatbot --> __end__([__end__])
+```
+
+<a id="part3"></a>
+
+## 3. 챗봇 실행 [↑](#toc)
 
 ```python
 from langchain_core.messages import HumanMessage
@@ -172,6 +198,79 @@ response = graph.invoke(state)
 print(response["messages"][-1].content)
 ```
 
+**실행 결과 (예시):**
+```
+LangGraph는 LangChain 팀이 개발한 멀티 에이전트 오케스트레이션 프레임워크입니다.
+복잡한 문제를 여러 전문화된 LLM 에이전트가 협력해 해결할 수 있도록
+그래프 기반 구조로 설계된 것이 특징입니다...
+```
+
 - 메인 스크립트에서 사용자의 질문을 입력받아 챗봇을 실행합니다.
 - 입력된 메시지는 `HumanMessage` 형식으로 LangGraph 상태로 전달됩니다.
 - 실행된 챗봇의 응답은 화면에 출력됩니다.
+
+<a id="part4"></a>
+
+## 4. 스트리밍 출력 [↑](#toc)
+
+`invoke()`는 전체 응답이 완성된 후 한 번에 반환합니다. `stream()`을 사용하면 노드가 실행될 때마다 중간 결과를 확인할 수 있습니다.
+
+```python
+for event in graph.stream({"messages": [HumanMessage(content="LangGraph가 무엇인가요?")]}):
+    for node_name, value in event.items():
+        print(f"--- [{node_name}] 노드 실행 ---")
+        print(value["messages"][-1].content[:100], "...")
+```
+
+**실행 결과 (예시):**
+```
+--- [chatbot] 노드 실행 ---
+LangGraph는 LangChain 팀이 개발한 멀티 에이전트 오케스트레이션 프레임워크입니다...
+```
+
+<a id="part5"></a>
+
+## 5. 대화형 챗봇 만들기 [↑](#toc)
+
+`while` 루프를 사용하면 터미널에서 연속 대화가 가능한 챗봇을 만들 수 있습니다.
+
+```python
+from langchain_core.messages import HumanMessage
+
+while True:
+    user_input = input("사용자: ")
+    if user_input.lower() in ["quit", "q", "종료"]:
+        print("대화를 종료합니다.")
+        break
+
+    response = graph.invoke({"messages": [HumanMessage(content=user_input)]})
+    print(f"챗봇: {response['messages'][-1].content}\n")
+```
+
+**실행 결과 (예시):**
+```
+사용자: 안녕하세요
+챗봇: 안녕하세요! 무엇을 도와드릴까요?
+
+사용자: Python이 뭔가요?
+챗봇: Python은 범용 프로그래밍 언어로...
+
+사용자: 종료
+대화를 종료합니다.
+```
+
+> ⚠️ **참고:** 이 챗봇은 이전 대화를 기억하지 못합니다. 메모리 기능은 [5단원](/llm/langgraph/chat_memory)에서 학습합니다.
+
+### 🎯 실습 미션
+
+1. 시스템 메시지를 추가하여 챗봇의 성격을 바꿔보세요. (힌트: `state["messages"]` 앞에 `SystemMessage`를 추가)
+   ```python
+   from langchain_core.messages import SystemMessage
+   def chatbot(state: State):
+       system = SystemMessage(content="당신은 해적 말투로 대답하는 AI입니다.")
+       response = llm.invoke([system] + state["messages"])
+       return {"messages": [response]}
+   ```
+2. 대화형 챗봇에서 사용자의 입력이 비어있을 때 "질문을 입력해주세요"라고 안내하는 코드를 추가해보세요.
+
+---
