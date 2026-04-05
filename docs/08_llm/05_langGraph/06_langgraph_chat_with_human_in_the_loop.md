@@ -183,7 +183,7 @@ tools = [search_tool, human_assist]
 llm_with_tools = llm.bind_tools(tools)
 ```
 
-> 💡 **Ollama 사용 시:** `from langchain_ollama import ChatOllama` 후 `llm = ChatOllama(model="llama3.2")`로 교체할 수 있습니다.
+> 💡 **Ollama 사용 시:** `from langchain_ollama import ChatOllama` 후 `llm = ChatOllama(model="gemma3:1b")`로 교체할 수 있습니다.
 
 ① 도구 목록 준비 (`tools`)
 

@@ -121,7 +121,7 @@ tools = [tool]
 llm_with_tools = llm.bind_tools(tools)
 ```
 
-> 💡 **Ollama 사용 시:** `from langchain_ollama import ChatOllama` 후 `llm = ChatOllama(model="llama3.2")`로 교체할 수 있습니다. 단, 일부 소형 모델은 도구 호출을 지원하지 않을 수 있습니다.
+> 💡 **Ollama 사용 시:** `from langchain_ollama import ChatOllama` 후 `llm = ChatOllama(model="gemma3:1b")`로 교체할 수 있습니다. 단, 일부 소형 모델은 도구 호출을 지원하지 않을 수 있습니다.
 
 - `llm`: 사용되는 LLM 모델로, 여기서는 OpenAI의 gpt-4o-mini 모델을 사용합니다.
 - `llm_with_tools`: LLM에 정의한 도구를 바인딩하여 도구 사용이 가능하게 합니다.
@@ -453,6 +453,9 @@ for msg in response["messages"]:
 ### 환경변수 로딩
 
 ```python
+from dotenv import load_dotenv
+import os
+
 load_dotenv()
 
 openai_model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")

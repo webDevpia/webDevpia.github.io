@@ -19,13 +19,12 @@ permalink: /llm/langchain/install
 
 1. [uv 설치](#part1)
 2. [프로젝트 생성](#part2)
-3. [Python 버전 설정](#part3)
-4. [패키지 설치](#part4)
-5. [자주 쓰는 uv 명령어](#part5)
-6. [VS Code 설정](#part6)
-7. [Ollama / LM Studio 설치](#part7)
-8. [API 키 발급](#part8)
-9. [환경변수 설정](#part9)
+3. [패키지 설치](#part3)
+4. [자주 쓰는 uv 명령어](#part4)
+5. [VS Code 설정](#part5)
+6. [Ollama / LM Studio 설치](#part6)
+7. [API 키 발급](#part7)
+8. [환경변수 설정](#part8)
 
 
 ---
@@ -56,8 +55,8 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 ```
 
 ```
-# 보안 오류 발생 시: 
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope currentuser 
+# 보안 오류 발생 시:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope currentuser
 # 입력 후 실행
 ```
 
@@ -73,12 +72,14 @@ uv --version
 
 ## 2. 프로젝트 생성 [↑](#toc)
 
+VS Code에서 프로젝트 폴더(`langchain_project`)를 만들고 `Open Folder`로 디렉토리를 열고 시작합니다.
+
 ```bash
-# 프로젝트 디렉터리 생성 및 초기화
-uv init langchain_project #프로젝트 폴더를 만듬
-uv init .                 #현재경로에 프로젝트 생성
-uv init . --python 3.12   #파이썬 버전을 정해서 프로젝트 생성
+uv init . --python 3.12
+uv sync
 ```
+
+터미널 창을 Kill Terminal로 닫고 다시 열어줍니다. 가상환경이 활성화되는지 확인합니다.
 
 생성되는 파일 구조:
 
@@ -94,21 +95,7 @@ langchain_project/
 
 <a id="part3"></a>
 
-## 3. Python 버전 설정 [↑](#toc)
-
-```bash
-# Python 3.12 설치 및 고정
-uv python install 3.12
-uv python pin 3.12
-```
-
-`.python-version` 파일이 자동으로 생성/업데이트됩니다.
-
----
-
-<a id="part4"></a>
-
-## 4. 패키지 설치 [↑](#toc)
+## 3. 패키지 설치 [↑](#toc)
 
 프로젝트 루트에 `requirements.txt` 파일을 생성하고, 필요한 패키지를 작성합니다.
 
@@ -143,18 +130,26 @@ streamlit
 ### 설치 명령어
 
 ```bash
-# 둘 다 동작
-uv pip install -r requirements.txt
 uv add -r requirements.txt
 ```
 
-`requirements.txt`에 패키지를 추가/삭제한 후 다시 위 명령어를 실행하면 됩니다.
+> `uv add`는 패키지를 설치하면서 `pyproject.toml`에도 기록합니다. `requirements.txt`에 패키지를 추가/삭제한 후 다시 위 명령어를 실행하면 됩니다.
+
+### requirements.txt 생성
+
+현재 설치된 패키지 목록을 `requirements.txt`로 내보내려면:
+
+```bash
+uv pip freeze > requirements.txt
+```
+
+> 💡 다른 환경에서 동일한 패키지를 설치할 때 이 파일을 공유하면 됩니다.
 
 ---
 
-<a id="part5"></a>
+<a id="part4"></a>
 
-## 5. 자주 쓰는 uv 명령어 [↑](#toc)
+## 4. 자주 쓰는 uv 명령어 [↑](#toc)
 
 | 명령어 | 설명 |
 |---|---|
@@ -169,9 +164,9 @@ uv add -r requirements.txt
 
 ---
 
-<a id="part6"></a>
+<a id="part5"></a>
 
-## 6. VS Code 설정 [↑](#toc)
+## 5. VS Code 설정 [↑](#toc)
 
 ### 확장 설치
 
@@ -200,9 +195,9 @@ source .venv/bin/activate
 
 ---
 
-<a id="part7"></a>
+<a id="part6"></a>
 
-## 7. Ollama / LM Studio 설치 (로컬 모델용) [↑](#toc)
+## 6. Ollama / LM Studio 설치 (로컬 모델용) [↑](#toc)
 
 이 교재의 예제에서는 OpenAI(유료) 외에 **로컬 LLM**도 사용합니다. 로컬 모델을 쓰려면 아래 중 하나를 설치합니다.
 
@@ -215,22 +210,17 @@ source .venv/bin/activate
 ollama --version
 
 # 모델 다운로드 (예시)
-ollama pull llama3.1
 ollama pull gemma3:1b
 ollama pull nomic-embed-text   # 임베딩 모델 (15장에서 사용)
 ```
 
 > Ollama는 설치 후 백그라운드에서 자동 실행됩니다. `http://127.0.0.1:11434`에서 API를 제공합니다.
 
-### LM Studio 설치 (선택)
-
-[LM Studio 공식 사이트](https://lmstudio.ai)에서 다운로드 후 설치합니다. GUI에서 모델을 검색/다운로드할 수 있으며, OpenAI 호환 API를 `http://127.0.0.1:1234/v1`에서 제공합니다.
-
 ---
 
-<a id="part8"></a>
+<a id="part7"></a>
 
-## 8. API 키 발급 [↑](#toc)
+## 7. API 키 발급 [↑](#toc)
 
 ### OpenAI API 키
 
@@ -246,9 +236,9 @@ ollama pull nomic-embed-text   # 임베딩 모델 (15장에서 사용)
 
 ---
 
-<a id="part9"></a>
+<a id="part8"></a>
 
-## 9. 환경변수 설정 [↑](#toc)
+## 8. 환경변수 설정 [↑](#toc)
 
 프로젝트 루트에 `.env` 파일을 생성합니다.
 
@@ -269,18 +259,18 @@ load_dotenv()
 
 ---
 
-## 10. 자주 발생하는 에러
+## 자주 발생하는 에러
 
 | 에러 | 원인 | 해결 |
 |---|---|---|
 | `AuthenticationError` | API 키 미설정 또는 잘못됨 | `.env` 파일 확인, `load_dotenv()` 호출 여부 확인 |
 | `ConnectionRefusedError` | Ollama/LM Studio 서버 미실행 | `ollama serve` 또는 LM Studio 실행 확인 |
-| `ModuleNotFoundError` | 패키지 미설치 | `uv pip install -r requirements.txt` 재실행 |
+| `ModuleNotFoundError` | 패키지 미설치 | `uv add -r requirements.txt` 재실행 |
 | `openai.RateLimitError` | API 호출 한도 초과 | 잠시 기다린 후 재시도, 또는 유료 플랜 확인 |
 
 ---
 
-## 11. 환경 제거
+## 환경 제거
 
 ```bash
 # 가상환경 제거 (프로젝트 디렉터리 내)

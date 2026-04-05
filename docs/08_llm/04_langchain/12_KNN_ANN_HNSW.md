@@ -1,9 +1,9 @@
 ---
-title: 11. KNN, ANN, HNSW
+title: 12. KNN, ANN, HNSW
 layout: default
 grand_parent: LLM
 parent: LangChain
-nav_order: 11
+nav_order: 12
 permalink: /llm/langchain/knn-ann-hnsw
 ---
 

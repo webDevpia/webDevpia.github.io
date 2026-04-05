@@ -11,25 +11,30 @@ permalink: /llm/langchain/memory
 ## 학습 목표
 
 - RunnableWithMessageHistory로 대화 맥락을 유지할 수 있다
-- 세션 기반 히스토리를 관리할 수 있다
+- 세션 기반 히스토리를 관리하여 여러 사용자를 지원할 수 있다
 
 <a id="toc"></a>
 
 ## 진행 순서
 
-1. [메모리의 개념](#part1) - LangChain 메모리 구조 이해
-2. [기본 구성 요소](#part2) - ChatMessageHistory 및 메모리 클래스 비교
-3. [예시: ChatMessageHistory](#part3) - 기본 메모리 사용법
-4. [RunnableWithMessageHistory 사용](#part4) - 단일/다중 세션 구현
-5. [비교 요약](#part5) - 코드① vs 코드② 정리
-6. [정리 — 어떤 걸 써야 할까?](#part6) - 상황별 추천
+1. [메모리의 개념](#part1) - 왜 메모리가 필요한가?
+2. [메시지 히스토리 기초](#part2) - InMemoryChatMessageHistory로 대화 저장하기
+3. [챗봇에 메모리 연결하기](#part3) - RunnableWithMessageHistory 단일 세션
+4. [여러 사용자 지원하기](#part4) - session_id 기반 다중 세션
+5. [대화형 챗봇 만들기](#part5) - while 루프로 연속 대화
+6. [정리](#part6) - 핵심 요약 + 실습 미션
 
+> **사전 준비:** [1장 개발환경](/llm/langchain/install)에서 `.env` 파일 설정과 패키지 설치를 완료한 상태에서 진행합니다. 모든 코드는 `.env`에 `OPENAI_API_KEY`가 설정되어 있어야 동작합니다.
 
 ---
 
 # LangChain 메모리
 
 이전 챕터에서 도구(Tool)로 LLM이 외부 세계와 상호작용하게 만들었습니다. 그런데 한 가지 문제가 있습니다 — **LLM은 기본적으로 이전 대화를 기억하지 못합니다.**
+
+<a id="part1"></a>
+
+## 1. 메모리의 개념 [↑](#toc)
 
 ### 메모장 비유로 이해하기
 
@@ -45,315 +50,353 @@ permalink: /llm/langchain/memory
 사용자: "거기서 뭐 먹으면 좋아?" → AI: "경주에서는 황남빵을 꼭 드셔보세요!" 👍
 ```
 
----
+### 메모리의 동작 원리
 
-{: .warning }
-> **v1.0 참고**: LangChain v1.0에서 `ConversationBufferMemory`, `ConversationSummaryMemory` 등 레거시 메모리 클래스는 `langchain-classic` 패키지로 이동되었습니다. 이 교안에서 실습하는 `RunnableWithMessageHistory`와 `InMemoryChatMessageHistory`는 **v1.0에서도 동일하게 사용**됩니다. 에이전트 수준의 메모리 관리는 [LangGraph](/langgraph)의 `MemorySaver`를 참고하세요.
+LangChain 메모리의 핵심은 단순합니다: **이전 대화 메시지를 저장해두었다가, 다음 질문 시 프롬프트에 함께 전달**하는 것입니다.
 
-<a id="part1"></a>
+```mermaid
+sequenceDiagram
+    participant 사용자
+    participant 메모리
+    participant LLM
 
-## 1. 메모리의 개념 [↑](#toc)
+    사용자->>메모리: "가을 여행지 추천해줘"
+    메모리->>메모리: 메시지 저장
+    메모리->>LLM: [사용자: 가을 여행지 추천해줘]
+    LLM->>메모리: "경주를 추천합니다!"
+    메모리->>메모리: 응답도 저장
+    메모리->>사용자: "경주를 추천합니다!"
 
-LangChain의 "메모리"는 LLM이 **이전 대화 맥락을 유지**하고 **상태를 관리**하도록 돕는 핵심 구성 요소  
-최근 버전에서는 메모리가 **`ChatMessageHistory` 기반의 전통적 방식**과  
-**LCEL(`RunnableWithMessageHistory`) 기반의 현대적 방식**으로 구분됩니다.
+    사용자->>메모리: "거기서 뭐 먹으면 좋아?"
+    메모리->>메모리: 메시지 저장
+    메모리->>LLM: [사용자: 가을 여행지 추천해줘]<br/>[AI: 경주를 추천합니다!]<br/>[사용자: 거기서 뭐 먹으면 좋아?]
+    LLM->>사용자: "경주에서는 황남빵을 꼭 드셔보세요!"
+```
+
+> 핵심: LLM이 "기억하는" 것이 아니라, **메모리가 이전 대화를 매번 함께 보내주는** 것입니다.
 
 ---
 
 <a id="part2"></a>
 
-## 2. 기본 구성 요소 [↑](#toc)
+## 2. 메시지 히스토리 기초 [↑](#toc)
 
-| 구성요소 | 설명 |
-|-----------|------|
-| **ChatMessageHistory** | 개별 대화의 과거 메시지를 저장하는 기본 클래스. 인메모리(InMemory), Redis, SQLite 등 다양한 백엔드로 구현 가능. |
-| **ConversationBufferMemory** | 대화 기록 전체를 순차적으로 저장하여 그대로 LLM에 전달. <br>→ 간단하지만 대화가 길어질수록 토큰 낭비 증가. |
-| **ConversationSummaryMemory** | 오래된 대화를 요약(summary) 형태로 압축 저장. <br>→ 장기 대화에서 효율적 (요약 후 핵심 내용만 유지). |
-| **ConversationBufferWindowMemory** | 최근 N개의 메시지만 유지 (슬라이딩 윈도우 방식). <br>→ 최신 맥락 중심의 응답에 적합. |
-| **ConversationSummaryBufferMemory** | 최근 대화는 그대로 유지하고, 오래된 대화는 요약본으로 대체. <br>→ 실무에서 가장 많이 사용되는 하이브리드 방식. |
-
-
-### 최신 버전 변화 포인트
-
-| 항목 | 기존 방식 | 최신 방식 |
-|------|------------|------------|
-| 메모리 적용 방식 | 체인(Chain) 내부에서 직접 메모리 지정 | `RunnableWithMessageHistory`로 외부에서 래핑 |
-| 주요 모듈 | `langchain.memory` | `langchain_core.chat_history` |
-| 상태 관리 | 수동 전달 (`memory.load_memory_variables()`) | 자동 상태 주입 (`RunnableWithMessageHistory`) |
-| 유연성 | 한 모델 1개의 메모리만 연결 | 여러 세션·사용자별 메모리 관리 가능 |
-
----
-
-<a id="part3"></a>
-
-## 3. 예시: ChatMessageHistory [↑](#toc)
+메모리의 가장 기본은 **메시지를 저장하고 꺼내보는** 것입니다. `InMemoryChatMessageHistory`가 이 역할을 합니다.
 
 ```python
-from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.messages import HumanMessage, AIMessage
 
-# 1️⃣ 메모리(히스토리) 객체 생성
-history = ChatMessageHistory()
+# 1. 히스토리 객체 생성 (빈 메모장)
+history = InMemoryChatMessageHistory()
 
-# 2️⃣ 대화 저장
+# 2. 대화 저장
 history.add_message(HumanMessage(content="안녕!"))
 history.add_message(AIMessage(content="안녕하세요!"))
 history.add_message(HumanMessage(content="오늘 날씨 어때?"))
 history.add_message(AIMessage(content="서울은 맑아요."))
 
-# 3️⃣ 대화 불러오기
+# 3. 저장된 대화 확인
 for msg in history.messages:
-    print(f"[{msg.type}] {msg.content}")
+    role = "사용자" if msg.type == "human" else "AI"
+    print(f"{role}: {msg.content}")
 ```
 
-출력:
+**실행 결과:**
 ```
-[human] 안녕!
-[ai] 안녕하세요!
-[human] 오늘 날씨 어때?
-[ai] 서울은 맑아요.
+사용자: 안녕!
+AI: 안녕하세요!
+사용자: 오늘 날씨 어때?
+AI: 서울은 맑아요.
 ```
+
+> 이 자체로는 LLM과 연결되지 않습니다. 다음 단계에서 이 히스토리를 LLM 체인에 연결합니다.
+
+---
+
+<a id="part3"></a>
+
+## 3. 챗봇에 메모리 연결하기 [↑](#toc)
+
+`RunnableWithMessageHistory`는 LCEL 체인에 **메모리를 자동으로 연결**해주는 래퍼입니다. 사용자가 질문할 때마다:
+1. 히스토리에서 이전 대화를 꺼내서 프롬프트에 주입
+2. LLM이 응답하면 히스토리에 자동 저장
+
+```python
+from dotenv import load_dotenv
+load_dotenv()
+
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_core.chat_history import InMemoryChatMessageHistory
+
+# 1. LLM + 프롬프트 정의
+llm = ChatOpenAI(model="gpt-4o-mini")
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "당신은 친절한 비서입니다."),
+    MessagesPlaceholder("history"),      # ← 이전 대화가 여기에 자동 삽입됩니다
+    ("human", "{input}"),
+])
+chain = prompt | llm
+
+# 2. 히스토리 객체 생성
+history = InMemoryChatMessageHistory()
+
+# 3. 체인에 메모리 연결
+chain_with_memory = RunnableWithMessageHistory(
+    chain,
+    get_session_history=lambda _: history,   # 모든 요청이 같은 히스토리를 사용
+    input_messages_key="input",
+    history_messages_key="history",
+)
+
+# 4. 대화 실행
+config = {"configurable": {"session_id": "test"}}
+
+resp = chain_with_memory.invoke({"input": "가을 여행지 추천해줘"}, config=config)
+print("AI:", resp.content)
+
+resp = chain_with_memory.invoke({"input": "거기서 뭐 먹으면 좋아?"}, config=config)
+print("AI:", resp.content)
+
+resp = chain_with_memory.invoke({"input": "그 음식 칼로리가 어떻게 돼?"}, config=config)
+print("AI:", resp.content)
+
+# 5. 저장된 전체 대화 확인
+print(f"\n=== 저장된 대화 ({len(history.messages)}개 메시지) ===")
+for msg in history.messages:
+    role = "사용자" if msg.type == "human" else "AI"
+    print(f"{role}: {msg.content[:50]}{'...' if len(msg.content) > 50 else ''}")
+```
+
+> 💡 **Ollama 사용 시:** `from langchain_ollama import ChatOllama` 후 `llm = ChatOllama(model="gemma3:1b")`로 교체할 수 있습니다.
+
+**실행 결과 (예시):**
+```
+AI: 가을 여행지로 경주를 추천합니다! 불국사의 단풍이 아름답고...
+AI: 경주에서는 황남빵을 꼭 드셔보세요! 경주 십원빵도 인기가 많습니다.
+AI: 황남빵 1개는 약 150kcal 정도입니다. 십원빵은 약 200kcal...
+
+=== 저장된 대화 (6개 메시지) ===
+사용자: 가을 여행지 추천해줘
+AI: 가을 여행지로 경주를 추천합니다! 불국사의 단풍이 아름답고...
+사용자: 거기서 뭐 먹으면 좋아?
+AI: 경주에서는 황남빵을 꼭 드셔보세요! 경주 십원빵도 인기가...
+사용자: 그 음식 칼로리가 어떻게 돼?
+AI: 황남빵 1개는 약 150kcal 정도입니다. 십원빵은 약 200kc...
+```
+
+> "거기서", "그 음식" — 앞 대화를 가리키는 질문인데, 메모리가 이전 대화를 함께 전달하기 때문에 LLM이 맥락을 이해합니다.
+
+### MessagesPlaceholder의 역할
+
+프롬프트에서 `MessagesPlaceholder("history")`는 **이전 대화가 삽입될 위치**를 지정합니다.
+
+LLM에 실제 전달되는 프롬프트는 이렇게 구성됩니다:
+
+```
+[system] 당신은 친절한 비서입니다.
+[human]  가을 여행지 추천해줘           ← 히스토리에서 꺼낸 1번째 대화
+[ai]     경주를 추천합니다!              ← 히스토리에서 꺼낸 1번째 응답
+[human]  거기서 뭐 먹으면 좋아?         ← 히스토리에서 꺼낸 2번째 대화
+[ai]     황남빵을 드셔보세요!            ← 히스토리에서 꺼낸 2번째 응답
+[human]  그 음식 칼로리가 어떻게 돼?    ← 현재 입력
+```
+
+> `"history"`라는 이름은 `MessagesPlaceholder("history")`와 `history_messages_key="history"`가 반드시 일치해야 합니다.
 
 ---
 
 <a id="part4"></a>
 
-## 4. RunnableWithMessageHistory 사용 [↑](#toc)
+## 4. 여러 사용자 지원하기 [↑](#toc)
 
-### 🧩 1️⃣ 공통점
+3장의 코드는 `lambda _: history`로 모든 요청이 같은 히스토리를 사용합니다. 이러면 **사용자 A의 대화 내용이 사용자 B에게도 보이는** 문제가 생깁니다.
 
-| 항목 | 설명 |
-|------|------|
-| 공통 기술 | `RunnableWithMessageHistory`를 사용해 LCEL 기반 메모리 통합 |
-| 공통 기능 | LLM이 이전 대화를 기억하도록 상태(`chat_history`)를 관리 |
-| 프롬프트 구조 | `ChatPromptTemplate` → `ChatOpenAI`로 구성된 파이프라인 |
-| 세션 관리 | `config={"configurable": {"session_id": ...}}`로 세션 분리 가능 |
+`session_id`로 사용자별 히스토리를 분리합니다.
 
-
-### 코드 ① — 단일 세션 / 단일 메모리 구조
 ```python
+from dotenv import load_dotenv
+load_dotenv()
+
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.runnables import RunnableWithMessageHistory
-from langchain_community.chat_message_histories import ChatMessageHistory
-
-llm = ChatOpenAI(model="gpt-4o-mini")
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "당신은 친절한 비서입니다."),
-    MessagesPlaceholder("chat_history"),   # 👈 반드시 키가 동일해야 함
-    ("human", "{input}")
-])
-
-chain = prompt | llm
-
-history = ChatMessageHistory()
-
-chain_with_memory = RunnableWithMessageHistory(
-    runnable=chain,
-    get_session_history=lambda _: history, # 세션이 몇 개가 오든, 무조건 같은 히스토리 객체를 돌려줌
-    input_messages_key="input",
-    history_messages_key="chat_history",   # 👈 여기가 위와 동일
-)
-
-resp = chain_with_memory.invoke(
-    {"input": "안녕하세요?"},
-    config={"configurable": {"session_id": "1"}}
-)
-print(resp.content)
-```
-
-출력 예:
-```
-안녕하세요! 무엇을 도와드릴까요?
-```
-
-저장된 메시지 확인
-
-```py
-for msg in history.messages:
-    print(f"{msg.type}: {msg.content}")
-```
-
-출력 예:
-```
-human: 안녕하세요?
-ai: 안녕하세요! 무엇을 도와드릴까요?
-```
-
-추가적인 질문
-
-```py
-resp = chain_with_memory.invoke(
-    {"input": "가을에 여행지 추천해줘"},
-    config={"configurable": {"session_id": "1"}}
-)
-print(resp.content)
-```
-
-기존 내용을 이용한 질문
-
-```py
-resp = chain_with_memory.invoke(
-    {"input": "그 중에 첫번째 여행지에 대해 좀더 자세하게 정리해줄래"},
-    config={"configurable": {"session_id": "1"}}
-)
-print(resp.content)
-```
-
-저장된 메시지 확인
-
-```py
-for msg in history.messages:
-    print(f"{msg.type}: {msg.content}")
-```
-
-#### 특징
-
-| 항목 | 설명 |
-|------|------|
-| **메모리 클래스** | `ChatMessageHistory` (기본형, 인메모리) |
-| **세션 관리** | 단일 세션만 지원 (`lambda _: history`) |
-| **저장 위치** | 코드 실행 중 메모리에만 저장 (종료 시 사라짐) |
-| **적용 대상** | 간단한 챗봇, 단일 사용자 테스트, 실습용 |
-| **입출력 구조** | `{input: "..."} → chat_history에 자동 저장 후 응답 반환` |
-
-#### 동작 방식
-- `lambda _: history`는 세션 구분 없이 모든 대화를 **같은 history 객체**에 저장합니다.  
-- 즉, 한 사용자의 대화가 다른 사용자 입력에 섞일 수 있습니다.  
-- 메모리 저장이 단순해서 **테스트나 데모용**으로 적합합니다.
-
-#### 장점
-- 코드 간결, 빠르게 테스트 가능  
-- 기본 메모리 로직 이해용으로 적합  
-
-#### 단점
-- 세션 구분 불가 → 여러 사용자가 동시에 사용할 수 없음  
-- 지속성 없음 → 재시작 시 모든 기록 손실  
-- 실제 서비스에는 부적합  
-
-### 🧩 코드 ② — 다중 세션 / 실서비스용 구조
-
-```python
-from langchain_openai import ChatOpenAI
+from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.chat_history import InMemoryChatMessageHistory
-from langchain_core.runnables import RunnableWithMessageHistory
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-# ✅ LLM과 프롬프트 정의 (MessagesPlaceholder로 대화 기록 삽입 위치 지정)
 llm = ChatOpenAI(model="gpt-4o-mini")
 prompt = ChatPromptTemplate.from_messages([
     ("system", "당신은 친절한 비서입니다."),
-    MessagesPlaceholder("chat_history"),
-    ("human", "{input}")
+    MessagesPlaceholder("history"),
+    ("human", "{input}"),
 ])
 
-# ✅ 사용자별 메모리 생성
-store = {}  # 세션별 메모리 저장소
+# 핵심: 세션별 히스토리를 딕셔너리로 관리
+store = {}
 
-def get_session_history(session_id: str):
-    """세션별 대화 기록 관리 함수"""
+def get_session_history(session_id: str) -> InMemoryChatMessageHistory:
     if session_id not in store:
         store[session_id] = InMemoryChatMessageHistory()
     return store[session_id]
 
-# ✅ 메모리와 LLM을 결합
 chain_with_memory = RunnableWithMessageHistory(
-    runnable=prompt | llm,
-    get_session_history=get_session_history,
+    prompt | llm,
+    get_session_history,               # ← session_id에 따라 다른 히스토리 반환
     input_messages_key="input",
-    history_messages_key="chat_history",
+    history_messages_key="history",
 )
 
-# 세션 ID 지정
-session_id = "user1"
+# ===== user1과 대화 =====
+config_user1 = {"configurable": {"session_id": "user1"}}
 
-# ✅ 대화 실행 — user1
-response = chain_with_memory.invoke(
-    {"input": "가을 여행지 추천해줘"},
-    config={"configurable": {"session_id": session_id}}
-)
-print("user1 응답:", response.content)
+resp = chain_with_memory.invoke({"input": "가을 여행지 추천해줘"}, config=config_user1)
+print("user1:", resp.content)
 
-response = chain_with_memory.invoke(
-    {"input": "첫번째 여행지에서 반드시 먹어야할 음식 추천도 부탁해"},
-    config={"configurable": {"session_id": session_id}}
-)
-print("user1 후속 응답:", response.content)
+resp = chain_with_memory.invoke({"input": "거기서 뭐 먹으면 좋아?"}, config=config_user1)
+print("user1:", resp.content)
 
-# 세션 ID 변경 — user2 (user1과 독립된 대화)
-session_id = "user2"
+# ===== user2와 대화 (user1의 대화를 모름) =====
+config_user2 = {"configurable": {"session_id": "user2"}}
 
-response = chain_with_memory.invoke(
-    {"input": "겨울 여행지 추천해줘"},
-    config={"configurable": {"session_id": session_id}}
-)
-print("user2 응답:", response.content)
+resp = chain_with_memory.invoke({"input": "겨울 여행지 추천해줘"}, config=config_user2)
+print("user2:", resp.content)
 
-# ✅ 세션별 저장된 메시지 확인
-for sid, history in store.items():
-    print(f"\n=== 🗂 세션 ID: {sid} ===")
-    for msg in history.messages:
+# ===== 각 세션의 히스토리 확인 =====
+for sid, hist in store.items():
+    print(f"\n=== 세션: {sid} ({len(hist.messages)}개 메시지) ===")
+    for msg in hist.messages:
         role = "사용자" if msg.type == "human" else "AI"
-        print(f"{role}: {msg.content}")
-
+        print(f"  {role}: {msg.content[:60]}{'...' if len(msg.content) > 60 else ''}")
 ```
-#### 특징
 
-| 항목 | 설명 |
-|------|------|
-| **메모리 클래스** | `InMemoryChatMessageHistory` (LangChain Core 권장 버전) |
-| **세션 관리** | 사용자별 세션(`session_id`)로 구분 |
-| **저장 위치** | 세션별 딕셔너리(`store`)에 저장 |
-| **적용 대상** | 다중 사용자 챗봇, 대화형 앱, RAG 파이프라인 등 |
-| **입출력 구조** | 각 세션별로 독립된 대화 맥락 유지 가능 |
+**실행 결과 (예시):**
+```
+user1: 가을 여행지로 경주를 추천합니다!...
+user1: 경주에서는 황남빵을 꼭 드셔보세요!...
+user2: 겨울 여행지로 강원도 평창을 추천합니다!...
 
-#### 동작 방식
-- `RunnableWithMessageHistory`가 `get_session_history()` 함수를 통해  
-  세션별로 별도의 메모리 객체를 가져옵니다.  
-- `config={"configurable": {"session_id": "user1"}}`에 따라  
-  사용자마다 고유한 메모리 공간을 유지합니다.
+=== 세션: user1 (4개 메시지) ===
+  사용자: 가을 여행지 추천해줘
+  AI: 가을 여행지로 경주를 추천합니다!...
+  사용자: 거기서 뭐 먹으면 좋아?
+  AI: 경주에서는 황남빵을 꼭 드셔보세요!...
 
-#### 장점
-- 세션 독립적 메모리 관리 → 여러 사용자 동시 지원  
-- 실제 서비스나 챗봇 앱에 바로 적용 가능  
-- 지속성 백엔드(DB/Redis 등)로 쉽게 확장 가능  
+=== 세션: user2 (2개 메시지) ===
+  사용자: 겨울 여행지 추천해줘
+  AI: 겨울 여행지로 강원도 평창을 추천합니다!...
+```
 
-#### 단점
-- 구조가 약간 복잡함 (세션 관리 필요)  
-- 단일 사용자 실습에는 다소 과함  
+> 핵심: user1의 "가을 여행지" 대화와 user2의 "겨울 여행지" 대화가 **완전히 분리**됩니다. `session_id`가 다르면 서로의 대화를 전혀 모릅니다.
+
+### 3장 vs 4장 비교
+
+| | 3장 (단일 세션) | 4장 (다중 세션) |
+|---|---|---|
+| 히스토리 관리 | `lambda _: history` (고정) | `get_session_history(session_id)` (분리) |
+| 사용자 구분 | 불가 — 모든 대화가 섞임 | 가능 — session_id로 분리 |
+| 적합한 용도 | 학습/테스트 | 실제 서비스, 다중 사용자 |
 
 ---
 
 <a id="part5"></a>
 
-## 비교 요약 [↑](#toc)
+## 5. 대화형 챗봇 만들기 [↑](#toc)
 
-| 구분 | 코드 ① (단일 세션) | 코드 ② (다중 세션) |
-|------|----------------------|----------------------|
-| 메모리 타입 | `ChatMessageHistory` | `InMemoryChatMessageHistory` |
-| 세션 관리 | 없음 (고정 history) | 있음 (`session_id` 기반 분리) |
-| 적용 범위 | 간단한 테스트 / 학습용 | 다중 사용자 / 실제 서비스용 |
-| 메모리 지속성 | 런타임 한정 | 확장 가능 (DB/Redis 연동) |
-| 코드 복잡도 | 간단 | 약간 복잡 |
-| LangChain 권장 | ⚠️ 구버전 예제 호환 | ✅ 최신 권장 방식 |
+`while` 루프로 터미널에서 연속 대화가 가능한 챗봇을 만듭니다.
+
+```python
+from dotenv import load_dotenv
+load_dotenv()
+
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_core.chat_history import InMemoryChatMessageHistory
+
+llm = ChatOpenAI(model="gpt-4o-mini")
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "당신은 친절한 비서입니다."),
+    MessagesPlaceholder("history"),
+    ("human", "{input}"),
+])
+
+store = {}
+
+def get_session_history(session_id: str) -> InMemoryChatMessageHistory:
+    if session_id not in store:
+        store[session_id] = InMemoryChatMessageHistory()
+    return store[session_id]
+
+chain_with_memory = RunnableWithMessageHistory(
+    prompt | llm,
+    get_session_history,
+    input_messages_key="input",
+    history_messages_key="history",
+)
+
+# 대화형 챗봇 시작
+config = {"configurable": {"session_id": "interactive"}}
+
+print("챗봇이 시작되었습니다. (종료: q)")
+print("=" * 40)
+
+while True:
+    user_input = input("사용자: ").strip()
+    if user_input.lower() in ["q", "quit", "종료"]:
+        print("대화를 종료합니다.")
+        break
+    if not user_input:
+        print("질문을 입력해주세요.")
+        continue
+
+    resp = chain_with_memory.invoke({"input": user_input}, config=config)
+    print(f"AI: {resp.content}\n")
+```
+
+**실행 예시:**
+```
+챗봇이 시작되었습니다. (종료: q)
+========================================
+사용자: 제 이름은 민수입니다
+AI: 안녕하세요 민수님! 만나서 반갑습니다. 무엇을 도와드릴까요?
+
+사용자: 제 이름이 뭐였죠?
+AI: 민수님이라고 하셨습니다!
+
+사용자: q
+대화를 종료합니다.
+```
+
+> 이름을 기억하는 것은 LLM이 똑똑해서가 아니라, **메모리가 이전 대화를 매번 함께 보내주기 때문**입니다.
 
 ---
 
 <a id="part6"></a>
 
-## 정리 — 어떤 걸 써야 할까? [↑](#toc)
+## 6. 정리 [↑](#toc)
 
-| 상황 | 추천 코드 | 이유 |
-|------|------------|------|
-| 빠른 실습, 단일 대화 테스트 | **코드①** | 간단하고 직관적 |
-| 챗봇 서비스, 멀티 유저 환경 | **코드②** | 세션별 메모리 분리, 확장성 높음 |
-| LCEL 기반 최신 설계 | **코드②** | `InMemoryChatMessageHistory`는 공식 권장 클래스 |
-| Redis/DB 연동 고려 | **코드② 기반 확장** | 구조적으로 쉽게 교체 가능 |
+### 이 장에서 배운 것
+
+| 개념 | 역할 | 비유 |
+|------|------|------|
+| `InMemoryChatMessageHistory` | 대화 메시지를 저장하는 저장소 | 메모장 |
+| `MessagesPlaceholder` | 프롬프트에서 이전 대화가 삽입될 위치 | 메모장을 펴놓는 자리 |
+| `RunnableWithMessageHistory` | 체인에 메모리를 자동 연결하는 래퍼 | 비서가 메모장을 자동으로 관리 |
+| `session_id` | 사용자별 대화를 분리하는 키 | 고객별 메모장 구분 |
+
+### 메모리의 한계
+
+| 한계 | 설명 | 해결 방법 |
+|------|------|----------|
+| 프로그램 종료 시 사라짐 | `InMemoryChatMessageHistory`는 메모리에만 저장 | Redis, SQLite 등 영구 저장소 사용 |
+| 대화가 길어지면 토큰 초과 | 모든 대화를 매번 전송하므로 토큰 한도에 도달 | 요약 기능 또는 최근 N개만 유지 |
+| 에이전트에서의 메모리 | `RunnableWithMessageHistory`는 LCEL 체인 전용 | [LangGraph](/langgraph)의 `MemorySaver` 사용 |
 
 ---
 
-### 실습 과제
+### 🎯 실습 과제
 
-- **기본**: 코드 ①을 실행하고, 3번 연속 대화한 뒤 `history.messages`로 전체 대화 기록을 확인해 보세요
-- **중급**: 코드 ②로 "user1"과 "user2" 두 세션을 만들고, 각 세션이 서로의 대화를 기억하지 않는 것을 확인해 보세요
-- **심화**: 코드 ②에서 system 메시지를 "당신은 영어 선생님입니다"로 바꾸고, 영어 회화 연습 챗봇을 만들어 보세요
+- **기본**: 3장의 코드를 실행하고, 3번 연속 대화한 뒤 `history.messages`로 전체 대화 기록을 확인해 보세요
+- **중급**: 4장의 코드로 "user1"과 "user2" 두 세션을 만들고, 각 세션이 서로의 대화를 기억하지 않는 것을 확인해 보세요
+- **심화**: system 메시지를 "당신은 영어 선생님입니다. 사용자가 한국어로 말하면 영어로 번역해서 알려주세요."로 바꾸고, 영어 회화 연습 챗봇을 만들어 보세요

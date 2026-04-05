@@ -24,11 +24,11 @@ permalink: /llm/langgraph/agent_task
 `.env`
 
 ```py
-OPENAI_API_KEY=XXXXXXXXXXXXX
+OPENAI_API_KEY=본인의_OpenAI_API키
 OPENAI_MODEL=gpt-4o-mini
-TAVILY_API_KEY=XXXXXXXXXXXXX
-KAKAO_API_KEY=XXXXXXXXXXXXX
-WEATHER_API_KEY=XXXXXXXXXXXXX
+TAVILY_API_KEY=본인의_TAVILY_API키
+KAKAO_API_KEY=본인의_KAKAO_API키
+WEATHER_API_KEY=본인의_WEATHER_API키
 ```
 
 `config.py`
@@ -85,7 +85,7 @@ import json
 # 사용자의 입력 문장을 기반으로 food / activity / unknown 중 하나로 분류합니다.
 # ChatOpenAI는 환경변수 OPENAI_API_KEY를 자동으로 읽습니다
 llm = ChatOpenAI(
-    model=OPENAI_MODEL,          # 사용할 OpenAI 모델 (예: gpt-4o)
+    model=OPENAI_MODEL,          # 사용할 OpenAI 모델 (예: gpt-4o-mini)
     temperature=0.3,             # 창의성 제어 (낮을수록 일관성 ↑)
     model_kwargs={               # OpenAI에 전달할 추가 옵션
         "response_format": {"type": "json_object"}  # 반드시 JSON 객체로 응답

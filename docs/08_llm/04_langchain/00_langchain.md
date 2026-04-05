@@ -35,23 +35,25 @@ flowchart LR
     end
 
     subgraph 프로젝트1["프로젝트"]
-        I["9. 투자보고서"]
+        I["9. 통합 실습"]
+        I2["10. 투자보고서"]
     end
 
     subgraph RAG["RAG"]
-        J["10. RAG 개요"] --> K["11. KNN/ANN"]
-        K --> L["12. 임베딩/인덱스"]
-        L --> M["13. 벡터 검색"]
+        J["11. RAG 개요"] --> K["12. KNN/ANN"]
+        K --> L["13. 임베딩/인덱스"]
+        L --> M["14. 벡터 검색"]
     end
 
     subgraph 프로젝트2["RAG 프로젝트"]
-        N["14. AI 소믈리에"]
-        O["15. 주택청약 챗봇"]
+        N["15. AI 소믈리에"]
+        O["16. 주택청약 챗봇"]
     end
 
     E --> F
     H --> I
-    I --> J
+    I --> I2
+    I2 --> J
     M --> N
     M --> O
 ```
@@ -106,6 +108,9 @@ LangChain의 핵심 설계 패턴. `|` (파이프) 연산자로 컴포넌트를 
 모든 컴포넌트는 `Runnable` 인터페이스를 구현하며, `.invoke()`, `.stream()`, `.batch()`를 지원합니다.
 
 ```python
+from dotenv import load_dotenv
+load_dotenv()
+
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI

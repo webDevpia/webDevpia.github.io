@@ -122,10 +122,19 @@ print(response)
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-import os
-from google.colab import userdata
 
-os.environ['OPENAI_API_KEY'] = userdata.get('OPENAI_API_KEY')
+# colab 에서 
+# import os
+# from google.colab import userdata
+# os.environ['OPENAI_API_KEY'] = userdata.get('OPENAI_API_KEY')
+
+# 로컬에서 
+from dotenv import load_dotenv
+# .env 파일에서 OPENAI_API_KEY를 자동으로 읽어옴
+load_dotenv()
+
+# import os
+# print(os.getenv("OPENAI_API_KEY"))
 
 llm = ChatOpenAI(model="gpt-4o-mini")
 prompt = ChatPromptTemplate.from_template("{city}에서 가장 유명한 랜드마크는?")

@@ -37,10 +37,10 @@ permalink: /llm/langgraph/chat_lab
   이 패키지들은 LangChain/LangGraph 프레임워크, OpenAI의 LLM 연동, .env 파일 로딩, 그리고 HTTP 요청 등을 위해 사용됩니다.
 
 - **OpenAI API 키**: OpenAI의 GPT 모델을 사용하기 위해 API 키를 발급받아 환경변수 `OPENAI_API_KEY`에 저장하거나,  
-  `.env` 파일에 `OPENAI_API_KEY=<your_key>` 형태로 기록하세요.
+  `.env` 파일에 `OPENAI_API_KEY=본인의_OpenAI_API키` 형태로 기록하세요.
 
 - **Kakao REST API 키**: Kakao 지도/로컬 API를 사용하기 위해 Kakao Developers에서 **REST API 키**를 발급받아야 합니다.  
-  발급받은 키를 환경변수 `KAKAO_API_KEY`에 저장하거나 `.env` 파일에 `KAKAO_API_KEY=<your_key>` 형태로 추가하세요.  
+  발급받은 키를 환경변수 `KAKAO_API_KEY`에 저장하거나 `.env` 파일에 `KAKAO_API_KEY=본인의_KAKAO_API키` 형태로 추가하세요.  
 
       내 애플리케이션 - 애플리케이션 추가
     ![](./img/langgraph/langgraph002.png)
@@ -77,7 +77,7 @@ load_dotenv()
 openai_model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 KAKAO_API_KEY = os.getenv("KAKAO_API_KEY")
 # OpenAI 챗 모델 초기화
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(model=openai_model)
 ```
 
 <a id="part2"></a>
@@ -142,8 +142,10 @@ import os
 from dotenv import load_dotenv
 load_dotenv()  # .env 파일의 환경변수를 불러옴
 
+openai_model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+
 # OpenAI 챗 모델 초기화
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(model=openai_model)
 ```
 
 - `ChatOpenAI`: LangChain에서 OpenAI의 ChatCompletion API를 래핑한 클래스입니다. `model` 파라미터에 사용할 모델명을 지정합니다.

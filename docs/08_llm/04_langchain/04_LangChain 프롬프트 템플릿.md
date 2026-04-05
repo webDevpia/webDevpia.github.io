@@ -27,6 +27,8 @@ permalink: /llm/langchain/template
 7. [시나리오 기반 프롬프트 작성](#part7) - 이메일 작성 예시
 8. [정리](#part8)
 
+> **사전 준비:** [1장 개발환경](/llm/langchain/install)에서 `.env` 파일 설정과 패키지 설치를 완료한 상태에서 진행합니다. 모든 코드는 `.env`에 `OPENAI_API_KEY`가 설정되어 있어야 동작합니다.
+
 ---
 
 # LangChain 프롬프트 템플릿
@@ -161,6 +163,9 @@ HUMAN: '안녕하세요'를 일본어로 번역해 주세요.
 3장에서 배운 LCEL 파이프로 템플릿을 LLM에 연결합니다.
 
 ```python
+from dotenv import load_dotenv
+load_dotenv()
+
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -247,6 +252,9 @@ print(prompt.format(topic="인공지능"))
 ### 단계별 코드
 
 ```python
+from dotenv import load_dotenv
+load_dotenv()
+
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
@@ -280,7 +288,7 @@ print(f"2단계 결과: {restaurant_result}")
 ### 한 줄 체인으로 축약 (심화)
 
 위 코드를 LCEL 파이프 한 줄로 연결할 수도 있습니다.
-
+위 코드에 아래 코드를 추가해서 실행해 봅니다.
 ```python
 from langchain_core.runnables import RunnableLambda
 
@@ -309,6 +317,9 @@ print(result)
 ### 예시: 마케팅 이메일 자동 작성
 
 ```python
+from dotenv import load_dotenv
+load_dotenv()
+
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser

@@ -99,7 +99,7 @@ from langchain_openai import ChatOpenAI
 llm = ChatOpenAI(model=openai_model)
 ```
 
-> 💡 **Ollama 사용 시:** `from langchain_ollama import ChatOllama` 후 `llm = ChatOllama(model="llama3.2")`로 교체하면 무료로 실습할 수 있습니다.
+> 💡 **Ollama 사용 시:** `from langchain_ollama import ChatOllama` 후 `llm = ChatOllama(model="gemma3:1b")`로 교체하면 무료로 실습할 수 있습니다.
 
 ### 챗봇 노드 정의
 
