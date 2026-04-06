@@ -112,15 +112,53 @@ AI: 서울은 맑아요.
 
 > 이 자체로는 LLM과 연결되지 않습니다. 다음 단계에서 이 히스토리를 LLM 체인에 연결합니다.
 
+### LLM은 이전 대화를 기억하지 못합니다
+
+메모리를 연결하기 전에, **LLM이 정말로 이전 대화를 기억 못하는지** 직접 확인해봅시다.
+
+```python
+from dotenv import load_dotenv
+load_dotenv()
+
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage
+
+llm = ChatOpenAI(model="gpt-4o-mini")
+
+# 첫 번째 질문
+response1 = llm.invoke([HumanMessage(content="제 이름은 민수입니다.")])
+print("① AI:", response1.content)
+
+# 두 번째 질문 — 이전 대화를 기억할까?
+response2 = llm.invoke([HumanMessage(content="제 이름이 뭐였죠?")])
+print("② AI:", response2.content)
+```
+
+**실행 결과 (예시):**
+```
+① AI: 안녕하세요 민수님! 만나서 반갑습니다.
+② AI: 죄송합니다, 저는 이전 대화 내용을 기억하지 못합니다. 이름을 다시 알려주시겠어요?
+```
+
+> `invoke()`를 따로 호출하면 **매번 새로운 대화**가 됩니다. 이전에 "민수"라고 말한 것을 전혀 모릅니다. 이 문제를 해결하는 것이 3장의 `RunnableWithMessageHistory`입니다.
+
 ---
 
 <a id="part3"></a>
 
 ## 3. 챗봇에 메모리 연결하기 [↑](#toc)
 
-`RunnableWithMessageHistory`는 LCEL 체인에 **메모리를 자동으로 연결**해주는 래퍼입니다. 사용자가 질문할 때마다:
-1. 히스토리에서 이전 대화를 꺼내서 프롬프트에 주입
-2. LLM이 응답하면 히스토리에 자동 저장
+2장에서 히스토리에 메시지를 직접 `add_message()`로 저장했습니다. 하지만 매번 수동으로 저장하는 것은 번거롭습니다.
+
+`RunnableWithMessageHistory`는 이 과정을 **자동화**해주는 도구입니다. 기존 LCEL 체인(`prompt | llm`)을 감싸면, 사용자가 질문할 때마다:
+1. 히스토리에서 이전 대화를 꺼내서 프롬프트에 **자동 주입**
+2. LLM이 응답하면 히스토리에 **자동 저장**
+
+> 비유: 2장에서는 비서가 **메모장을 직접 펴고 적었다면**, `RunnableWithMessageHistory`는 **녹음기처럼 대화를 자동으로 기록**해주는 것입니다. 우리는 대화만 하면 되고, 기록은 알아서 됩니다.
+
+코드를 단계별로 살펴봅니다.
+
+### Step 1: 기존 LCEL 체인 만들기 (3장 LCEL에서 배운 것)
 
 ```python
 from dotenv import load_dotenv
@@ -128,33 +166,53 @@ load_dotenv()
 
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.runnables.history import RunnableWithMessageHistory
-from langchain_core.chat_history import InMemoryChatMessageHistory
 
-# 1. LLM + 프롬프트 정의
 llm = ChatOpenAI(model="gpt-4o-mini")
+
 prompt = ChatPromptTemplate.from_messages([
     ("system", "당신은 친절한 비서입니다."),
-    MessagesPlaceholder("history"),      # ← 이전 대화가 여기에 자동 삽입됩니다
-    ("human", "{input}"),
+    MessagesPlaceholder("history"),   # ← 이전 대화가 삽입될 "빈칸"
+    ("human", "{input}"),             # ← 현재 사용자 입력
 ])
-chain = prompt | llm
 
-# 2. 히스토리 객체 생성
-history = InMemoryChatMessageHistory()
+chain = prompt | llm    # 3장에서 배운 LCEL 체인
+```
 
-# 3. 체인에 메모리 연결
+> `MessagesPlaceholder("history")`는 프롬프트에 **빈칸**을 만들어둔 것입니다. 나중에 `RunnableWithMessageHistory`가 이 빈칸에 이전 대화를 자동으로 채워넣습니다.
+
+### Step 2: 히스토리 저장소 준비 (2장에서 배운 것)
+
+```python
+from langchain_core.chat_history import InMemoryChatMessageHistory
+
+history = InMemoryChatMessageHistory()   # 빈 메모장 준비
+```
+
+### Step 3: 체인에 메모리 연결 (이번 장의 핵심)
+
+```python
+from langchain_core.runnables.history import RunnableWithMessageHistory
+
 chain_with_memory = RunnableWithMessageHistory(
-    chain,
-    get_session_history=lambda _: history,   # 모든 요청이 같은 히스토리를 사용
-    input_messages_key="input",
-    history_messages_key="history",
+    chain,                                     # ← Step 1에서 만든 체인
+    get_session_history=lambda _: history,      # ← Step 2의 히스토리를 사용
+    input_messages_key="input",                 # ← 사용자 입력이 담긴 키 이름
+    history_messages_key="history",             # ← 프롬프트의 MessagesPlaceholder 이름과 동일해야 함
 )
+```
 
-# 4. 대화 실행
-config = {"configurable": {"session_id": "test"}}
+> 각 파라미터의 역할:
+> - `chain` — 기존 LCEL 체인을 그대로 넣습니다
+> - `get_session_history` — "히스토리를 어디서 가져올지" 알려주는 함수. 여기서는 항상 같은 `history` 객체를 반환
+> - `input_messages_key="input"` — invoke할 때 `{"input": "질문"}` 형태로 보낼 것이라는 뜻
+> - `history_messages_key="history"` — 프롬프트의 `MessagesPlaceholder("history")`에 이전 대화를 넣으라는 뜻
 
-resp = chain_with_memory.invoke({"input": "가을 여행지 추천해줘"}, config=config)
+### Step 4: 대화 실행
+
+```python
+config = {"configurable": {"session_id": "test"}}  # 세션 식별자 (4장에서 자세히)
+
+resp = chain_with_memory.invoke({"input": "가을 여행지 3곳만 추천해줘"}, config=config)
 print("AI:", resp.content)
 
 resp = chain_with_memory.invoke({"input": "거기서 뭐 먹으면 좋아?"}, config=config)
