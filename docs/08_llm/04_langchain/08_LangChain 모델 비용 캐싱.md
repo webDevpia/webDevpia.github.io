@@ -306,7 +306,7 @@ class JsonFileCache(BaseCache):
     def __init__(self, file_path=CACHE_FILE):
         self.file_path = file_path
         try:
-            with open(file_path, "r") as f:
+            with open(file_path, "r", encoding="utf-8") as f:
                 self._data = json.load(f)
             print(f"📂 기존 캐시 로드: {len(self._data)}개 항목")
         except FileNotFoundError:
