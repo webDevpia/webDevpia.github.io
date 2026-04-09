@@ -8,59 +8,6 @@ permalink: /llm/langchain
 ---
 
 # LangChain
-{: .no_toc }
-
-## Table of Contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
-
-## 커리큘럼 로드맵
-
-```mermaid
-flowchart LR
-    subgraph 기초["기초"]
-        A["1. 개발환경"] --> B["2. 기본 사용 예제"]
-        B --> C["3. LCEL"]
-        C --> D["4. 프롬프트 템플릿"]
-        D --> E["5. 출력 파서"]
-    end
-
-    subgraph 심화["심화"]
-        F["6. 도구/에이전트"] --> G["7. 메모리"]
-        G --> H["8. 캐싱"]
-    end
-
-    subgraph 프로젝트1["프로젝트"]
-        I["9. 통합 실습"]
-        I2["10. 투자보고서"]
-    end
-
-    subgraph RAG["RAG"]
-        J["11. RAG 개요"] --> K["12. KNN/ANN"]
-        K --> L["13. 임베딩/인덱스"]
-        L --> M["14. 벡터 검색"]
-    end
-
-    subgraph 프로젝트2["RAG 프로젝트"]
-        M2["15. RAG 통합 실습"]
-        N["16. AI 소믈리에"]
-        O["17. 주택청약 챗봇"]
-    end
-
-    E --> F
-    H --> I
-    I --> I2
-    I2 --> J
-    M --> M2
-    M2 --> N
-    M2 --> O
-```
-
----
 
 ## LangChain이란?
 
