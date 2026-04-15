@@ -294,3 +294,6 @@ uv sync
 | **non-Python 패키지** | 미지원 (시스템 패키지 매니저 필요) | 지원 (CUDA, MKL 등) |
 
 > **참고:** CUDA 드라이버나 시스템 레벨 라이브러리가 필요한 경우(GPU 학습 등)에는 Conda가 여전히 유용하다. 일반적인 LangChain 개발에는 uv가 더 간편하다.
+
+
+→ **다음 장**: [2. 기본 사용 예제](/llm/langchain/example)

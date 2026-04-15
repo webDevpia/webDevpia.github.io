@@ -585,7 +585,7 @@ BMI 계산기를 확장해 보세요.
 <a id="part7"></a>
 ## 7. 통합 정리 [↑](#toc)
 
-### 이 수업에서 배운 것
+### 이 장에서 배운 것
 
 | 개념 | 핵심 내용 |
 |------|----------|
@@ -598,24 +598,24 @@ BMI 계산기를 확장해 보세요.
 
 ### 다음 시간 연결
 
-다음 시간([6-3. 웹서비스 배포](/deeplearning/streamlit-mnist-deploy))에서 이 지식을 활용하여 CNN 수업에서 만든 MNIST 모델을 **숫자 인식 웹 앱**으로 만들고 배포합니다.
+다음 장([6-3. 웹서비스 배포](/deeplearning/streamlit-mnist-deploy))에서 이 지식을 활용하여 CNN 수업에서 만든 MNIST 모델을 **숫자 인식 웹 앱**으로 만들고 배포합니다.
 
 ```python
 # 6-3에서 만들 앱의 구조 미리보기
 import streamlit as st
 
-st.title("MNIST 숫자 인식")           # ← 오늘 배운 st.title
+st.title("MNIST 숫자 인식")           # ← 앞에서 배운 st.title
 
-uploaded = st.file_uploader(...)     # ← 오늘 배운 파일 업로드
+uploaded = st.file_uploader(...)     # ← 앞에서 배운 파일 업로드
 
-col1, col2 = st.columns(2)          # ← 오늘 배운 레이아웃
+col1, col2 = st.columns(2)          # ← 앞에서 배운 레이아웃
 with col1:
-    st.image(uploaded)               # ← 오늘 배운 이미지 표시
+    st.image(uploaded)               # ← 앞에서 배운 이미지 표시
 
-model = load_model()                 # ← 오늘 배운 @st.cache_resource
+model = load_model()                 # ← 앞에서 배운 @st.cache_resource
 
-st.success(f"결과: {prediction}")    # ← 오늘 배운 상태 메시지
-st.bar_chart(probabilities)          # ← 오늘 배운 차트
+st.success(f"결과: {prediction}")    # ← 앞에서 배운 상태 메시지
+st.bar_chart(probabilities)          # ← 앞에서 배운 차트
 ```
 
 ### 복습 질문
@@ -640,3 +640,6 @@ st.bar_chart(probabilities)          # ← 오늘 배운 차트
 - [Streamlit API 레퍼런스](https://docs.streamlit.io/develop/api-reference)
 - [Streamlit 갤러리 (다른 사람들이 만든 앱)](https://streamlit.io/gallery)
 - [Streamlit 치트 시트](https://docs.streamlit.io/develop/quick-references/api-cheat-sheet)
+
+
+→ **다음 장**: [6-3. 웹서비스 배포 - MNIST](/deeplearning/streamlit-mnist-deploy)

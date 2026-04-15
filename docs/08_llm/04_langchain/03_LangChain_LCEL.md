@@ -457,3 +457,6 @@ print("키워드:", result["키워드"])
 - **기본**: `.invoke()`, `.batch()`, `.stream()` 세 가지를 모두 실행해 보고 차이를 체감해 보세요
 - **중급**: `RunnableParallel`로 "번역 + 요약"을 동시에 하는 체인을 만들어 보세요
 - **심화**: `RunnableBranch`로 한국어/영어 질문을 자동 분류하는 체인을 만들어 보세요
+
+
+→ **다음 장**: [4. Template](/llm/langchain/template)

@@ -666,3 +666,6 @@ streamlit run app.py --server.port 8501
 
 - `reporting_service.py`에서 `ChatOpenAI` → `ChatOllama`로 교체하고, 보고서 품질을 비교해보세요
 - 여러 회사를 한 번에 분석하여 비교 보고서를 생성하는 기능을 만들어보세요
+
+
+→ **다음 장**: [11. Retrieval-Augmented Generation (RAG)](/llm/langchain/rag)

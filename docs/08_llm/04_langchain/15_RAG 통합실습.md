@@ -919,3 +919,6 @@ streamlit run food_app.py --server.port 8501
 | 인라인 텍스트 20개 | 15장: CSV 데이터 + Pinecone (클라우드) |
 | FAISS (로컬) | 15장: Pinecone (클라우드) |
 | 모듈 분리 | 16장: PDF 로딩 + Streamlit 웹 앱 |
+
+
+→ **다음 장**: [16. LangChain sommelier project](/llm/langchain/sommelier_project)

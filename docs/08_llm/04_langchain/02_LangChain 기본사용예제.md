@@ -196,3 +196,6 @@ result = chain.invoke({"변수명": "값"})
 | `.invoke()` | 단일 입력 실행 |
 | `.stream()` | 스트리밍 출력 |
 | `.batch()` | 여러 입력 일괄 실행 |
+
+
+→ **다음 장**: [3. LCEL](/llm/langchain/lcel)

@@ -341,3 +341,6 @@ npm run test:e2e:report
 - 테스트는 독립적이어야 합니다
 - E2E 테스트는 중요한 사용자 흐름에 집중하세요
 - 테스트 커버리지보다 테스트 품질이 중요합니다
+
+
+→ **다음 장**: [3. GitHub Spec Kit을 활용한 Spec Driven Development](/sdd/speckit/lab03)

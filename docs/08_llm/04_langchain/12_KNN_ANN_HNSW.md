@@ -216,3 +216,6 @@ for r,score in results:
 > - `InMemoryDocstore()`: FAISS 인덱스의 벡터 ID와 실제 문서를 매핑하는 메모리 내 저장소입니다. FAISS 자체는 벡터만 저장하므로, 원본 문서 내용을 보관하는 역할을 합니다.
 > - `index_to_docstore_id={}`: FAISS 내부의 정수 인덱스를 문서 ID로 변환하는 딕셔너리입니다. 문서가 추가되면 자동으로 채워집니다.
 > - 이 두 가지는 `FAISS.from_documents()`를 사용하면 내부적으로 자동 처리되지만, 여기서는 HNSW 인덱스를 직접 지정하기 위해 수동으로 설정합니다.
+
+
+→ **다음 장**: [13. embedding](/llm/langchain/embedding)

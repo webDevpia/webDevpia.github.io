@@ -37,25 +37,44 @@ CNN 수업에서 MNIST 모델을 만들고, 직접 이미지를 넣어 예측까
 
 하지만 현재 상태로는 **Colab 노트북이 있는 사람만** 사용할 수 있습니다.
 
-```
-현재:  사용자 → Colab 열기 → 런타임 연결 → 코드 실행 → 이미지 업로드 → 결과 확인
-        😰 "코드가 뭐예요? Colab이 뭐예요?"
-
-목표:  사용자 → URL 접속 → 이미지 업로드 → 결과 확인
-        😊 "와, 이거 누가 만들었어요?"
+```mermaid
+flowchart LR
+    subgraph 현재["😰 현재"]
+        direction LR
+        A1["사용자"] --> B1["Colab 열기"] --> C1["런타임 연결"] --> D1["코드 실행"] --> E1["이미지 업로드"] --> F1["결과 확인"]
+    end
+    subgraph 목표["😊 목표"]
+        direction LR
+        A2["사용자"] --> B2["URL 접속"] --> C2["이미지 업로드"] --> D2["결과 확인"]
+    end
+    style 현재 fill:#FEF3C7,stroke:#D97706
+    style 목표 fill:#D1FAE5,stroke:#059669
 ```
 
 ### 모델 → 서비스까지의 흐름
 
-```
-[6. CNN에서 한 것]           [6-2에서 배운 것]        [이번 시간]
-모델 학습 → 모델 저장    +    Streamlit 위젯/캐싱  →   웹 앱 완성 → 배포
-(mnist_cnn.pt)              (st.file_uploader 등)    (app.py)    (Cloud)
+```mermaid
+flowchart LR
+    subgraph S1["6. CNN에서 한 것"]
+        A["모델 학습"] --> B["모델 저장\nmnist_cnn.pt"]
+    end
+    subgraph S2["6-2에서 배운 것"]
+        C["Streamlit 위젯/캐싱\nst.file_uploader 등"]
+    end
+    subgraph S3["이번 장"]
+        D["웹 앱 완성\napp.py"] --> E["배포\nCloud"]
+    end
+    B --> D
+    C --> D
+    style S1 fill:#DBEAFE,stroke:#1D4ED8
+    style S2 fill:#FEF3C7,stroke:#D97706
+    style S3 fill:#D1FAE5,stroke:#059669
+    style E fill:#4CAF50,color:#fff
 ```
 
 Streamlit 기초에서 배운 요소들이 어떻게 사용되는지 봅시다.
 
-| 6-2에서 배운 것 | 이번 시간에 활용 |
+| 6-2에서 배운 것 | 이번 장에서 활용 |
 |---------------|---------------|
 | `st.title()`, `st.write()` | 앱 제목과 안내 문구 |
 | `st.file_uploader()` | 숫자 이미지 업로드 |
@@ -439,3 +458,6 @@ Streamlit Cloud는 연결된 GitHub 저장소를 **감시(watch)** 하고 있습
 - [Streamlit 공식 문서](https://docs.streamlit.io/)
 - [Streamlit Community Cloud](https://share.streamlit.io/)
 - [Streamlit 배포 가이드](https://docs.streamlit.io/deploy/streamlit-community-cloud)
+
+
+→ **다음 장**: [7. 전이학습 - Dogs vs Cats 실전 분류](/deeplearning/DogsVsCats)

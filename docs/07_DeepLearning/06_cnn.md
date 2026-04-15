@@ -645,6 +645,6 @@ Pooling은 Feature Map의 공간 크기를 줄여서 세 가지 효과를 얻습
 
 ### 다음 시간 예고
 
-이번 시간에 만든 MNIST 모델을 **누구나 사용할 수 있는 웹 앱**으로 만들어 봅니다. 먼저 Streamlit이라는 도구를 배운 뒤, 이 모델을 웹에 올려 서비스합니다.
+이번 장에서 만든 MNIST 모델을 **누구나 사용할 수 있는 웹 앱**으로 만들어 봅니다. 먼저 Streamlit이라는 도구를 배운 뒤, 이 모델을 웹에 올려 서비스합니다.
 
 → [6-2. Streamlit 기초](/deeplearning/streamlit-basics) → [6-3. 웹서비스 배포: MNIST](/deeplearning/streamlit-mnist-deploy)

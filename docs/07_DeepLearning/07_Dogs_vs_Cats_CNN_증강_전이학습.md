@@ -1335,3 +1335,6 @@ gdown
 - [Kaggle Dogs vs Cats competition](https://www.kaggle.com/c/dogs-vs-cats)
 - [Streamlit Community Cloud](https://share.streamlit.io/)
 - [Streamlit 공식 문서](https://docs.streamlit.io/)
+
+
+→ **다음 장**: [8. 전이학습 - 작물 잎 사진으로 질병 분류](/deeplearning/plant)

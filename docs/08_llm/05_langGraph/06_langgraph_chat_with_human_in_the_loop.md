@@ -422,3 +422,6 @@ print(snapshot.next)
 1. `interrupt` 후 `snapshot.next`를 출력하여 `('tools',)` 상태를 직접 확인해보세요. 정상 응답 후에도 출력하여 `()`과 비교해보세요.
 2. `Command(resume={"data": "다른 응답"})`에서 `"data"` 키 대신 다른 키(예: `"answer"`)를 사용하면 어떤 에러가 발생하는지 확인해보세요.
 3. `human_assist` 도구의 docstring을 수정하여 LLM이 더 자주/드물게 사람에게 도움을 요청하도록 유도해보세요.
+
+
+→ **다음 장**: [7. LangGraph 실습](/llm/langgraph/chat_lab)

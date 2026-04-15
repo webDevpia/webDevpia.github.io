@@ -268,3 +268,6 @@ for snapshot in all_snapshots:
 1. `thread_id`를 3개 만들어 각각 다른 주제로 대화하고, `graph.get_state(config).values['messages']`로 각 상태를 비교해보세요.
 2. 같은 `thread_id`로 5번 이상 대화를 이어가며 맥락이 유지되는지 확인해보세요.
 3. 프로그램을 재시작한 후 같은 `thread_id`로 대화해보세요. `InMemorySaver`의 한계를 직접 확인할 수 있습니다.
+
+
+→ **다음 장**: [6. LangGraph 챗봇에 사람의 개입 통합하기](/llm/langgraph/chat_human)

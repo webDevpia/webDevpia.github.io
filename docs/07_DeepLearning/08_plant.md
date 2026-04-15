@@ -627,3 +627,6 @@ print('ResNet test acc:  ', test_accuracy)
 - PyTorch Transfer Learning Tutorial
 - Torchvision ImageFolder
 - Torchvision models (ResNet50)
+
+
+→ **다음 장**: [9. 객체 탐지와 YOLO26](/deeplearning/yolo26-guide)

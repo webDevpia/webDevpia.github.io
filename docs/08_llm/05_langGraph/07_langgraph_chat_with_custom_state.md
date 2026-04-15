@@ -380,4 +380,7 @@ final_state = graph.invoke(initial_state2)
 ```
 이런 입력에 대해 챗봇이 어떤 키워드를 뽑고, Kakao API에서 어떤 결과를 가져오며, 최종 답변을 어떻게 하는지 관찰해보세요.
 
-또한, 현재 구조는 한 번 질문에 한 번 답변을 하는 형태지만, `final_state`를 다음 질문의 초기 상태로 넘기면 **대화의 연속성**을 가질 수도 있습니다. 다만 도구 호출에 대한 상태(`search_query`, `search_results`)를 초기화하거나 유지하는 전략이 필요합니다. 
+또한, 현재 구조는 한 번 질문에 한 번 답변을 하는 형태지만, `final_state`를 다음 질문의 초기 상태로 넘기면 **대화의 연속성**을 가질 수도 있습니다. 다만 도구 호출에 대한 상태(`search_query`, `search_results`)를 초기화하거나 유지하는 전략이 필요합니다.
+
+
+→ **다음 장**: [8. LangGraph 프로젝트 정의서](/llm/langgraph/agent_proj)

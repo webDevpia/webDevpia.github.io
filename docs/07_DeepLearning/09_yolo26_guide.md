@@ -1463,3 +1463,6 @@ graph LR
 - [Roboflow](https://roboflow.com/) — 데이터 라벨링 및 커스텀 데이터셋
 - [COCO Dataset](https://cocodataset.org/) — 80 클래스 사전학습 데이터셋
 - [DOTA Dataset](https://captain-whu.github.io/DOTA/) — OBB 사전학습 데이터셋
+
+
+→ **다음 장**: [10. 텍스트 AI 기초](/deeplearning/textAI)

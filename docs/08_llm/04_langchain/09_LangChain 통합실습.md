@@ -632,3 +632,6 @@ streamlit run travel_app.py --server.port 8501
 | 6장: 도구 | 도구 정의 | `@tool`, `llm.bind_tools(tools)` |
 | 7장: 메모리 | 체인 구성 | `RunnableWithMessageHistory`, `session_id` |
 | 8장: 캐싱 | 맨 위 | `set_llm_cache(SQLiteCache(...))` |
+
+
+→ **다음 장**: [10. 투자보고서 작성 Project](/llm/langchain/langchain_proj)

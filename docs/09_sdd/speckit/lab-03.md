@@ -212,3 +212,6 @@ permalink: /sdd/speckit/lab03
 - 스펙 수정이 발생하면 clarify → plan → tasks 순서로 다시 동기화하세요.
 - 작업을 시작하기 전, 반드시 헌법(품질/테스트/UX/성능) 체크리스트를 통과시키세요.
 - 작은 MVP(US1)부터 완성한 뒤 단계적으로 확장하세요.
+
+
+→ **다음 장**: [4. 신규 기능을 위한 완전한 Spec Driven Development 사이클](/sdd/speckit/lab04)

@@ -326,3 +326,6 @@ gh pr merge --squash --delete-branch
   - `ssh -vT git@github.com`로 디버그 로그 확인
 - `Permission denied (publickey)`:
   - 키 파일 경로/권한/등록 여부 문제일 가능성이 큼
+
+
+→ **다음 장**: [2. Next.js 프로젝트에 테스트 환경 설정하기](/sdd/speckit/lab02)

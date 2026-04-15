@@ -53,14 +53,15 @@ exclude:
   - fixtures/
 # 배포시에 제외하고 싶은 폴더 경로 추가
   - docs/ex/
-  - docs/01_git
-  - docs/02_language
+  # - docs/01_git
+  # - docs/02_language
   - docs/02_language/00_basic
-  - docs/02_language/02_fastapi
-  - docs/02_language/03_0_react
-  - docs/02_language/03_1_react
-  - docs/02_language/04_java
-  - docs/02_language/05_spring
+  # - docs/02_language/01_html
+  # - docs/02_language/  
+  # - docs/02_language/
+  # - docs/02_language/
+  # - docs/02_language/
+  # - docs/02_language/
   - docs/03_db/
   - docs/04_cloud/
   - docs/05_site_Deploy
@@ -70,8 +71,8 @@ exclude:
   # - docs/07_DeepLearning/08_plant
   # - docs/07_DeepLearning/09_yolo
   # - docs/07_DeepLearning/10_텍스트AI
-  - docs/07_DeepLearning/11_임베딩모델
-  - docs/07_DeepLearning/99_labelstudio
+  # - docs/07_DeepLearning/11_임베딩모델
+  # - docs/07_DeepLearning/99_labelstudio
   # - docs/08_llm
   - docs/08_llm/00_basic_model
   - docs/08_llm/01_flowise
@@ -83,7 +84,7 @@ exclude:
   - docs/08_llm/06_RegPrompting
   - docs/08_llm/07_mcp
   - docs/09_sdd
-  - docs/10_작업중
+  - docs/작업중
   - docs/강의계획서
 
 

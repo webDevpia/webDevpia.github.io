@@ -348,3 +348,6 @@ print(json.dumps(data, indent=2, ensure_ascii=False))  # 보기 좋게 출력
 - ✅ **하지 말 것**은? (제외 조건)
 
 > **확인**: "딥러닝 알려줘"라는 프롬프트를 CRAFT 프레임워크로 개선해보세요. 5가지 요소(C, R, A, F, T)를 모두 포함하여 작성합니다.
+
+
+→ **다음 장**: [3. 고급기법과 실전활용](/llm/prompt-basic/advanced)

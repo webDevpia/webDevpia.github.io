@@ -115,7 +115,7 @@ PyTorch 버전: 2.10.0+cpu
 
 ### 4. GPU 연결 여부 확인
 
-오늘은 CPU만으로도 충분하지만, Colab의 중요한 장점 중 하나는 **브라우저에서 GPU를 사용할 수 있다**는 점입니다.
+이 실습은 CPU만으로도 충분하지만, Colab의 중요한 장점 중 하나는 **브라우저에서 GPU를 사용할 수 있다**는 점입니다.
 
 #### GPU 켜는 방법
 
@@ -840,3 +840,6 @@ print("predicted class:", predicted_class.item())
 - `torch.nn.Module`: https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html
 - `torch.utils.data`: https://docs.pytorch.org/docs/stable/data.html
 - `torch.no_grad`: https://docs.pytorch.org/docs/stable/generated/torch.no_grad.html
+
+
+→ **다음 장**: [2. 신경망 기초 - 퍼셉트론에서 MLP까지](/deeplearning/neural-network-basic)
