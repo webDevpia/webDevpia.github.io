@@ -1,9 +1,9 @@
 ---
-title: fontawesome
+title: Font Awesome
 layout: default
-parent: Language
+parent: HTML
 nav_order: 5
-permalink: /language/fontawesome
+permalink: /language/html/fontawesome
 # nav_exclude: true
 # search_exclude: true
 ---

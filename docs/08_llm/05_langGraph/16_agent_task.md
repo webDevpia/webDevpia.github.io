@@ -3,7 +3,7 @@ title: 9. LangGraph 프로젝트
 layout: default
 grand_parent: LLM
 parent: LangGraph
-nav_order: 9
+nav_order: 16
 permalink: /llm/langgraph/agent_task
 ---
 
@@ -14,6 +14,8 @@ permalink: /llm/langgraph/agent_task
 1. [환경설정 파일 작성](#part1)
 2. [각 사이트 api key 얻기](#part2)
 3. [각 Agent 생성 및 테스트](#part3)
+4. [그래프 시각화](#part12)
+5. [비용 추적](#part13)
 
 <a id="part1"></a>
 
@@ -1276,3 +1278,117 @@ except Exception as e:
     print("❌ 실행 중 오류 발생:")
     print(str(e))
 ```
+
+---
+
+<a id="part12"></a>
+
+### 12. 그래프 시각화 [↑](#toc)
+
+LangGraph는 컴파일된 그래프를 Mermaid 형식으로 출력하는 기능을 제공합니다.  
+이를 통해 에이전트 흐름을 시각적으로 확인할 수 있습니다.
+
+#### 그래프 구조 출력
+
+```python
+# Mermaid 형식으로 그래프 구조 출력
+print(graph.get_graph().draw_mermaid())
+```
+
+#### 예상 출력 결과
+
+이 프로젝트의 10개 에이전트 그래프는 아래와 같이 출력됩니다.
+
+```
+%%{init: {'flowchart': {'curve': 'linear'}}}%%
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	classify_intent(classify_intent)
+	get_time_slot(get_time_slot)
+	get_season(get_season)
+	get_weather(get_weather)
+	recommend_food(recommend_food)
+	recommend_activity(recommend_activity)
+	generate_search_keyword(generate_search_keyword)
+	search_place(search_place)
+	summarize_message(summarize_message)
+	intent_unsupported(intent_unsupported)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> classify_intent;
+	classify_intent --> get_time_slot;
+	get_time_slot --> get_season;
+	get_season --> get_weather;
+	get_weather -.-> recommend_food;
+	get_weather -.-> recommend_activity;
+	get_weather -.-> intent_unsupported;
+	recommend_food --> generate_search_keyword;
+	recommend_activity --> generate_search_keyword;
+	generate_search_keyword --> search_place;
+	search_place --> summarize_message;
+	summarize_message --> __end__;
+	intent_unsupported --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+```
+
+> 💡 이 출력을 [mermaid.live](https://mermaid.live)에 붙여넣으면 시각적으로 확인할 수 있습니다.
+
+조건부 분기(`add_conditional_edges`)는 점선 화살표(`-.->`)로 표시되어, 일반 엣지와 구분됩니다.  
+`recommend_food` 또는 `recommend_activity` 중 하나만 실행되는 분기 구조를 한눈에 파악할 수 있습니다.
+
+---
+
+<a id="part13"></a>
+
+### 13. 비용 추적 [↑](#toc)
+
+LangGraph 실행 시 소비되는 OpenAI 토큰 수와 예상 비용을 추적할 수 있습니다.  
+`langchain_community.callbacks`의 `get_openai_callback`을 활용합니다.
+
+#### 토큰 카운팅 코드
+
+```python
+from langchain_community.callbacks import get_openai_callback
+
+# 테스트용 입력 상태
+initial_state = {
+    "user_input": "배고파",
+    "location": "홍대"
+}
+
+config = {"configurable": {"thread_id": "cost-test-01"}}
+
+with get_openai_callback() as cb:
+    result = graph.invoke(initial_state, config)
+    print(f"총 토큰:     {cb.total_tokens:,}")
+    print(f"프롬프트 토큰: {cb.prompt_tokens:,}")
+    print(f"완성 토큰:   {cb.completion_tokens:,}")
+    print(f"예상 비용:   ${cb.total_cost:.4f}")
+```
+
+#### 출력 예시
+
+```
+총 토큰:     2,341
+프롬프트 토큰: 1,987
+완성 토큰:   354
+예상 비용:   $0.0014
+```
+
+#### 쿼리당 예상 비용 (gpt-4o-mini 기준)
+
+| 시나리오 | 총 토큰 (예상) | 예상 비용 |
+|---------|--------------|---------|
+| 음식 추천 (food intent) | 약 2,000~2,500 토큰 | 약 $0.001~$0.002 |
+| 활동 추천 (activity intent) | 약 2,000~2,500 토큰 | 약 $0.001~$0.002 |
+| 미지원 입력 (unknown intent) | 약 800~1,000 토큰 | 약 $0.0005 이하 |
+
+> ⚠️ 위 비용은 **gpt-4o-mini** 모델 기준 추정치입니다. 모델에 따라 달라집니다.  
+> gpt-4o 사용 시 약 10배 이상의 비용이 발생할 수 있으니 개발 단계에서는 gpt-4o-mini 사용을 권장합니다.
+
+> 💡 비용을 절감하려면 `classify_intent`, `generate_search_keyword` 등 단순 분류 노드는 더 저렴한 모델(`gpt-3.5-turbo`)로 교체하는 것도 방법입니다.
+
+---
+
+→ **다음 장**: [17. Streamlit UI 배포](/llm/langgraph/deployment)

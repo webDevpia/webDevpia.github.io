@@ -1,9 +1,9 @@
 ---
 title: Emmet
 layout: default
-parent: Language
-nav_order: 2
-permalink: /language/emmet
+parent: HTML
+nav_order: 4
+permalink: /language/html/emmet
 # nav_exclude: true
 # search_exclude: true
 ---

@@ -55,7 +55,7 @@ exclude:
   - docs/ex/
   # - docs/01_git
   # - docs/02_language
-  - docs/02_language/00_basic
+  # - docs/02_language/00_basic
   # - docs/02_language/01_html
   # - docs/02_language/  
   # - docs/02_language/

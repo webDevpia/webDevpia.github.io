@@ -3,7 +3,7 @@ title: 6. LangGraph 챗봇에 사람의 개입 통합하기
 layout: default
 grand_parent: LLM
 parent: LangGraph
-nav_order: 6
+nav_order: 7
 permalink: /llm/langgraph/chat_human
 --- 
 # LangGraph 챗봇에 사람의 개입 통합하기
@@ -35,6 +35,8 @@ permalink: /llm/langgraph/chat_human
 1. [환경 설정](#part1)
 2. [코드 설명](#part2)
 3. [챗봇 실행](#part3)
+4. [도구 호출 승인 게이트 (Approval Gate)](#part4)
+5. [Time Travel: 과거 상태로 되돌리기](#part5)
 
 <a id="part1"></a>
 
@@ -417,11 +419,289 @@ pprint(snapshot.values['messages'])
 print(snapshot.next)
 ```
 
+<a id="part4"></a>
+
+## 4. 도구 호출 승인 게이트 (Approval Gate) [↑](#toc)
+
+지금까지는 `interrupt()`를 **도구 함수 내부**에서 호출하여 사람의 개입을 요청했습니다. LangGraph는 이보다 더 간단한 방법도 제공합니다. 그래프 컴파일 시 `interrupt_before` 옵션을 지정하면, 특정 노드 실행 전에 **자동으로** 그래프가 멈춥니다.
+
+### interrupt_before 설정
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain_tavily import TavilySearch
+from langgraph.graph import StateGraph, START, END
+from langgraph.graph.message import add_messages
+from langgraph.prebuilt import ToolNode, tools_condition
+from langgraph.checkpoint.memory import InMemorySaver
+from typing_extensions import TypedDict
+from typing import Annotated
+
+class State(TypedDict):
+    messages: Annotated[list, add_messages]
+
+llm = ChatOpenAI(model="gpt-4o-mini")
+search_tool = TavilySearch(max_results=2)
+llm_with_tools = llm.bind_tools([search_tool])
+
+def chatbot(state: State):
+    return {"messages": [llm_with_tools.invoke(state["messages"])]}
+
+memory = InMemorySaver()
+tool_node = ToolNode([search_tool])
+
+workflow = StateGraph(State)
+workflow.add_node("chatbot", chatbot)
+workflow.add_node("tools", tool_node)
+workflow.add_conditional_edges("chatbot", tools_condition)
+workflow.add_edge("tools", "chatbot")
+workflow.add_edge(START, "chatbot")
+
+# interrupt_before=["tools"] — 도구 실행 전 자동으로 멈춤
+graph = workflow.compile(
+    checkpointer=memory,
+    interrupt_before=["tools"]
+)
+```
+
+> 💡 `interrupt_before=["tools"]`를 지정하면, LLM이 도구 호출을 결정한 직후, 실제 도구가 실행되기 **전에** 그래프가 자동으로 일시 정지합니다. 도구 함수 코드를 수정하지 않아도 됩니다.
+
+### 승인 게이트 워크플로우
+
+승인 게이트를 사용하는 전형적인 흐름은 다음과 같습니다.
+
+```mermaid
+flowchart TD
+    A[사용자 질문 입력] --> B[chatbot 노드: LLM이 도구 호출 결정]
+    B --> C{interrupt_before 게이트}
+    C -->|사람이 검토| D[도구 호출 내용 확인]
+    D -->|승인| E["graph.invoke(None, config) — 실행 재개"]
+    D -->|거절| F[상태 수정 또는 다른 입력 제공]
+    E --> G[tools 노드 실행]
+    G --> H[chatbot 노드: 최종 응답 생성]
+    F --> B
+```
+
+**1단계: 질문 입력 → 그래프 일시 정지**
+
+```python
+from langchain_core.messages import HumanMessage
+
+config = {"configurable": {"thread_id": "approval_demo"}}
+user_input = "오늘 서울 날씨를 검색해 주세요."
+
+result = graph.invoke(
+    {"messages": [HumanMessage(content=user_input)]},
+    config
+)
+
+# 그래프가 tools 노드 직전에 멈춤
+snapshot = graph.get_state(config)
+print("현재 다음 노드:", snapshot.next)  # ('tools',)
+```
+
+**실행 결과 (예시):**
+```
+현재 다음 노드: ('tools',)
+```
+
+**2단계: 도구 호출 내용 확인**
+
+```python
+# LLM이 어떤 도구를 어떤 인수로 호출하려는지 확인
+last_message = snapshot.values["messages"][-1]
+print("LLM이 호출하려는 도구:")
+for tool_call in last_message.tool_calls:
+    print(f"  도구: {tool_call['name']}")
+    print(f"  인수: {tool_call['args']}")
+```
+
+**실행 결과 (예시):**
+```
+LLM이 호출하려는 도구:
+  도구: tavily_search
+  인수: {'query': '서울 날씨 오늘'}
+```
+
+**3단계A: 승인 → 실행 재개**
+
+```python
+# None을 전달하면 "중단된 지점에서 그대로 계속" 의미
+result = graph.invoke(None, config)
+print(result["messages"][-1].content)
+```
+
+**실행 결과 (예시):**
+```
+오늘 서울의 날씨는 맑고 기온은 약 18°C입니다...
+```
+
+**3단계B: 거절 → 상태 수정**
+
+```python
+from langgraph.types import Command
+
+# 도구 호출을 취소하고 직접 응답을 주입
+result = graph.invoke(
+    Command(resume="죄송합니다. 날씨 검색 도구 사용을 승인하지 않겠습니다. 직접 확인해 주세요."),
+    config
+)
+```
+
+### interrupt() vs interrupt_before 비교
+
+| 구분 | `interrupt()` | `interrupt_before` |
+|---|---|---|
+| 설정 위치 | 도구 함수 내부 | 그래프 컴파일 시 |
+| 적용 범위 | 해당 도구만 | 지정한 모든 노드 |
+| 유연성 | 조건부 인터럽트 가능 | 항상 멈춤 |
+| 코드 변경 | 도구 함수 수정 필요 | 도구 함수 수정 불필요 |
+| 주요 사용처 | 특정 상황에서만 사람 확인 필요 | 모든 도구 실행 전 일괄 승인 |
+
+> ⚠️ `interrupt_before`는 지정한 노드 실행 전에 **항상** 멈춥니다. 특정 조건에서만 멈추게 하려면 `interrupt()` 함수를 노드 내부에서 조건부로 호출하세요.
+
+---
+
+<a id="part5"></a>
+
+## 5. Time Travel: 과거 상태로 되돌리기 [↑](#toc)
+
+LangGraph의 체크포인터는 대화 중 매 단계의 상태를 스냅샷으로 저장합니다. 이 스냅샷들을 이용하면 과거의 특정 시점으로 되돌아가서 대화를 다시 진행할 수 있습니다. 이를 **Time Travel**이라고 합니다.
+
+### 언제 필요한가?
+
+> LLM이 잘못된 도구를 선택했거나, 엉뚱한 방향으로 응답을 생성했을 때, 한 단계 전으로 되돌려서 다시 시도할 수 있습니다.
+
+마치 게임의 "세이브 포인트"처럼, 중요한 분기점으로 돌아가 다른 선택을 해볼 수 있습니다.
+
+### 과거 상태 목록 조회
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain_tavily import TavilySearch
+from langchain_core.messages import HumanMessage
+from langgraph.graph import StateGraph, START
+from langgraph.graph.message import add_messages
+from langgraph.prebuilt import ToolNode, tools_condition
+from langgraph.checkpoint.memory import InMemorySaver
+from typing_extensions import TypedDict
+from typing import Annotated
+
+class State(TypedDict):
+    messages: Annotated[list, add_messages]
+
+memory = InMemorySaver()
+llm = ChatOpenAI(model="gpt-4o-mini")
+search_tool = TavilySearch(max_results=2)
+llm_with_tools = llm.bind_tools([search_tool])
+
+def chatbot(state: State):
+    return {"messages": [llm_with_tools.invoke(state["messages"])]}
+
+workflow = StateGraph(State)
+workflow.add_node("chatbot", chatbot)
+workflow.add_node("tools", ToolNode([search_tool]))
+workflow.add_conditional_edges("chatbot", tools_condition)
+workflow.add_edge("tools", "chatbot")
+workflow.add_edge(START, "chatbot")
+graph = workflow.compile(checkpointer=memory)
+
+# 몇 차례 대화를 진행하여 체크포인트 쌓기
+config = {"configurable": {"thread_id": "time_travel_demo"}}
+for msg in ["안녕하세요!", "LangGraph란 무엇인가요?", "LangGraph의 장점을 알려주세요."]:
+    graph.invoke({"messages": [HumanMessage(content=msg)]}, config)
+
+# 저장된 모든 상태(체크포인트) 조회
+print("=== 저장된 상태 이력 ===")
+for state in graph.get_state_history(config):
+    step = state.metadata.get("step", "?")
+    next_nodes = state.next
+    msg_count = len(state.values.get("messages", []))
+    print(f"Step: {step:>3} | 다음 노드: {str(next_nodes):<20} | 메시지 수: {msg_count}")
+    print(f"  체크포인트 ID: {state.config['configurable']['checkpoint_id']}")
+    print()
+```
+
+**실행 결과 (예시):**
+```
+=== 저장된 상태 이력 ===
+Step:   6 | 다음 노드: ()                   | 메시지 수: 6
+  체크포인트 ID: 1ef8a2b3-...
+
+Step:   5 | 다음 노드: ('chatbot',)          | 메시지 수: 5
+  체크포인트 ID: 1ef8a2b2-...
+
+Step:   4 | 다음 노드: ()                   | 메시지 수: 4
+  체크포인트 ID: 1ef8a2b1-...
+
+Step:   3 | 다음 노드: ('chatbot',)          | 메시지 수: 3
+  체크포인트 ID: 1ef8a2b0-...
+...
+```
+
+> 💡 `get_state_history()`는 가장 최근 상태부터 역순으로 반환합니다. `state.next`가 `()`이면 해당 단계에서 그래프가 정상 종료된 상태, `('chatbot',)` 등이면 해당 노드 실행 직전 상태입니다.
+
+### 특정 시점으로 되돌아가기
+
+```python
+# 이력에서 되돌아갈 체크포인트 선택
+all_states = list(graph.get_state_history(config))
+
+# 메시지가 2개였던 시점(첫 번째 대화 직후)을 찾기
+target_state = None
+for state in all_states:
+    if len(state.values.get("messages", [])) == 2 and state.next == ():
+        target_state = state
+        break
+
+if target_state:
+    checkpoint_id = target_state.config["configurable"]["checkpoint_id"]
+    print(f"되돌아갈 체크포인트: {checkpoint_id}")
+
+    # 해당 체크포인트를 기준으로 새 config 구성
+    replay_config = {
+        "configurable": {
+            "thread_id": "time_travel_demo",
+            "checkpoint_id": checkpoint_id
+        }
+    }
+
+    # 해당 시점 이후 새로운 질문으로 다시 시작
+    new_result = graph.invoke(
+        {"messages": [HumanMessage(content="그 시점에서 파이썬이란 무엇인가요?")]},
+        replay_config
+    )
+    print("\n=== 과거 시점에서 새로 이어간 응답 ===")
+    print(new_result["messages"][-1].content)
+```
+
+**실행 결과 (예시):**
+```
+되돌아갈 체크포인트: 1ef8a2b0-c4d5-...
+
+=== 과거 시점에서 새로 이어간 응답 ===
+파이썬(Python)은 간결하고 읽기 쉬운 문법을 가진 프로그래밍 언어입니다...
+```
+
+### Time Travel 활용 시나리오
+
+| 시나리오 | 방법 |
+|---|---|
+| LLM이 잘못된 도구를 선택한 경우 | 도구 호출 직전 체크포인트로 복원 후 재실행 |
+| 잘못된 정보로 응답을 생성한 경우 | 해당 응답 이전 체크포인트로 복원 후 다른 질문 |
+| A/B 테스트 | 동일한 체크포인트에서 두 가지 입력으로 분기 실행 |
+| 디버깅 | 특정 단계의 상태를 정확히 재현하여 문제 분석 |
+
+> ⚠️ `InMemorySaver`는 프로세스가 종료되면 모든 이력이 사라집니다. 이력을 영구 보존하려면 `SqliteSaver` 또는 `PostgresSaver`를 사용하세요.
+
+---
+
 ### 🎯 실습 미션
 
 1. `interrupt` 후 `snapshot.next`를 출력하여 `('tools',)` 상태를 직접 확인해보세요. 정상 응답 후에도 출력하여 `()`과 비교해보세요.
 2. `Command(resume={"data": "다른 응답"})`에서 `"data"` 키 대신 다른 키(예: `"answer"`)를 사용하면 어떤 에러가 발생하는지 확인해보세요.
 3. `human_assist` 도구의 docstring을 수정하여 LLM이 더 자주/드물게 사람에게 도움을 요청하도록 유도해보세요.
+4. `interrupt_before=["tools"]`를 사용하여 도구 실행 전 승인 여부를 묻는 챗봇을 만들어 보세요. 승인 시에는 `graph.invoke(None, config)`, 거절 시에는 다른 메시지를 출력하도록 분기를 구현해 보세요.
+5. `get_state_history()`를 사용하여 특정 시점으로 되돌아간 후, 원래와 다른 질문을 해보세요. 이전 대화 맥락이 어디까지 유지되는지 관찰해보세요.
 
-
-→ **다음 장**: [7. LangGraph 실습](/llm/langgraph/chat_lab)
+→ **다음 장**: [8. 스트리밍 심화](/llm/langgraph/streaming)

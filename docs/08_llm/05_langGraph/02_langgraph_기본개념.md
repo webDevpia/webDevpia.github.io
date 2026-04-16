@@ -20,8 +20,8 @@ permalink: /llm/langgraph/preview
 4. [동작 방식 이해하기](#part4)
 5. [설계 시 유의사항](#part5)
 6. [주요 활용 사례](#part6)
-7. [LangGraph의 장점 요약](#part7)
-8. [직접 해보기: 미니 그래프 실습](#part8)
+7. [LangGraph의 장점 요약](#part7) — Reducer 미리보기 포함
+8. [직접 해보기: 미니 그래프 실습](#part8) — 예제 1~4 (반복 루프 포함)
 
 <a id="part1"></a>
 
@@ -149,6 +149,45 @@ LangGraph는 **상태 기반(State-based)** 구조를 통해 문제를 해결합
 | 🔁 **유연한 흐름 제어** | 조건 분기, 반복, 병렬 처리 가능 |
 | 💡 **가시성** | 그래프 기반 구조로 실행 흐름 시각화 용이 |
 | 🚀 **확장성** | 새로운 에이전트나 기능을 쉽게 추가 가능 |
+
+### Reducer 미리보기
+
+상태(State) 필드는 두 가지 방식으로 동작할 수 있습니다.
+
+- **덮어쓰기(Overwrite):** 기본 동작입니다. 노드가 반환한 값이 기존 필드를 그대로 대체합니다.
+- **누적(Accumulate):** `Annotated`와 `operator.add`를 함께 사용하면 여러 노드가 같은 필드에 값을 **쌓을** 수 있습니다.
+
+```python
+import operator
+from typing import Annotated, TypedDict
+from langgraph.graph import StateGraph, START, END
+
+class State(TypedDict):
+    # 이 필드는 덮어쓰지 않고, 노드가 반환할 때마다 리스트에 추가됩니다
+    logs: Annotated[list, operator.add]
+
+def node_a(state: State):
+    return {"logs": ["node_a 실행됨"]}
+
+def node_b(state: State):
+    return {"logs": ["node_b 실행됨"]}
+
+graph = StateGraph(State)
+graph.add_node("node_a", node_a)
+graph.add_node("node_b", node_b)
+graph.add_edge(START, "node_a")
+graph.add_edge("node_a", "node_b")
+graph.add_edge("node_b", END)
+
+app = graph.compile()
+result = app.invoke({"logs": []})
+print(result["logs"])
+# ['node_a 실행됨', 'node_b 실행됨']
+```
+
+`operator.add`가 없다면 `node_b`의 반환값이 `node_a`의 결과를 덮어써서 `['node_b 실행됨']`만 남게 됩니다. Reducer를 사용하면 두 값이 모두 누적됩니다.
+
+> 💡 이 개념은 6장 '상태 관리 심화'에서 자세히 다룹니다.
 
 ---
 
@@ -311,11 +350,64 @@ graph TD
 
 > 핵심 포인트: `add_conditional_edges`를 사용하면 **조건에 따라 다른 노드로 이동**할 수 있습니다. 이것이 단순 체인과 그래프의 가장 큰 차이입니다.
 
+### 예제 4: 반복 루프
+
+조건부 엣지를 이용하면 **루프(반복)** 도 구현할 수 있습니다. 카운터가 5가 될 때까지 노드를 반복 실행하는 그래프입니다.
+
+```python
+from typing import TypedDict, Literal
+from langgraph.graph import StateGraph, START, END
+
+class State(TypedDict):
+    count: int
+
+def increment(state: State):
+    new_count = state["count"] + 1
+    print(f"count = {new_count}")
+    return {"count": new_count}
+
+def should_continue(state: State) -> Literal["increment", "__end__"]:
+    if state["count"] < 5:
+        return "increment"
+    return "__end__"
+
+graph = StateGraph(State)
+graph.add_node("increment", increment)
+
+graph.add_edge(START, "increment")
+graph.add_conditional_edges("increment", should_continue)
+
+app = graph.compile()
+result = app.invoke({"count": 0})
+print("최종 count:", result["count"])
+```
+
+**실행 결과:**
+```
+count = 1
+count = 2
+count = 3
+count = 4
+count = 5
+최종 count: 5
+```
+
+```mermaid
+graph TD
+    __start__([시작]) --> increment[increment 노드]
+    increment -->|count < 5| increment
+    increment -->|count >= 5| __end__([종료])
+```
+
+> 핵심 포인트: 조건부 엣지의 반환값이 자기 자신(`"increment"`)이면 같은 노드로 되돌아옵니다. 이렇게 **루프**를 만들 수 있으며, 종료 조건을 반드시 설정해야 무한 루프를 막을 수 있습니다.
+
+> ⚠️ **주의:** 종료 조건 없이 루프를 만들면 무한 루프가 발생합니다. LangGraph는 기본적으로 `recursion_limit`(기본값 25)을 설정해 무한 루프를 방지합니다.
+
 ### 🎯 실습 미션
 
 1. 예제 1의 `greeting` 노드를 수정하여 현재 시간을 포함한 인사말을 출력해보세요.
 2. 예제 3의 합격 기준을 70점으로 변경하고, 점수대별로 A/B/C/F 등급을 분류하는 노드를 추가해보세요.
 3. 노드를 3개 이상 사용하는 자신만의 그래프를 설계하고 실행해보세요.
-
+4. 예제 4의 카운터를 수정하여 2씩 증가하면서 10까지 세는 그래프를 만들어 보세요.
 
 → **다음 장**: [3. LangGraph를 활용한 챗봇](/llm/langgraph/chat)

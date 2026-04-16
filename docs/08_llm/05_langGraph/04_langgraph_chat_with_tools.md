@@ -563,6 +563,8 @@ workflow.set_entry_point("chatbot")
 graph = workflow.compile()
 ```
 
+> ⚠️ **v1.0 참고**: `set_entry_point("chatbot")`는 `graph.add_edge(START, "chatbot")`으로 대체되었습니다. 이 과정에서는 새로운 방식을 사용합니다.
+
 - 먼저 `StateGraph(State)`를 통해 상태 기반 그래프를 생성합니다.
 - `workflow.add_node("chatbot", chatbot)`은 그래프에 "chatbot"이라는 이름의 노드를 추가하며, 이 노드는 앞에서 정의한 `chatbot` 함수를 실행합니다.
 - `workflow.add_node("tools", tool_node)`는 "tools"이라는 이름의 노드를 추가하며, 이 노드는 도구 실행을 관리합니다.
@@ -599,11 +601,20 @@ response = graph.invoke(state)
 print(response["messages"][-1].content)
 ```
 
+### 도구 실행 에러에 대해
+
+현재 코드에서는 Tavily API가 정상 작동한다고 가정합니다. 실제 운영 환경에서는 API 호출이 실패할 수 있습니다. 대표적인 원인으로는 네트워크 오류, API 키 만료, 무료 사용량 초과 등이 있습니다. 이러한 상황에서는 도구 노드가 예외를 발생시키고 그래프 실행이 중단될 수 있습니다.
+
+LangGraph는 노드 실행 중 발생하는 예외를 처리하는 다양한 패턴을 제공합니다. 예를 들어 재시도 로직을 추가하거나, 오류 발생 시 사용자에게 안내 메시지를 반환하도록 노드를 설계할 수 있습니다. 에러 처리 패턴은 11장 '에러 처리와 재시도'에서 자세히 다룹니다.
+
+현재 실습 단계에서는 API 호출이 정상적으로 이루어진다고 가정하고 진행합니다. 오류가 발생하더라도 당황하지 말고 아래 팁을 참고하세요.
+
+> 💡 실습 중 Tavily API 오류가 발생하면 API 키가 올바른지, 무료 사용량을 초과하지 않았는지 확인하세요.
+
 ### 🎯 실습 미션
 
 1. "오늘 서울 날씨가 어때?"를 입력하고, 도구 호출 과정을 메시지 순회 코드로 확인해보세요.
 2. LLM이 도구를 사용하지 않는 질문 ("안녕하세요", "1+1은?")을 입력해보고, END 경로로 가는지 확인해보세요.
 3. `max_results=5`로 변경하여 검색 결과 수를 늘려보세요.
 
-
-→ **다음 장**: [5. LangGraph 챗봇에 메모리 추가하기](/llm/langgraph/chat_memory)
+→ **다음 장**: [5. 챗봇에 메모리 추가하기](/llm/langgraph/chat_memory)

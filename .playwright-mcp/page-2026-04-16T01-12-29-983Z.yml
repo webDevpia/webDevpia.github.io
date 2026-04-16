@@ -1,0 +1,114 @@
+- generic [ref=e1]:
+  - link "콘텐츠로 건너뛰기" [ref=e3] [cursor=pointer]:
+    - /url: "#main"
+  - generic [ref=e7]:
+    - generic [ref=e9]:
+      - generic:
+        - generic:
+          - generic:
+            - button "사이드바 열기":
+              - img
+        - generic:
+          - generic:
+            - link "새 채팅":
+              - /url: /
+              - generic:
+                - img
+              - generic: 새 채팅
+          - generic:
+            - generic:
+              - generic:
+                - img
+              - generic: 채팅 검색
+        - generic:
+          - generic:
+            - button "프로필 메뉴 열기":
+              - generic:
+                - generic:
+                  - img
+      - generic [ref=e10]:
+        - heading "채팅 기록" [level=2] [ref=e11]
+        - navigation "채팅 기록" [ref=e12]:
+          - generic [ref=e15]:
+            - link "홈" [ref=e16] [cursor=pointer]:
+              - /url: /
+              - img [ref=e17]
+            - button "사이드바 닫기" [expanded] [ref=e20]:
+              - img [ref=e21]
+          - complementary [ref=e23]:
+            - list [ref=e24]:
+              - listitem [ref=e25]:
+                - link "새 채팅" [ref=e26] [cursor=pointer]:
+                  - /url: /
+                  - img [ref=e28]
+                  - generic [ref=e31]: 새 채팅
+              - listitem [ref=e32]:
+                - generic [ref=e33] [cursor=pointer]:
+                  - img [ref=e35]
+                  - generic [ref=e38]: 채팅 검색
+          - generic [ref=e40] [cursor=pointer]:
+            - img [ref=e42]
+            - generic [ref=e45]: 더 보기
+          - generic [ref=e47]:
+            - link "플랜 및 가격 보기" [ref=e48] [cursor=pointer]:
+              - /url: https://openai.com/chatgpt/pricing/
+              - generic [ref=e49]:
+                - img [ref=e51]
+                - text: 플랜 및 가격 보기
+              - img [ref=e54]
+            - generic [ref=e56] [cursor=pointer]:
+              - img [ref=e58]
+              - text: 설정
+            - generic [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]:
+                - img [ref=e63]
+                - generic [ref=e66]: 도움말
+              - img [ref=e68]
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - paragraph [ref=e72]: 내게 맞춘 응답을 받으세요
+              - paragraph [ref=e73]: 로그인해 저장된 채팅에 기반해 답변을 받고, 이미지 생성 및 파일 업로드도 이용하세요.
+            - button "로그인" [ref=e75] [cursor=pointer]:
+              - generic [ref=e76]: 로그인
+    - generic [ref=e78]:
+      - banner:
+        - button "모델 선택기" [ref=e80] [cursor=pointer]:
+          - generic [ref=e81]: ChatGPT
+          - img [ref=e82]
+        - generic [ref=e88]:
+          - button "로그인" [ref=e89] [cursor=pointer]:
+            - generic [ref=e91]: 로그인
+          - button "무료로 회원 가입" [ref=e92] [cursor=pointer]:
+            - generic [ref=e93]: 무료로 회원 가입
+      - main [ref=e94]:
+        - generic [ref=e95]:
+          - heading "오늘은 무슨 이야기를 할까요?" [level=1] [ref=e103]:
+            - generic [ref=e104]: 오늘은 무슨 이야기를 할까요?
+          - generic [ref=e105]:
+            - generic [ref=e109]:
+              - generic [ref=e113]:
+                - button "파일 추가 및 기타" [ref=e116] [cursor=pointer]:
+                  - img
+                - textbox "ChatGPT와 채팅" [active] [ref=e119]:
+                  - /placeholder: 무엇이든 물어보세요
+                - generic [ref=e121]:
+                  - button "받아쓰기 시작" [ref=e123] [cursor=pointer]:
+                    - img
+                  - button "Voice 시작" [ref=e127] [cursor=pointer]:
+                    - img [ref=e129]
+                    - generic [ref=e131]: 음성
+              - button [ref=e132]
+              - button [ref=e133]
+            - generic [ref=e140]:
+              - text: AI 챗봇 ChatGPT에 메시지를 보냄으로써, 당사
+              - link "이용약관" [ref=e141] [cursor=pointer]:
+                - /url: https://openai.com/terms
+              - text: 에 동의하고
+              - link "개인정보 보호 정책" [ref=e142] [cursor=pointer]:
+                - /url: https://openai.com/privacy
+              - text: 및 이의
+              - link "한국 부록" [ref=e143] [cursor=pointer]:
+                - /url: https://openai.com/ko/policies/kr-privacy-policy-addendum
+              - text: 을 읽은 것으로 간주합니다. 쿠키 기본 설정을 참고하세요.
+  - alert [ref=e144]
+  - status [ref=e145]

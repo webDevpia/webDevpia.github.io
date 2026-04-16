@@ -3,7 +3,7 @@ title: 7. LangGraph 실습
 layout: default
 grand_parent: LLM
 parent: LangGraph
-nav_order: 7
+nav_order: 13
 permalink: /llm/langgraph/chat_lab
 # nav_exclude: true
 # search_exclude: true
@@ -23,6 +23,8 @@ permalink: /llm/langgraph/chat_lab
 5. [Kakao 장소 검색 도구 정의하기](#part5)
 6. [대화 흐름 그래프 만들기](#part6)
 7. [챗봇 실행 및 테스트](#part7)
+8. [Reducer 패턴 실습](#part8)
+9. [복합 상태 활용](#part9)
 
 <a id="part1"></a>
 
@@ -383,4 +385,250 @@ final_state = graph.invoke(initial_state2)
 또한, 현재 구조는 한 번 질문에 한 번 답변을 하는 형태지만, `final_state`를 다음 질문의 초기 상태로 넘기면 **대화의 연속성**을 가질 수도 있습니다. 다만 도구 호출에 대한 상태(`search_query`, `search_results`)를 초기화하거나 유지하는 전략이 필요합니다.
 
 
-→ **다음 장**: [8. LangGraph 프로젝트 정의서](/llm/langgraph/agent_proj)
+<a id="part8"></a>
+
+## 8단계: Reducer 패턴 실습 [↑](#toc)
+
+지금까지 `search_results` 필드는 `Optional[List[KakaoPlace]]`로 정의되어 있었습니다. 이 방식에서는 새로운 검색 결과가 들어올 때마다 **이전 결과를 덮어쓰게** 됩니다. 여러 번 검색을 수행하는 경우, 최근 결과만 남고 이전 결과는 사라집니다.
+
+**Reducer 패턴**을 사용하면, `messages` 필드처럼 결과를 누적해서 쌓을 수 있습니다. `Annotated[list, operator.add]`를 사용하면 새 결과가 올 때마다 기존 리스트에 **이어붙이기(append)** 됩니다.
+
+### 기존 State vs Reducer 적용 State 비교
+
+**기존 방식** (덮어쓰기):
+```python
+from typing import List, Optional
+from typing_extensions import TypedDict
+
+class State(TypedDict):
+    messages: Annotated[List[BaseMessage], add_messages]
+    search_query: Optional[str]
+    search_results: Optional[List[KakaoPlace]]   # 매번 덮어씀
+```
+
+**Reducer 적용 방식** (누적):
+```python
+import operator
+from typing import Annotated, List, Optional
+from typing_extensions import TypedDict
+
+class StateWithReducer(TypedDict):
+    messages: Annotated[List[BaseMessage], add_messages]
+    search_query: Optional[str]
+    search_results: Annotated[list, operator.add]   # 누적 추가
+```
+
+- `operator.add`는 Python 내장 `+` 연산자를 나타냅니다. 리스트에 적용하면 두 리스트를 이어붙입니다.
+- `Annotated[list, operator.add]` 형태로 선언하면 LangGraph가 상태를 업데이트할 때 자동으로 `기존_리스트 + 새_리스트` 방식으로 합칩니다.
+
+### 동작 차이 예시
+
+```python
+# --- 기존 방식 (덮어쓰기) ---
+state_old = {"search_results": [{"name": "성심당", "address": "대전 ..."}]}
+# 두 번째 검색 결과가 들어오면
+state_old = {"search_results": [{"name": "뚜레쥬르", "address": "서울 ..."}]}
+# 결과: 성심당 사라지고 뚜레쥬르만 남음
+
+# --- Reducer 방식 (누적) ---
+state_new = {"search_results": [{"name": "성심당", "address": "대전 ..."}]}
+# 두 번째 검색 결과가 들어오면 자동으로 합쳐짐
+# 결과: [{"name": "성심당", ...}, {"name": "뚜레쥬르", ...}]
+```
+
+### 언제 Reducer 패턴을 쓸까?
+
+| 상황 | 권장 방식 |
+|------|-----------|
+| 최신 값만 필요한 경우 (예: `search_query`) | 일반 덮어쓰기 |
+| 결과를 모두 누적해야 하는 경우 (예: 여러 검색 결과) | `Annotated[list, operator.add]` |
+| 대화 메시지처럼 순서가 있는 누적 | `Annotated[..., add_messages]` |
+
+> 💡 **Tip:** Reducer 함수는 `operator.add` 외에도 직접 만들 수 있습니다. 예를 들어 중복을 제거하는 Reducer, 최근 N개만 유지하는 Reducer 등 복잡한 병합 로직을 함수로 정의해 사용할 수 있습니다.
+
+### Reducer 적용 후 그래프 재구성
+
+`StateWithReducer`를 사용하면, 노드 반환값이 리스트면 자동으로 누적됩니다:
+
+```python
+# kakao_place_search 도구를 직접 상태에 저장하는 노드 예시
+def search_node(state: StateWithReducer):
+    query = state.get("search_query", "")
+    results = kakao_place_search.invoke({"query": query})
+    return {"search_results": results}   # 이전 결과에 자동으로 이어붙음
+```
+
+두 번 실행하면:
+```
+1회 실행 후: search_results = [성심당, ...]
+2회 실행 후: search_results = [성심당, ..., 뚜레쥬르, ...]   ← 누적됨!
+```
+
+<a id="part9"></a>
+
+## 9단계: 복합 상태 활용 [↑](#toc)
+
+이번 단계에서는 State에 **날씨 정보**를 추가하여, 장소 추천 시 현재 날씨까지 고려하는 더 풍부한 챗봇을 만들어봅니다. 날씨 정보는 OpenWeather API를 사용하거나, API 키가 없는 경우 모의 데이터(mock data)를 활용합니다.
+
+### 확장된 State 정의
+
+```python
+import operator
+from typing import Annotated, List, Optional
+from typing_extensions import TypedDict
+from langchain_core.messages import BaseMessage
+from langgraph.graph.message import add_messages
+
+class WeatherInfo(TypedDict):
+    city: str
+    temperature: float   # 섭씨 온도
+    condition: str       # 예: "맑음", "흐림", "비"
+
+class EnhancedState(TypedDict):
+    messages: Annotated[List[BaseMessage], add_messages]
+    intent: Optional[str]            # 사용자 의도 (예: "food", "activity")
+    search_query: Optional[str]      # 검색 키워드
+    place: Optional[str]             # 검색할 장소/지역
+    weather: Optional[WeatherInfo]   # 날씨 정보
+    search_results: Annotated[list, operator.add]  # 누적 검색 결과
+```
+
+### 날씨 정보 조회 함수
+
+```python
+import requests
+import os
+
+def get_weather(city: str) -> WeatherInfo:
+    """OpenWeather API로 날씨를 조회합니다. API 키가 없으면 모의 데이터를 반환합니다."""
+    api_key = os.getenv("OPENWEATHER_API_KEY")
+
+    if not api_key:
+        # API 키가 없을 때는 모의 데이터 반환
+        mock_data = {
+            "서울": WeatherInfo(city="서울", temperature=22.5, condition="맑음"),
+            "대전": WeatherInfo(city="대전", temperature=24.0, condition="구름 조금"),
+            "부산": WeatherInfo(city="부산", temperature=26.0, condition="흐림"),
+        }
+        return mock_data.get(city, WeatherInfo(city=city, temperature=20.0, condition="맑음"))
+
+    # 실제 API 호출
+    url = "https://api.openweathermap.org/data/2.5/weather"
+    params = {
+        "q": city,
+        "appid": api_key,
+        "units": "metric",
+        "lang": "kr"
+    }
+    try:
+        response = requests.get(url, params=params, timeout=5)
+        data = response.json()
+        return WeatherInfo(
+            city=city,
+            temperature=data["main"]["temp"],
+            condition=data["weather"][0]["description"]
+        )
+    except Exception:
+        return WeatherInfo(city=city, temperature=20.0, condition="정보 없음")
+```
+
+### 상태 흐름 다이어그램
+
+노드가 실행되면서 상태가 단계적으로 채워지는 과정입니다:
+
+```mermaid
+flowchart TD
+    A([START]) --> B[classify_intent 노드]
+    B --> C{의도 분류}
+    C -->|"음식/장소"| D[extract_keyword 노드]
+    C -->|"날씨만 묻기"| E[weather_node]
+    D --> F[search_node]
+    F --> E
+    E --> G[response_node]
+    G --> H([END])
+
+    subgraph 상태 변화
+        S1["초기:\nmessages: [HumanMessage]\nintent: None\nweather: None\nsearch_results: []"]
+        S2["intent 분류 후:\nintent: 'food'\nsearch_query: None"]
+        S3["키워드 추출 후:\nsearch_query: '대전 빵집'\nplace: '대전'"]
+        S4["검색 후:\nsearch_results: [성심당, ...]"]
+        S5["날씨 조회 후:\nweather: {city:'대전', temp:24.0, condition:'구름 조금'}"]
+        S6["최종 응답:\nmessages: [..., AIMessage('날씨가 ...')]"]
+    end
+```
+
+### 노드 구현 예시
+
+```python
+from langchain_core.messages import HumanMessage, AIMessage
+import json
+
+def classify_intent_node(state: EnhancedState):
+    """사용자 의도와 장소를 분류하는 노드"""
+    last_message = state["messages"][-1].content
+    prompt = f"""다음 사용자 요청을 분석하고 JSON으로 답하세요.
+- intent: "food" (음식/맛집), "activity" (활동/관광), "weather" (날씨만)
+- place: 언급된 도시 이름 (없으면 "서울")
+
+요청: "{last_message}"
+JSON만 출력:"""
+    response = llm.invoke([HumanMessage(content=prompt)])
+    try:
+        parsed = json.loads(response.content)
+    except Exception:
+        parsed = {"intent": "food", "place": "서울"}
+    return {
+        "intent": parsed.get("intent", "food"),
+        "place": parsed.get("place", "서울")
+    }
+
+def weather_node(state: EnhancedState):
+    """날씨 정보를 조회하여 상태에 저장하는 노드"""
+    city = state.get("place") or "서울"
+    weather = get_weather(city)
+    return {"weather": weather}
+
+def response_node(state: EnhancedState):
+    """날씨와 검색 결과를 종합하여 최종 응답을 생성하는 노드"""
+    weather = state.get("weather")
+    results = state.get("search_results", [])
+
+    weather_str = ""
+    if weather:
+        weather_str = (
+            f"현재 {weather['city']} 날씨: {weather['condition']}, "
+            f"기온 {weather['temperature']}°C"
+        )
+
+    results_str = ""
+    if results:
+        results_str = "추천 장소:\n" + "\n".join(
+            f"- {r['name']} ({r['address']})" for r in results[:3]
+        )
+
+    prompt = f"""다음 정보를 바탕으로 사용자에게 친절하게 답변해주세요.
+
+{weather_str}
+{results_str}
+
+사용자 질문: {state['messages'][0].content}"""
+    response = llm.invoke([HumanMessage(content=prompt)])
+    return {"messages": [AIMessage(content=response.content)]}
+```
+
+### 상태 성장 과정 요약
+
+| 단계 | 채워지는 상태 필드 | 내용 |
+|------|--------------------|------|
+| 초기 | `messages` | 사용자 질문 |
+| intent 분류 | `intent`, `place` | `"food"`, `"대전"` |
+| 키워드 추출 | `search_query` | `"대전 빵집"` |
+| 장소 검색 | `search_results` | `[성심당, ...]` |
+| 날씨 조회 | `weather` | `{city: "대전", temp: 24.0, ...}` |
+| 최종 응답 | `messages` | AI 응답 메시지 추가 |
+
+> ⚠️ **주의:** `search_results`에 `Annotated[list, operator.add]`를 사용하면 초기값을 반드시 빈 리스트 `[]`로 설정해야 합니다. `None`으로 시작하면 `None + [...]` 연산 시 오류가 발생합니다.
+
+> 💡 **Tip:** 상태 필드가 많아질수록 각 노드가 담당하는 필드를 명확히 구분하는 것이 중요합니다. 노드는 자신이 책임지는 필드만 반환하고, 나머지는 LangGraph가 이전 상태를 유지합니다.
+
+→ **다음 장**: [14. 프로덕션 준비](/llm/langgraph/production)
