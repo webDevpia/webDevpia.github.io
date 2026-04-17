@@ -9,6 +9,10 @@ permalink: /ai-native-js/async
 # 10장. 비동기 JavaScript — 데이터 가져오기
 {: .no_toc }
 
+> **Day 4** · Phase 2 · 예상 시간: 30분 (핵심만)
+
+> 💡 **실습 흐름**: 강사 시연 보기 → 함께 따라하기 → 혼자 변형해 보기
+
 > **이 장의 AI 사용 규칙 — 생성 + 검증 모드**
 > AI(Copilot)가 코드를 생성할 수 있습니다.
 > 단, 반드시 생성된 코드를 **읽고, 이해하고, 테스트로 검증**해야 합니다.
@@ -38,7 +42,9 @@ permalink: /ai-native-js/async
 
 <a id="part1"></a>
 
-## 1️⃣ 비동기란? [↑](#toc)
+## 1️⃣ ⭐ **핵심** — 비동기란? [↑](#toc)
+
+> 강사와 함께 동기와 비동기의 차이를 알아봅시다
 
 지금까지 배운 코드는 **위에서 아래로 순서대로** 실행됐습니다. 이것을 **동기(synchronous)** 방식이라고 합니다.
 
@@ -78,7 +84,7 @@ console.log('3: 바로 실행됨');
 
 <a id="part2"></a>
 
-## 2️⃣ 콜백 함수 [↑](#toc)
+## 2️⃣ 📖 **더 알아보기** — 콜백 함수 [↑](#toc)
 
 사실 여러분은 이미 비동기 코드를 써왔습니다. `addEventListener`에 전달하는 함수가 바로 **콜백 함수**입니다.
 
@@ -120,7 +126,7 @@ getUser(1, (user) => {
 
 <a id="part3"></a>
 
-## 3️⃣ Promise [↑](#toc)
+## 3️⃣ 📖 **더 알아보기** — Promise [↑](#toc)
 
 Promise는 "지금은 없지만 나중에 값이 생길 것이라는 약속"입니다.
 
@@ -178,7 +184,7 @@ fetch('https://jsonplaceholder.typicode.com/users/1')
 
 <a id="part4"></a>
 
-## 4️⃣ async/await [↑](#toc)
+## 4️⃣ 🚀 **도전** — async/await [↑](#toc)
 
 `async/await`는 Promise를 더 읽기 쉽게 쓰는 문법입니다. "기다려!(await)"라는 이름처럼, 비동기 작업이 끝날 때까지 기다렸다가 다음 줄로 넘어갑니다.
 
@@ -247,7 +253,9 @@ async function fetchData(url) {
 
 <a id="part5"></a>
 
-## 5️⃣ fetch로 데이터 가져오기 [↑](#toc)
+## 5️⃣ ⭐ **핵심** — fetch로 데이터 가져오기 [↑](#toc)
+
+> 강사 시연을 보면서 따라하세요
 
 `fetch`는 브라우저에 내장된 함수로, HTTP 요청을 보내고 응답을 받습니다.
 
@@ -355,7 +363,7 @@ async function safeFetch(url) {
 
 <a id="part6"></a>
 
-## 6️⃣ AI + 테스트로 검증하기 [↑](#toc)
+## 6️⃣ 📖 **더 알아보기** — AI + 테스트로 검증하기 [↑](#toc)
 
 비동기 코드는 직접 실행해보기 전에 테스트로 확인하는 것이 좋습니다. 특히 API 응답 처리 로직은 네트워크 없이 테스트할 수 있어야 합니다.
 
@@ -548,4 +556,4 @@ JSONPlaceholder API를 사용해서 다음을 구현하세요:
 지금까지 배운 모든 것을 합칩니다. DOM 조작, 이벤트, 비동기, 테스트를 결합한 ToDo 앱을 AI와 협업해서 만듭니다. 이것이 Phase 2의 최종 관문입니다.
 
 
-→ **다음 장**: [11. 미니 프로젝트 — AI 협업 ToDo 앱](/ai-native-js/todo-app)
+→ **다음 내용으로 넘어갑시다**: [11. 미니 프로젝트 — AI 협업 ToDo 앱](/ai-native-js/todo-app)
