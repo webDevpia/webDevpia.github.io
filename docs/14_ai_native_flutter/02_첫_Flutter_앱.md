@@ -539,3 +539,7 @@ class _MyHomePageState extends State<MyHomePage> {
 다음 장부터는 Dart 언어를 본격적으로 배웁니다. 변수, 타입, 조건문, 반복문... Flutter 앱을 자유자재로 만들기 위한 언어 기초를 다집니다.
 
 ---
+
+---
+
+→ **다음 내용으로 넘어갑시다**: [02. Dart — 변수와 데이터 타입](/ai-native-flutter/dart-variables)

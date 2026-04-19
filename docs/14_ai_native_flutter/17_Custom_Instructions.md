@@ -525,3 +525,7 @@ MCP는 빠르게 발전하는 기술입니다. Claude Desktop, VS Code의 Copilo
 
 다음 장에서는 **테스트 입문 + TDD**를 배웁니다.  
 이 장에서 만든 `testing.instructions.md`가 바로 활용됩니다.
+
+---
+
+→ **다음 내용으로 넘어갑시다**: [17. 테스트 입문 + TDD](/ai-native-flutter/testing-tdd)

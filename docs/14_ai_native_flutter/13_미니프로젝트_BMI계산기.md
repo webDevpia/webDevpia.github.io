@@ -929,3 +929,7 @@ Named Routes, 화면 간 데이터 전달, BottomNavigationBar를 배우고
 > 1. BMI 계산 기록을 리스트로 보여주기 (List 상태)
 > 2. 이상적인 몸무게 범위 계산하여 표시
 > 3. 키/몸무게 단위 전환 (cm ↔ ft/in, kg ↔ lb)
+
+---
+
+→ **다음 내용으로 넘어갑시다**: [13. 네비게이션과 라우팅](/ai-native-flutter/navigation)

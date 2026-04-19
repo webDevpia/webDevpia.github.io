@@ -820,3 +820,7 @@ class _InfoRow extends StatelessWidget {
 - AI가 생성한 Flutter 코드를 읽고 검증하기
 
 ---
+
+---
+
+→ **다음 내용으로 넘어갑시다**: [08. 레이아웃 — Row, Column, Expanded](/ai-native-flutter/layout)

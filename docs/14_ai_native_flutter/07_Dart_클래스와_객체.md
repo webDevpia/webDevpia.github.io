@@ -622,3 +622,7 @@ extends               →   extends StatelessWidget
 **문제 3 (도전)**: 위 `Student` 클래스를 사용하는 Flutter 위젯을 만들어서, 학생 정보와 합격/불합격 여부를 화면에 표시하세요.
 
 ---
+
+---
+
+→ **다음 내용으로 넘어갑시다**: [07. Flutter 위젯 기초](/ai-native-flutter/widgets-basics)

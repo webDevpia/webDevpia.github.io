@@ -773,3 +773,7 @@ context.read<MyNotifier>().increment();
 
 다음 장부터는 **통합 프로젝트**를 시작합니다.  
 지금까지 배운 모든 것 — API 호출, Custom Instructions, TDD — 을 하나의 앱으로 통합합니다.
+
+---
+
+→ **다음 내용으로 넘어갑시다**: [19. 통합 프로젝트 — 날씨 앱](/ai-native-flutter/weather-app)

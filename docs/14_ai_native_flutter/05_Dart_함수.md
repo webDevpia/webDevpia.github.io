@@ -557,3 +557,7 @@ double average(List<int> numbers) {
 ```
 
 ---
+
+---
+
+→ **다음 내용으로 넘어갑시다**: [05. Dart — 컬렉션](/ai-native-flutter/dart-collections)
