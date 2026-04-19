@@ -1,10 +1,6 @@
 ---
 title: TypeScript 커리큘럼 분석 보고서
-layout: default
-grand_parent: Language
-parent: TypeScript
-nav_order: 99
-permalink: /language/typescript/analysis-report
+nav_exclude: true
 ---
 
 {% raw %}

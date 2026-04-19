@@ -41,7 +41,7 @@ permalink: /language/basic/terminal
 
 ---
 
-## 1️⃣ 터미널이란? [↑](#toc) {#1}
+## 1️⃣ 터미널이란? [↑](#toc)
 
 ### 비유: 음성 주문 vs 키오스크
 
@@ -83,7 +83,7 @@ Mac/Linux는 **bash** 또는 **zsh**, Windows는 **PowerShell** 또는 **Command
 
 ---
 
-## 2️⃣ 현재 위치 확인 — pwd / cd [↑](#toc) {#2}
+## 2️⃣ 현재 위치 확인 — pwd / cd [↑](#toc)
 
 ### "나는 지금 어디에 있는가?"
 
@@ -121,7 +121,7 @@ C:\Users\sunny\projects\my-app
 
 ---
 
-## 3️⃣ 폴더 이동과 목록 — cd / ls [↑](#toc) {#3}
+## 3️⃣ 폴더 이동과 목록 — cd / ls [↑](#toc)
 
 ### 폴더 이동 — cd
 
@@ -185,7 +185,7 @@ cd pr[Tab]    →    cd projects/
 
 ---
 
-## 4️⃣ 폴더와 파일 만들기 — mkdir / touch [↑](#toc) {#4}
+## 4️⃣ 폴더와 파일 만들기 — mkdir / touch [↑](#toc)
 
 ### 폴더 만들기 — mkdir
 
@@ -251,7 +251,7 @@ ls src
 
 ---
 
-## 5️⃣ 파일 삭제와 이동 — rm / mv / cp [↑](#toc) {#5}
+## 5️⃣ 파일 삭제와 이동 — rm / mv / cp [↑](#toc)
 
 ### 파일 삭제 — rm
 
@@ -293,7 +293,7 @@ cp -r src/ src_backup/       # 폴더 복사 (Mac/Linux, -r 필요)
 
 ---
 
-## 6️⃣ 환경변수와 .env [↑](#toc) {#6}
+## 6️⃣ 환경변수와 .env [↑](#toc)
 
 ### 환경변수란?
 
@@ -367,7 +367,7 @@ api_key = os.getenv("OPENAI_API_KEY")
 
 ---
 
-## 7️⃣ 정리 [↑](#toc) {#7}
+## 7️⃣ 정리 [↑](#toc)
 
 ### 명령어 요약 표
 

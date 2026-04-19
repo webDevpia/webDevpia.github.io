@@ -1,9 +1,6 @@
 ---
 title: ML 커리큘럼 분석 보고서
-layout: default
-parent: MachineLearning
-nav_order: 99
-permalink: /machinelearning/analysis-report
+nav_exclude: true
 ---
 
 {% raw %}

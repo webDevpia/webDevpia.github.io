@@ -1,9 +1,6 @@
 ---
 title: AI-Native JavaScript 학습 과정 설계 분석 보고서
-layout: default
-parent: AI-Native Development
-nav_order: 10
-permalink: /ai-native/js-analysis-report
+nav_exclude: true
 ---
 
 # AI-Native 방식의 JavaScript 학습 과정 설계 — 다중 페르소나 비판적 분석 보고서

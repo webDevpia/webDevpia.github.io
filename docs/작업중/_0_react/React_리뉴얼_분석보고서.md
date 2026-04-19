@@ -1,9 +1,6 @@
 ---
 title: React 커리큘럼 리뉴얼 분석 보고서
-layout: default
-parent: React
-nav_order: 99
-permalink: /language/react/renewal-report
+nav_exclude: true
 ---
 
 {% raw %}

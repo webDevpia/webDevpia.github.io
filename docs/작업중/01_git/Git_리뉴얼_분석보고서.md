@@ -1,9 +1,6 @@
 ---
 title: Git 커리큘럼 리뉴얼 분석 보고서
-layout: default
-parent: Git
-nav_order: 99
-permalink: /git/renewal-report
+nav_exclude: true
 ---
 
 {% raw %}
