@@ -22,7 +22,8 @@ permalink: /language/css/basics
 4. [색상과 텍스트 스타일링](#part4) - 색상 표기법, 폰트 속성
 5. [박스 모델(Box Model)](#part5) - content, padding, border, margin
 6. [display 속성](#part6) - block, inline, inline-block
-7. [정리](#part7) - 핵심 개념 요약 및 실습 과제
+7. [position과 transition 기초](#part7) - 위치 제어, 부드러운 전환 효과
+8. [정리](#part8) - 핵심 개념 요약 및 실습 과제
 
 ---
 
@@ -233,7 +234,7 @@ h1 { color: black; }        /* 1점 */
 
 ### 색상 표기법
 
-CSS에서 색상을 표현하는 방법은 3가지입니다.
+CSS에서 색상을 표현하는 방법은 4가지입니다.
 
 ```css
 /* 1. 색상 이름 */
@@ -293,6 +294,19 @@ p.intro {
   letter-spacing: 0.05em;
 }
 ```
+
+### CSS 단위 미리보기
+
+글자 크기나 여백을 지정할 때 숫자 뒤에 붙는 단위입니다.
+
+| 단위 | 의미 | 예시 | 특징 |
+|------|------|------|------|
+| `px` | 픽셀 (고정 크기) | `font-size: 16px;` | 화면 해상도에 따라 고정 |
+| `rem` | 루트 글자 크기 기준 (상대 크기) | `font-size: 2rem;` | 브라우저 기본 16px 기준 → 2rem = 32px |
+| `%` | 부모 요소 기준 비율 | `width: 50%;` | 부모의 절반 |
+
+> 💡 `rem`은 "root em"의 약자입니다. `2rem`은 "기본 글자 크기의 2배"라는 뜻입니다.
+> 반응형 디자인에서는 `px`보다 `rem`을 권장합니다. 더 자세한 단위는 CSS 03장에서 다룹니다.
 
 ### 실용 예시: 본문 텍스트 스타일링
 
@@ -530,7 +544,73 @@ a.button {
 
 <a id="part7"></a>
 
-## 7️⃣ 정리 [↑](#toc)
+## 7️⃣ position과 transition 기초 [↑](#toc)
+
+### position — 요소의 위치 제어
+
+**position** 속성은 요소를 문서 흐름에서 어떻게 배치할지 결정합니다.
+
+| 값 | 의미 | 사용 예 |
+|----|------|---------|
+| `static` | 기본값 — 문서 흐름대로 배치 | 대부분의 요소 |
+| `relative` | 원래 위치 기준으로 이동 | 미세 조정, absolute의 기준점 |
+| `absolute` | 가장 가까운 relative 부모 기준으로 배치 | 배지, 드롭다운, 오버레이 |
+| `fixed` | 화면(뷰포트) 기준 고정 | 상단 고정 네비게이션 |
+| `sticky` | 스크롤 시 특정 위치에 붙음 | 스크롤 따라가는 헤더 |
+
+```css
+/* 상단 고정 네비게이션 */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;  /* 다른 요소 위에 표시 (숫자가 클수록 위) */
+}
+
+/* 스크롤하면 상단에 붙는 사이드바 */
+.sidebar {
+  position: sticky;
+  top: 80px;  /* 상단에서 80px 위치에 고정 */
+}
+```
+
+> 💡 **z-index**는 요소의 쌓이는 순서를 결정합니다. 숫자가 클수록 위에 표시됩니다. `position`이 `static`이 아닌 요소에만 적용됩니다.
+
+### transition — 부드러운 변화 효과
+
+**transition**은 CSS 속성 값이 바뀔 때 **즉시 변하지 않고 부드럽게 전환**되도록 만듭니다.
+
+```css
+.button {
+  background-color: #3498db;
+  transition: background-color 0.3s;  /* 배경색을 0.3초에 걸쳐 변경 */
+}
+
+.button:hover {
+  background-color: #2980b9;  /* 마우스 올리면 부드럽게 색상 전환 */
+}
+```
+
+```css
+/* 카드 hover 효과 — 위로 살짝 올라가면서 그림자 커짐 */
+.card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);     /* 위로 4px 이동 */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+```
+
+> **비유**: transition은 **슬로우 모션**입니다. "색상이 바뀌었다!"가 아니라 "색상이 부드럽게~ 바뀌는 중..."이 됩니다. 이후 Flexbox 챕터와 Tailwind에서 자주 사용합니다.
+
+---
+
+<a id="part8"></a>
+
+## 8️⃣ 정리 [↑](#toc)
 
 ### 핵심 개념 요약
 
@@ -542,6 +622,8 @@ a.button {
 | 색상 | 이름, HEX, RGB | 실무에서는 HEX 많이 사용 |
 | 박스 모델 | content→padding→border→margin | `box-sizing: border-box` 필수 |
 | display | block / inline / inline-block / none | 레이아웃의 기초 |
+| position | static / relative / absolute / fixed / sticky | 요소 배치 제어 |
+| transition | 속성 변화를 부드럽게 | `transition: 속성 시간` |
 
 ### 다음 장 미리보기
 
