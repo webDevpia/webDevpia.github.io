@@ -29,8 +29,6 @@ permalink: /language/css/basics
 
 ---
 
-# 01장. CSS 기초
-
 <a id="part1"></a>
 
 ## 1️⃣ CSS란? [↑](#toc)

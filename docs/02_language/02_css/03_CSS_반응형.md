@@ -27,8 +27,6 @@ permalink: /language/css/responsive
 
 ---
 
-# 03장. CSS 반응형 디자인
-
 <a id="part1"></a>
 
 ## 1️⃣ 반응형 디자인이란? [↑](#toc)

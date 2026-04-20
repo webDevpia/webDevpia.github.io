@@ -25,8 +25,6 @@ permalink: /language/html/mini-project
 
 ---
 
-# 03장. HTML 미니 프로젝트
-
 <a id="part1"></a>
 
 ## 1️⃣ 프로젝트 소개 [↑](#toc)

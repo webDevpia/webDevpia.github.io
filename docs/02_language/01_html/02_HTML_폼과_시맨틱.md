@@ -27,8 +27,6 @@ permalink: /language/html/forms-semantic
 
 ---
 
-# 02장. HTML 폼과 시맨틱 태그
-
 <a id="part1"></a>
 
 ## 1️⃣ 폼(Form) 기초 [↑](#toc)

@@ -28,8 +28,6 @@ permalink: /language/html/getting-started
 
 ---
 
-# 01장. HTML 시작하기
-
 <a id="part1"></a>
 
 ## 1️⃣ HTML이란? [↑](#toc)

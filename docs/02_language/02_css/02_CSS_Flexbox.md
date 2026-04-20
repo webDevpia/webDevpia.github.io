@@ -27,8 +27,6 @@ permalink: /language/css/flexbox
 
 ---
 
-# 02장. CSS Flexbox
-
 <a id="part1"></a>
 
 ## 1️⃣ Flexbox란? [↑](#toc)
