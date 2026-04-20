@@ -317,11 +317,35 @@ font-family: 'Noto Sans KR', Arial, sans-serif;
 
 #### 자주 쓰는 한글 웹 글꼴
 
-| 글꼴 | 특징 | `<link>` 코드 |
-|------|------|--------------|
-| **Noto Sans KR** | 구글이 만든 한글 고딕체, 가장 대중적 | `family=Noto+Sans+KR:wght@400;700` |
-| **Pretendard** | 애플 산돌고딕 느낌, 최근 인기 | CDN: `cdn.jsdelivr.net/gh/orioncactus/pretendard` |
-| **Nanum Gothic** | 네이버가 만든 한글 고딕체 | `family=Nanum+Gothic:wght@400;700` |
+**Noto Sans KR** — 구글이 만든 한글 고딕체, 가장 대중적
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+```
+
+```css
+font-family: 'Noto Sans KR', sans-serif;
+```
+
+**Pretendard** — 애플 산돌고딕 느낌, 최근 인기
+
+```html
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+```
+
+```css
+font-family: 'Pretendard', sans-serif;
+```
+
+**Nanum Gothic** — 네이버가 만든 한글 고딕체
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+```
+
+```css
+font-family: 'Nanum Gothic', sans-serif;
+```
 
 ### 텍스트 스타일링 속성
 
