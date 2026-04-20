@@ -2,6 +2,8 @@
 nav_exclude: true
 ---
 
+# 02장. CSS Flexbox
+
 ## 학습 목표
 
 - Flexbox로 요소를 가로/세로로 정렬하고 카드 레이아웃을 만들 수 있다
@@ -17,8 +19,6 @@ nav_exclude: true
 6. 정리 - 속성 요약 및 실습 과제
 
 ---
-
-# 02장. CSS Flexbox
 
 ## 1️⃣ Flexbox란?
 

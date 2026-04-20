@@ -1,6 +1,7 @@
 ---
 nav_exclude: true
 ---
+
 # 03장. HTML 미니 프로젝트
 
 ## 학습 목표
