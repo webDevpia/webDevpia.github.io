@@ -7,6 +7,8 @@ nav_order: 3
 permalink: /language/html/mini-project
 ---
 
+# 03장. HTML 미니 프로젝트
+
 ## 학습 목표
 
 - 1~2장에서 배운 모든 태그를 활용하여 완성도 있는 웹페이지를 만들 수 있다

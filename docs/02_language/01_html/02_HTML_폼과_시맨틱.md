@@ -7,6 +7,8 @@ nav_order: 2
 permalink: /language/html/forms-semantic
 ---
 
+# 02장. HTML 폼과 시맨틱 태그
+
 ## 학습 목표
 
 - 폼(Form) 요소로 사용자 입력을 받는 페이지를 만들 수 있다

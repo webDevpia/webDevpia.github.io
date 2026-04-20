@@ -7,6 +7,8 @@ nav_order: 1
 permalink: /language/css/basics
 ---
 
+# 01장. CSS 기초
+
 ## 학습 목표
 
 - CSS를 HTML에 연결하는 3가지 방법을 이해하고 외부 파일 방식을 사용할 수 있다

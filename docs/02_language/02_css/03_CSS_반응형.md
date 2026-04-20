@@ -7,6 +7,8 @@ nav_order: 3
 permalink: /language/css/responsive
 ---
 
+# 03장. CSS 반응형 디자인
+
 ## 학습 목표
 
 - 미디어 쿼리로 화면 크기에 따라 다른 스타일을 적용할 수 있다

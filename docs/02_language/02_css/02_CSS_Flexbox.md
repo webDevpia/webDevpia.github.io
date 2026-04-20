@@ -7,6 +7,8 @@ nav_order: 2
 permalink: /language/css/flexbox
 ---
 
+# 02장. CSS Flexbox
+
 ## 학습 목표
 
 - Flexbox로 요소를 가로/세로로 정렬하고 카드 레이아웃을 만들 수 있다
