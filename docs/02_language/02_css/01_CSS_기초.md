@@ -256,6 +256,73 @@ h2 { color: rgb(51, 51, 51); }  /* 진한 회색 */
 
 실무에서는 **HEX 코드**를 가장 많이 사용합니다. 디자이너로부터 `#3498db` 같은 HEX 코드를 전달받는 경우가 많습니다.
 
+### 글꼴(Font) 설정
+
+#### 글꼴의 종류
+
+| 분류 | 설명 | 대표 글꼴 |
+|------|------|----------|
+| **시스템 글꼴** | OS에 기본 설치된 글꼴 | Arial, 맑은 고딕, Apple SD Gothic Neo |
+| **웹 글꼴** | 인터넷에서 불러오는 글꼴 | Noto Sans KR, Pretendard, Roboto |
+
+#### 시스템 글꼴만 사용하기
+
+PC에 이미 설치된 글꼴만 사용합니다. 별도 설정이 필요 없지만, OS마다 보이는 글꼴이 다를 수 있습니다.
+
+```css
+body {
+  /* Windows: 맑은 고딕, macOS: Apple SD Gothic Neo, 둘 다 없으면 기본 고딕체 */
+  font-family: '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+}
+```
+
+#### 웹 글꼴 사용하기 (Google Fonts)
+
+Google Fonts에서 무료 글꼴을 불러올 수 있습니다. **가장 많이 사용하는 방법**입니다.
+
+**Step 1.** HTML `<head>`에 글꼴을 불러오는 `<link>` 추가:
+
+```html
+<head>
+  <!-- Google Fonts에서 Noto Sans KR 불러오기 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+```
+
+**Step 2.** CSS에서 불러온 글꼴 사용:
+
+```css
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+```
+
+> **비유**: 웹 글꼴은 **배달 음식**과 같습니다. 내 냉장고(PC)에 재료가 없어도 배달(Google Fonts)로 가져올 수 있습니다. `<link>` 태그가 주문서이고, `font-family`가 "이 음식을 먹겠다"는 선택입니다.
+
+#### font-family의 폴백(fallback) 순서
+
+```css
+font-family: 'Noto Sans KR', Arial, sans-serif;
+/*            ①               ②      ③        */
+```
+
+| 순서 | 글꼴 | 언제 사용되나 |
+|------|------|-------------|
+| ① | `'Noto Sans KR'` | `<link>`로 불러왔거나 PC에 설치된 경우 |
+| ② | `Arial` | ①이 없을 때 — Windows/Mac 기본 내장 |
+| ③ | `sans-serif` | ①②가 모두 없을 때 — 브라우저 기본 고딕체 |
+
+> 💡 **실무 팁**: 글꼴 이름에 공백이 있으면 반드시 따옴표로 감싸세요. `'Noto Sans KR'` (O), `Noto Sans KR` (X)
+
+#### 자주 쓰는 한글 웹 글꼴
+
+| 글꼴 | 특징 | `<link>` 코드 |
+|------|------|--------------|
+| **Noto Sans KR** | 구글이 만든 한글 고딕체, 가장 대중적 | `family=Noto+Sans+KR:wght@400;700` |
+| **Pretendard** | 애플 산돌고딕 느낌, 최근 인기 | CDN: `cdn.jsdelivr.net/gh/orioncactus/pretendard` |
+| **Nanum Gothic** | 네이버가 만든 한글 고딕체 | `family=Nanum+Gothic:wght@400;700` |
+
 ### 텍스트 스타일링 속성
 
 ```css
@@ -263,7 +330,7 @@ body {
   /* 글자 크기 (기본값: 16px) */
   font-size: 16px;
 
-  /* 글꼴 — 여러 개를 쓰면 순서대로 폴백(fallback) */
+  /* 글꼴 — 웹 글꼴 + 폴백 */
   font-family: 'Noto Sans KR', Arial, sans-serif;
 
   /* 글자 굵기 (400=기본, 700=굵게) */
