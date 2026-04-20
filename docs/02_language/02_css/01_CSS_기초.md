@@ -347,6 +347,16 @@ font-family: 'Pretendard', sans-serif;
 font-family: 'Nanum Gothic', sans-serif;
 ```
 
+#### 글꼴을 찾을 수 있는 사이트
+
+| 사이트 | URL | 특징 |
+|--------|-----|------|
+| **Google Fonts** | [fonts.google.com](https://fonts.google.com) | 무료, 한글 글꼴 다수, `<link>` 코드 자동 생성 |
+| **눈누** | [noonnu.cc](https://noonnu.cc) | 한글 무료 글꼴 전문, 상업적 사용 가능 여부 표시 |
+| **Adobe Fonts** | [fonts.adobe.com](https://fonts.adobe.com) | Adobe 구독자 무료, 고품질 글꼴 |
+
+> 💡 **Google Fonts 사용법**: 사이트 접속 → 원하는 글꼴 선택 → "Get font" → "Get embed code" → `<link>` 태그를 HTML에 복사-붙여넣기
+
 ### 텍스트 스타일링 속성
 
 ```css
