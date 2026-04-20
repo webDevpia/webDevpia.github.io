@@ -354,7 +354,7 @@ IconButton(
 
 ```dart
 Image.network(
-  'https://picsum.photos/200/300',  // 이미지 URL
+  'https://placehold.co/200x300',  // 이미지 URL
   width: 200,
   height: 300,
   fit: BoxFit.cover,               // 이미지 크기 맞추기 방식
@@ -384,7 +384,7 @@ Image.network(
 // 네트워크 이미지로
 CircleAvatar(
   radius: 40,
-  backgroundImage: NetworkImage('https://picsum.photos/100'),
+  backgroundImage: NetworkImage('https://placehold.co/100'),
 )
 
 // 아이콘으로

@@ -1,0 +1,413 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "Welcome to Agentria" [ref=e12] [cursor=pointer]:
+        - /url: ./about-agentria-ko
+        - paragraph [ref=e15]: Welcome to Agentria
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - link "시작하기" [ref=e22] [cursor=pointer]:
+            - /url: ./get-started-ko
+            - paragraph [ref=e25]: 시작하기
+          - link "3단계 핵심 가이드" [ref=e32] [cursor=pointer]:
+            - /url: ./3step-core-ko
+            - paragraph [ref=e35]: 3단계 핵심 가이드
+          - generic [ref=e38]:
+            - link "어빌리티 가이드" [ref=e45] [cursor=pointer]:
+              - /url: ./ability-guide-ko
+              - paragraph [ref=e48]: 어빌리티 가이드
+            - generic [ref=e52]:
+              - link "[어빌리티] AI 노드 (LLM)" [ref=e55] [cursor=pointer]:
+                - /url: ./llm-node-ko
+                - paragraph [ref=e58]: "[어빌리티] AI 노드 (LLM)"
+              - link "[어빌리티] 코드 노드 (Python)" [ref=e61] [cursor=pointer]:
+                - /url: ./python-node-ko
+                - paragraph [ref=e64]: "[어빌리티] 코드 노드 (Python)"
+              - link "[어빌리티] 도구 노드 (Gmail)" [ref=e67] [cursor=pointer]:
+                - /url: ./gmail-node-ko
+                - paragraph [ref=e70]: "[어빌리티] 도구 노드 (Gmail)"
+              - link "[어빌리티] 도구 노드 (Slack)" [ref=e73] [cursor=pointer]:
+                - /url: ./slack-node-ko
+                - paragraph [ref=e76]: "[어빌리티] 도구 노드 (Slack)"
+              - link "[어빌리티] 흐름 제어 노드 (Branch)" [ref=e79] [cursor=pointer]:
+                - /url: ./branch-node-ko
+                - paragraph [ref=e82]: "[어빌리티] 흐름 제어 노드 (Branch)"
+          - generic [ref=e85]:
+            - link "에이전트 가이드" [ref=e92] [cursor=pointer]:
+              - /url: ./agent-guide-ko
+              - paragraph [ref=e95]: 에이전트 가이드
+            - generic [ref=e99]:
+              - link "[에이전트] 단기 기억 조회" [ref=e102] [cursor=pointer]:
+                - /url: ./shortterm-node-ko
+                - paragraph [ref=e105]: "[에이전트] 단기 기억 조회"
+              - link "[에이전트] 추론 행동 (ReAct)" [ref=e108] [cursor=pointer]:
+                - /url: ./react-node-ko
+                - paragraph [ref=e111]: "[에이전트] 추론 행동 (ReAct)"
+        - generic [ref=e112]:
+          - link "핵심개념" [ref=e117] [cursor=pointer]:
+            - /url: ./key-concepts-ko
+            - paragraph [ref=e120]: 핵심개념
+          - generic [ref=e123]:
+            - link "노드" [ref=e129] [cursor=pointer]:
+              - /url: ./node-ko
+              - paragraph [ref=e132]: 노드
+            - generic [ref=e136]:
+              - link "유형" [ref=e139] [cursor=pointer]:
+                - /url: ./node-type-ko
+                - paragraph [ref=e142]: 유형
+              - link "구조" [ref=e145] [cursor=pointer]:
+                - /url: ./node-structure-ko
+                - paragraph [ref=e148]: 구조
+              - link "사용법" [ref=e151] [cursor=pointer]:
+                - /url: ./node-usage-ko
+                - paragraph [ref=e154]: 사용법
+              - link "노드 테스트" [ref=e157] [cursor=pointer]:
+                - /url: ./node-test-ko
+                - paragraph [ref=e160]: 노드 테스트
+          - generic [ref=e163]:
+            - link "어빌리티" [ref=e169] [cursor=pointer]:
+              - /url: ./ability-ko
+              - paragraph [ref=e172]: 어빌리티
+            - generic [ref=e176]:
+              - link "구조" [ref=e179] [cursor=pointer]:
+                - /url: ./ability-structure-ko
+                - paragraph [ref=e182]: 구조
+              - link "사용법" [ref=e185] [cursor=pointer]:
+                - /url: ./ability-usage-ko
+                - paragraph [ref=e188]: 사용법
+              - link "어빌리티 테스트" [ref=e191] [cursor=pointer]:
+                - /url: ./ability-test-ko
+                - paragraph [ref=e194]: 어빌리티 테스트
+          - generic [ref=e197]:
+            - link "에이전트" [ref=e203] [cursor=pointer]:
+              - /url: ./agent-ko
+              - paragraph [ref=e206]: 에이전트
+            - generic [ref=e210]:
+              - link "구조" [ref=e213] [cursor=pointer]:
+                - /url: ./agent-structure-ko
+                - paragraph [ref=e216]: 구조
+              - link "사용법" [ref=e219] [cursor=pointer]:
+                - /url: ./agent-usage-ko
+                - paragraph [ref=e222]: 사용법
+              - link "에이전트 테스트" [ref=e225] [cursor=pointer]:
+                - /url: ./agent-test-ko
+                - paragraph [ref=e228]: 에이전트 테스트
+          - generic [ref=e231]:
+            - link "스토리지" [ref=e237] [cursor=pointer]:
+              - /url: ./storage-ko
+              - paragraph [ref=e240]: 스토리지
+            - generic [ref=e244]:
+              - link "정형 데이터" [ref=e247] [cursor=pointer]:
+                - /url: ./structured-data-ko
+                - paragraph [ref=e250]: 정형 데이터
+              - link "데이터 구조" [ref=e253] [cursor=pointer]:
+                - /url: ./data-structure-ko
+                - paragraph [ref=e256]: 데이터 구조
+              - link "벌크 런 테스트" [ref=e259] [cursor=pointer]:
+                - /url: ./bulkrun-test-ko
+                - paragraph [ref=e262]: 벌크 런 테스트
+        - generic [ref=e263]:
+          - link "핵심기능" [ref=e268] [cursor=pointer]:
+            - /url: ./key-features-ko
+            - paragraph [ref=e271]: 핵심기능
+          - generic [ref=e274]:
+            - link "크리덴셜" [ref=e280] [cursor=pointer]:
+              - /url: ./credential-ko
+              - paragraph [ref=e283]: 크리덴셜
+            - generic [ref=e287]:
+              - link "구글 크리덴셜" [ref=e290] [cursor=pointer]:
+                - /url: ./google-credential-ko
+                - paragraph [ref=e293]: 구글 크리덴셜
+              - link "슬랙 크리덴셜" [ref=e296] [cursor=pointer]:
+                - /url: ./slack-credential-ko
+                - paragraph [ref=e299]: 슬랙 크리덴셜
+          - generic [ref=e302]:
+            - link "API" [ref=e308] [cursor=pointer]:
+              - /url: ./api-ko
+              - paragraph [ref=e311]: API
+            - generic [ref=e315]:
+              - link "버전" [ref=e318] [cursor=pointer]:
+                - /url: ./api-version-ko
+                - paragraph [ref=e321]: 버전
+              - link "API 배포" [ref=e324] [cursor=pointer]:
+                - /url: ./api-release-ko
+                - paragraph [ref=e327]: API 배포
+              - link "어빌리티 API cURL" [ref=e330] [cursor=pointer]:
+                - /url: ./ability-endpoint-ko
+                - paragraph [ref=e333]: 어빌리티 API cURL
+              - link "에이전트 API cURL" [ref=e336] [cursor=pointer]:
+                - /url: ./agent-endpoint-ko
+                - paragraph [ref=e339]: 에이전트 API cURL
+              - link "API 호출 (포스트맨)" [ref=e342] [cursor=pointer]:
+                - /url: ./postman-ko
+                - paragraph [ref=e345]: API 호출 (포스트맨)
+        - link "노드정보" [ref=e352] [cursor=pointer]:
+          - /url: ./node-info-ko
+          - paragraph [ref=e355]: 노드정보
+    - generic [ref=e361]:
+      - paragraph [ref=e365]: Get Started
+      - heading "단기 기억 조회 노드 사용하기" [level=1] [ref=e368]
+      - generic [ref=e369]:
+        - paragraph [ref=e370]:
+          - text: 응용 가이드의 튜토리얼은
+          - strong [ref=e371]: 에이전트리아
+          - text: (Agentria)를 통해 구성할 수 있는 보다 다양한 워크플로 제작 과정을 다룹니다.
+        - paragraph [ref=e372]: 본 튜토리얼에서는 단기 기억 조회(Short-term Memory Reader) 노드와 LLM 노드를 사용해 에이전트(Agent)를 구성하고 챗 테스트(Chat Test)를 진행합니다.
+        - paragraph [ref=e373]: 이를 통해 대화형 에이전트 워크플로를 만들어 볼 수 있습니다.
+        - paragraph [ref=e374]
+        - heading "사전 준비" [level=2] [ref=e375]:
+          - link "사전 준비" [ref=e376] [cursor=pointer]:
+            - /url: ./shortterm-node-ko#%EC%82%AC%EC%A0%84-%EC%A4%80%EB%B9%84
+        - paragraph [ref=e377]
+        - paragraph [ref=e378]:
+          - text: 시작을 위해,
+          - strong [ref=e379]: 에이전트리아
+          - text: 에서 프로젝트(Project)를 생성한 후, 에이전트 캔버스(Canvas)로 진입합니다.
+        - paragraph [ref=e380]:
+          - text: 캔버스 진입 절차는
+          - link "3단계 핵심 가이드" [ref=e381] [cursor=pointer]:
+            - /url: ./3step-core-ko
+          - text: 의 1단계(프로젝트 생성 및 컴포저 선택)를 참고하시기 바랍니다.
+        - paragraph [ref=e382]
+        - paragraph [ref=e383]: 본 튜토리얼을 완료하면 다음과 같은 작업을 수행할 수 있습니다.
+        - list [ref=e384]:
+          - listitem [ref=e385]:
+            - paragraph [ref=e386]: 단기 기억 조회 노드 사용하기
+          - listitem [ref=e387]:
+            - paragraph [ref=e388]: 노드 두 개 이상 연결하기
+          - listitem [ref=e389]:
+            - paragraph [ref=e390]: 에이전트 워크플로 구성하기
+          - listitem [ref=e391]:
+            - paragraph [ref=e392]: 챗 테스트를 통해 워크플로 실행 결과 검증하기
+        - paragraph [ref=e393]
+        - 'heading "1단계: 인풋 변수 선언" [level=2] [ref=e394]':
+          - 'link "1단계: 인풋 변수 선언" [ref=e395] [cursor=pointer]':
+            - /url: ./shortterm-node-ko#1%EB%8B%A8%EA%B3%84-%EC%9D%B8%ED%92%8B-%EB%B3%80%EC%88%98-%EC%84%A0%EC%96%B8
+        - paragraph [ref=e396]
+        - paragraph [ref=e397]
+        - paragraph [ref=e398]:
+          - strong [ref=e399]: 에이전트리아
+          - text: 캔버스에는 기본적으로
+          - code [ref=e400]: 스타트 노드(Start Node)
+          - text: 와
+          - code [ref=e401]: 엔드 노드(End Node)
+          - text: 가 하나씩 배치되어 있습니다.
+        - paragraph [ref=e402]
+        - list [ref=e403]:
+          - listitem [ref=e404]:
+            - text: •
+            - paragraph [ref=e405]: 스타트 노드는 전체 흐름을 시작합니다.
+          - listitem [ref=e406]:
+            - text: •
+            - paragraph [ref=e407]: 엔드 노드는 전체 흐름을 종료합니다.
+        - paragraph [ref=e408]
+        - paragraph [ref=e409]: 따라서 ‘대화형 에이전트’ 워크플로를 구성하기 위해서는 먼저 스타트 노드에서 필요한 변수를 선언해야 합니다.
+        - paragraph [ref=e410]: 스타트 노드를 더블 클릭하면 노드 편집기가 팝업 형태로 열리며, 이곳에서 자료형과 이름, 설명을 설정하여 변수를 선언할 수 있습니다.
+        - paragraph [ref=e411]
+        - paragraph [ref=e412]
+        - paragraph [ref=e413]: 에이전트 스타트 노드는 챗 테스트를 위해 인풋 변수가 기본값으로 설정되어 있습니다.
+        - paragraph [ref=e414]: 임의로 필요한 변수를 추가할 수 있습니다.
+        - paragraph [ref=e415]: 본 튜토리얼에서는 추가 변수 설정 없이 기본 변수만 사용합니다.
+        - paragraph [ref=e416]: 다시 캔버스로 돌아갑니다.
+        - paragraph [ref=e417]
+        - 'heading "2단계: 드래그 앤 드롭으로 노드 추가" [level=2] [ref=e418]':
+          - 'link "2단계: 드래그 앤 드롭으로 노드 추가" [ref=e419] [cursor=pointer]':
+            - /url: ./shortterm-node-ko#2%EB%8B%A8%EA%B3%84-%EB%93%9C%EB%9E%98%EA%B7%B8-%EC%95%A4-%EB%93%9C%EB%A1%AD%EC%9C%BC%EB%A1%9C-%EB%85%B8%EB%93%9C-%EC%B6%94%EA%B0%80
+        - paragraph [ref=e420]
+        - paragraph [ref=e421]
+        - paragraph [ref=e422]: 챗 테스트에서 사용자의 입력 정보를 기억할 노드를 추가할 차례입니다.
+        - paragraph [ref=e423]:
+          - code [ref=e424]: 단기 기억 조회(Shor-term Memory Reader)
+          - text: 노드를 사용하면 사용자의 에이전트가 사용자의 입력 정보를 기억할 수 있습니다.
+        - paragraph [ref=e425]:
+          - text: 캔버스 하단의
+          - code [ref=e426]: +노드 추가(Add Node)
+          - text: 버튼을 클릭하여, AI Agent 카테고리에서 단기 기억 조회 노드를 드래그 앤 드롭(Drag and drop) 방식으로 배치합니다.
+        - paragraph [ref=e427]
+        - paragraph [ref=e428]: 기억 정보를 기반으로 에이전트가 답변을 생성할 수 있도록 LLM 노드도 추가합니다.
+        - paragraph [ref=e429]:
+          - text: 본 튜토리얼에서는
+          - code [ref=e430]: Azure OpenAI LLM
+          - text: 노드를 사용합니다.
+        - paragraph [ref=e431]
+        - 'heading "3단계: 엣지로 노드 연결" [level=2] [ref=e432]':
+          - 'link "3단계: 엣지로 노드 연결" [ref=e433] [cursor=pointer]':
+            - /url: ./shortterm-node-ko#3%EB%8B%A8%EA%B3%84-%EC%97%A3%EC%A7%80%EB%A1%9C-%EB%85%B8%EB%93%9C-%EC%97%B0%EA%B2%B0
+        - paragraph [ref=e434]
+        - paragraph [ref=e435]
+        - paragraph [ref=e436]: 스타트 노드에서 입력받은 변수들을 단기 기억 조회 노드에서 사용하기 위해서는 두 노드를 연결해야 합니다.
+        - paragraph [ref=e437]: 이 연결선을 엣지(Edge)라고 부릅니다.
+        - paragraph [ref=e438]: 스타트 노드의 오른쪽에 있는 아웃 핀(Out-Pin)을 단기 기억 조회 노드 왼쪽에 있는 인 핀(In-Pin)과 엣지로 연결하면, 스타트 노드의 입력값이 단기 기억 조회 노드로 전달됩니다.
+        - paragraph [ref=e439]
+        - paragraph [ref=e440]: 같은 방법으로 단기 기억 조회 노드에서 처리된 데이터를 LLM 노드에 전달합니다.
+        - paragraph [ref=e441]
+        - 'heading "4단계: 단기 기억 조회 노드 설정" [level=2] [ref=e442]':
+          - 'link "4단계: 단기 기억 조회 노드 설정" [ref=e443] [cursor=pointer]':
+            - /url: ./shortterm-node-ko#4%EB%8B%A8%EA%B3%84-%EB%8B%A8%EA%B8%B0-%EA%B8%B0%EC%96%B5-%EC%A1%B0%ED%9A%8C-%EB%85%B8%EB%93%9C-%EC%84%A4%EC%A0%95
+        - paragraph [ref=e444]
+        - paragraph [ref=e445]
+        - paragraph [ref=e446]: 단기 기억 조회 노드는 기억 저장소에 사용할 사용자 메시지 개수를 설정할 수 있습니다.
+        - paragraph [ref=e447]:
+          - text: 예를 들어 Number of Recent Messages 입력값을
+          - code [ref=e448]: "10"
+          - text: 으로 설정하면 사용자의 대화를 최근 메시지로부터 10개까지 기억해 활용합니다.
+        - paragraph [ref=e449]: 본 튜토리얼에서는 기본값으로 두고 진행합니다.
+        - paragraph [ref=e450]
+        - 'heading "5단계: LLM 노드 프롬프트 작성" [level=2] [ref=e451]':
+          - 'link "5단계: LLM 노드 프롬프트 작성" [ref=e452] [cursor=pointer]':
+            - /url: ./shortterm-node-ko#5%EB%8B%A8%EA%B3%84-llm-%EB%85%B8%EB%93%9C-%ED%94%84%EB%A1%AC%ED%94%84%ED%8A%B8-%EC%9E%91%EC%84%B1
+        - paragraph [ref=e453]
+        - paragraph [ref=e454]: LLM 노드 프롬프트 작성을 통해 에이전트가 적절한 답변을 생성하도록 합니다.
+        - paragraph [ref=e455]: 역할과 출력 규칙을 구체적으로 지시할수록 결과물의 품질이 높아집니다.
+        - paragraph [ref=e456]
+        - heading "5-1) 시스템 프롬프트" [level=3] [ref=e457]:
+          - link "5-1) 시스템 프롬프트" [ref=e458] [cursor=pointer]:
+            - /url: ./shortterm-node-ko#5-1)-%EC%8B%9C%EC%8A%A4%ED%85%9C-%ED%94%84%EB%A1%AC%ED%94%84%ED%8A%B8
+        - paragraph [ref=e459]
+        - paragraph [ref=e460]
+        - paragraph [ref=e461]: 시스템 프롬프트 필드에는 AI에게 수행할 역할과 출력 형식을 지시하는 지침 사항을 작성합니다.
+        - paragraph [ref=e462]: 본 튜토리얼은 아주 간단한 대화를 위한 에이전트를 구성하므로 시스템 프롬프트에 다음과 같이 작성합니다.
+        - blockquote [ref=e463]:
+          - paragraph [ref=e464]: 이전 대화를 기반으로 답변하세요. 대화 기록은 다음과 같습니다.
+        - paragraph [ref=e465]
+        - heading "5-2) 사용자 프롬프트" [level=3] [ref=e466]:
+          - link "5-2) 사용자 프롬프트" [ref=e467] [cursor=pointer]:
+            - /url: ./shortterm-node-ko#5-2)-%EC%82%AC%EC%9A%A9%EC%9E%90-%ED%94%84%EB%A1%AC%ED%94%84%ED%8A%B8
+        - paragraph [ref=e468]
+        - paragraph [ref=e469]: 사용자 프롬프트 필드에는 입력값을 건네는 요청을 작성합니다.
+        - paragraph [ref=e470]: 즉, 단기 기억 조회 노드에서 입력받은 데이터를 AI에 전달하는 단계입니다.
+        - paragraph [ref=e471]: 본 튜토리얼은 아주 간단한 대화를 위한 에이전트를 구성하므로 사용자 프롬프트에 다음과 같이 변수를 입력해야 합니다.
+        - paragraph [ref=e472]:
+          - strong [ref=e473]: 6단계
+          - text: 영상을 참고하시기 바랍니다.
+        - paragraph [ref=e474]
+        - 'heading "6단계: 드래그 앤 드롭으로 변수 바인딩" [level=2] [ref=e475]':
+          - 'link "6단계: 드래그 앤 드롭으로 변수 바인딩" [ref=e476] [cursor=pointer]':
+            - /url: ./shortterm-node-ko#6%EB%8B%A8%EA%B3%84-%EB%93%9C%EB%9E%98%EA%B7%B8-%EC%95%A4-%EB%93%9C%EB%A1%AD%EC%9C%BC%EB%A1%9C-%EB%B3%80%EC%88%98-%EB%B0%94%EC%9D%B8%EB%94%A9
+        - paragraph [ref=e477]
+        - paragraph [ref=e478]
+        - paragraph [ref=e479]:
+          - strong [ref=e480]: 에이전트리아
+          - text: 에서는 별도의 코드를 작성하지 않고, 드래그 앤 드롭으로 변수를 손쉽게 불러올 수 있습니다.
+        - paragraph [ref=e481]: 변수를 다음과 같이 배치해 바인딩합니다.
+        - paragraph [ref=e482]
+        - paragraph [ref=e483]: "시스템 프롬프트:"
+        - blockquote [ref=e484]:
+          - paragraph [ref=e485]:
+            - code [ref=e486]: memory_output
+        - paragraph [ref=e487]
+        - paragraph [ref=e488]: "사용자 프롬프트:"
+        - blockquote [ref=e489]:
+          - paragraph [ref=e490]:
+            - code [ref=e491]: input_message
+        - paragraph [ref=e492]
+        - 'heading "7단계: LLM 출력 변수 선언" [level=2] [ref=e493]':
+          - 'link "7단계: LLM 출력 변수 선언" [ref=e494] [cursor=pointer]':
+            - /url: ./shortterm-node-ko#7%EB%8B%A8%EA%B3%84-llm-%EC%B6%9C%EB%A0%A5-%EB%B3%80%EC%88%98-%EC%84%A0%EC%96%B8
+        - paragraph [ref=e495]
+        - paragraph [ref=e496]
+        - paragraph [ref=e497]: 최종 출력을 위해 엔드 노드와 연결하려면, LLM 노드에서 아웃풋 변수를 선언해야 합니다.
+        - paragraph [ref=e498]:
+          - text: 자료형은
+          - code [ref=e499]: String
+          - text: 으로 지정하고, 변수명은
+          - code [ref=e500]: Message
+          - text: 로 설정하면 LLM 노드의 모든 설정이 완료됩니다.
+        - paragraph [ref=e501]
+        - 'heading "8단계: 엔드 노드 연결" [level=2] [ref=e502]':
+          - 'link "8단계: 엔드 노드 연결" [ref=e503] [cursor=pointer]':
+            - /url: ./shortterm-node-ko#8%EB%8B%A8%EA%B3%84-%EC%97%94%EB%93%9C-%EB%85%B8%EB%93%9C-%EC%97%B0%EA%B2%B0
+        - paragraph [ref=e504]
+        - paragraph [ref=e505]
+        - paragraph [ref=e506]: 이제 생성된 LLM 아웃풋을 엔드 노드로 전달합니다.
+        - paragraph [ref=e507]: 다시 캔버스로 돌아와서 LLM 노드와 엔드 노드를 엣지로 연결합니다.
+        - paragraph [ref=e508]:
+          - text: 엔드 노드를 더블클릭하여 노드 편집기를 열면 기본값으로
+          - code [ref=e509]: String
+          - text: 타입의
+          - code [ref=e510]: output_message
+          - text: 어댑터 변수를 확인할 수 있습니다.
+        - paragraph [ref=e511]:
+          - text: 여기에 LLM 노드에서 생성한
+          - code [ref=e512]: Message
+          - text: 변수를 선택 또는 드래그앤 드롭 방식으로 연결합니다.
+        - paragraph [ref=e513]: 이로써 ‘단기 기억 조회 노드를 활용한 대화형 에이전트’ 워크플로가 완성되었습니다.
+        - paragraph [ref=e514]
+        - 'heading "9단계: 챗 테스트로 워크플로 점검" [level=2] [ref=e515]':
+          - 'link "9단계: 챗 테스트로 워크플로 점검" [ref=e516] [cursor=pointer]':
+            - /url: ./shortterm-node-ko#9%EB%8B%A8%EA%B3%84-%EC%B1%97-%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%A1%9C-%EC%9B%8C%ED%81%AC%ED%94%8C%EB%A1%9C-%EC%A0%90%EA%B2%80
+        - paragraph [ref=e517]
+        - paragraph [ref=e518]
+        - paragraph [ref=e519]:
+          - text: 캔버스 우측 하단에서
+          - code [ref=e520]: CHAT TEST
+          - text: 버튼을 클릭하여 완성된 전체 워크플로를 실행할 수 있습니다.
+        - paragraph [ref=e521]: 에이전트 테스트는 대화 형식으로 진행됩니다.
+        - paragraph [ref=e522]: 원활한 상호작용이 이루어지는지 점검하며 노드를 수정하고 기능을 향상할 수 있습니다.
+        - paragraph [ref=e523]
+        - 'heading "10단계: 대화 생성 과정 확인" [level=2] [ref=e524]':
+          - 'link "10단계: 대화 생성 과정 확인" [ref=e525] [cursor=pointer]':
+            - /url: ./shortterm-node-ko#10%EB%8B%A8%EA%B3%84-%EB%8C%80%ED%99%94-%EC%83%9D%EC%84%B1-%EA%B3%BC%EC%A0%95-%ED%99%95%EC%9D%B8
+        - paragraph [ref=e526]
+        - paragraph [ref=e527]
+        - paragraph [ref=e528]: 에이전트 챗 테스트는 에이전트의 대화 생성 로직을 확인할 수 있습니다.
+        - paragraph [ref=e529]: 에이전트의 답변을 클릭하면 우측에 답변 생성 과정이 담긴 노드별 로직이 나옵니다.
+        - paragraph [ref=e530]: 해당 기능은 에이전트의 세부 성능 개선 작업에 활용할 수 있습니다.
+        - paragraph [ref=e531]
+        - heading "다음 단계" [level=2] [ref=e532]:
+          - link "다음 단계" [ref=e533] [cursor=pointer]:
+            - /url: ./shortterm-node-ko#%EB%8B%A4%EC%9D%8C-%EB%8B%A8%EA%B3%84
+        - paragraph [ref=e534]
+        - paragraph [ref=e535]
+        - paragraph [ref=e536]:
+          - text: 🎉 축하합니다!
+          - strong [ref=e537]: 에이전트리아
+          - text: 를 사용해
+          - strong [ref=e538]
+          - text: ‘대화형 에이전트’를 완성했습니다.
+        - paragraph [ref=e539]: 이제 챗 테스트에서 다양한 메시지를 입력해 결과를 확인해보고, 노드를 수정하며 워크플로의 성능을 개선해 보세요.
+        - paragraph [ref=e540]
+        - paragraph [ref=e541]:
+          - strong [ref=e542]: 에이전트리아
+          - text: 는 아이디어를 현실로 바꾸는 가능성의 공간입니다.
+        - paragraph [ref=e543]: 당신의 상상력으로 워크플로는 무한히 확장될 수 있습니다.
+        - paragraph [ref=e544]
+        - paragraph [ref=e545]
+        - list [ref=e546]:
+          - listitem [ref=e547]:
+            - text: •
+            - paragraph [ref=e548]:
+              - text: 더 많은 어빌리티 예제가 궁금하다면
+              - link "어빌리티 가이드" [ref=e549] [cursor=pointer]:
+                - /url: ./ability-guide-ko
+              - text: 페이지를 확인하세요.
+          - listitem [ref=e550]:
+            - text: •
+            - paragraph [ref=e551]:
+              - text: 에이전트 예제를 원한다면
+              - link "에이전트 가이드" [ref=e552] [cursor=pointer]:
+                - /url: ./agent-guide-ko
+              - text: 페이지를 확인하세요.
+        - paragraph [ref=e553]
+        - paragraph [ref=e554]
+  - navigation [ref=e558]:
+    - link "Agentria home" [ref=e560] [cursor=pointer]:
+      - /url: ../ko
+      - img "Agentria home" [ref=e562]
+    - generic [ref=e564]:
+      - generic [ref=e565]:
+        - link "Features" [ref=e567] [cursor=pointer]:
+          - /url: ../ko#topfeatures
+          - paragraph [ref=e569]: Features
+        - link "Pricing" [ref=e571] [cursor=pointer]:
+          - /url: ../ko#pricing
+          - paragraph [ref=e573]: Pricing
+        - link "Docs" [ref=e575] [cursor=pointer]:
+          - /url: ./about-agentria-ko
+          - paragraph [ref=e577]: Docs
+      - link "EN · KO" [ref=e579] [cursor=pointer]:
+        - /url: ./shortterm-node
+        - paragraph [ref=e581]: EN · KO
+      - link "Try Now" [ref=e583] [cursor=pointer]:
+        - /url: https://app.agentria.ai
+        - paragraph [ref=e585]: Try Now

@@ -705,7 +705,7 @@ GridView와 NetworkImage를 사용해 인스타그램 스타일 갤러리를 만
 ```dart
 // 인터넷 이미지 표시
 Image.network(
-  'https://picsum.photos/200/200',
+  'https://placehold.co/200x200',
   fit: BoxFit.cover,
   loadingBuilder: (context, child, loadingProgress) {
     if (loadingProgress == null) return child;

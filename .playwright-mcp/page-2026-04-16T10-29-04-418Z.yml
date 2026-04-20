@@ -1,0 +1,313 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "Welcome to Agentria" [ref=e12] [cursor=pointer]:
+        - /url: ./about-agentria-ko
+        - paragraph [ref=e15]: Welcome to Agentria
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - link "시작하기" [ref=e22] [cursor=pointer]:
+            - /url: ./get-started-ko
+            - paragraph [ref=e25]: 시작하기
+          - link "3단계 핵심 가이드" [ref=e32] [cursor=pointer]:
+            - /url: ./3step-core-ko
+            - paragraph [ref=e35]: 3단계 핵심 가이드
+          - generic [ref=e38]:
+            - link "어빌리티 가이드" [ref=e45] [cursor=pointer]:
+              - /url: ./ability-guide-ko
+              - paragraph [ref=e48]: 어빌리티 가이드
+            - generic [ref=e52]:
+              - link "[어빌리티] AI 노드 (LLM)" [ref=e55] [cursor=pointer]:
+                - /url: ./llm-node-ko
+                - paragraph [ref=e58]: "[어빌리티] AI 노드 (LLM)"
+              - link "[어빌리티] 코드 노드 (Python)" [ref=e61] [cursor=pointer]:
+                - /url: ./python-node-ko
+                - paragraph [ref=e64]: "[어빌리티] 코드 노드 (Python)"
+              - link "[어빌리티] 도구 노드 (Gmail)" [ref=e67] [cursor=pointer]:
+                - /url: ./gmail-node-ko
+                - paragraph [ref=e70]: "[어빌리티] 도구 노드 (Gmail)"
+              - link "[어빌리티] 도구 노드 (Slack)" [ref=e73] [cursor=pointer]:
+                - /url: ./slack-node-ko
+                - paragraph [ref=e76]: "[어빌리티] 도구 노드 (Slack)"
+              - link "[어빌리티] 흐름 제어 노드 (Branch)" [ref=e79] [cursor=pointer]:
+                - /url: ./branch-node-ko
+                - paragraph [ref=e82]: "[어빌리티] 흐름 제어 노드 (Branch)"
+          - generic [ref=e85]:
+            - link "에이전트 가이드" [ref=e92] [cursor=pointer]:
+              - /url: ./agent-guide-ko
+              - paragraph [ref=e95]: 에이전트 가이드
+            - generic [ref=e99]:
+              - link "[에이전트] 단기 기억 조회" [ref=e102] [cursor=pointer]:
+                - /url: ./shortterm-node-ko
+                - paragraph [ref=e105]: "[에이전트] 단기 기억 조회"
+              - link "[에이전트] 추론 행동 (ReAct)" [ref=e108] [cursor=pointer]:
+                - /url: ./react-node-ko
+                - paragraph [ref=e111]: "[에이전트] 추론 행동 (ReAct)"
+        - generic [ref=e112]:
+          - link "핵심개념" [ref=e117] [cursor=pointer]:
+            - /url: ./key-concepts-ko
+            - paragraph [ref=e120]: 핵심개념
+          - generic [ref=e123]:
+            - link "노드" [ref=e129] [cursor=pointer]:
+              - /url: ./node-ko
+              - paragraph [ref=e132]: 노드
+            - generic [ref=e136]:
+              - link "유형" [ref=e139] [cursor=pointer]:
+                - /url: ./node-type-ko
+                - paragraph [ref=e142]: 유형
+              - link "구조" [ref=e145] [cursor=pointer]:
+                - /url: ./node-structure-ko
+                - paragraph [ref=e148]: 구조
+              - link "사용법" [ref=e151] [cursor=pointer]:
+                - /url: ./node-usage-ko
+                - paragraph [ref=e154]: 사용법
+              - link "노드 테스트" [ref=e157] [cursor=pointer]:
+                - /url: ./node-test-ko
+                - paragraph [ref=e160]: 노드 테스트
+          - generic [ref=e163]:
+            - link "어빌리티" [ref=e169] [cursor=pointer]:
+              - /url: ./ability-ko
+              - paragraph [ref=e172]: 어빌리티
+            - generic [ref=e176]:
+              - link "구조" [ref=e179] [cursor=pointer]:
+                - /url: ./ability-structure-ko
+                - paragraph [ref=e182]: 구조
+              - link "사용법" [ref=e185] [cursor=pointer]:
+                - /url: ./ability-usage-ko
+                - paragraph [ref=e188]: 사용법
+              - link "어빌리티 테스트" [ref=e191] [cursor=pointer]:
+                - /url: ./ability-test-ko
+                - paragraph [ref=e194]: 어빌리티 테스트
+          - generic [ref=e197]:
+            - link "에이전트" [ref=e203] [cursor=pointer]:
+              - /url: ./agent-ko
+              - paragraph [ref=e206]: 에이전트
+            - generic [ref=e210]:
+              - link "구조" [ref=e213] [cursor=pointer]:
+                - /url: ./agent-structure-ko
+                - paragraph [ref=e216]: 구조
+              - link "사용법" [ref=e219] [cursor=pointer]:
+                - /url: ./agent-usage-ko
+                - paragraph [ref=e222]: 사용법
+              - link "에이전트 테스트" [ref=e225] [cursor=pointer]:
+                - /url: ./agent-test-ko
+                - paragraph [ref=e228]: 에이전트 테스트
+          - generic [ref=e231]:
+            - link "스토리지" [ref=e237] [cursor=pointer]:
+              - /url: ./storage-ko
+              - paragraph [ref=e240]: 스토리지
+            - generic [ref=e244]:
+              - link "정형 데이터" [ref=e247] [cursor=pointer]:
+                - /url: ./structured-data-ko
+                - paragraph [ref=e250]: 정형 데이터
+              - link "데이터 구조" [ref=e253] [cursor=pointer]:
+                - /url: ./data-structure-ko
+                - paragraph [ref=e256]: 데이터 구조
+              - link "벌크 런 테스트" [ref=e259] [cursor=pointer]:
+                - /url: ./bulkrun-test-ko
+                - paragraph [ref=e262]: 벌크 런 테스트
+        - generic [ref=e263]:
+          - link "핵심기능" [ref=e268] [cursor=pointer]:
+            - /url: ./key-features-ko
+            - paragraph [ref=e271]: 핵심기능
+          - generic [ref=e274]:
+            - link "크리덴셜" [ref=e280] [cursor=pointer]:
+              - /url: ./credential-ko
+              - paragraph [ref=e283]: 크리덴셜
+            - generic [ref=e287]:
+              - link "구글 크리덴셜" [ref=e290] [cursor=pointer]:
+                - /url: ./google-credential-ko
+                - paragraph [ref=e293]: 구글 크리덴셜
+              - link "슬랙 크리덴셜" [ref=e296] [cursor=pointer]:
+                - /url: ./slack-credential-ko
+                - paragraph [ref=e299]: 슬랙 크리덴셜
+          - generic [ref=e302]:
+            - link "API" [ref=e308] [cursor=pointer]:
+              - /url: ./api-ko
+              - paragraph [ref=e311]: API
+            - generic [ref=e315]:
+              - link "버전" [ref=e318] [cursor=pointer]:
+                - /url: ./api-version-ko
+                - paragraph [ref=e321]: 버전
+              - link "API 배포" [ref=e324] [cursor=pointer]:
+                - /url: ./api-release-ko
+                - paragraph [ref=e327]: API 배포
+              - link "어빌리티 API cURL" [ref=e330] [cursor=pointer]:
+                - /url: ./ability-endpoint-ko
+                - paragraph [ref=e333]: 어빌리티 API cURL
+              - link "에이전트 API cURL" [ref=e336] [cursor=pointer]:
+                - /url: ./agent-endpoint-ko
+                - paragraph [ref=e339]: 에이전트 API cURL
+              - link "API 호출 (포스트맨)" [ref=e342] [cursor=pointer]:
+                - /url: ./postman-ko
+                - paragraph [ref=e345]: API 호출 (포스트맨)
+        - link "노드정보" [ref=e352] [cursor=pointer]:
+          - /url: ./node-info-ko
+          - paragraph [ref=e355]: 노드정보
+    - generic [ref=e361]:
+      - paragraph [ref=e365]: welcome
+      - heading "에이전트리아에 오신 것을 환영합니다" [level=1] [ref=e368]
+      - generic [ref=e369]:
+        - heading "강력한 에이전트, 에이전트리아로부터" [level=2] [ref=e370]:
+          - link "강력한 에이전트, 에이전트리아로부터" [ref=e371] [cursor=pointer]:
+            - /url: ./about-agentria-ko#%EA%B0%95%EB%A0%A5%ED%95%9C-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8%EB%A6%AC%EC%95%84%EB%A1%9C%EB%B6%80%ED%84%B0
+        - paragraph [ref=e372]
+        - paragraph [ref=e373]:
+          - strong [ref=e374]: 에이전트리아(Agentria)
+          - text: 는 🔗
+          - link "에이전트(Agent)" [ref=e375] [cursor=pointer]:
+            - /url: ./agent-ko
+          - text: 개발·배포·거래의 새로운 패러다임(Paradigm)을 제시하는 혁신적인 플랫폼이자, 에이전트 생태계의 중심 거점입니다.
+        - paragraph [ref=e376]:
+          - text: 사용자는
+          - strong [ref=e377]: 에이전트리아
+          - text: 안에서 에이전트를 만들고, 배포하고, 거래하며 아이디어를 실현하고, 세상을 확장할 수 있습니다.
+        - paragraph [ref=e378]: 우리는 개인과 기업이 자신만의 에이전트를 쉽게 만들고, 자유롭게 활용하며, 수익화할 수 있는 글로벌 생태계 구축을 목표로 합니다.
+        - paragraph [ref=e379]:
+          - strong [ref=e380]: 에이전트리아
+          - text: 라는 공간은 개발자와 사용자에게는 무궁무진한 가능성을 가진 연구실, 기업에게는 강력한 생산성을 제공하는 작업실, 개인에게는 자신만의 지능형 파트너를 구축할 수 있는 놀이터입니다.
+        - paragraph [ref=e381]:
+          - strong [ref=e382]: 에이전트리아
+          - text: 는 DevOps를 넘어, MLOps를 넘어, LLMOps를 넘어 AgentOps를 선도합니다.
+        - paragraph [ref=e383]
+        - paragraph [ref=e384]:
+          - text: 누구나, 에이전트를 원할 때
+          - strong [ref=e385]: 에이전트리아
+          - text: 로 향하게 하는 것.
+        - paragraph [ref=e386]: 그것이 우리의 비전입니다.
+        - paragraph [ref=e387]
+        - heading "개발에 최적화된 사용자 인터페이스" [level=2] [ref=e388]:
+          - link "개발에 최적화된 사용자 인터페이스" [ref=e389] [cursor=pointer]:
+            - /url: ./about-agentria-ko#%EA%B0%9C%EB%B0%9C%EC%97%90-%EC%B5%9C%EC%A0%81%ED%99%94%EB%90%9C-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4
+        - paragraph [ref=e390]
+        - paragraph [ref=e391]
+        - paragraph [ref=e392]:
+          - strong [ref=e393]: 에이전트리아
+          - text: 는 드래그 앤 드롭(Drag and drop) 기반의 직관적인 사용자 인터페이스(User Interface)를 제공하여, 복잡한 코드를 작성하지 않고도 쉽고 빠르게 🔗
+          - link "어빌리티(Ability)" [ref=e394] [cursor=pointer]:
+            - /url: ./ability-ko
+          - text: 와 에이전트를 개발할 수 있습니다.
+        - paragraph [ref=e395]:
+          - text: 워크플로(Workflow)는 🔗
+          - link "노드(Node)" [ref=e396] [cursor=pointer]:
+            - /url: ./node-ko
+          - text: 단위로 구성되어 있어, 흐름을 한눈에 파악하고 관리하기가 쉽습니다.
+        - paragraph [ref=e397]: 개발 과정에서 노드 테스트를 진행할 수 있어 안정적으로 프로토타입(Prototype)을 구성할 수 있으며, 일부 노드는 프롬프트(Prompt) 또는 코드 생성기를 통해 비개발자도 최소한의 학습만으로 완성할 수 있습니다.
+        - paragraph [ref=e398]: 고급 사용자의 경우 커스터마이징을 통해 보다 고도화된 프로젝트를 구현할 수 있습니다.
+        - paragraph [ref=e399]:
+          - strong [ref=e400]: 에이전트리아
+          - text: 는 사용자 친화적인 유연한 인터페이스로, 최적의 워크플로 개발 환경을 제공합니다.
+        - paragraph [ref=e401]
+        - heading "다양한 모델, 자유로운 선택" [level=2] [ref=e402]:
+          - link "다양한 모델, 자유로운 선택" [ref=e403] [cursor=pointer]:
+            - /url: ./about-agentria-ko#%EB%8B%A4%EC%96%91%ED%95%9C-%EB%AA%A8%EB%8D%B8-%EC%9E%90%EC%9C%A0%EB%A1%9C%EC%9A%B4-%EC%84%A0%ED%83%9D
+        - paragraph [ref=e404]
+        - paragraph [ref=e405]
+        - paragraph [ref=e406]:
+          - strong [ref=e407]: 에이전트리아
+          - text: 는 Gemini, GPT를 비롯한 다양한 최신 AI 모델과의 연동을 지원합니다.
+        - paragraph [ref=e408]: 사용자는 목적과 상황에 따라 원하는 모델의 노드를 자유롭게 선택하여 적용할 수 있으며, 텍스트 생성, 대화형 응답, 분석, 추론 등 각 모델이 가진 강점을 최대로 활용할 수 있습니다.
+        - paragraph [ref=e409]: 또한 광학 문자 인식(OCR, Optical Character Recognition)과 같은 AI 인식 기술, Nano Banana와 같은 생성형 AI와도 연결할 수 있어, 단일 워크플로 안에서 다중 양상(Multi-modal) AI 시스템을 구현할 수 있습니다.
+        - paragraph [ref=e410]:
+          - strong [ref=e411]: 에이전트리아
+          - text: 의 시스템 아키텍처는 확장성과 호환성을 고려해 설계되었기 때문에, 앞으로 등장할 새로운 AI 모델이나 외부 서비스 역시 유연하게 연동할 수 있습니다.
+        - paragraph [ref=e412]
+        - heading "사용자 맞춤형 배포 방식" [level=2] [ref=e413]:
+          - link "사용자 맞춤형 배포 방식" [ref=e414] [cursor=pointer]:
+            - /url: ./about-agentria-ko#%EC%82%AC%EC%9A%A9%EC%9E%90-%EB%A7%9E%EC%B6%A4%ED%98%95-%EB%B0%B0%ED%8F%AC-%EB%B0%A9%EC%8B%9D
+        - paragraph [ref=e415]
+        - paragraph [ref=e416]:
+          - strong [ref=e417]: 에이전트리아
+          - text: 는 클라우드 기반의 🔗
+          - link "API 배포" [ref=e418] [cursor=pointer]:
+            - /url: ./api-release-ko
+          - text: 시스템을 통해 누구나 쉽게 워크플로를 서비스로 전환할 수 있도록 지원합니다.
+        - paragraph [ref=e419]: 쉽고 간편한 방식으로, 나만의 에이전트를 전 세계 사용자에게 제공할 수 있습니다.
+        - paragraph [ref=e420]: 또한 기업 수준의 환경에서는 보안과 규제 준수를 위해 온프레미스(On-Premise) 배포를 지원합니다.
+        - paragraph [ref=e421]: 온프레미스 배포 시, 별도의 앱 개발 없이 자체적인 사용자 관리 기능을 통해 기업 내부 규칙과 보안 정책에 맞춘 통합 운영이 가능합니다.
+        - paragraph [ref=e422]: 이처럼, 하이브리드 옵션을 통해 개인부터 스타트업, 대규모 기업까지 각 사용자의 요구와 환경에 최적화된 선택지를 제공합니다.
+        - paragraph [ref=e423]
+        - heading "수익화할 수 있는 마켓플레이스" [level=2] [ref=e424]:
+          - link "수익화할 수 있는 마켓플레이스" [ref=e425] [cursor=pointer]:
+            - /url: ./about-agentria-ko#%EC%88%98%EC%9D%B5%ED%99%94%ED%95%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EB%A7%88%EC%BC%93%ED%94%8C%EB%A0%88%EC%9D%B4%EC%8A%A4
+        - paragraph [ref=e426]
+        - paragraph [ref=e427]:
+          - strong [ref=e428]: 에이전트리아
+          - text: 는 자체적인 마켓플레이스(Marketplace)를 운영하여, 개발자가 직접 만든 워크플로를 등록하고 판매할 수 있는 수익화 기회를 제공합니다.
+        - paragraph [ref=e429]: 이를 통해 개발자는 단순히 기술을 실험하는 것을 넘어 지속적인 수익 창출이 가능하며, 사용자들은 손쉽게 원하는 기능을 찾아 사용할 수 있습니다.
+        - paragraph [ref=e430]: 마켓플레이스에서는 에이전트 단위뿐만 아니라, 특정 기능을 수행하는 컴포넌트(Component), 노드 단위까지 거래할 수 있습니다.
+        - paragraph [ref=e431]: 구매자는 필요한 기능만 조합하여 자신만의 워크플로를 구축할 수 있고, 판매자는 다양한 형태로 자신의 작업물을 상품화할 수 있습니다.
+        - paragraph [ref=e432]: 또한, 리뷰 및 평가 시스템을 통해 사용자는 신뢰도 높은 에이전트를 선택할 수 있고, 개발자는 피드백을 기반으로 지속적인 품질 개선이 가능합니다.
+        - paragraph [ref=e433]
+        - heading "소통에 강한 협업 인터페이스" [level=2] [ref=e434]:
+          - link "소통에 강한 협업 인터페이스" [ref=e435] [cursor=pointer]:
+            - /url: ./about-agentria-ko#%EC%86%8C%ED%86%B5%EC%97%90-%EA%B0%95%ED%95%9C-%ED%98%91%EC%97%85-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4
+        - paragraph [ref=e436]
+        - paragraph [ref=e437]
+        - paragraph [ref=e438]:
+          - strong [ref=e439]: 에이전트리아
+          - text: 는 단순한 개발 도구를 넘어, 팀 단위 협업을 위한 사용자 인터페이스를 제공합니다.
+        - paragraph [ref=e440]: 스티키 노트(Sticky note)와 코멘트(Comment) 기능을 활용하여 팀원들과 실시간 피드백을 남길 수 있습니다.
+        - paragraph [ref=e441]: 이러한 기능은 단순히 의견을 주고받는 수준을 넘어, 실시간 업무 싱크를 통해 프로젝트 진행 과정에서 발생할 수 있는 오해와 중복 작업을 최소화합니다.
+        - paragraph [ref=e442]: 팀원 모두가 동일한 화면 위에서 작업을 공유하고, 필요한 코멘트를 남기며 프로젝트의 흐름을 유지할 수 있습니다.
+        - paragraph [ref=e443]:
+          - text: 언제 어디서든 접속 가능한
+          - strong [ref=e444]: 에이전트리아
+          - text: 의 고차원 협업 환경은 원격 근무 시에서도 유용하며, 강력한 생산성을 자랑합니다.
+        - paragraph [ref=e445]
+        - heading "업무 자동화 스케줄러 지원" [level=2] [ref=e446]:
+          - link "업무 자동화 스케줄러 지원" [ref=e447] [cursor=pointer]:
+            - /url: ./about-agentria-ko#%EC%97%85%EB%AC%B4-%EC%9E%90%EB%8F%99%ED%99%94-%EC%8A%A4%EC%BC%80%EC%A4%84%EB%9F%AC-%EC%A7%80%EC%9B%90
+        - paragraph [ref=e448]
+        - paragraph [ref=e449]
+        - paragraph [ref=e450]:
+          - strong [ref=e451]: 에이전트리아
+          - text: 에서 워크플로를 구성하는 궁극적인 목적은 업무 자동화입니다.
+        - paragraph [ref=e452]: 날짜, 요일 등 세부적인 반복 주기 설정이 가능한 스케줄러를 통해 어빌리티 또는 에이전트가 실행될 스케줄을 설정할 수 있습니다.
+        - paragraph [ref=e453]: 이러한 기능을 통해 사용자는 필요할 때마다 워크플로를 실행할 수 있고, 나아가 업무 자동화 시스템을 구축할 수 있습니다.
+        - paragraph [ref=e454]: 간편한 온/오프 기능으로 스케줄러를 언제든지 활성화하거나 비활성화 할 수 있습니다.
+        - paragraph [ref=e455]
+        - heading "확장할 수 있는 에코시스템" [level=2] [ref=e456]:
+          - link "확장할 수 있는 에코시스템" [ref=e457] [cursor=pointer]:
+            - /url: ./about-agentria-ko#%ED%99%95%EC%9E%A5%ED%95%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EC%97%90%EC%BD%94%EC%8B%9C%EC%8A%A4%ED%85%9C
+        - paragraph [ref=e458]
+        - paragraph [ref=e459]:
+          - strong [ref=e460]: 에이전트리아
+          - text: 는 협력 개발자를 위해 강력한 🔗
+          - link "API(Application Programming Interface)" [ref=e461] [cursor=pointer]:
+            - /url: ./api-ko
+          - text: 배포 기능을 제공하며, 기존 워크플로에 새로운 기능을 쉽게 통합할 수 있습니다.
+        - paragraph [ref=e462]: 또한, 플러그인(Plugin) 확장 기능을 통해 다양한 서비스 및 도구를 연결할 수 있어, 사용자는 워크플로를 무한히 확장해 나갈 수 있습니다.
+        - paragraph [ref=e463]: 그뿐만 아니라, 커뮤니티나 마켓플레이스를 통해 개발자와 사용자가 함께 성장할 수 있습니다.
+        - paragraph [ref=e464]:
+          - text: 이곳에서 공유되는 경험과 노하우는
+          - strong [ref=e465]: 에이전트리아
+          - text: 생태계를 지속적으로 진화하게 할 것입니다.
+        - paragraph [ref=e466]
+        - paragraph [ref=e467]:
+          - text: 지금, 당신의 가능성을
+          - strong [ref=e468]: 에이전트리아
+          - text: 에서 현실로 만드세요.
+        - paragraph [ref=e469]
+        - paragraph [ref=e470]
+  - navigation [ref=e474]:
+    - link "Agentria home" [ref=e476] [cursor=pointer]:
+      - /url: ../ko
+      - img "Agentria home" [ref=e478]
+    - generic [ref=e480]:
+      - generic [ref=e481]:
+        - link "Features" [ref=e483] [cursor=pointer]:
+          - /url: ../ko#topfeatures
+          - paragraph [ref=e485]: Features
+        - link "Pricing" [ref=e487] [cursor=pointer]:
+          - /url: ../ko#pricing
+          - paragraph [ref=e489]: Pricing
+        - link "Docs" [ref=e491] [cursor=pointer]:
+          - /url: ./about-agentria-ko
+          - paragraph [ref=e493]: Docs
+      - link "EN · KO" [ref=e495] [cursor=pointer]:
+        - /url: ./about-agentria
+        - paragraph [ref=e497]: EN · KO
+      - link "Try Now" [ref=e499] [cursor=pointer]:
+        - /url: https://app.agentria.ai
+        - paragraph [ref=e501]: Try Now

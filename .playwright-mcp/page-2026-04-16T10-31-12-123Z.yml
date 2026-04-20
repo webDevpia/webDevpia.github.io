@@ -1,0 +1,244 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "Welcome to Agentria" [ref=e12] [cursor=pointer]:
+        - /url: ./about-agentria-ko
+        - paragraph [ref=e15]: Welcome to Agentria
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - link "시작하기" [ref=e22] [cursor=pointer]:
+            - /url: ./get-started-ko
+            - paragraph [ref=e25]: 시작하기
+          - link "3단계 핵심 가이드" [ref=e32] [cursor=pointer]:
+            - /url: ./3step-core-ko
+            - paragraph [ref=e35]: 3단계 핵심 가이드
+          - generic [ref=e38]:
+            - link "어빌리티 가이드" [ref=e45] [cursor=pointer]:
+              - /url: ./ability-guide-ko
+              - paragraph [ref=e48]: 어빌리티 가이드
+            - generic [ref=e52]:
+              - link "[어빌리티] AI 노드 (LLM)" [ref=e55] [cursor=pointer]:
+                - /url: ./llm-node-ko
+                - paragraph [ref=e58]: "[어빌리티] AI 노드 (LLM)"
+              - link "[어빌리티] 코드 노드 (Python)" [ref=e61] [cursor=pointer]:
+                - /url: ./python-node-ko
+                - paragraph [ref=e64]: "[어빌리티] 코드 노드 (Python)"
+              - link "[어빌리티] 도구 노드 (Gmail)" [ref=e67] [cursor=pointer]:
+                - /url: ./gmail-node-ko
+                - paragraph [ref=e70]: "[어빌리티] 도구 노드 (Gmail)"
+              - link "[어빌리티] 도구 노드 (Slack)" [ref=e73] [cursor=pointer]:
+                - /url: ./slack-node-ko
+                - paragraph [ref=e76]: "[어빌리티] 도구 노드 (Slack)"
+              - link "[어빌리티] 흐름 제어 노드 (Branch)" [ref=e79] [cursor=pointer]:
+                - /url: ./branch-node-ko
+                - paragraph [ref=e82]: "[어빌리티] 흐름 제어 노드 (Branch)"
+          - generic [ref=e85]:
+            - link "에이전트 가이드" [ref=e92] [cursor=pointer]:
+              - /url: ./agent-guide-ko
+              - paragraph [ref=e95]: 에이전트 가이드
+            - generic [ref=e99]:
+              - link "[에이전트] 단기 기억 조회" [ref=e102] [cursor=pointer]:
+                - /url: ./shortterm-node-ko
+                - paragraph [ref=e105]: "[에이전트] 단기 기억 조회"
+              - link "[에이전트] 추론 행동 (ReAct)" [ref=e108] [cursor=pointer]:
+                - /url: ./react-node-ko
+                - paragraph [ref=e111]: "[에이전트] 추론 행동 (ReAct)"
+        - generic [ref=e112]:
+          - link "핵심개념" [ref=e117] [cursor=pointer]:
+            - /url: ./key-concepts-ko
+            - paragraph [ref=e120]: 핵심개념
+          - generic [ref=e123]:
+            - link "노드" [ref=e129] [cursor=pointer]:
+              - /url: ./node-ko
+              - paragraph [ref=e132]: 노드
+            - generic [ref=e136]:
+              - link "유형" [ref=e139] [cursor=pointer]:
+                - /url: ./node-type-ko
+                - paragraph [ref=e142]: 유형
+              - link "구조" [ref=e145] [cursor=pointer]:
+                - /url: ./node-structure-ko
+                - paragraph [ref=e148]: 구조
+              - link "사용법" [ref=e151] [cursor=pointer]:
+                - /url: ./node-usage-ko
+                - paragraph [ref=e154]: 사용법
+              - link "노드 테스트" [ref=e157] [cursor=pointer]:
+                - /url: ./node-test-ko
+                - paragraph [ref=e160]: 노드 테스트
+          - generic [ref=e163]:
+            - link "어빌리티" [ref=e169] [cursor=pointer]:
+              - /url: ./ability-ko
+              - paragraph [ref=e172]: 어빌리티
+            - generic [ref=e176]:
+              - link "구조" [ref=e179] [cursor=pointer]:
+                - /url: ./ability-structure-ko
+                - paragraph [ref=e182]: 구조
+              - link "사용법" [ref=e185] [cursor=pointer]:
+                - /url: ./ability-usage-ko
+                - paragraph [ref=e188]: 사용법
+              - link "어빌리티 테스트" [ref=e191] [cursor=pointer]:
+                - /url: ./ability-test-ko
+                - paragraph [ref=e194]: 어빌리티 테스트
+          - generic [ref=e197]:
+            - link "에이전트" [ref=e203] [cursor=pointer]:
+              - /url: ./agent-ko
+              - paragraph [ref=e206]: 에이전트
+            - generic [ref=e210]:
+              - link "구조" [ref=e213] [cursor=pointer]:
+                - /url: ./agent-structure-ko
+                - paragraph [ref=e216]: 구조
+              - link "사용법" [ref=e219] [cursor=pointer]:
+                - /url: ./agent-usage-ko
+                - paragraph [ref=e222]: 사용법
+              - link "에이전트 테스트" [ref=e225] [cursor=pointer]:
+                - /url: ./agent-test-ko
+                - paragraph [ref=e228]: 에이전트 테스트
+          - generic [ref=e231]:
+            - link "스토리지" [ref=e237] [cursor=pointer]:
+              - /url: ./storage-ko
+              - paragraph [ref=e240]: 스토리지
+            - generic [ref=e244]:
+              - link "정형 데이터" [ref=e247] [cursor=pointer]:
+                - /url: ./structured-data-ko
+                - paragraph [ref=e250]: 정형 데이터
+              - link "데이터 구조" [ref=e253] [cursor=pointer]:
+                - /url: ./data-structure-ko
+                - paragraph [ref=e256]: 데이터 구조
+              - link "벌크 런 테스트" [ref=e259] [cursor=pointer]:
+                - /url: ./bulkrun-test-ko
+                - paragraph [ref=e262]: 벌크 런 테스트
+        - generic [ref=e263]:
+          - link "핵심기능" [ref=e268] [cursor=pointer]:
+            - /url: ./key-features-ko
+            - paragraph [ref=e271]: 핵심기능
+          - generic [ref=e274]:
+            - link "크리덴셜" [ref=e280] [cursor=pointer]:
+              - /url: ./credential-ko
+              - paragraph [ref=e283]: 크리덴셜
+            - generic [ref=e287]:
+              - link "구글 크리덴셜" [ref=e290] [cursor=pointer]:
+                - /url: ./google-credential-ko
+                - paragraph [ref=e293]: 구글 크리덴셜
+              - link "슬랙 크리덴셜" [ref=e296] [cursor=pointer]:
+                - /url: ./slack-credential-ko
+                - paragraph [ref=e299]: 슬랙 크리덴셜
+          - generic [ref=e302]:
+            - link "API" [ref=e308] [cursor=pointer]:
+              - /url: ./api-ko
+              - paragraph [ref=e311]: API
+            - generic [ref=e315]:
+              - link "버전" [ref=e318] [cursor=pointer]:
+                - /url: ./api-version-ko
+                - paragraph [ref=e321]: 버전
+              - link "API 배포" [ref=e324] [cursor=pointer]:
+                - /url: ./api-release-ko
+                - paragraph [ref=e327]: API 배포
+              - link "어빌리티 API cURL" [ref=e330] [cursor=pointer]:
+                - /url: ./ability-endpoint-ko
+                - paragraph [ref=e333]: 어빌리티 API cURL
+              - link "에이전트 API cURL" [ref=e336] [cursor=pointer]:
+                - /url: ./agent-endpoint-ko
+                - paragraph [ref=e339]: 에이전트 API cURL
+              - link "API 호출 (포스트맨)" [ref=e342] [cursor=pointer]:
+                - /url: ./postman-ko
+                - paragraph [ref=e345]: API 호출 (포스트맨)
+        - link "노드정보" [ref=e352] [cursor=pointer]:
+          - /url: ./node-info-ko
+          - paragraph [ref=e355]: 노드정보
+    - generic [ref=e361]:
+      - paragraph [ref=e365]: Key Features
+      - heading "크리덴셜이란?" [level=1] [ref=e368]
+      - generic [ref=e369]:
+        - 'heading "크리덴셜 : 서비스 접근을 위한 자격 증명" [level=2] [ref=e370]':
+          - 'link "크리덴셜 : 서비스 접근을 위한 자격 증명" [ref=e371] [cursor=pointer]':
+            - /url: ./credential-ko#%ED%81%AC%EB%A6%AC%EB%8D%B4%EC%85%9C-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%A0%91%EA%B7%BC%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%9E%90%EA%B2%A9-%EC%A6%9D%EB%AA%85
+        - paragraph [ref=e372]
+        - paragraph [ref=e373]:
+          - strong [ref=e374]: Agentria
+          - text: 의 크리덴셜(Credential)은 외부 서비스나 리소스에 안전하게 접근하기 위해 필요한 자격 증명 정보입니다. API 키, 인증 토큰, 비밀번호, 인증서 등이 크리덴셜에 해당하며, 이를 통해 시스템은 사용자를 식별하고 접근 권한을 검증합니다.
+        - paragraph [ref=e375]: "외부 API를 호출하거나(예: Google의 특정 서비스를 사용) 데이터베이스, 클라우드 스토리지 등과 연동할 때는 반드시 유효한 크리덴셜이 필요합니다."
+        - paragraph [ref=e376]: 크리덴셜이 없으면 시스템이 접근 권한을 확인할 수 없어 요청이 거부되거나, 워크플로우가 정상적으로 실행되지 않을 수 있습니다.
+        - paragraph [ref=e377]: 즉, 크리덴셜은 외부 서비스와 안전하게 데이터를 주고받고, 자동화를 안정적으로 운영하기 위한 필수 요소라고 할 수 있습니다.
+        - paragraph [ref=e378]
+        - heading "주요 기능 및 장점" [level=2] [ref=e379]:
+          - link "주요 기능 및 장점" [ref=e380] [cursor=pointer]:
+            - /url: ./credential-ko#%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EB%B0%8F-%EC%9E%A5%EC%A0%90
+        - paragraph [ref=e381]
+        - paragraph [ref=e382]
+        - list [ref=e383]:
+          - listitem [ref=e384]:
+            - text: •
+            - paragraph [ref=e385]:
+              - strong [ref=e386]: "보안성:"
+              - text: 민감한 정보를 코드에 직접 작성하지 않고 안전하게 관리할 수 있어, 보안 사고 위험을 최소화합니다.
+          - listitem [ref=e387]:
+            - text: •
+            - paragraph [ref=e388]:
+              - strong [ref=e389]: "효율성:"
+              - text: 한 번 생성한 크리덴셜을 여러 워크플로우에서 재사용할 수 있어 관리와 유지보수가 편리합니다.
+          - listitem [ref=e390]:
+            - text: •
+            - paragraph [ref=e391]:
+              - strong [ref=e392]: "체계적 관리:"
+              - text: 프로젝트 단위로 크리덴셜을 구분하여 관리할 수 있어, 서비스별 접근 권한을 명확히 설정하고 권한 남용을 방지할 수 있습니다.
+        - paragraph [ref=e393]
+        - paragraph [ref=e394]
+        - heading "더 알아보기" [level=2] [ref=e395]:
+          - link "더 알아보기" [ref=e396] [cursor=pointer]:
+            - /url: ./credential-ko#%EB%8D%94-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0
+        - paragraph [ref=e397]
+        - paragraph [ref=e398]: Agentria는 크리덴셜 관리 기능을 제공하여 사용자가 직관적인 인터페이스에서 손쉽게 등록·수정·삭제할 수 있도록 지원합니다.
+        - paragraph [ref=e399]: 이를 통해 개발자는 보안 설정에 복잡하게 얽히지 않고, 워크플로우 설계와 자동화 구현에 집중할 수 있습니다.
+        - paragraph [ref=e400]: 실제 프로젝트에서 크리덴셜을 설정하고 외부 서비스와 연동하는 방법을 익히고 싶다면, 크리덴셜 가이드와 노드 활용 예제를 참고하시기 바랍니다.
+        - paragraph [ref=e401]
+        - paragraph [ref=e402]
+        - list [ref=e403]:
+          - listitem [ref=e404]:
+            - text: •
+            - paragraph [ref=e405]:
+              - text: 🔗
+              - link "구글 크리덴셜 가이드" [ref=e406] [cursor=pointer]:
+                - /url: ./google-credential-ko
+            - list [ref=e407]:
+              - listitem [ref=e408]:
+                - text: •
+                - paragraph [ref=e409]:
+                  - text: 🔗
+                  - link "Tools 노드 (Gmail)" [ref=e410] [cursor=pointer]:
+                    - /url: ./gmail-node-ko
+          - listitem [ref=e411]:
+            - text: •
+            - paragraph [ref=e412]:
+              - text: 🔗
+              - link "슬랙 크리덴셜 가이드" [ref=e413] [cursor=pointer]:
+                - /url: ./slack-credential-ko
+            - list [ref=e414]:
+              - listitem [ref=e415]:
+                - text: •
+                - paragraph [ref=e416]:
+                  - text: 🔗
+                  - link "Tools 노드 (Slack)" [ref=e417] [cursor=pointer]:
+                    - /url: ./slack-node-ko
+        - paragraph [ref=e418]
+        - paragraph [ref=e419]
+        - paragraph [ref=e420]
+  - navigation [ref=e424]:
+    - link "Agentria home" [ref=e426] [cursor=pointer]:
+      - /url: ../ko
+      - img "Agentria home" [ref=e428]
+    - generic [ref=e430]:
+      - generic [ref=e431]:
+        - link "Features" [ref=e433] [cursor=pointer]:
+          - /url: ../ko#topfeatures
+          - paragraph [ref=e435]: Features
+        - link "Pricing" [ref=e437] [cursor=pointer]:
+          - /url: ../ko#pricing
+          - paragraph [ref=e439]: Pricing
+        - link "Docs" [ref=e441] [cursor=pointer]:
+          - /url: ./about-agentria-ko
+          - paragraph [ref=e443]: Docs
+      - link "EN · KO" [ref=e445] [cursor=pointer]:
+        - /url: ./credential
+        - paragraph [ref=e447]: EN · KO
+      - link "Try Now" [ref=e449] [cursor=pointer]:
+        - /url: https://app.agentria.ai
+        - paragraph [ref=e451]: Try Now

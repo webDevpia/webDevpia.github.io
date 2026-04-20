@@ -1,0 +1,569 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "Welcome to Agentria" [ref=e12] [cursor=pointer]:
+        - /url: ./about-agentria-ko
+        - paragraph [ref=e15]: Welcome to Agentria
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - link "시작하기" [ref=e22] [cursor=pointer]:
+            - /url: ./get-started-ko
+            - paragraph [ref=e25]: 시작하기
+          - link "3단계 핵심 가이드" [ref=e32] [cursor=pointer]:
+            - /url: ./3step-core-ko
+            - paragraph [ref=e35]: 3단계 핵심 가이드
+          - generic [ref=e38]:
+            - link "어빌리티 가이드" [ref=e45] [cursor=pointer]:
+              - /url: ./ability-guide-ko
+              - paragraph [ref=e48]: 어빌리티 가이드
+            - generic [ref=e52]:
+              - link "[어빌리티] AI 노드 (LLM)" [ref=e55] [cursor=pointer]:
+                - /url: ./llm-node-ko
+                - paragraph [ref=e58]: "[어빌리티] AI 노드 (LLM)"
+              - link "[어빌리티] 코드 노드 (Python)" [ref=e61] [cursor=pointer]:
+                - /url: ./python-node-ko
+                - paragraph [ref=e64]: "[어빌리티] 코드 노드 (Python)"
+              - link "[어빌리티] 도구 노드 (Gmail)" [ref=e67] [cursor=pointer]:
+                - /url: ./gmail-node-ko
+                - paragraph [ref=e70]: "[어빌리티] 도구 노드 (Gmail)"
+              - link "[어빌리티] 도구 노드 (Slack)" [ref=e73] [cursor=pointer]:
+                - /url: ./slack-node-ko
+                - paragraph [ref=e76]: "[어빌리티] 도구 노드 (Slack)"
+              - link "[어빌리티] 흐름 제어 노드 (Branch)" [ref=e79] [cursor=pointer]:
+                - /url: ./branch-node-ko
+                - paragraph [ref=e82]: "[어빌리티] 흐름 제어 노드 (Branch)"
+          - generic [ref=e85]:
+            - link "에이전트 가이드" [ref=e92] [cursor=pointer]:
+              - /url: ./agent-guide-ko
+              - paragraph [ref=e95]: 에이전트 가이드
+            - generic [ref=e99]:
+              - link "[에이전트] 단기 기억 조회" [ref=e102] [cursor=pointer]:
+                - /url: ./shortterm-node-ko
+                - paragraph [ref=e105]: "[에이전트] 단기 기억 조회"
+              - link "[에이전트] 추론 행동 (ReAct)" [ref=e108] [cursor=pointer]:
+                - /url: ./react-node-ko
+                - paragraph [ref=e111]: "[에이전트] 추론 행동 (ReAct)"
+        - generic [ref=e112]:
+          - link "핵심개념" [ref=e117] [cursor=pointer]:
+            - /url: ./key-concepts-ko
+            - paragraph [ref=e120]: 핵심개념
+          - generic [ref=e123]:
+            - link "노드" [ref=e129] [cursor=pointer]:
+              - /url: ./node-ko
+              - paragraph [ref=e132]: 노드
+            - generic [ref=e136]:
+              - link "유형" [ref=e139] [cursor=pointer]:
+                - /url: ./node-type-ko
+                - paragraph [ref=e142]: 유형
+              - link "구조" [ref=e145] [cursor=pointer]:
+                - /url: ./node-structure-ko
+                - paragraph [ref=e148]: 구조
+              - link "사용법" [ref=e151] [cursor=pointer]:
+                - /url: ./node-usage-ko
+                - paragraph [ref=e154]: 사용법
+              - link "노드 테스트" [ref=e157] [cursor=pointer]:
+                - /url: ./node-test-ko
+                - paragraph [ref=e160]: 노드 테스트
+          - generic [ref=e163]:
+            - link "어빌리티" [ref=e169] [cursor=pointer]:
+              - /url: ./ability-ko
+              - paragraph [ref=e172]: 어빌리티
+            - generic [ref=e176]:
+              - link "구조" [ref=e179] [cursor=pointer]:
+                - /url: ./ability-structure-ko
+                - paragraph [ref=e182]: 구조
+              - link "사용법" [ref=e185] [cursor=pointer]:
+                - /url: ./ability-usage-ko
+                - paragraph [ref=e188]: 사용법
+              - link "어빌리티 테스트" [ref=e191] [cursor=pointer]:
+                - /url: ./ability-test-ko
+                - paragraph [ref=e194]: 어빌리티 테스트
+          - generic [ref=e197]:
+            - link "에이전트" [ref=e203] [cursor=pointer]:
+              - /url: ./agent-ko
+              - paragraph [ref=e206]: 에이전트
+            - generic [ref=e210]:
+              - link "구조" [ref=e213] [cursor=pointer]:
+                - /url: ./agent-structure-ko
+                - paragraph [ref=e216]: 구조
+              - link "사용법" [ref=e219] [cursor=pointer]:
+                - /url: ./agent-usage-ko
+                - paragraph [ref=e222]: 사용법
+              - link "에이전트 테스트" [ref=e225] [cursor=pointer]:
+                - /url: ./agent-test-ko
+                - paragraph [ref=e228]: 에이전트 테스트
+          - generic [ref=e231]:
+            - link "스토리지" [ref=e237] [cursor=pointer]:
+              - /url: ./storage-ko
+              - paragraph [ref=e240]: 스토리지
+            - generic [ref=e244]:
+              - link "정형 데이터" [ref=e247] [cursor=pointer]:
+                - /url: ./structured-data-ko
+                - paragraph [ref=e250]: 정형 데이터
+              - link "데이터 구조" [ref=e253] [cursor=pointer]:
+                - /url: ./data-structure-ko
+                - paragraph [ref=e256]: 데이터 구조
+              - link "벌크 런 테스트" [ref=e259] [cursor=pointer]:
+                - /url: ./bulkrun-test-ko
+                - paragraph [ref=e262]: 벌크 런 테스트
+        - generic [ref=e263]:
+          - link "핵심기능" [ref=e268] [cursor=pointer]:
+            - /url: ./key-features-ko
+            - paragraph [ref=e271]: 핵심기능
+          - generic [ref=e274]:
+            - link "크리덴셜" [ref=e280] [cursor=pointer]:
+              - /url: ./credential-ko
+              - paragraph [ref=e283]: 크리덴셜
+            - generic [ref=e287]:
+              - link "구글 크리덴셜" [ref=e290] [cursor=pointer]:
+                - /url: ./google-credential-ko
+                - paragraph [ref=e293]: 구글 크리덴셜
+              - link "슬랙 크리덴셜" [ref=e296] [cursor=pointer]:
+                - /url: ./slack-credential-ko
+                - paragraph [ref=e299]: 슬랙 크리덴셜
+          - generic [ref=e302]:
+            - link "API" [ref=e308] [cursor=pointer]:
+              - /url: ./api-ko
+              - paragraph [ref=e311]: API
+            - generic [ref=e315]:
+              - link "버전" [ref=e318] [cursor=pointer]:
+                - /url: ./api-version-ko
+                - paragraph [ref=e321]: 버전
+              - link "API 배포" [ref=e324] [cursor=pointer]:
+                - /url: ./api-release-ko
+                - paragraph [ref=e327]: API 배포
+              - link "어빌리티 API cURL" [ref=e330] [cursor=pointer]:
+                - /url: ./ability-endpoint-ko
+                - paragraph [ref=e333]: 어빌리티 API cURL
+              - link "에이전트 API cURL" [ref=e336] [cursor=pointer]:
+                - /url: ./agent-endpoint-ko
+                - paragraph [ref=e339]: 에이전트 API cURL
+              - link "API 호출 (포스트맨)" [ref=e342] [cursor=pointer]:
+                - /url: ./postman-ko
+                - paragraph [ref=e345]: API 호출 (포스트맨)
+        - link "노드정보" [ref=e352] [cursor=pointer]:
+          - /url: ./node-info-ko
+          - paragraph [ref=e355]: 노드정보
+    - generic [ref=e361]:
+      - paragraph [ref=e365]: Get Started
+      - heading "흐름 제어 노드 사용하기 (Branch)" [level=1] [ref=e368]
+      - generic [ref=e369]:
+        - paragraph [ref=e370]:
+          - text: 어빌리티(Ability) 가이드의 튜토리얼은
+          - strong [ref=e371]: 에이전트리아(Agentria)
+          - text: 입문자를 위한 가장 기본적이면서도 핵심적인 과정을 다룹니다.
+        - paragraph [ref=e372]: 본 튜토리얼은 브랜치(Branch) 노드를 활성화하고, 조건에 따라 LLM으로 메일 내용을 생성하는 어빌리티를 직접 만들고 실행합니다.
+        - paragraph [ref=e373]
+        - heading "사전 준비" [level=2] [ref=e374]:
+          - link "사전 준비" [ref=e375] [cursor=pointer]:
+            - /url: ./branch-node-ko#%EC%82%AC%EC%A0%84-%EC%A4%80%EB%B9%84
+        - paragraph [ref=e376]
+        - paragraph [ref=e377]:
+          - text: 시작을 위해,
+          - strong [ref=e378]: 에이전트리아
+          - text: 에서 프로젝트(Project)를 생성한 후, 어빌리티 캔버스(Canvas)로 진입합니다.
+        - paragraph [ref=e379]:
+          - text: 캔버스 진입 절차는 🔗
+          - link "3단계 핵심 가이드" [ref=e380] [cursor=pointer]:
+            - /url: ./3step-core-ko
+          - text: 의 1단계(프로젝트 생성 및 컴포저 선택)를 참고하시기 바랍니다.
+        - paragraph [ref=e381]
+        - paragraph [ref=e382]: 본 튜토리얼을 완료하면 다음과 같은 작업을 수행할 수 있습니다.
+        - list [ref=e383]:
+          - listitem [ref=e384]:
+            - paragraph [ref=e385]: 노드(Node) 추가하기
+          - listitem [ref=e386]:
+            - paragraph [ref=e387]: 스타트 노드(Start Node)에서 변수 선언하기
+          - listitem [ref=e388]:
+            - paragraph [ref=e389]: 노드 연결하기
+          - listitem [ref=e390]:
+            - paragraph [ref=e391]: 브랜치 노드 사용하기
+          - listitem [ref=e392]:
+            - paragraph [ref=e393]: LLM 노드 사용하기
+          - listitem [ref=e394]:
+            - paragraph [ref=e395]: 파이썬(Python) 노드 사용하기
+          - listitem [ref=e396]:
+            - paragraph [ref=e397]: 어빌리티 테스트를 통해 워크플로(Workflow) 실행 결과 확인하기
+        - paragraph [ref=e398]
+        - 'heading "1단계: 필요한 노드" [level=2] [ref=e399]':
+          - 'link "1단계: 필요한 노드" [ref=e400] [cursor=pointer]':
+            - /url: ./branch-node-ko#1%EB%8B%A8%EA%B3%84-%ED%95%84%EC%9A%94%ED%95%9C-%EB%85%B8%EB%93%9C
+        - paragraph [ref=e401]
+        - paragraph [ref=e402]
+        - paragraph [ref=e403]:
+          - text: 캔버스 하단의
+          - code [ref=e404]: +노드 추가(Add Node)
+          - text: 버튼을 클릭하고 사이드바 도구(Tools) 카테고리에서 필요한 노드를 선택해 드래그 앤 드롭(Drag and Drop)으로 배치합니다.
+        - paragraph [ref=e405]: 노드 위에 마우스를 올려 편집 아이콘을 클릭하고 옵션 창에서 노드의 이름과 설명을 수정할 수 있습니다.
+        - paragraph [ref=e406]: 실제 사용 시에는 필요할 때마다 노드를 추가하게 되지만, 본 튜토리얼은 설명의 편의를 위해 한번에 모든 노드를 배치합니다.
+        - paragraph [ref=e407]
+        - list [ref=e408]:
+          - listitem [ref=e409]:
+            - text: •
+            - paragraph [ref=e410]: "파이썬 노드 : 3개"
+          - listitem [ref=e411]:
+            - text: •
+            - paragraph [ref=e412]: "브랜치 노드 : 1개"
+          - listitem [ref=e413]:
+            - text: •
+            - paragraph [ref=e414]: "LLM 노드 : 3개"
+          - listitem [ref=e415]:
+            - text: •
+            - paragraph [ref=e416]: "지메일 노드 : 1개 (선택)"
+        - paragraph [ref=e417]
+        - paragraph [ref=e418]
+        - 'heading "2단계: 인풋 변수 선언" [level=2] [ref=e419]':
+          - 'link "2단계: 인풋 변수 선언" [ref=e420] [cursor=pointer]':
+            - /url: ./branch-node-ko#2%EB%8B%A8%EA%B3%84-%EC%9D%B8%ED%92%8B-%EB%B3%80%EC%88%98-%EC%84%A0%EC%96%B8
+        - paragraph [ref=e421]
+        - paragraph [ref=e422]
+        - paragraph [ref=e423]:
+          - strong [ref=e424]: 에이전트리아
+          - text: 캔버스에는 기본적으로
+          - code [ref=e425]: 스타트 노드(Start Node)
+          - text: 와
+          - code [ref=e426]: 엔드 노드(End Node)
+          - text: 가 하나씩 배치되어 있습니다.
+        - list [ref=e427]:
+          - listitem [ref=e428]:
+            - text: •
+            - paragraph [ref=e429]: 스타트 노드는 전체 흐름을 시작합니다.
+          - listitem [ref=e430]:
+            - text: •
+            - paragraph [ref=e431]: 엔드 노드는 전체 흐름을 종료합니다.
+        - paragraph [ref=e432]
+        - paragraph [ref=e433]: 스타트 노드를 더블 클릭하면 노드 편집기가 열리며, 여기에서 자료형과 이름, 설명을 설정할 수 있습니다.
+        - paragraph [ref=e434]:
+          - text: 본 튜토리얼에서는 응시자 정보를 기반으로 조건을 분기하므로, 자료형을
+          - code [ref=e435]: JSON
+          - text: 으로 두고 변수명을
+          - code [ref=e436]: applicant
+          - text: 로 설정합니다. 다시 캔버스로 돌아갑니다.
+        - paragraph [ref=e437]
+        - heading "입력 데이터 샘플" [level=3] [ref=e438]:
+          - link "입력 데이터 샘플" [ref=e439] [cursor=pointer]:
+            - /url: ./branch-node-ko#%EC%9E%85%EB%A0%A5-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%83%98%ED%94%8C
+        - paragraph [ref=e440]
+        - paragraph [ref=e441]
+        - paragraph [ref=e442]: 응시자 정보는 json 형식이며, 고유번호(id), 이름(name), 이메일(email), 점수(score), 부서(dept), 회사(company), 비고(note)에 대한 값을 가지고 있습니다.
+        - paragraph [ref=e443]: 샘플은 다음과 같습니다.
+        - paragraph [ref=e444]
+        - list [ref=e445]:
+          - listitem [ref=e446]:
+            - text: •
+            - paragraph [ref=e447]: 합격
+        - paragraph [ref=e448]
+        - blockquote [ref=e449]:
+          - paragraph [ref=e450]: "{"
+          - paragraph [ref=e451]: "\"id\": 0,"
+          - paragraph [ref=e452]: "\"name\": \"A신입\","
+          - paragraph [ref=e453]: "\"email\": \"test1@genesislab.ai\","
+          - paragraph [ref=e454]: "\"score\": 95,"
+          - paragraph [ref=e455]: "\"dept\": \"웹개발\","
+          - paragraph [ref=e456]: "\"company\": \"제네시스랩\","
+          - paragraph [ref=e457]: "\"note\": \"\""
+          - paragraph [ref=e458]: "}"
+        - paragraph [ref=e459]
+        - list [ref=e460]:
+          - listitem [ref=e461]:
+            - text: •
+            - paragraph [ref=e462]: 불합격
+        - paragraph [ref=e463]
+        - blockquote [ref=e464]:
+          - paragraph [ref=e465]: "{"
+          - paragraph [ref=e466]: "\"id\": 1,"
+          - paragraph [ref=e467]: "\"name\": \"B신입\","
+          - paragraph [ref=e468]: "\"email\": \"test2@genesislab.ai\","
+          - paragraph [ref=e469]: "\"score\": 88,"
+          - paragraph [ref=e470]: "\"dept\": \"영업\","
+          - paragraph [ref=e471]: "\"company\": \"제네시스랩\","
+          - paragraph [ref=e472]: "\"note\": \"예비\""
+          - paragraph [ref=e473]: "}"
+        - paragraph [ref=e474]
+        - list [ref=e475]:
+          - listitem [ref=e476]:
+            - text: •
+            - paragraph [ref=e477]: 예비
+        - paragraph [ref=e478]
+        - blockquote [ref=e479]:
+          - paragraph [ref=e480]: "{"
+          - paragraph [ref=e481]: "\"id\": 2,"
+          - paragraph [ref=e482]: "\"name\": \"C신입\","
+          - paragraph [ref=e483]: "\"email\": \"test3@genesislab.ai\","
+          - paragraph [ref=e484]: "\"score\": 76,"
+          - paragraph [ref=e485]: "\"dept\": \"사업기획\","
+          - paragraph [ref=e486]: "\"company\": \"제네시스랩\","
+          - paragraph [ref=e487]: "\"note\": \"\""
+          - paragraph [ref=e488]: "}"
+        - paragraph [ref=e489]
+        - 'heading "3단계: 엣지로 노드 연결" [level=2] [ref=e490]':
+          - 'link "3단계: 엣지로 노드 연결" [ref=e491] [cursor=pointer]':
+            - /url: ./branch-node-ko#3%EB%8B%A8%EA%B3%84-%EC%97%A3%EC%A7%80%EB%A1%9C-%EB%85%B8%EB%93%9C-%EC%97%B0%EA%B2%B0
+        - paragraph [ref=e492]
+        - paragraph [ref=e493]
+        - paragraph [ref=e494]: 스타트 노드에서 입력받은 변수를 다른 노드에서 사용하기 위해서는 엣지를 사용해 두 노드를 연결해야 합니다.
+        - paragraph [ref=e495]: 스타트 노드의 오른쪽 아웃 핀(Out-Pin)을 파이썬 노드의 왼쪽 인 핀(In-Pin)과 연결합니다.
+        - paragraph [ref=e496]: 이렇게 하면 스타트 노드의 입력값이 파이썬 노드로 전달됩니다.
+        - paragraph [ref=e497]
+        - paragraph [ref=e498]: 다음 노드를 사용하기 위해서는 반드시 엣지를 연결하여 데이터 흐름을 만들어야 합니다.
+        - paragraph [ref=e499]
+        - 'heading "4단계: 파이썬 노드 - 조건 만들기" [level=2] [ref=e500]':
+          - 'link "4단계: 파이썬 노드 - 조건 만들기" [ref=e501] [cursor=pointer]':
+            - /url: ./branch-node-ko#4%EB%8B%A8%EA%B3%84-%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%85%B8%EB%93%9C---%EC%A1%B0%EA%B1%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0
+        - paragraph [ref=e502]
+        - paragraph [ref=e503]
+        - paragraph [ref=e504]: 파이썬 노드를 더블클릭하면 노드 편집기가 열립니다.
+        - paragraph [ref=e505]:
+          - text: 먼저, 아웃풋 변수명을
+          - code [ref=e506]: result
+          - text: 로 변경합니다.
+        - paragraph [ref=e507]
+        - paragraph [ref=e508]:
+          - text: 파이썬 노드는 간단한 프롬프트만으로 코드를 만들 수 있는
+          - code [ref=e509]: 코드 생성기(Code Generator)
+          - text: 를 지원합니다.
+        - paragraph [ref=e510]: "프롬프트 예시:"
+        - blockquote [ref=e511]:
+          - paragraph [ref=e512]: aplicant 정보에서 score값이 90 이상 100이하면 '합격', 90 미만이면 '불합격'으로 결과값 내는 코드를 생성하세요. 이때, note에 '예비' 값이 있는 경우는 '예비'라는 결과를 가져야 합니다.
+        - paragraph [ref=e513]
+        - 'heading "5단계 : 브랜치 노드 - 조건에 따라 분기하기" [level=2] [ref=e514]':
+          - 'link "5단계 : 브랜치 노드 - 조건에 따라 분기하기" [ref=e515] [cursor=pointer]':
+            - /url: ./branch-node-ko#5%EB%8B%A8%EA%B3%84-%EB%B8%8C%EB%9E%9C%EC%B9%98-%EB%85%B8%EB%93%9C---%EC%A1%B0%EA%B1%B4%EC%97%90-%EB%94%B0%EB%9D%BC-%EB%B6%84%EA%B8%B0%ED%95%98%EA%B8%B0
+        - paragraph [ref=e516]
+        - paragraph [ref=e517]
+        - paragraph [ref=e518]: 브랜치 노드는 조건에 따른 분기 처리를 지원합니다.
+        - paragraph [ref=e519]: 파이썬 노드에서 코드나 함수 기능으로 조건을 분기할 수도 있지만 브랜치 노드를 사용하면 더욱 직관적인 워크플로를 구성할 수 있습니다.
+        - paragraph [ref=e520]: 또한 런테스트(Run Test) 시 동작 로직을 확인할 수 있어 디버깅(Debugging)이 용이합니다.
+        - paragraph [ref=e521]
+        - paragraph [ref=e522]: 브랜치 노드는 조건식(Condition)을 만들어 사용합니다.
+        - paragraph [ref=e523]: 필요 시 Else 조건식을 사용할 수 있습니다.
+        - paragraph [ref=e524]
+        - paragraph [ref=e525]:
+          - text: 본 튜토리얼은
+          - code [ref=e526]: 합격(pass)
+          - text: ","
+          - code [ref=e527]: 불합격(fail)
+          - text: ","
+          - code [ref=e528]: 예비(pre)
+          - text: 로 조건식을 설정합니다.
+        - paragraph [ref=e529]: 조건식 제목을 변경해서 사용하면 편리합니다.
+        - paragraph [ref=e530]: Else 조건문은 사용하지 않습니다.
+        - paragraph [ref=e531]
+        - list [ref=e532]:
+          - listitem [ref=e533]:
+            - text: •
+            - paragraph [ref=e534]:
+              - code [ref=e535]: result
+              - text: == ‘합격’
+          - listitem [ref=e536]:
+            - text: •
+            - paragraph [ref=e537]:
+              - code [ref=e538]: result
+              - text: == ‘불합격’
+          - listitem [ref=e539]:
+            - text: •
+            - paragraph [ref=e540]:
+              - code [ref=e541]: result
+              - text: == ‘예비’
+        - paragraph [ref=e542]
+        - paragraph [ref=e543]
+        - paragraph [ref=e544]
+        - paragraph [ref=e545]: 조건식을 작성하면 조건식의 개수에 따라 브랜치 핀(Branch-Pin)이 노출됩니다.
+        - paragraph [ref=e546]: 각 핀에 마우스를 올려 조건식 제목을 확인하고 LLM 노드에 연결합니다.
+        - paragraph [ref=e547]: 편의를 위해 LLM 노드의 제목과 설명도 수정합니다.
+        - paragraph [ref=e548]
+        - list [ref=e549]:
+          - listitem [ref=e550]:
+            - text: •
+            - paragraph [ref=e551]: "Pass : 합격자용"
+          - listitem [ref=e552]:
+            - text: •
+            - paragraph [ref=e553]: "Fail : 불합격자용"
+          - listitem [ref=e554]:
+            - text: •
+            - paragraph [ref=e555]: "Pre : 예비합격자용"
+        - paragraph [ref=e556]
+        - paragraph [ref=e557]
+        - 'heading "6단계 : LLM 노드 - 메일 내용 생성하기" [level=2] [ref=e558]':
+          - 'link "6단계 : LLM 노드 - 메일 내용 생성하기" [ref=e559] [cursor=pointer]':
+            - /url: ./branch-node-ko#6%EB%8B%A8%EA%B3%84-llm-%EB%85%B8%EB%93%9C---%EB%A9%94%EC%9D%BC-%EB%82%B4%EC%9A%A9-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0
+        - paragraph [ref=e560]
+        - heading "6-1) 합격자용 메일" [level=3] [ref=e561]:
+          - link "6-1) 합격자용 메일" [ref=e562] [cursor=pointer]:
+            - /url: ./branch-node-ko#6-1)-%ED%95%A9%EA%B2%A9%EC%9E%90%EC%9A%A9-%EB%A9%94%EC%9D%BC
+        - paragraph [ref=e563]
+        - paragraph [ref=e564]
+        - paragraph [ref=e565]: 합격자용 LLM 노드 시스템 프롬프트 영역에 메일 생성에 관한 지침 사항을 작성합니다.
+        - paragraph [ref=e566]:
+          - text: 아웃풋은
+          - code [ref=e567]: JSON
+          - text: 형식의
+          - code [ref=e568]: passMail
+          - text: 로 선언합니다.
+        - paragraph [ref=e569]
+        - paragraph [ref=e570]: "합격 메일 예시:"
+        - blockquote [ref=e571]:
+          - paragraph [ref=e572]: 당신은 채용 담당자입니다. 합격자에게 보낼 합격 메일을 작성하세요.
+        - paragraph [ref=e573]
+        - heading "6-2) 불합격자용 메일" [level=3] [ref=e574]:
+          - link "6-2) 불합격자용 메일" [ref=e575] [cursor=pointer]:
+            - /url: ./branch-node-ko#6-2)-%EB%B6%88%ED%95%A9%EA%B2%A9%EC%9E%90%EC%9A%A9-%EB%A9%94%EC%9D%BC
+        - paragraph [ref=e576]
+        - paragraph [ref=e577]
+        - paragraph [ref=e578]: 불합격자용 LLM 노드 시스템 프롬프트 영역에 메일 생성에 관한 지침 사항을 작성합니다.
+        - paragraph [ref=e579]:
+          - text: 아웃풋은
+          - code [ref=e580]: JSON
+          - text: 형식의
+          - code [ref=e581]: failMail
+          - text: 로 선언합니다.
+        - paragraph [ref=e582]
+        - paragraph [ref=e583]: "불합격 메일 예시:"
+        - blockquote [ref=e584]:
+          - paragraph [ref=e585]: 당신은 채용 담당자입니다. 불합격자에게 보낼 합격 메일을 작성하세요.
+        - paragraph [ref=e586]
+        - heading "6-3) 예비 합격자용 메일" [level=3] [ref=e587]:
+          - link "6-3) 예비 합격자용 메일" [ref=e588] [cursor=pointer]:
+            - /url: ./branch-node-ko#6-3)-%EC%98%88%EB%B9%84-%ED%95%A9%EA%B2%A9%EC%9E%90%EC%9A%A9-%EB%A9%94%EC%9D%BC
+        - paragraph [ref=e589]
+        - paragraph [ref=e590]
+        - paragraph [ref=e591]: 예비 합격자용 LLM 노드 시스템 프롬프트 영역에 메일 생성에 관한 지침 사항을 작성합니다.
+        - paragraph [ref=e592]:
+          - text: 아웃풋은
+          - code [ref=e593]: JSON
+          - text: 형식의
+          - code [ref=e594]: preMail
+          - text: 로 선언합니다.
+        - paragraph [ref=e595]
+        - paragraph [ref=e596]: "예비 합격 예시:"
+        - blockquote [ref=e597]:
+          - paragraph [ref=e598]: 당신은 채용 담당자입니다. 예비 합격자에게 보낼 합격 메일을 작성하세요.
+        - paragraph [ref=e599]
+        - 'heading "7단계: 데이터 병합" [level=2] [ref=e600]':
+          - 'link "7단계: 데이터 병합" [ref=e601] [cursor=pointer]':
+            - /url: ./branch-node-ko#7%EB%8B%A8%EA%B3%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B3%91%ED%95%A9
+        - paragraph [ref=e602]
+        - paragraph [ref=e603]
+        - paragraph [ref=e604]: 브랜치 노드를 통해 분기 처리한 데이터를 하나로 합쳐야 합니다.
+        - paragraph [ref=e605]
+        - paragraph [ref=e606]
+        - paragraph [ref=e607]:
+          - text: 아웃풋은
+          - code [ref=e608]: json
+          - text: 형식의
+          - code [ref=e609]: mailContext
+          - text: 으로 선언하고 파이썬 코드 생성기로 코드를 생성합니다.
+        - paragraph [ref=e610]: "프롬프트 예시:"
+        - blockquote [ref=e611]:
+          - paragraph [ref=e612]: passMail, failMail, preMail을 merge하는 코드를 작성하세요.
+          - paragraph [ref=e613]: 변수 안에 데이터가 없는 경우 무시하세요.
+          - paragraph [ref=e614]: 이를 하나의 json인 emailContext로 출력하세요.
+        - paragraph [ref=e615]
+        - 'heading "8단계: 메일 형식으로 파싱" [level=2] [ref=e616]':
+          - 'link "8단계: 메일 형식으로 파싱" [ref=e617] [cursor=pointer]':
+            - /url: ./branch-node-ko#8%EB%8B%A8%EA%B3%84-%EB%A9%94%EC%9D%BC-%ED%98%95%EC%8B%9D%EC%9C%BC%EB%A1%9C-%ED%8C%8C%EC%8B%B1
+        - paragraph [ref=e618]
+        - paragraph [ref=e619]
+        - paragraph [ref=e620]:
+          - strong [ref=e621]: 7단계
+          - text: 에서 한번에 파싱까지 진행할 수도 있지만 더욱 명확한 워크플로 구성을 위해 새로운 파이썬 노드로 파싱 작업을 수행합니다.
+        - paragraph [ref=e622]:
+          - text: 아웃풋 변수고
+          - code [ref=e623]: String
+          - text: 타입의
+          - code [ref=e624]: To
+          - text: ","
+          - code [ref=e625]: Message
+          - text: ","
+          - code [ref=e626]: Subject
+          - text: 를 추가합니다.
+        - paragraph [ref=e627]: 코드 생성기에 프롬프트를 입력하여 코드를 생성합니다.
+        - paragraph [ref=e628]: "예시:"
+        - blockquote [ref=e629]:
+          - paragraph [ref=e630]: emailContext에서 값을 파싱해 아웃풋 변수에 할당합니다.
+          - paragraph [ref=e631]: email의 값을 To 변수에,
+          - paragraph [ref=e632]: message의 값을 Message 변수에,
+          - paragraph [ref=e633]: subject의 값을 Subject 변수에 할당합니다.
+        - paragraph [ref=e634]
+        - 'heading "9단계: 지메일 노드 추가 (선택)" [level=2] [ref=e635]':
+          - 'link "9단계: 지메일 노드 추가 (선택)" [ref=e636] [cursor=pointer]':
+            - /url: ./branch-node-ko#9%EB%8B%A8%EA%B3%84-%EC%A7%80%EB%A9%94%EC%9D%BC-%EB%85%B8%EB%93%9C-%EC%B6%94%EA%B0%80-(%EC%84%A0%ED%83%9D)
+        - paragraph [ref=e637]
+        - paragraph [ref=e638]
+        - paragraph [ref=e639]: 지메일 노드를 추가하면 실제 메일을 전송할 수 있습니다.
+        - paragraph [ref=e640]:
+          - text: 🔗
+          - link "지메일 노드 튜토리얼" [ref=e641] [cursor=pointer]:
+            - /url: ./gmail-node-ko
+          - text: 을 참고하여 메일 전송 자동화 워크플로를 구성합니다.
+        - paragraph [ref=e642]: 본 튜토리얼은 값 출력 단계만 진행합니다.
+        - paragraph [ref=e643]
+        - 'heading "10단계: 어빌리티 테스트로 워크플로 전체 실행" [level=2] [ref=e644]':
+          - 'link "10단계: 어빌리티 테스트로 워크플로 전체 실행" [ref=e645] [cursor=pointer]':
+            - /url: ./branch-node-ko#10%EB%8B%A8%EA%B3%84-%EC%96%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0-%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%A1%9C-%EC%9B%8C%ED%81%AC%ED%94%8C%EB%A1%9C-%EC%A0%84%EC%B2%B4-%EC%8B%A4%ED%96%89
+        - paragraph [ref=e646]
+        - paragraph [ref=e647]
+        - paragraph [ref=e648]:
+          - text: 캔버스 우측 하단에서
+          - code [ref=e649]: 테스트 실행(RUN TEST)
+          - text: 버튼을 클릭하여 완성된 전체 워크플로를 실행할 수 있습니다.
+        - paragraph [ref=e650]: 입력창에 샘플 데이터 중 하나를 선택해 입력합니다.
+        - paragraph [ref=e651]: 결과가 잘 나온다면 워크플로가 제대로 구성된 것입니다.
+        - paragraph [ref=e652]
+        - heading "다음 단계" [level=2] [ref=e653]:
+          - link "다음 단계" [ref=e654] [cursor=pointer]:
+            - /url: ./branch-node-ko#%EB%8B%A4%EC%9D%8C-%EB%8B%A8%EA%B3%84
+        - paragraph [ref=e655]
+        - paragraph [ref=e656]
+        - paragraph [ref=e657]:
+          - text: 🎉 축하합니다!
+          - strong [ref=e658]: 에이전트리아
+          - text: 를 사용해 ‘조건에 따른 메일 생성’ 워크플로를 완성했습니다.
+        - paragraph [ref=e659]: 이제 다양한 메일 형식을 적용해 결과를 확인해 보고, 노드를 추가하며 워크플로를 확장해 보세요.
+        - paragraph [ref=e660]
+        - paragraph [ref=e661]:
+          - strong [ref=e662]: 에이전트리아
+          - text: 는 아이디어를 현실로 바꾸는 가능성의 공간입니다.
+        - paragraph [ref=e663]: 당신의 상상력으로 워크플로는 무한히 확장될 수 있습니다.
+        - paragraph [ref=e664]
+        - paragraph [ref=e665]
+        - list [ref=e666]:
+          - listitem [ref=e667]:
+            - text: •
+            - paragraph [ref=e668]:
+              - text: 🔗
+              - link "어빌리티 가이드" [ref=e669] [cursor=pointer]:
+                - /url: ./ability-guide-ko
+              - text: 는 어빌리티 튜토리얼로 구성되어 있습니다.
+              - strong [ref=e670]: 에이전트리아
+              - text: 및 자동화 입문 사용자를 위한 가이드입니다.
+          - listitem [ref=e671]:
+            - text: •
+            - paragraph [ref=e672]:
+              - text: 🔗
+              - link "3단계 핵심 가이드" [ref=e673] [cursor=pointer]:
+                - /url: ./3step-core-ko
+              - text: 는 복잡한 설정이나 자세한 개념 설명을 생략하여 짧고 간결하게 익힐 수 있는 핵심 가이드 입니다.
+        - paragraph [ref=e674]
+        - paragraph [ref=e675]
+  - navigation [ref=e679]:
+    - link "Agentria home" [ref=e681] [cursor=pointer]:
+      - /url: ../ko
+      - img "Agentria home" [ref=e683]
+    - generic [ref=e685]:
+      - generic [ref=e686]:
+        - link "Features" [ref=e688] [cursor=pointer]:
+          - /url: ../ko#topfeatures
+          - paragraph [ref=e690]: Features
+        - link "Pricing" [ref=e692] [cursor=pointer]:
+          - /url: ../ko#pricing
+          - paragraph [ref=e694]: Pricing
+        - link "Docs" [ref=e696] [cursor=pointer]:
+          - /url: ./about-agentria-ko
+          - paragraph [ref=e698]: Docs
+      - link "EN · KO" [ref=e700] [cursor=pointer]:
+        - /url: ./branch-node
+        - paragraph [ref=e702]: EN · KO
+      - link "Try Now" [ref=e704] [cursor=pointer]:
+        - /url: https://app.agentria.ai
+        - paragraph [ref=e706]: Try Now

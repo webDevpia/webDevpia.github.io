@@ -155,7 +155,7 @@ nav_exclude: true
         저는 <strong>웹 개발</strong>을 공부하고 있는 <strong>김코딩</strong>입니다.<br>
         <em>언젠가는 멋진 웹사이트를 만드는 것</em>이 목표입니다.
     </p>
-    <img src="https://via.placeholder.com/150x150" alt="김코딩 프로필 사진">
+    <img src="https://placehold.co/150x150" alt="김코딩 프로필 사진">
 </section>
 ```
 
@@ -190,7 +190,7 @@ nav_exclude: true
 
     <article>
         <h3>자기소개 페이지</h3>
-        <img src="https://via.placeholder.com/200x120" alt="자기소개 페이지 스크린샷">
+        <img src="https://placehold.co/200x120" alt="자기소개 페이지 스크린샷">
         <p>HTML 01장에서 만든 자기소개 페이지입니다. 제목, 목록, 링크, 이미지를 활용했습니다.</p>
         <p><a href="index.html" target="_blank">페이지 보기</a></p>
     </article>
@@ -199,7 +199,7 @@ nav_exclude: true
 
     <article>
         <h3>회원가입 폼</h3>
-        <img src="https://via.placeholder.com/200x120" alt="회원가입 폼 스크린샷">
+        <img src="https://placehold.co/200x120" alt="회원가입 폼 스크린샷">
         <p>HTML 02장에서 만든 회원가입 폼입니다. 시맨틱 태그와 다양한 input 타입을 활용했습니다.</p>
         <p><a href="signup.html" target="_blank">페이지 보기</a></p>
     </article>
@@ -290,7 +290,7 @@ nav_exclude: true
                 저는 <strong>웹 개발</strong>을 공부하고 있는 <strong>김코딩</strong>입니다.<br>
                 <em>언젠가는 멋진 웹사이트를 만드는 것</em>이 목표입니다.
             </p>
-            <img src="https://via.placeholder.com/150x150" alt="김코딩 프로필 사진">
+            <img src="https://placehold.co/150x150" alt="김코딩 프로필 사진">
         </section>
 
         <hr>
@@ -321,7 +321,7 @@ nav_exclude: true
 
             <article>
                 <h3>자기소개 페이지</h3>
-                <img src="https://via.placeholder.com/200x120" alt="자기소개 페이지 스크린샷">
+                <img src="https://placehold.co/200x120" alt="자기소개 페이지 스크린샷">
                 <p>HTML 01장에서 만든 자기소개 페이지입니다. 제목, 목록, 링크, 이미지를 활용했습니다.</p>
                 <p><a href="index.html">페이지 보기</a></p>
             </article>
@@ -330,7 +330,7 @@ nav_exclude: true
 
             <article>
                 <h3>회원가입 폼</h3>
-                <img src="https://via.placeholder.com/200x120" alt="회원가입 폼 스크린샷">
+                <img src="https://placehold.co/200x120" alt="회원가입 폼 스크린샷">
                 <p>HTML 02장에서 만든 회원가입 폼입니다. 시맨틱 태그와 다양한 input 타입을 활용했습니다.</p>
                 <p><a href="signup.html">페이지 보기</a></p>
             </article>

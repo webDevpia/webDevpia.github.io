@@ -1,0 +1,622 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "Welcome to Agentria" [ref=e12] [cursor=pointer]:
+        - /url: ./about-agentria-ko
+        - paragraph [ref=e15]: Welcome to Agentria
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - link "시작하기" [ref=e22] [cursor=pointer]:
+            - /url: ./get-started-ko
+            - paragraph [ref=e25]: 시작하기
+          - link "3단계 핵심 가이드" [ref=e32] [cursor=pointer]:
+            - /url: ./3step-core-ko
+            - paragraph [ref=e35]: 3단계 핵심 가이드
+          - generic [ref=e38]:
+            - link "어빌리티 가이드" [ref=e45] [cursor=pointer]:
+              - /url: ./ability-guide-ko
+              - paragraph [ref=e48]: 어빌리티 가이드
+            - generic [ref=e52]:
+              - link "[어빌리티] AI 노드 (LLM)" [ref=e55] [cursor=pointer]:
+                - /url: ./llm-node-ko
+                - paragraph [ref=e58]: "[어빌리티] AI 노드 (LLM)"
+              - link "[어빌리티] 코드 노드 (Python)" [ref=e61] [cursor=pointer]:
+                - /url: ./python-node-ko
+                - paragraph [ref=e64]: "[어빌리티] 코드 노드 (Python)"
+              - link "[어빌리티] 도구 노드 (Gmail)" [ref=e67] [cursor=pointer]:
+                - /url: ./gmail-node-ko
+                - paragraph [ref=e70]: "[어빌리티] 도구 노드 (Gmail)"
+              - link "[어빌리티] 도구 노드 (Slack)" [ref=e73] [cursor=pointer]:
+                - /url: ./slack-node-ko
+                - paragraph [ref=e76]: "[어빌리티] 도구 노드 (Slack)"
+              - link "[어빌리티] 흐름 제어 노드 (Branch)" [ref=e79] [cursor=pointer]:
+                - /url: ./branch-node-ko
+                - paragraph [ref=e82]: "[어빌리티] 흐름 제어 노드 (Branch)"
+          - generic [ref=e85]:
+            - link "에이전트 가이드" [ref=e92] [cursor=pointer]:
+              - /url: ./agent-guide-ko
+              - paragraph [ref=e95]: 에이전트 가이드
+            - generic [ref=e99]:
+              - link "[에이전트] 단기 기억 조회" [ref=e102] [cursor=pointer]:
+                - /url: ./shortterm-node-ko
+                - paragraph [ref=e105]: "[에이전트] 단기 기억 조회"
+              - link "[에이전트] 추론 행동 (ReAct)" [ref=e108] [cursor=pointer]:
+                - /url: ./react-node-ko
+                - paragraph [ref=e111]: "[에이전트] 추론 행동 (ReAct)"
+        - generic [ref=e112]:
+          - link "핵심개념" [ref=e117] [cursor=pointer]:
+            - /url: ./key-concepts-ko
+            - paragraph [ref=e120]: 핵심개념
+          - generic [ref=e123]:
+            - link "노드" [ref=e129] [cursor=pointer]:
+              - /url: ./node-ko
+              - paragraph [ref=e132]: 노드
+            - generic [ref=e136]:
+              - link "유형" [ref=e139] [cursor=pointer]:
+                - /url: ./node-type-ko
+                - paragraph [ref=e142]: 유형
+              - link "구조" [ref=e145] [cursor=pointer]:
+                - /url: ./node-structure-ko
+                - paragraph [ref=e148]: 구조
+              - link "사용법" [ref=e151] [cursor=pointer]:
+                - /url: ./node-usage-ko
+                - paragraph [ref=e154]: 사용법
+              - link "노드 테스트" [ref=e157] [cursor=pointer]:
+                - /url: ./node-test-ko
+                - paragraph [ref=e160]: 노드 테스트
+          - generic [ref=e163]:
+            - link "어빌리티" [ref=e169] [cursor=pointer]:
+              - /url: ./ability-ko
+              - paragraph [ref=e172]: 어빌리티
+            - generic [ref=e176]:
+              - link "구조" [ref=e179] [cursor=pointer]:
+                - /url: ./ability-structure-ko
+                - paragraph [ref=e182]: 구조
+              - link "사용법" [ref=e185] [cursor=pointer]:
+                - /url: ./ability-usage-ko
+                - paragraph [ref=e188]: 사용법
+              - link "어빌리티 테스트" [ref=e191] [cursor=pointer]:
+                - /url: ./ability-test-ko
+                - paragraph [ref=e194]: 어빌리티 테스트
+          - generic [ref=e197]:
+            - link "에이전트" [ref=e203] [cursor=pointer]:
+              - /url: ./agent-ko
+              - paragraph [ref=e206]: 에이전트
+            - generic [ref=e210]:
+              - link "구조" [ref=e213] [cursor=pointer]:
+                - /url: ./agent-structure-ko
+                - paragraph [ref=e216]: 구조
+              - link "사용법" [ref=e219] [cursor=pointer]:
+                - /url: ./agent-usage-ko
+                - paragraph [ref=e222]: 사용법
+              - link "에이전트 테스트" [ref=e225] [cursor=pointer]:
+                - /url: ./agent-test-ko
+                - paragraph [ref=e228]: 에이전트 테스트
+          - generic [ref=e231]:
+            - link "스토리지" [ref=e237] [cursor=pointer]:
+              - /url: ./storage-ko
+              - paragraph [ref=e240]: 스토리지
+            - generic [ref=e244]:
+              - link "정형 데이터" [ref=e247] [cursor=pointer]:
+                - /url: ./structured-data-ko
+                - paragraph [ref=e250]: 정형 데이터
+              - link "데이터 구조" [ref=e253] [cursor=pointer]:
+                - /url: ./data-structure-ko
+                - paragraph [ref=e256]: 데이터 구조
+              - link "벌크 런 테스트" [ref=e259] [cursor=pointer]:
+                - /url: ./bulkrun-test-ko
+                - paragraph [ref=e262]: 벌크 런 테스트
+        - generic [ref=e263]:
+          - link "핵심기능" [ref=e268] [cursor=pointer]:
+            - /url: ./key-features-ko
+            - paragraph [ref=e271]: 핵심기능
+          - generic [ref=e274]:
+            - link "크리덴셜" [ref=e280] [cursor=pointer]:
+              - /url: ./credential-ko
+              - paragraph [ref=e283]: 크리덴셜
+            - generic [ref=e287]:
+              - link "구글 크리덴셜" [ref=e290] [cursor=pointer]:
+                - /url: ./google-credential-ko
+                - paragraph [ref=e293]: 구글 크리덴셜
+              - link "슬랙 크리덴셜" [ref=e296] [cursor=pointer]:
+                - /url: ./slack-credential-ko
+                - paragraph [ref=e299]: 슬랙 크리덴셜
+          - generic [ref=e302]:
+            - link "API" [ref=e308] [cursor=pointer]:
+              - /url: ./api-ko
+              - paragraph [ref=e311]: API
+            - generic [ref=e315]:
+              - link "버전" [ref=e318] [cursor=pointer]:
+                - /url: ./api-version-ko
+                - paragraph [ref=e321]: 버전
+              - link "API 배포" [ref=e324] [cursor=pointer]:
+                - /url: ./api-release-ko
+                - paragraph [ref=e327]: API 배포
+              - link "어빌리티 API cURL" [ref=e330] [cursor=pointer]:
+                - /url: ./ability-endpoint-ko
+                - paragraph [ref=e333]: 어빌리티 API cURL
+              - link "에이전트 API cURL" [ref=e336] [cursor=pointer]:
+                - /url: ./agent-endpoint-ko
+                - paragraph [ref=e339]: 에이전트 API cURL
+              - link "API 호출 (포스트맨)" [ref=e342] [cursor=pointer]:
+                - /url: ./postman-ko
+                - paragraph [ref=e345]: API 호출 (포스트맨)
+        - link "노드정보" [ref=e352] [cursor=pointer]:
+          - /url: ./node-info-ko
+          - paragraph [ref=e355]: 노드정보
+    - generic [ref=e361]:
+      - paragraph [ref=e365]: Get Started
+      - heading "코드 노드 사용하기 (Python)" [level=1] [ref=e368]
+      - generic [ref=e369]:
+        - paragraph [ref=e370]:
+          - text: 어빌리티(Ability) 가이드의 튜토리얼은
+          - strong [ref=e371]: 에이전트리아(Agentria)
+          - text: 입문자를 위한 가장 기본적이면서도 핵심적인 과정을 다룹니다.
+        - paragraph [ref=e372]: 본 튜토리얼에서는 기상 시간을 입력하고, 파이썬(Python) 노드를 활용해 수면 시간을 역산하여 권장 취침 시간을 안내하는 어빌리티를 직접 만들고 실행합니다.
+        - paragraph [ref=e373]
+        - heading "사전 준비" [level=2] [ref=e374]:
+          - link "사전 준비" [ref=e375] [cursor=pointer]:
+            - /url: ./python-node-ko#%EC%82%AC%EC%A0%84-%EC%A4%80%EB%B9%84
+        - paragraph [ref=e376]
+        - paragraph [ref=e377]:
+          - text: 시작을 위해,
+          - strong [ref=e378]: 에이전트리아
+          - text: 에서 프로젝트(Project)를 생성한 후, 어빌리티 캔버스(Canvas)로 진입합니다.
+        - paragraph [ref=e379]:
+          - text: 캔버스 진입 절차는 🔗
+          - link "3단계 핵심 가이드" [ref=e380] [cursor=pointer]:
+            - /url: ./3step-core-ko
+          - text: 의 1단계(프로젝트 생성 및 컴포저 선택)를 참고하시기 바랍니다.
+        - paragraph [ref=e381]
+        - paragraph [ref=e382]: 본 튜토리얼을 완료하면 다음과 같은 작업을 수행할 수 있습니다.
+        - list [ref=e383]:
+          - listitem [ref=e384]:
+            - paragraph [ref=e385]: 노드(Node) 추가하기
+          - listitem [ref=e386]:
+            - paragraph [ref=e387]: 스타트 노드(Start Node)에서 변수 선언하기
+          - listitem [ref=e388]:
+            - paragraph [ref=e389]: 노드 연결하기
+          - listitem [ref=e390]:
+            - paragraph [ref=e391]: 파이썬 노드 코드 작성하기
+          - listitem [ref=e392]:
+            - paragraph [ref=e393]: 파이썬 노드 코드 생성기 사용하기
+          - listitem [ref=e394]:
+            - paragraph [ref=e395]: 파이썬 노드 출력값을 엔드 노드(End Node)로 전달하기
+          - listitem [ref=e396]:
+            - paragraph [ref=e397]: 어빌리티 테스트를 통해 워크플로(Workflow) 실행 결과 확인하기
+        - paragraph [ref=e398]
+        - 'heading "1단계: 인풋 변수 선언" [level=2] [ref=e399]':
+          - 'link "1단계: 인풋 변수 선언" [ref=e400] [cursor=pointer]':
+            - /url: ./python-node-ko#1%EB%8B%A8%EA%B3%84-%EC%9D%B8%ED%92%8B-%EB%B3%80%EC%88%98-%EC%84%A0%EC%96%B8
+        - paragraph [ref=e401]
+        - paragraph [ref=e402]
+        - paragraph [ref=e403]:
+          - strong [ref=e404]: 에이전트리아
+          - text: 캔버스에는 기본적으로
+          - code [ref=e405]: 스타트 노드(Start Node)
+          - text: 와
+          - code [ref=e406]: 엔드 노드(End Node)
+          - text: 가 하나씩 배치되어 있습니다.
+        - paragraph [ref=e407]: 이때, 스타트 노드는 전체 흐름을 시작하는 역할을 하고, 엔드 노드는 전체 흐름을 종료하는 역할을 합니다.
+        - paragraph [ref=e408]: “권장 취침 시간 안내” 워크플로를 구성하기 위해서는 먼저 스타트 노드에서 필요한 변수를 선언해야 합니다.
+        - paragraph [ref=e409]: 스타트 노드를 더블클릭하면 노드 편집기(Node Editor)가 열리며, 여기에서 자료형과 이름, 설명을 설정할 수 있습니다.
+        - paragraph [ref=e410]
+        - paragraph [ref=e411]
+        - paragraph [ref=e412]:
+          - text: 본 튜토리얼에서는 기상 시간을 입력값으로 받아야 하므로, 자료형을
+          - code [ref=e413]: String
+          - text: 으로 두고 변수명을
+          - code [ref=e414]: WakeUpTime
+          - text: 으로 설정하여 변수를 선언하겠습니다.
+        - paragraph [ref=e415]: 변수 선언을 완료했다면 다시 캔버스로 돌아갑니다.
+        - paragraph [ref=e416]
+        - 'heading "2단계: 파이썬 노드 추가" [level=2] [ref=e417]':
+          - 'link "2단계: 파이썬 노드 추가" [ref=e418] [cursor=pointer]':
+            - /url: ./python-node-ko#2%EB%8B%A8%EA%B3%84-%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%85%B8%EB%93%9C-%EC%B6%94%EA%B0%80
+        - paragraph [ref=e419]
+        - paragraph [ref=e420]
+        - paragraph [ref=e421]: 이제 수면 시간을 계산할 파이썬 노드를 추가할 차례입니다.
+        - paragraph [ref=e422]:
+          - text: 캔버스 하단의
+          - code [ref=e423]: +노드 추가(Add Node)
+          - text: 버튼을 클릭하고, 코드(Code) 카테고리에서 파이썬 노드를 드래그 앤 드롭(Drag and Drop)으로 캔버스에 배치합니다.
+        - paragraph [ref=e424]:
+          - text: 파이썬 노드는 직접 코드를 작성하거나, 짧은 프롬프트로 자동 코드 생성을 지원하는
+          - code [ref=e425]: 코드 생성기(Code Generator)
+          - text: 기능을 사용할 수 있습니다.
+        - paragraph [ref=e426]
+        - 'heading "3단계: 엣지로 노드 연결" [level=2] [ref=e427]':
+          - 'link "3단계: 엣지로 노드 연결" [ref=e428] [cursor=pointer]':
+            - /url: ./python-node-ko#3%EB%8B%A8%EA%B3%84-%EC%97%A3%EC%A7%80%EB%A1%9C-%EB%85%B8%EB%93%9C-%EC%97%B0%EA%B2%B0
+        - paragraph [ref=e429]
+        - paragraph [ref=e430]
+        - paragraph [ref=e431]:
+          - text: 스타트 노드에서 입력받은
+          - code [ref=e432]: WakeUpTime
+          - text: 변수를 파이썬 노드에서 사용하기 위해서는 두 노드를 연결해야 합니다.
+        - paragraph [ref=e433]: 이 연결선을 엣지(Edge)라고 부릅니다.
+        - paragraph [ref=e434]: 스타트 노드의 오른쪽 아웃 핀(Out-Pin)을 파이썬 노드의 왼쪽 인 핀(In-Pin)과 연결하면, 입력값이 파이썬 노드로 전달됩니다.
+        - paragraph [ref=e435]
+        - 'heading "4단계: 파이썬 코드 작성" [level=2] [ref=e436]':
+          - 'link "4단계: 파이썬 코드 작성" [ref=e437] [cursor=pointer]':
+            - /url: ./python-node-ko#4%EB%8B%A8%EA%B3%84-%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EC%BD%94%EB%93%9C-%EC%9E%91%EC%84%B1
+        - paragraph [ref=e438]
+        - paragraph [ref=e439]
+        - paragraph [ref=e440]: 파이썬 노드를 더블 클릭하면 노드 편집기가 열립니다.
+        - paragraph [ref=e441]:
+          - text: 인풋 영역에
+          - code [ref=e442]: WakeUpTime
+          - text: 변수가 표시된다면 두 노드가 정상적으로 연결된 것입니다.
+        - paragraph [ref=e443]: 이제 파이썬 코드 입력창에 수면 시간을 계산하는 스크립트를 작성합니다.
+        - paragraph [ref=e444]
+        - paragraph [ref=e445]: "예시:"
+        - blockquote [ref=e446]:
+          - paragraph [ref=e447]: wake_up_time = int()
+          - paragraph [ref=e448]: time_minus_9 = (wake_up_time - 9) % 12
+          - paragraph [ref=e449]: time_minus_7 = (wake_up_time - 7) % 12
+          - paragraph [ref=e450]: time_minus_9 = 12 if time_minus_9 == 0 else time_minus_9
+          - paragraph [ref=e451]: time_minus_7 = 12 if time_minus_7 == 0 else time_minus_7
+          - paragraph [ref=e452]: "recommended_sleep_time = f\"{time_minus_9}시~{time_minus_7}시\""
+          - paragraph [ref=e453]: "return {\"output\": recommended_sleep_time}"
+        - paragraph [ref=e454]
+        - 'heading "5단계: 드래그 앤 드롭으로 변수 바인딩" [level=2] [ref=e455]':
+          - 'link "5단계: 드래그 앤 드롭으로 변수 바인딩" [ref=e456] [cursor=pointer]':
+            - /url: ./python-node-ko#5%EB%8B%A8%EA%B3%84-%EB%93%9C%EB%9E%98%EA%B7%B8-%EC%95%A4-%EB%93%9C%EB%A1%AD%EC%9C%BC%EB%A1%9C-%EB%B3%80%EC%88%98-%EB%B0%94%EC%9D%B8%EB%94%A9
+        - paragraph [ref=e457]
+        - paragraph [ref=e458]
+        - paragraph [ref=e459]:
+          - strong [ref=e460]: 에이전트리아
+          - text: 에서는 별도의 코드를 작성하지 않고, 드래그 앤 드롭 방식으로 변수를 손쉽게 불러올 수 있습니다.
+        - paragraph [ref=e461]:
+          - text: 다음과 같이
+          - code [ref=e462]: WakeUpTime
+          - text: 변수를 스크립트 첫 번째 줄의
+          - code [ref=e463]: int()
+          - text: 괄호 안에 배치합니다.
+        - paragraph [ref=e464]
+        - paragraph [ref=e465]
+        - list [ref=e466]:
+          - listitem [ref=e467]:
+            - text: •
+            - paragraph [ref=e468]:
+              - text: int(
+              - code [ref=e469]: WakeUpTime
+              - text: )
+        - paragraph [ref=e470]
+        - paragraph [ref=e471]
+        - 'heading "6단계: 코드 생성기 사용" [level=2] [ref=e472]':
+          - 'link "6단계: 코드 생성기 사용" [ref=e473] [cursor=pointer]':
+            - /url: ./python-node-ko#6%EB%8B%A8%EA%B3%84-%EC%BD%94%EB%93%9C-%EC%83%9D%EC%84%B1%EA%B8%B0-%EC%82%AC%EC%9A%A9
+        - paragraph [ref=e474]
+        - paragraph [ref=e475]
+        - paragraph [ref=e476]: 프로그래밍에 익숙하지 않아도 괜찮습니다.
+        - paragraph [ref=e477]:
+          - strong [ref=e478]: 에이전트리아
+          - text: 의 파이썬 노드는
+          - code [ref=e479]: 코드 생성기(Code Generator)
+          - text: 를 통해 짧은 프롬프트만으로도 자동 코드를 생성할 수 있도록 지원합니다.
+        - paragraph [ref=e480]
+        - paragraph [ref=e481]
+        - paragraph [ref=e482]: 코드 생성기 아이콘을 클릭하면 나타나는 프롬프트 입력창에 필요한 코드에 대한 설명을 입력하세요.
+        - paragraph [ref=e483]:
+          - code [ref=e484]: 생성(Generate)
+          - text: 버튼을 눌러 코드를 생성하고, 해당 코드를 적용하고 싶다면
+          - code [ref=e485]: 수락(Accept)
+          - text: 버튼을 눌러 적용합니다.
+        - paragraph [ref=e486]
+        - paragraph [ref=e487]: "예시:"
+        - blockquote [ref=e488]:
+          - paragraph [ref=e489]: WakeUpTime을 정수로 받아서 권장 취침 시간으로 계산하는 파이썬 코드 만들어주세요.
+          - paragraph [ref=e490]: 예를 들어 8을 입력 받으면 거기서 9시간을 뺀 11시, 그리고 7시간을 뺀 1시를 계산하고 권장 취침시간을 11시~1시라고 출력하는 코드를 만들어야 합니다.
+          - paragraph [ref=e491]: 12시간제로 출력되도록 해주세요.
+        - paragraph [ref=e492]
+        - 'heading "7단계: 노드 테스트 실행" [level=2] [ref=e493]':
+          - 'link "7단계: 노드 테스트 실행" [ref=e494] [cursor=pointer]':
+            - /url: ./python-node-ko#7%EB%8B%A8%EA%B3%84-%EB%85%B8%EB%93%9C-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8B%A4%ED%96%89
+        - paragraph [ref=e495]
+        - paragraph [ref=e496]
+        - paragraph [ref=e497]:
+          - text: 코드를 작성한 후, 편집기 내 인풋 영역의
+          - code [ref=e498]: 테스트(TEST)
+          - text: 버튼을 눌러 파이썬 노드 개별 점검을 진행할 수 있습니다.
+        - paragraph [ref=e499]: 노드 테스트(Node Test)란 노드 편집기에서 개별적으로 진행할 수 있는 점검 작업입니다.
+        - paragraph [ref=e500]: 이를 통해 노드가 올바르게 구성되어 있음을 확인하고 다른 노드와 연결하면 오류를 최소화하고 흐름을 안정적으로 이어 나갈 수 있습니다.
+        - paragraph [ref=e501]:
+          - text: 예를 들어
+          - code [ref=e502]: WakeUpTime
+          - text: 에
+          - code [ref=e503]: "07"
+          - text: 을 입력했을 때 다음과 같이 결과가 출력된다면 정상적으로 구성된 것입니다.
+        - blockquote [ref=e504]:
+          - paragraph [ref=e505]: "\"output\": \"10시~12시\""
+        - paragraph [ref=e506]
+        - 'heading "8단계: 함수 기능 사용" [level=2] [ref=e507]':
+          - 'link "8단계: 함수 기능 사용" [ref=e508] [cursor=pointer]':
+            - /url: ./python-node-ko#8%EB%8B%A8%EA%B3%84-%ED%95%A8%EC%88%98-%EA%B8%B0%EB%8A%A5-%EC%82%AC%EC%9A%A9
+        - paragraph [ref=e509]
+        - paragraph [ref=e510]
+        - paragraph [ref=e511]: 파이썬 노드에 있는 파란색 핀은 함수 핀(Function-Pin) 입니다.
+        - paragraph [ref=e512]: 파이썬 노드에서 함수 기능을 사용하면 조건 분기를 통해 지정된 조건을 충족할 때만 함수를 호출하여 새로운 실행 경로를 만듭니다.
+        - paragraph [ref=e513]: 이렇게 하면 노드가 불필요한 연산을 하지 않도록 제한하여 워크플로의 효율성을 높일 수 있습니다.
+        - paragraph [ref=e514]: 본 튜토리얼은 함수를 사용하지 않습니다.
+        - paragraph [ref=e515]:
+          - text: 함수 노드 사용법은 🔗
+          - link "노드 유형" [ref=e516] [cursor=pointer]:
+            - /url: ./node-type-ko
+          - text: 페이지의 함수 노드를 확인하시길 바랍니다.
+        - paragraph [ref=e517]
+        - 'heading "9단계: 엔드 노드 연결" [level=2] [ref=e518]':
+          - 'link "9단계: 엔드 노드 연결" [ref=e519] [cursor=pointer]':
+            - /url: ./python-node-ko#9%EB%8B%A8%EA%B3%84-%EC%97%94%EB%93%9C-%EB%85%B8%EB%93%9C-%EC%97%B0%EA%B2%B0
+        - paragraph [ref=e520]
+        - paragraph [ref=e521]
+        - paragraph [ref=e522]: 이제 계산된 수면시간 계산 아웃풋 값을 엔드 노드로 전달합니다.
+        - paragraph [ref=e523]: 다시 캔버스로 돌아와서 파이썬 노드와 엔드 노드를 엣지로 연결합니다.
+        - paragraph [ref=e524]:
+          - text: 엔드 노드를 더블클릭하여 노드 편집기를 열고,
+          - code [ref=e525]: String
+          - text: 타입의
+          - code [ref=e526]: SleepTime
+          - text: 변수를 추가합니다.
+        - paragraph [ref=e527]:
+          - text: 파이썬 노드에서 아웃풋 값을 담은
+          - code [ref=e528]: Output
+          - text: 변수를 선택 또는 드래그 앤 드롭 방식으로
+          - code [ref=e529]: SleepTime
+          - text: 변수와 연결합니다.
+        - paragraph [ref=e530]: 이로써 “권장 취침 시간 안내” 워크플로가 완성되었습니다.
+        - paragraph [ref=e531]
+        - 'heading "10단계: 어빌리티 테스트로 워크플로 전체 실행" [level=2] [ref=e532]':
+          - 'link "10단계: 어빌리티 테스트로 워크플로 전체 실행" [ref=e533] [cursor=pointer]':
+            - /url: ./python-node-ko#10%EB%8B%A8%EA%B3%84-%EC%96%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0-%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%A1%9C-%EC%9B%8C%ED%81%AC%ED%94%8C%EB%A1%9C-%EC%A0%84%EC%B2%B4-%EC%8B%A4%ED%96%89
+        - paragraph [ref=e534]
+        - paragraph [ref=e535]
+        - paragraph [ref=e536]:
+          - text: 캔버스 우측 하단에서
+          - code [ref=e537]: RUN TEST
+          - text: 버튼을 클릭하여 완성된 전체 워크플로를 실행할 수 있습니다.
+        - paragraph [ref=e538]:
+          - text: 노드 테스트와 마찬가지로 기상 시간을 입력한 뒤 실행하면,
+          - code [ref=e539]: SleepTime
+          - text: 결과에 권장 취침 시간이 표시됩니다.
+        - blockquote [ref=e540]:
+          - paragraph [ref=e541]: "\"SleepTime\": \"10시~12시\""
+        - paragraph [ref=e542]
+        - heading "다음 단계" [level=2] [ref=e543]:
+          - link "다음 단계" [ref=e544] [cursor=pointer]:
+            - /url: ./python-node-ko#%EB%8B%A4%EC%9D%8C-%EB%8B%A8%EA%B3%84
+        - paragraph [ref=e545]
+        - paragraph [ref=e546]
+        - paragraph [ref=e547]:
+          - text: 🎉 축하합니다!
+          - strong [ref=e548]: 에이전트리아
+          - text: 를 사용해 ‘권장 취침 시간 안내’ 워크플로를 완성했습니다.
+        - paragraph [ref=e549]: 이제 다양한 입력값을 적용해 결과를 확인해 보고, 파이썬 코드를 수정하며 워크플로의 성능을 개선해 보세요.
+        - paragraph [ref=e550]
+        - paragraph [ref=e551]:
+          - strong [ref=e552]: 에이전트리아
+          - text: 는 아이디어를 현실로 바꾸는 가능성의 공간입니다.
+        - paragraph [ref=e553]: 당신의 상상력으로 워크플로는 무한히 확장될 수 있습니다.
+        - paragraph [ref=e554]
+        - paragraph [ref=e555]
+        - list [ref=e556]:
+          - listitem [ref=e557]:
+            - text: •
+            - paragraph [ref=e558]:
+              - text: 더 많은 어빌리티 예제가 궁금하다면 🔗
+              - link "어빌리티 가이드" [ref=e559] [cursor=pointer]:
+                - /url: ./ability-guide-ko
+              - text: 페이지를 확인하세요.
+          - listitem [ref=e560]:
+            - text: •
+            - paragraph [ref=e561]:
+              - text: 에이전트 예제를 원한다면 🔗
+              - link "에이전트 가이드" [ref=e562] [cursor=pointer]:
+                - /url: ./agent-guide-ko
+              - text: 페이지를 확인하세요.
+        - paragraph [ref=e563]
+        - paragraph [ref=e564]
+        - heading "사용할 수 없는 함수" [level=2] [ref=e565]:
+          - link "사용할 수 없는 함수" [ref=e566] [cursor=pointer]:
+            - /url: ./python-node-ko#%EC%82%AC%EC%9A%A9%ED%95%A0-%EC%88%98-%EC%97%86%EB%8A%94-%ED%95%A8%EC%88%98
+        - figure [ref=e567]:
+          - table [ref=e568]:
+            - rowgroup [ref=e569]:
+              - row "차단/제한 항목 이유" [ref=e570]:
+                - columnheader "차단/제한 항목" [ref=e571]:
+                  - paragraph [ref=e572]: 차단/제한 항목
+                - columnheader "이유" [ref=e573]:
+                  - paragraph [ref=e574]: 이유
+              - row "import 임의 모듈 로드 방지" [ref=e575]:
+                - cell "import" [ref=e576]:
+                  - paragraph [ref=e577]:
+                    - code [ref=e578]: import
+                - cell "임의 모듈 로드 방지" [ref=e579]:
+                  - paragraph [ref=e580]: 임의 모듈 로드 방지
+              - row "exec() 동적 코드 실행 방지" [ref=e581]:
+                - cell "exec()" [ref=e582]:
+                  - paragraph [ref=e583]:
+                    - code [ref=e584]: exec()
+                - cell "동적 코드 실행 방지" [ref=e585]:
+                  - paragraph [ref=e586]: 동적 코드 실행 방지
+              - row "eval() 동적 표현식 평가 방지" [ref=e587]:
+                - cell "eval()" [ref=e588]:
+                  - paragraph [ref=e589]:
+                    - code [ref=e590]: eval()
+                - cell "동적 표현식 평가 방지" [ref=e591]:
+                  - paragraph [ref=e592]: 동적 표현식 평가 방지
+              - row "exit(), quit() 프로세스 종료 방지" [ref=e593]:
+                - cell "exit(), quit()" [ref=e594]:
+                  - paragraph [ref=e595]:
+                    - code [ref=e596]: exit()
+                    - text: ","
+                    - code [ref=e597]: quit()
+                - cell "프로세스 종료 방지" [ref=e598]:
+                  - paragraph [ref=e599]: 프로세스 종료 방지
+              - row "globals(), locals() 내부 컨텍스트 노출 방지" [ref=e600]:
+                - cell "globals(), locals()" [ref=e601]:
+                  - paragraph [ref=e602]:
+                    - code [ref=e603]: globals()
+                    - text: ","
+                    - code [ref=e604]: locals()
+                - cell "내부 컨텍스트 노출 방지" [ref=e605]:
+                  - paragraph [ref=e606]: 내부 컨텍스트 노출 방지
+              - row "open() 파일 시스템 접근 방지" [ref=e607]:
+                - cell "open()" [ref=e608]:
+                  - paragraph [ref=e609]:
+                    - code [ref=e610]: open()
+                - cell "파일 시스템 접근 방지" [ref=e611]:
+                  - paragraph [ref=e612]: 파일 시스템 접근 방지
+              - row "__context__, __deco__, __arams__ 내부 변수 접근 방지" [ref=e613]:
+                - cell "__context__, __deco__, __arams__" [ref=e614]:
+                  - paragraph [ref=e615]:
+                    - code [ref=e616]: __context__
+                    - text: ","
+                    - code [ref=e617]: __deco__
+                    - text: ","
+                    - code [ref=e618]: __arams__
+                - cell "내부 변수 접근 방지" [ref=e619]:
+                  - paragraph [ref=e620]: 내부 변수 접근 방지
+              - row "asyncio.create_subprocess_exec() 외부 명령어 실행 방지" [ref=e621]:
+                - cell "asyncio.create_subprocess_exec()" [ref=e622]:
+                  - paragraph [ref=e623]:
+                    - code [ref=e624]: asyncio.create_subprocess_exec()
+                - cell "외부 명령어 실행 방지" [ref=e625]:
+                  - paragraph [ref=e626]: 외부 명령어 실행 방지
+              - row "asyncio.create_subprocess_shell() 쉘 명령어 실행 방지" [ref=e627]:
+                - cell "asyncio.create_subprocess_shell()" [ref=e628]:
+                  - paragraph [ref=e629]:
+                    - code [ref=e630]: asyncio.create_subprocess_shell()
+                - cell "쉘 명령어 실행 방지" [ref=e631]:
+                  - paragraph [ref=e632]: 쉘 명령어 실행 방지
+              - row "asyncio.subprocess subprocess 모듈 접근 방지" [ref=e633]:
+                - cell "asyncio.subprocess" [ref=e634]:
+                  - paragraph [ref=e635]:
+                    - code [ref=e636]: asyncio.subprocess
+                - cell "subprocess 모듈 접근 방지" [ref=e637]:
+                  - paragraph [ref=e638]: subprocess 모듈 접근 방지
+        - heading "사용 가능한 라이브러리" [level=2] [ref=e639]:
+          - link "사용 가능한 라이브러리" [ref=e640] [cursor=pointer]:
+            - /url: ./python-node-ko#%EC%82%AC%EC%9A%A9-%EA%B0%80%EB%8A%A5%ED%95%9C-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC
+        - figure [ref=e641]:
+          - table [ref=e642]:
+            - rowgroup [ref=e643]:
+              - row "사용 가능한 모듈 용도" [ref=e644]:
+                - columnheader "사용 가능한 모듈" [ref=e645]:
+                  - paragraph [ref=e646]: 사용 가능한 모듈
+                - columnheader "용도" [ref=e647]:
+                  - paragraph [ref=e648]: 용도
+              - row "re 정규식" [ref=e649]:
+                - cell "re" [ref=e650]:
+                  - paragraph [ref=e651]:
+                    - code [ref=e652]: re
+                - cell "정규식" [ref=e653]:
+                  - paragraph [ref=e654]: 정규식
+              - row "json, orjson JSON 처리" [ref=e655]:
+                - cell "json, orjson" [ref=e656]:
+                  - paragraph [ref=e657]:
+                    - code [ref=e658]: json
+                    - text: ","
+                    - code [ref=e659]: orjson
+                - cell "JSON 처리" [ref=e660]:
+                  - paragraph [ref=e661]: JSON 처리
+              - row "math 수학 연산" [ref=e662]:
+                - cell "math" [ref=e663]:
+                  - paragraph [ref=e664]:
+                    - code [ref=e665]: math
+                - cell "수학 연산" [ref=e666]:
+                  - paragraph [ref=e667]: 수학 연산
+              - row "datetime, time 날짜/시간" [ref=e668]:
+                - cell "datetime, time" [ref=e669]:
+                  - paragraph [ref=e670]:
+                    - code [ref=e671]: datetime
+                    - text: ","
+                    - code [ref=e672]: time
+                - cell "날짜/시간" [ref=e673]:
+                  - paragraph [ref=e674]: 날짜/시간
+              - row "collections, itertools, functools 자료구조, 반복, 함수형 유틸" [ref=e675]:
+                - cell "collections, itertools, functools" [ref=e676]:
+                  - paragraph [ref=e677]:
+                    - code [ref=e678]: collections
+                    - text: ","
+                    - code [ref=e679]: itertools
+                    - text: ","
+                    - code [ref=e680]: functools
+                - cell "자료구조, 반복, 함수형 유틸" [ref=e681]:
+                  - paragraph [ref=e682]: 자료구조, 반복, 함수형 유틸
+              - row "base64 인코딩/디코딩" [ref=e683]:
+                - cell "base64" [ref=e684]:
+                  - paragraph [ref=e685]:
+                    - code [ref=e686]: base64
+                - cell "인코딩/디코딩" [ref=e687]:
+                  - paragraph [ref=e688]: 인코딩/디코딩
+              - row "ast 코드 파싱" [ref=e689]:
+                - cell "ast" [ref=e690]:
+                  - paragraph [ref=e691]:
+                    - code [ref=e692]: ast
+                - cell "코드 파싱" [ref=e693]:
+                  - paragraph [ref=e694]: 코드 파싱
+              - row "typing, pydantic 타입 관련" [ref=e695]:
+                - cell "typing, pydantic" [ref=e696]:
+                  - paragraph [ref=e697]:
+                    - code [ref=e698]: typing
+                    - text: ","
+                    - code [ref=e699]: pydantic
+                - cell "타입 관련" [ref=e700]:
+                  - paragraph [ref=e701]: 타입 관련
+              - row "pd (pandas), np (numpy) 데이터 분석" [ref=e702]:
+                - cell "pd (pandas), np (numpy)" [ref=e703]:
+                  - paragraph [ref=e704]:
+                    - code [ref=e705]: pd
+                    - text: (pandas),
+                    - code [ref=e706]: np
+                    - text: (numpy)
+                - cell "데이터 분석" [ref=e707]:
+                  - paragraph [ref=e708]: 데이터 분석
+              - row "tiktoken 토큰 카운팅" [ref=e709]:
+                - cell "tiktoken" [ref=e710]:
+                  - paragraph [ref=e711]:
+                    - code [ref=e712]: tiktoken
+                - cell "토큰 카운팅" [ref=e713]:
+                  - paragraph [ref=e714]: 토큰 카운팅
+              - row "asyncio (제한적) 비동기 처리 (subprocess 계열 제외)" [ref=e715]:
+                - cell "asyncio (제한적)" [ref=e716]:
+                  - paragraph [ref=e717]:
+                    - code [ref=e718]: asyncio
+                    - text: (제한적)
+                - cell "비동기 처리 (subprocess 계열 제외)" [ref=e719]:
+                  - paragraph [ref=e720]: 비동기 처리 (subprocess 계열 제외)
+              - row "mecab 형태소 분석" [ref=e721]:
+                - cell "mecab" [ref=e722]:
+                  - paragraph [ref=e723]:
+                    - code [ref=e724]: mecab
+                - cell "형태소 분석" [ref=e725]:
+                  - paragraph [ref=e726]: 형태소 분석
+              - row "helpers 내장 헬퍼 함수" [ref=e727]:
+                - cell "helpers" [ref=e728]:
+                  - paragraph [ref=e729]:
+                    - code [ref=e730]: helpers
+                - cell "내장 헬퍼 함수" [ref=e731]:
+                  - paragraph [ref=e732]: 내장 헬퍼 함수
+        - paragraph [ref=e733]
+  - navigation [ref=e737]:
+    - link "Agentria home" [ref=e739] [cursor=pointer]:
+      - /url: ../ko
+      - img "Agentria home" [ref=e741]
+    - generic [ref=e743]:
+      - generic [ref=e744]:
+        - link "Features" [ref=e746] [cursor=pointer]:
+          - /url: ../ko#topfeatures
+          - paragraph [ref=e748]: Features
+        - link "Pricing" [ref=e750] [cursor=pointer]:
+          - /url: ../ko#pricing
+          - paragraph [ref=e752]: Pricing
+        - link "Docs" [ref=e754] [cursor=pointer]:
+          - /url: ./about-agentria-ko
+          - paragraph [ref=e756]: Docs
+      - link "EN · KO" [ref=e758] [cursor=pointer]:
+        - /url: ./python-node
+        - paragraph [ref=e760]: EN · KO
+      - link "Try Now" [ref=e762] [cursor=pointer]:
+        - /url: https://app.agentria.ai
+        - paragraph [ref=e764]: Try Now

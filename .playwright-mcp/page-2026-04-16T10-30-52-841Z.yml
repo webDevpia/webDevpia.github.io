@@ -1,0 +1,543 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "Welcome to Agentria" [ref=e12] [cursor=pointer]:
+        - /url: ./about-agentria-ko
+        - paragraph [ref=e15]: Welcome to Agentria
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - link "시작하기" [ref=e22] [cursor=pointer]:
+            - /url: ./get-started-ko
+            - paragraph [ref=e25]: 시작하기
+          - link "3단계 핵심 가이드" [ref=e32] [cursor=pointer]:
+            - /url: ./3step-core-ko
+            - paragraph [ref=e35]: 3단계 핵심 가이드
+          - generic [ref=e38]:
+            - link "어빌리티 가이드" [ref=e45] [cursor=pointer]:
+              - /url: ./ability-guide-ko
+              - paragraph [ref=e48]: 어빌리티 가이드
+            - generic [ref=e52]:
+              - link "[어빌리티] AI 노드 (LLM)" [ref=e55] [cursor=pointer]:
+                - /url: ./llm-node-ko
+                - paragraph [ref=e58]: "[어빌리티] AI 노드 (LLM)"
+              - link "[어빌리티] 코드 노드 (Python)" [ref=e61] [cursor=pointer]:
+                - /url: ./python-node-ko
+                - paragraph [ref=e64]: "[어빌리티] 코드 노드 (Python)"
+              - link "[어빌리티] 도구 노드 (Gmail)" [ref=e67] [cursor=pointer]:
+                - /url: ./gmail-node-ko
+                - paragraph [ref=e70]: "[어빌리티] 도구 노드 (Gmail)"
+              - link "[어빌리티] 도구 노드 (Slack)" [ref=e73] [cursor=pointer]:
+                - /url: ./slack-node-ko
+                - paragraph [ref=e76]: "[어빌리티] 도구 노드 (Slack)"
+              - link "[어빌리티] 흐름 제어 노드 (Branch)" [ref=e79] [cursor=pointer]:
+                - /url: ./branch-node-ko
+                - paragraph [ref=e82]: "[어빌리티] 흐름 제어 노드 (Branch)"
+          - generic [ref=e85]:
+            - link "에이전트 가이드" [ref=e92] [cursor=pointer]:
+              - /url: ./agent-guide-ko
+              - paragraph [ref=e95]: 에이전트 가이드
+            - generic [ref=e99]:
+              - link "[에이전트] 단기 기억 조회" [ref=e102] [cursor=pointer]:
+                - /url: ./shortterm-node-ko
+                - paragraph [ref=e105]: "[에이전트] 단기 기억 조회"
+              - link "[에이전트] 추론 행동 (ReAct)" [ref=e108] [cursor=pointer]:
+                - /url: ./react-node-ko
+                - paragraph [ref=e111]: "[에이전트] 추론 행동 (ReAct)"
+        - generic [ref=e112]:
+          - link "핵심개념" [ref=e117] [cursor=pointer]:
+            - /url: ./key-concepts-ko
+            - paragraph [ref=e120]: 핵심개념
+          - generic [ref=e123]:
+            - link "노드" [ref=e129] [cursor=pointer]:
+              - /url: ./node-ko
+              - paragraph [ref=e132]: 노드
+            - generic [ref=e136]:
+              - link "유형" [ref=e139] [cursor=pointer]:
+                - /url: ./node-type-ko
+                - paragraph [ref=e142]: 유형
+              - link "구조" [ref=e145] [cursor=pointer]:
+                - /url: ./node-structure-ko
+                - paragraph [ref=e148]: 구조
+              - link "사용법" [ref=e151] [cursor=pointer]:
+                - /url: ./node-usage-ko
+                - paragraph [ref=e154]: 사용법
+              - link "노드 테스트" [ref=e157] [cursor=pointer]:
+                - /url: ./node-test-ko
+                - paragraph [ref=e160]: 노드 테스트
+          - generic [ref=e163]:
+            - link "어빌리티" [ref=e169] [cursor=pointer]:
+              - /url: ./ability-ko
+              - paragraph [ref=e172]: 어빌리티
+            - generic [ref=e176]:
+              - link "구조" [ref=e179] [cursor=pointer]:
+                - /url: ./ability-structure-ko
+                - paragraph [ref=e182]: 구조
+              - link "사용법" [ref=e185] [cursor=pointer]:
+                - /url: ./ability-usage-ko
+                - paragraph [ref=e188]: 사용법
+              - link "어빌리티 테스트" [ref=e191] [cursor=pointer]:
+                - /url: ./ability-test-ko
+                - paragraph [ref=e194]: 어빌리티 테스트
+          - generic [ref=e197]:
+            - link "에이전트" [ref=e203] [cursor=pointer]:
+              - /url: ./agent-ko
+              - paragraph [ref=e206]: 에이전트
+            - generic [ref=e210]:
+              - link "구조" [ref=e213] [cursor=pointer]:
+                - /url: ./agent-structure-ko
+                - paragraph [ref=e216]: 구조
+              - link "사용법" [ref=e219] [cursor=pointer]:
+                - /url: ./agent-usage-ko
+                - paragraph [ref=e222]: 사용법
+              - link "에이전트 테스트" [ref=e225] [cursor=pointer]:
+                - /url: ./agent-test-ko
+                - paragraph [ref=e228]: 에이전트 테스트
+          - generic [ref=e231]:
+            - link "스토리지" [ref=e237] [cursor=pointer]:
+              - /url: ./storage-ko
+              - paragraph [ref=e240]: 스토리지
+            - generic [ref=e244]:
+              - link "정형 데이터" [ref=e247] [cursor=pointer]:
+                - /url: ./structured-data-ko
+                - paragraph [ref=e250]: 정형 데이터
+              - link "데이터 구조" [ref=e253] [cursor=pointer]:
+                - /url: ./data-structure-ko
+                - paragraph [ref=e256]: 데이터 구조
+              - link "벌크 런 테스트" [ref=e259] [cursor=pointer]:
+                - /url: ./bulkrun-test-ko
+                - paragraph [ref=e262]: 벌크 런 테스트
+        - generic [ref=e263]:
+          - link "핵심기능" [ref=e268] [cursor=pointer]:
+            - /url: ./key-features-ko
+            - paragraph [ref=e271]: 핵심기능
+          - generic [ref=e274]:
+            - link "크리덴셜" [ref=e280] [cursor=pointer]:
+              - /url: ./credential-ko
+              - paragraph [ref=e283]: 크리덴셜
+            - generic [ref=e287]:
+              - link "구글 크리덴셜" [ref=e290] [cursor=pointer]:
+                - /url: ./google-credential-ko
+                - paragraph [ref=e293]: 구글 크리덴셜
+              - link "슬랙 크리덴셜" [ref=e296] [cursor=pointer]:
+                - /url: ./slack-credential-ko
+                - paragraph [ref=e299]: 슬랙 크리덴셜
+          - generic [ref=e302]:
+            - link "API" [ref=e308] [cursor=pointer]:
+              - /url: ./api-ko
+              - paragraph [ref=e311]: API
+            - generic [ref=e315]:
+              - link "버전" [ref=e318] [cursor=pointer]:
+                - /url: ./api-version-ko
+                - paragraph [ref=e321]: 버전
+              - link "API 배포" [ref=e324] [cursor=pointer]:
+                - /url: ./api-release-ko
+                - paragraph [ref=e327]: API 배포
+              - link "어빌리티 API cURL" [ref=e330] [cursor=pointer]:
+                - /url: ./ability-endpoint-ko
+                - paragraph [ref=e333]: 어빌리티 API cURL
+              - link "에이전트 API cURL" [ref=e336] [cursor=pointer]:
+                - /url: ./agent-endpoint-ko
+                - paragraph [ref=e339]: 에이전트 API cURL
+              - link "API 호출 (포스트맨)" [ref=e342] [cursor=pointer]:
+                - /url: ./postman-ko
+                - paragraph [ref=e345]: API 호출 (포스트맨)
+        - link "노드정보" [ref=e352] [cursor=pointer]:
+          - /url: ./node-info-ko
+          - paragraph [ref=e355]: 노드정보
+    - generic [ref=e361]:
+      - paragraph [ref=e365]: Get Started
+      - heading "추론 행동 노드 사용하기" [level=1] [ref=e368]
+      - generic [ref=e369]:
+        - paragraph [ref=e370]:
+          - text: 응용 가이드의 튜토리얼은
+          - strong [ref=e371]: 에이전트리아(Agentria)
+          - text: 를 통해 구성할 수 있는 보다 다양한 워크플로 제작 과정을 다룹니다.
+        - paragraph [ref=e372]: 본 튜토리얼은 리액트(ReAct) 노드를 사용해 에이전트(Agent)를 구성하고 챗 테스트(Chat Test)를 진행합니다.
+        - paragraph [ref=e373]: 이를 통해 스스로 판단하고 실행하는 리액트 에이전트 워크플로(Workflow)를 만들어 볼 수 있습니다.
+        - paragraph [ref=e374]
+        - heading "리액트 노드" [level=2] [ref=e375]:
+          - link "리액트 노드" [ref=e376] [cursor=pointer]:
+            - /url: ./react-node-ko#%EB%A6%AC%EC%95%A1%ED%8A%B8-%EB%85%B8%EB%93%9C
+        - paragraph [ref=e377]
+        - paragraph [ref=e378]: 리액트 노드는 언어 모델의 추론과 행동 연구를 기반으로 구현된 노드입니다.
+        - paragraph [ref=e379]: 리액트 노드는 연결된 리액트 도구(Tools) 중에서 적절한 노드를 선택하고 스스로 판단하여 실행합니다.
+        - paragraph [ref=e380]
+        - paragraph [ref=e381]: 연구 논문은 다음 링크의 PDF를 참고하시길 바랍니다.
+        - paragraph [ref=e382]
+        - list [ref=e383]:
+          - listitem [ref=e384]:
+            - text: •
+            - paragraph [ref=e385]:
+              - text: 🔗
+              - 'link "리액트: 언어 모델에서 추론과 행동의 시너지 효과(ReAct: Synergizing Reasoning and Acting in Language Models)" [ref=e386] [cursor=pointer]':
+                - /url: https://arxiv.org/abs/2210.03629v3
+        - paragraph [ref=e387]
+        - paragraph [ref=e388]
+        - heading "사전 준비" [level=2] [ref=e389]:
+          - link "사전 준비" [ref=e390] [cursor=pointer]:
+            - /url: ./react-node-ko#%EC%82%AC%EC%A0%84-%EC%A4%80%EB%B9%84
+        - paragraph [ref=e391]
+        - paragraph [ref=e392]:
+          - text: 시작을 위해,
+          - strong [ref=e393]: 에이전트리아
+          - text: 에서 프로젝트(Project)를 생성한 후, 에이전트 캔버스(Canvas)로 진입합니다.
+        - paragraph [ref=e394]:
+          - text: 캔버스 진입 절차는 🔗
+          - link "3단계 핵심 가이드" [ref=e395] [cursor=pointer]:
+            - /url: ./3step-core-ko
+          - text: 의 1단계(프로젝트 생성 및 컴포저 선택)를 참고하시기 바랍니다.
+        - paragraph [ref=e396]
+        - paragraph [ref=e397]: 본 튜토리얼을 완료하면 다음과 같은 작업을 수행할 수 있습니다.
+        - list [ref=e398]:
+          - listitem [ref=e399]:
+            - paragraph [ref=e400]: 리액트 노드 사용하기
+          - listitem [ref=e401]:
+            - paragraph [ref=e402]: 노드 두 개 이상 연결하기
+          - listitem [ref=e403]:
+            - paragraph [ref=e404]: 리액트 도구 노드 연결하기
+          - listitem [ref=e405]:
+            - paragraph [ref=e406]: 에이전트 워크플로 구성하기
+          - listitem [ref=e407]:
+            - paragraph [ref=e408]: 챗 테스트를 통해 워크플로 실행 결과 검증하기
+        - paragraph [ref=e409]
+        - 'heading "1단계: 인풋 변수 선언" [level=2] [ref=e410]':
+          - 'link "1단계: 인풋 변수 선언" [ref=e411] [cursor=pointer]':
+            - /url: ./react-node-ko#1%EB%8B%A8%EA%B3%84-%EC%9D%B8%ED%92%8B-%EB%B3%80%EC%88%98-%EC%84%A0%EC%96%B8
+        - paragraph [ref=e412]
+        - paragraph [ref=e413]
+        - paragraph [ref=e414]:
+          - strong [ref=e415]: 에이전트리아
+          - text: 캔버스에는 기본적으로
+          - code [ref=e416]: 스타트 노드(Start Node)
+          - text: 와
+          - code [ref=e417]: 엔드 노드(End Node)
+          - text: 가 하나씩 배치되어 있습니다.
+        - paragraph [ref=e418]
+        - list [ref=e419]:
+          - listitem [ref=e420]:
+            - text: •
+            - paragraph [ref=e421]: 스타트 노드는 전체 흐름을 시작합니다.
+          - listitem [ref=e422]:
+            - text: •
+            - paragraph [ref=e423]: 엔드 노드는 전체 흐름을 종료합니다.
+        - paragraph [ref=e424]
+        - paragraph [ref=e425]: 따라서 ‘리액트 에이전트’ 워크플로를 구성하기 위해서는 먼저 스타트 노드에서 필요한 변수를 선언해야 합니다.
+        - paragraph [ref=e426]: 스타트 노드를 더블 클릭하면 노드 편집기가 팝업 형태로 열리며, 이곳에서 자료형과 이름, 설명을 설정하여 변수를 선언할 수 있습니다.
+        - paragraph [ref=e427]
+        - paragraph [ref=e428]
+        - paragraph [ref=e429]: 에이전트 스타트 노드는 챗 테스트를 위해 인풋 변수가 기본값으로 설정되어 있습니다.
+        - paragraph [ref=e430]: 임의로 필요한 변수를 추가할 수 있습니다.
+        - paragraph [ref=e431]: 본 튜토리얼에서는 추가 변수 설정 없이 기본 변수만 사용합니다.
+        - paragraph [ref=e432]: 다시 캔버스로 돌아갑니다.
+        - paragraph [ref=e433]
+        - 'heading "2단계: 드래그 앤 드롭으로 노드 추가" [level=2] [ref=e434]':
+          - 'link "2단계: 드래그 앤 드롭으로 노드 추가" [ref=e435] [cursor=pointer]':
+            - /url: ./react-node-ko#2%EB%8B%A8%EA%B3%84-%EB%93%9C%EB%9E%98%EA%B7%B8-%EC%95%A4-%EB%93%9C%EB%A1%AD%EC%9C%BC%EB%A1%9C-%EB%85%B8%EB%93%9C-%EC%B6%94%EA%B0%80
+        - paragraph [ref=e436]
+        - paragraph [ref=e437]
+        - paragraph [ref=e438]: 스스로 판단하고 실행할 노드를 추가할 차례입니다.
+        - paragraph [ref=e439]:
+          - code [ref=e440]: 리액트(ReAct)
+          - text: 노드를 사용하면 사용자의 에이전트가 사용자의 입력 정보를 기억할 수 있습니다.
+        - paragraph [ref=e441]:
+          - text: 캔버스 하단의
+          - code [ref=e442]: +노드 추가(Add Node)
+          - text: 버튼을 클릭하여, AI Agent 카테고리에서 리액트 노드를 드래그 앤 드롭(Drag and drop) 방식으로 배치합니다.
+        - paragraph [ref=e443]
+        - 'heading "3단계: 리액트 도구 노드 추가" [level=2] [ref=e444]':
+          - 'link "3단계: 리액트 도구 노드 추가" [ref=e445] [cursor=pointer]':
+            - /url: ./react-node-ko#3%EB%8B%A8%EA%B3%84-%EB%A6%AC%EC%95%A1%ED%8A%B8-%EB%8F%84%EA%B5%AC-%EB%85%B8%EB%93%9C-%EC%B6%94%EA%B0%80
+        - paragraph [ref=e446]
+        - paragraph [ref=e447]
+        - paragraph [ref=e448]: 리액트 노드는 연결한 도구 중에서 작업에 필요한 도구를 선택하고 실행합니다.
+        - paragraph [ref=e449]: 도구 노드로 사용할 노드를 추가합니다.
+        - paragraph [ref=e450]: 본 튜토리얼은 다음 세 가지 노드를 사용합니다.
+        - paragraph [ref=e451]
+        - list [ref=e452]:
+          - listitem [ref=e453]:
+            - text: •
+            - paragraph [ref=e454]: "웹 도구(Web Tools) : DuckDuckGo 웹 서치(Web Search) 노드"
+          - listitem [ref=e455]:
+            - text: •
+            - paragraph [ref=e456]: 어빌리티(Ability)
+          - listitem [ref=e457]:
+            - text: •
+            - paragraph [ref=e458]: "AI 에이전트(Agent) : 장기 기억 메모리(Long-term Memory Reader) 노드"
+        - paragraph [ref=e459]
+        - paragraph [ref=e460]:
+          - text: 어빌리티 노드는 기존에 만들어 둔 어빌리티를 🔗
+          - link "API로 배포" [ref=e461] [cursor=pointer]:
+            - /url: ./api-release-ko
+          - text: 한 후에 불러와 사용할 수 있습니다.
+        - paragraph [ref=e462]:
+          - text: 본 튜토리얼은 🔗
+          - link "AI 노드 활용하기" [ref=e463] [cursor=pointer]:
+            - /url: ./llm-node-ko
+          - text: 워크플로를 사용합니다.
+        - paragraph [ref=e464]
+        - 'heading "4단계: 엣지로 노드 연결하기" [level=2] [ref=e465]':
+          - 'link "4단계: 엣지로 노드 연결하기" [ref=e466] [cursor=pointer]':
+            - /url: ./react-node-ko#4%EB%8B%A8%EA%B3%84-%EC%97%A3%EC%A7%80%EB%A1%9C-%EB%85%B8%EB%93%9C-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0
+        - paragraph [ref=e467]
+        - heading "1) 기본 구조" [level=3] [ref=e468]:
+          - link "1) 기본 구조" [ref=e469] [cursor=pointer]:
+            - /url: ./react-node-ko#1)-%EA%B8%B0%EB%B3%B8-%EA%B5%AC%EC%A1%B0
+        - paragraph [ref=e470]
+        - paragraph [ref=e471]
+        - paragraph [ref=e472]: 스타트 노드에서 입력받은 변수들을 리액트 노드에서 사용하기 위해서는 두 노드를 연결해야 합니다.
+        - paragraph [ref=e473]: 이 연결선을 엣지(Edge)라고 부릅니다.
+        - paragraph [ref=e474]: 스타트 노드의 오른쪽에 있는 아웃 핀(Out-Pin)을 리액트 노드 왼쪽에 있는 인 핀(In-Pin)과 엣지로 연결하면, 스타트 노드의 입력값이 리액트 노드로 전달됩니다.
+        - paragraph [ref=e475]
+        - heading "2) 리액트 구조" [level=3] [ref=e476]:
+          - link "2) 리액트 구조" [ref=e477] [cursor=pointer]:
+            - /url: ./react-node-ko#2)-%EB%A6%AC%EC%95%A1%ED%8A%B8-%EA%B5%AC%EC%A1%B0
+        - paragraph [ref=e478]
+        - paragraph [ref=e479]
+        - paragraph [ref=e480]: 리액트 노드는 리액트 도구를 연결하여 어떤 도구를 사용할지 판단하고 실행합니다.
+        - paragraph [ref=e481]: 리액트 노드는 아웃 핀 아래에 툴 핀(Tool-Pin)이 있습니다.
+        - paragraph [ref=e482]: 툴 핀과 각 도구 노드의 인 핀을 연결합니다.
+        - paragraph [ref=e483]
+        - 'heading "5단계: 도구 노드 설정" [level=2] [ref=e484]':
+          - 'link "5단계: 도구 노드 설정" [ref=e485] [cursor=pointer]':
+            - /url: ./react-node-ko#5%EB%8B%A8%EA%B3%84-%EB%8F%84%EA%B5%AC-%EB%85%B8%EB%93%9C-%EC%84%A4%EC%A0%95
+        - paragraph [ref=e486]
+        - paragraph [ref=e487]: 도구 노드는 단일 노드만 가능합니다.
+        - paragraph [ref=e488]: 여러 단계의 흐름을 도구화하고 싶다면 어빌리티 형태로 만들어 노드를 단일화 해야 합니다.
+        - paragraph [ref=e489]
+        - paragraph [ref=e490]: 리액트 노드는 도구 노드의 이름과 설명을 기반으로 사용 여부를 판단합니다.
+        - paragraph [ref=e491]: 따라서 노드의 이름과 설명을 자세하고 명확하게 작성할수록 성능을 기대할 수 있습니다.
+        - paragraph [ref=e492]
+        - paragraph [ref=e493]
+        - paragraph [ref=e494]: 노드에 마우스를 올리고 편집 아이콘을 클릭하면 노드 제목과 설명을 수정할 수 있습니다.
+        - paragraph [ref=e495]: 각 노드에 적절한 이름과 설명을 추가합니다.
+        - paragraph [ref=e496]: "예시:"
+        - paragraph [ref=e497]
+        - list [ref=e498]:
+          - listitem [ref=e499]:
+            - text: •
+            - paragraph [ref=e500]: DuckDuckGo Web Search Node
+            - list [ref=e501]:
+              - listitem [ref=e502]:
+                - text: •
+                - paragraph [ref=e503]: Use this when you need to search the web.
+          - listitem [ref=e504]:
+            - text: •
+            - paragraph [ref=e505]: Today’s Fortune Ability Node
+            - list [ref=e506]:
+              - listitem [ref=e507]:
+                - text: •
+                - paragraph [ref=e508]: Use this ability when you want to generate today’s fortune. It serves as a tool for a ReAct Agent, implemented in the form of an ability node.
+          - listitem [ref=e509]:
+            - text: •
+            - paragraph [ref=e510]: Retrieve Long-term Memory
+            - list [ref=e511]:
+              - listitem [ref=e512]:
+                - text: •
+                - paragraph [ref=e513]: Retrieve the stored memory by topic to summarize previous conversations for the purpose of grounding the user's input or thoughts. If the previous conversation doesn't have the information you need, you can fill in the gaps in long-term memory. Query must be input in the same language as user input.
+        - paragraph [ref=e514]
+        - paragraph [ref=e515]
+        - 'heading "6단계: 리액트 노드 변수 바인딩" [level=2] [ref=e516]':
+          - 'link "6단계: 리액트 노드 변수 바인딩" [ref=e517] [cursor=pointer]':
+            - /url: ./react-node-ko#6%EB%8B%A8%EA%B3%84-%EB%A6%AC%EC%95%A1%ED%8A%B8-%EB%85%B8%EB%93%9C-%EB%B3%80%EC%88%98-%EB%B0%94%EC%9D%B8%EB%94%A9
+        - paragraph [ref=e518]
+        - paragraph [ref=e519]
+        - paragraph [ref=e520]:
+          - strong [ref=e521]: 에이전트리아
+          - text: 에서는 별도의 코드를 작성하지 않고, 드래그 앤 드롭으로 변수를 손쉽게 연결할 수 있습니다.
+        - paragraph [ref=e522]
+        - list [ref=e523]:
+          - listitem [ref=e524]:
+            - text: •
+            - paragraph [ref=e525]:
+              - text: "user_input:"
+              - code [ref=e526]: input_message
+          - listitem [ref=e527]:
+            - text: •
+            - paragraph [ref=e528]:
+              - text: "chat_histories:"
+              - code [ref=e529]: input_files
+        - paragraph [ref=e530]
+        - paragraph [ref=e531]
+        - 'heading "7단계: 도구 노드 변수 바인딩" [level=2] [ref=e532]':
+          - 'link "7단계: 도구 노드 변수 바인딩" [ref=e533] [cursor=pointer]':
+            - /url: ./react-node-ko#7%EB%8B%A8%EA%B3%84-%EB%8F%84%EA%B5%AC-%EB%85%B8%EB%93%9C-%EB%B3%80%EC%88%98-%EB%B0%94%EC%9D%B8%EB%94%A9
+        - paragraph [ref=e534]
+        - paragraph [ref=e535]: 각 노드의 어댑터 변수에 인풋 변수를 연결합니다.
+        - paragraph [ref=e536]
+        - heading "1) DuckDuckGo 웹 검색 노드" [level=3] [ref=e537]:
+          - link "1) DuckDuckGo 웹 검색 노드" [ref=e538] [cursor=pointer]:
+            - /url: ./react-node-ko#1)-duckduckgo-%EC%9B%B9-%EA%B2%80%EC%83%89-%EB%85%B8%EB%93%9C
+        - paragraph [ref=e539]
+        - paragraph [ref=e540]
+        - list [ref=e541]:
+          - listitem [ref=e542]:
+            - text: •
+            - paragraph [ref=e543]:
+              - text: "search_query:"
+              - code [ref=e544]: input_message
+        - paragraph [ref=e545]
+        - paragraph [ref=e546]
+        - heading "2) 어빌리티 노드 (AI 노드 활용하기)" [level=3] [ref=e547]:
+          - link "2) 어빌리티 노드 (AI 노드 활용하기)" [ref=e548] [cursor=pointer]:
+            - /url: ./react-node-ko#2)-%EC%96%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0-%EB%85%B8%EB%93%9C-(ai-%EB%85%B8%EB%93%9C-%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0)
+        - paragraph [ref=e549]
+        - paragraph [ref=e550]
+        - list [ref=e551]:
+          - listitem [ref=e552]:
+            - text: •
+            - paragraph [ref=e553]:
+              - text: "Name:"
+              - code [ref=e554]: input_message
+          - listitem [ref=e555]:
+            - text: •
+            - paragraph [ref=e556]:
+              - text: "BirthDay:"
+              - code [ref=e557]: input_message
+        - paragraph [ref=e558]
+        - paragraph [ref=e559]
+        - heading "3) 장기 기억 메모리 노드" [level=3] [ref=e560]:
+          - link "3) 장기 기억 메모리 노드" [ref=e561] [cursor=pointer]:
+            - /url: ./react-node-ko#3)-%EC%9E%A5%EA%B8%B0-%EA%B8%B0%EC%96%B5-%EB%A9%94%EB%AA%A8%EB%A6%AC-%EB%85%B8%EB%93%9C
+        - paragraph [ref=e562]
+        - paragraph [ref=e563]
+        - list [ref=e564]:
+          - listitem [ref=e565]:
+            - text: •
+            - paragraph [ref=e566]:
+              - text: "embedding_model:"
+              - code [ref=e567]: input_message
+          - listitem [ref=e568]:
+            - text: •
+            - paragraph [ref=e569]:
+              - text: "query:"
+              - code [ref=e570]: input_message
+        - paragraph [ref=e571]
+        - paragraph [ref=e572]
+        - 'heading "8단계: 엔드 노드 연결하기" [level=2] [ref=e573]':
+          - 'link "8단계: 엔드 노드 연결하기" [ref=e574] [cursor=pointer]':
+            - /url: ./react-node-ko#8%EB%8B%A8%EA%B3%84-%EC%97%94%EB%93%9C-%EB%85%B8%EB%93%9C-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0
+        - paragraph [ref=e575]
+        - paragraph [ref=e576]
+        - paragraph [ref=e577]: 이제 생성된 리액트 아웃풋을 엔드 노드로 전달합니다.
+        - paragraph [ref=e578]: 다시 캔버스로 돌아와서 리액트 노드와 엔드 노드를 엣지로 연결합니다.
+        - paragraph [ref=e579]:
+          - text: 엔드 노드를 더블클릭하여 노드 편집기를 열면 기본값으로
+          - code [ref=e580]: String
+          - text: 타입의
+          - code [ref=e581]: output_message
+          - text: 어댑터 변수를 확인할 수 있습니다.
+        - paragraph [ref=e582]:
+          - text: 여기에 리액트 노드에서 생성한
+          - code [ref=e583]: final_answer
+          - text: 변수를 선택 또는 드래그앤 드롭 방식으로 연결합니다.
+        - paragraph [ref=e584]: 이로써 ‘리액트 노드를 활용한 판단형 에이전트’ 워크플로가 완성되었습니다.
+        - paragraph [ref=e585]
+        - 'heading "9단계: 챗 테스트로 워크플로 점검하기" [level=2] [ref=e586]':
+          - 'link "9단계: 챗 테스트로 워크플로 점검하기" [ref=e587] [cursor=pointer]':
+            - /url: ./react-node-ko#9%EB%8B%A8%EA%B3%84-%EC%B1%97-%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%A1%9C-%EC%9B%8C%ED%81%AC%ED%94%8C%EB%A1%9C-%EC%A0%90%EA%B2%80%ED%95%98%EA%B8%B0
+        - paragraph [ref=e588]
+        - paragraph [ref=e589]
+        - paragraph [ref=e590]:
+          - text: 캔버스 우측 하단에서
+          - code [ref=e591]: CHAT TEST
+          - text: 버튼을 클릭하여 완성된 전체 워크플로를 실행할 수 있습니다.
+        - paragraph [ref=e592]: 에이전트 테스트는 대화 형식으로 진행됩니다.
+        - paragraph [ref=e593]: 원활한 상호작용이 이루어지는지 점검하며 노드를 수정하고 기능을 향상할 수 있습니다.
+        - paragraph [ref=e594]
+        - paragraph [ref=e595]: 오늘의 운세를 확인하기 위해 메시지를 전송합니다.
+        - paragraph [ref=e596]: "예시:"
+        - blockquote [ref=e597]:
+          - paragraph [ref=e598]: 내 이름은 홍길동이고, 내 생일은 1999년 10월 10일이야. 내 이름과 생일에 기반해서 오늘의 운세를 알려줘.
+        - blockquote [ref=e599]:
+          - paragraph [ref=e600]: 운세의 정의를 검색해줘.
+        - paragraph [ref=e601]
+        - 'heading "10단계: 대화 생성 과정 확인" [level=2] [ref=e602]':
+          - 'link "10단계: 대화 생성 과정 확인" [ref=e603] [cursor=pointer]':
+            - /url: ./react-node-ko#10%EB%8B%A8%EA%B3%84-%EB%8C%80%ED%99%94-%EC%83%9D%EC%84%B1-%EA%B3%BC%EC%A0%95-%ED%99%95%EC%9D%B8
+        - paragraph [ref=e604]
+        - paragraph [ref=e605]
+        - paragraph [ref=e606]: 에이전트 챗 테스트는 에이전트의 대화 생성 로직을 확인할 수 있습니다.
+        - paragraph [ref=e607]: 에이전트의 답변을 클릭하면 우측에 답변 생성 과정이 담긴 노드별 로직이 나옵니다.
+        - paragraph [ref=e608]: 해당 기능은 에이전트의 세부 성능 개선 작업에 활용할 수 있습니다.
+        - paragraph [ref=e609]
+        - paragraph [ref=e610]:
+          - code [ref=e611]: 리액트 노드
+          - text: ">"
+          - code [ref=e612]: 아웃풋 변수
+          - text: ">"
+          - code [ref=e613]: reasonings
+          - text: 에서 리액트 노드가 스스로 생각하고 판단하고 있음을 확인할 수 있습니다.
+        - paragraph [ref=e614]
+        - heading "1) 어빌리티 노드 사용" [level=3] [ref=e615]:
+          - link "1) 어빌리티 노드 사용" [ref=e616] [cursor=pointer]:
+            - /url: ./react-node-ko#1)-%EC%96%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0-%EB%85%B8%EB%93%9C-%EC%82%AC%EC%9A%A9
+        - paragraph [ref=e617]
+        - paragraph [ref=e618]
+        - paragraph [ref=e619]: 리액트 노드가 사용자 메시지를 오늘의 운세를 생성해달라는 요청으로 인식합니다.
+        - paragraph [ref=e620]: 추론과 행동의 과정으로 어빌리티 노드를 사용해 첫 번째 메시지에 대한 작업을 수행합니다.
+        - paragraph [ref=e621]
+        - heading "2) 웹 서치 노드 사용" [level=3] [ref=e622]:
+          - link "2) 웹 서치 노드 사용" [ref=e623] [cursor=pointer]:
+            - /url: ./react-node-ko#2)-%EC%9B%B9-%EC%84%9C%EC%B9%98-%EB%85%B8%EB%93%9C-%EC%82%AC%EC%9A%A9
+        - paragraph [ref=e624]
+        - paragraph [ref=e625]
+        - paragraph [ref=e626]: 리액트 노드가 사용자 메시지를 운세의 정의를 검색해달라는 요청으로 인식합니다.
+        - paragraph [ref=e627]: 추론과 행동의 과정으로 웹 서치 노드를 사용해 두 번째 메시지에 대한 작업을 수행합니다.
+        - paragraph [ref=e628]
+        - heading "다음 단계" [level=2] [ref=e629]:
+          - link "다음 단계" [ref=e630] [cursor=pointer]:
+            - /url: ./react-node-ko#%EB%8B%A4%EC%9D%8C-%EB%8B%A8%EA%B3%84
+        - paragraph [ref=e631]
+        - paragraph [ref=e632]
+        - paragraph [ref=e633]:
+          - text: 🎉 축하합니다!
+          - strong [ref=e634]: 에이전트리아
+          - text: 를 사용해
+          - strong [ref=e635]
+          - text: ‘리액트 에이전트’를 완성했습니다.
+        - paragraph [ref=e636]: 이제 챗 테스트에서 다양한 메시지를 입력해 결과를 확인해보고, 노드를 수정하며 워크플로의 성능을 개선해 보세요.
+        - paragraph [ref=e637]
+        - paragraph [ref=e638]:
+          - strong [ref=e639]: 에이전트리아
+          - text: 는 아이디어를 현실로 바꾸는 가능성의 공간입니다.
+        - paragraph [ref=e640]: 당신의 상상력으로 워크플로는 무한히 확장될 수 있습니다.
+        - paragraph [ref=e641]
+        - paragraph [ref=e642]
+        - list [ref=e643]:
+          - listitem [ref=e644]:
+            - text: •
+            - paragraph [ref=e645]:
+              - text: 더 많은 어빌리티 예제가 궁금하다면 🔗
+              - link "어빌리티 가이드" [ref=e646] [cursor=pointer]:
+                - /url: ./ability-guide-ko
+              - text: 페이지를 확인하세요.
+          - listitem [ref=e647]:
+            - text: •
+            - paragraph [ref=e648]:
+              - text: 에이전트 예제를 원한다면 🔗
+              - link "에이전트 가이드" [ref=e649] [cursor=pointer]:
+                - /url: ./agent-guide-ko
+              - text: 페이지를 확인하세요.
+        - paragraph [ref=e650]
+        - paragraph [ref=e651]
+  - navigation [ref=e655]:
+    - link "Agentria home" [ref=e657] [cursor=pointer]:
+      - /url: ../ko
+      - img "Agentria home" [ref=e659]
+    - generic [ref=e661]:
+      - generic [ref=e662]:
+        - link "Features" [ref=e664] [cursor=pointer]:
+          - /url: ../ko#topfeatures
+          - paragraph [ref=e666]: Features
+        - link "Pricing" [ref=e668] [cursor=pointer]:
+          - /url: ../ko#pricing
+          - paragraph [ref=e670]: Pricing
+        - link "Docs" [ref=e672] [cursor=pointer]:
+          - /url: ./about-agentria-ko
+          - paragraph [ref=e674]: Docs
+      - link "EN · KO" [ref=e676] [cursor=pointer]:
+        - /url: ./react-node
+        - paragraph [ref=e678]: EN · KO
+      - link "Try Now" [ref=e680] [cursor=pointer]:
+        - /url: https://app.agentria.ai
+        - paragraph [ref=e682]: Try Now

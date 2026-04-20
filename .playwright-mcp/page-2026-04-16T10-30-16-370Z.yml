@@ -1,0 +1,516 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "Welcome to Agentria" [ref=e12] [cursor=pointer]:
+        - /url: ./about-agentria-ko
+        - paragraph [ref=e15]: Welcome to Agentria
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - link "시작하기" [ref=e22] [cursor=pointer]:
+            - /url: ./get-started-ko
+            - paragraph [ref=e25]: 시작하기
+          - link "3단계 핵심 가이드" [ref=e32] [cursor=pointer]:
+            - /url: ./3step-core-ko
+            - paragraph [ref=e35]: 3단계 핵심 가이드
+          - generic [ref=e38]:
+            - link "어빌리티 가이드" [ref=e45] [cursor=pointer]:
+              - /url: ./ability-guide-ko
+              - paragraph [ref=e48]: 어빌리티 가이드
+            - generic [ref=e52]:
+              - link "[어빌리티] AI 노드 (LLM)" [ref=e55] [cursor=pointer]:
+                - /url: ./llm-node-ko
+                - paragraph [ref=e58]: "[어빌리티] AI 노드 (LLM)"
+              - link "[어빌리티] 코드 노드 (Python)" [ref=e61] [cursor=pointer]:
+                - /url: ./python-node-ko
+                - paragraph [ref=e64]: "[어빌리티] 코드 노드 (Python)"
+              - link "[어빌리티] 도구 노드 (Gmail)" [ref=e67] [cursor=pointer]:
+                - /url: ./gmail-node-ko
+                - paragraph [ref=e70]: "[어빌리티] 도구 노드 (Gmail)"
+              - link "[어빌리티] 도구 노드 (Slack)" [ref=e73] [cursor=pointer]:
+                - /url: ./slack-node-ko
+                - paragraph [ref=e76]: "[어빌리티] 도구 노드 (Slack)"
+              - link "[어빌리티] 흐름 제어 노드 (Branch)" [ref=e79] [cursor=pointer]:
+                - /url: ./branch-node-ko
+                - paragraph [ref=e82]: "[어빌리티] 흐름 제어 노드 (Branch)"
+          - generic [ref=e85]:
+            - link "에이전트 가이드" [ref=e92] [cursor=pointer]:
+              - /url: ./agent-guide-ko
+              - paragraph [ref=e95]: 에이전트 가이드
+            - generic [ref=e99]:
+              - link "[에이전트] 단기 기억 조회" [ref=e102] [cursor=pointer]:
+                - /url: ./shortterm-node-ko
+                - paragraph [ref=e105]: "[에이전트] 단기 기억 조회"
+              - link "[에이전트] 추론 행동 (ReAct)" [ref=e108] [cursor=pointer]:
+                - /url: ./react-node-ko
+                - paragraph [ref=e111]: "[에이전트] 추론 행동 (ReAct)"
+        - generic [ref=e112]:
+          - link "핵심개념" [ref=e117] [cursor=pointer]:
+            - /url: ./key-concepts-ko
+            - paragraph [ref=e120]: 핵심개념
+          - generic [ref=e123]:
+            - link "노드" [ref=e129] [cursor=pointer]:
+              - /url: ./node-ko
+              - paragraph [ref=e132]: 노드
+            - generic [ref=e136]:
+              - link "유형" [ref=e139] [cursor=pointer]:
+                - /url: ./node-type-ko
+                - paragraph [ref=e142]: 유형
+              - link "구조" [ref=e145] [cursor=pointer]:
+                - /url: ./node-structure-ko
+                - paragraph [ref=e148]: 구조
+              - link "사용법" [ref=e151] [cursor=pointer]:
+                - /url: ./node-usage-ko
+                - paragraph [ref=e154]: 사용법
+              - link "노드 테스트" [ref=e157] [cursor=pointer]:
+                - /url: ./node-test-ko
+                - paragraph [ref=e160]: 노드 테스트
+          - generic [ref=e163]:
+            - link "어빌리티" [ref=e169] [cursor=pointer]:
+              - /url: ./ability-ko
+              - paragraph [ref=e172]: 어빌리티
+            - generic [ref=e176]:
+              - link "구조" [ref=e179] [cursor=pointer]:
+                - /url: ./ability-structure-ko
+                - paragraph [ref=e182]: 구조
+              - link "사용법" [ref=e185] [cursor=pointer]:
+                - /url: ./ability-usage-ko
+                - paragraph [ref=e188]: 사용법
+              - link "어빌리티 테스트" [ref=e191] [cursor=pointer]:
+                - /url: ./ability-test-ko
+                - paragraph [ref=e194]: 어빌리티 테스트
+          - generic [ref=e197]:
+            - link "에이전트" [ref=e203] [cursor=pointer]:
+              - /url: ./agent-ko
+              - paragraph [ref=e206]: 에이전트
+            - generic [ref=e210]:
+              - link "구조" [ref=e213] [cursor=pointer]:
+                - /url: ./agent-structure-ko
+                - paragraph [ref=e216]: 구조
+              - link "사용법" [ref=e219] [cursor=pointer]:
+                - /url: ./agent-usage-ko
+                - paragraph [ref=e222]: 사용법
+              - link "에이전트 테스트" [ref=e225] [cursor=pointer]:
+                - /url: ./agent-test-ko
+                - paragraph [ref=e228]: 에이전트 테스트
+          - generic [ref=e231]:
+            - link "스토리지" [ref=e237] [cursor=pointer]:
+              - /url: ./storage-ko
+              - paragraph [ref=e240]: 스토리지
+            - generic [ref=e244]:
+              - link "정형 데이터" [ref=e247] [cursor=pointer]:
+                - /url: ./structured-data-ko
+                - paragraph [ref=e250]: 정형 데이터
+              - link "데이터 구조" [ref=e253] [cursor=pointer]:
+                - /url: ./data-structure-ko
+                - paragraph [ref=e256]: 데이터 구조
+              - link "벌크 런 테스트" [ref=e259] [cursor=pointer]:
+                - /url: ./bulkrun-test-ko
+                - paragraph [ref=e262]: 벌크 런 테스트
+        - generic [ref=e263]:
+          - link "핵심기능" [ref=e268] [cursor=pointer]:
+            - /url: ./key-features-ko
+            - paragraph [ref=e271]: 핵심기능
+          - generic [ref=e274]:
+            - link "크리덴셜" [ref=e280] [cursor=pointer]:
+              - /url: ./credential-ko
+              - paragraph [ref=e283]: 크리덴셜
+            - generic [ref=e287]:
+              - link "구글 크리덴셜" [ref=e290] [cursor=pointer]:
+                - /url: ./google-credential-ko
+                - paragraph [ref=e293]: 구글 크리덴셜
+              - link "슬랙 크리덴셜" [ref=e296] [cursor=pointer]:
+                - /url: ./slack-credential-ko
+                - paragraph [ref=e299]: 슬랙 크리덴셜
+          - generic [ref=e302]:
+            - link "API" [ref=e308] [cursor=pointer]:
+              - /url: ./api-ko
+              - paragraph [ref=e311]: API
+            - generic [ref=e315]:
+              - link "버전" [ref=e318] [cursor=pointer]:
+                - /url: ./api-version-ko
+                - paragraph [ref=e321]: 버전
+              - link "API 배포" [ref=e324] [cursor=pointer]:
+                - /url: ./api-release-ko
+                - paragraph [ref=e327]: API 배포
+              - link "어빌리티 API cURL" [ref=e330] [cursor=pointer]:
+                - /url: ./ability-endpoint-ko
+                - paragraph [ref=e333]: 어빌리티 API cURL
+              - link "에이전트 API cURL" [ref=e336] [cursor=pointer]:
+                - /url: ./agent-endpoint-ko
+                - paragraph [ref=e339]: 에이전트 API cURL
+              - link "API 호출 (포스트맨)" [ref=e342] [cursor=pointer]:
+                - /url: ./postman-ko
+                - paragraph [ref=e345]: API 호출 (포스트맨)
+        - link "노드정보" [ref=e352] [cursor=pointer]:
+          - /url: ./node-info-ko
+          - paragraph [ref=e355]: 노드정보
+    - generic [ref=e361]:
+      - paragraph [ref=e365]: Get Started
+      - heading "도구 노드 사용하기 (Slack)" [level=1] [ref=e368]
+      - generic [ref=e369]:
+        - paragraph [ref=e370]:
+          - text: 입문 가이드의 튜토리얼은
+          - strong [ref=e371]: 에이전트리아
+          - text: 입문자를 위한 가장 기본적이면서도 핵심적인 과정을 다룹니다.
+        - paragraph [ref=e372]: 본 튜토리얼에서는 슬랙(Slack) 노드를 활성화하고, 슬랙 워크스페이스와 연동된 봇(Bot)을 추가하여 메시지를 전송하는 어빌리티(Ability)를 직접 만들고 실행합니다.
+        - paragraph [ref=e373]
+        - heading "사전 준비" [level=2] [ref=e374]:
+          - link "사전 준비" [ref=e375] [cursor=pointer]:
+            - /url: ./slack-node-ko#%EC%82%AC%EC%A0%84-%EC%A4%80%EB%B9%84
+        - paragraph [ref=e376]
+        - paragraph [ref=e377]:
+          - text: 시작을 위해,
+          - strong [ref=e378]: 에이전트리아
+          - text: 에서 프로젝트(Project)를 생성한 후, 어빌리티 캔버스(Canvas)로 진입합니다.
+        - paragraph [ref=e379]:
+          - text: 캔버스 진입 절차는 🔗
+          - link "3단계 핵심 가이드" [ref=e380] [cursor=pointer]:
+            - /url: ./3step-core-ko
+          - text: 의 1단계(프로젝트 생성 및 컴포저 선택)를 참고하시기 바랍니다.
+        - paragraph [ref=e381]
+        - paragraph [ref=e382]: 본 튜토리얼을 완료하면 다음과 같은 작업을 수행할 수 있습니다.
+        - list [ref=e383]:
+          - listitem [ref=e384]:
+            - paragraph [ref=e385]: 노드(Node) 추가하기
+          - listitem [ref=e386]:
+            - paragraph [ref=e387]: 스타트 노드(Start Node)에서 변수 선언하기
+          - listitem [ref=e388]:
+            - paragraph [ref=e389]: 노드 연결하기
+          - listitem [ref=e390]:
+            - paragraph [ref=e391]: 슬랙 크리덴셜(Credential) 등록하기
+          - listitem [ref=e392]:
+            - paragraph [ref=e393]: 슬랙 앱 추가하고 워크스페이스 연동하기
+          - listitem [ref=e394]:
+            - paragraph [ref=e395]: 슬랙 노드에서 크리덴셜 설정하기
+          - listitem [ref=e396]:
+            - paragraph [ref=e397]: 슬랙 노드로 봇 메시지 세팅하기
+          - listitem [ref=e398]:
+            - paragraph [ref=e399]: 어빌리티 테스트를 통해 워크플로(Workflow) 실행 결과 확인하기
+        - paragraph [ref=e400]
+        - 'heading "1단계: 슬랙 OAuth와 크리덴셜 생성" [level=2] [ref=e401]':
+          - 'link "1단계: 슬랙 OAuth와 크리덴셜 생성" [ref=e402] [cursor=pointer]':
+            - /url: ./slack-node-ko#1%EB%8B%A8%EA%B3%84-%EC%8A%AC%EB%9E%99-oauth%EC%99%80-%ED%81%AC%EB%A6%AC%EB%8D%B4%EC%85%9C-%EC%83%9D%EC%84%B1
+        - paragraph [ref=e403]
+        - paragraph [ref=e404]: 슬랙 노드를 사용하기 위해서는 슬랙에서 제공하는 인증키를 기반으로 자격증명을 설정해야 합니다.
+        - paragraph [ref=e405]: 슬랙의 액세스 토큰은 OAuth(오픈인증, Open Authorization) 플로우를 거쳐야 발급할 수 있습니다.
+        - paragraph [ref=e406]:
+          - text: 슬랙 OAuth 생성이 처음이라면 🔗
+          - link "슬랙 크리덴셜" [ref=e407] [cursor=pointer]:
+            - /url: ./slack-credential-ko
+          - text: 사용 가이드를 참고하세요.
+        - paragraph [ref=e408]
+        - paragraph [ref=e409]
+        - paragraph [ref=e410]: 크리덴셜은 시스템이나 서비스에 접근하기 위해 사용자를 인증하는 데 필요한 자격 증명 정보입니다.
+        - paragraph [ref=e411]:
+          - text: 본 튜토리얼 진행을 위해 크리덴셜 등록 시 템플릿을
+          - code [ref=e412]: Slack
+          - text: 으로 설정합니다.
+        - paragraph [ref=e413]
+        - 'heading "2단계: Slack 노드 추가" [level=2] [ref=e414]':
+          - 'link "2단계: Slack 노드 추가" [ref=e415] [cursor=pointer]':
+            - /url: ./slack-node-ko#2%EB%8B%A8%EA%B3%84-slack-%EB%85%B8%EB%93%9C-%EC%B6%94%EA%B0%80
+        - paragraph [ref=e416]
+        - paragraph [ref=e417]
+        - paragraph [ref=e418]:
+          - text: 캔버스 하단의
+          - code [ref=e419]: +노드 추가(Add Node)
+          - text: 버튼을 클릭하고 사이드바 도구(Tools) 카테고리에서 슬랙 노드를 선택해 드래그 앤 드롭(Drag and drop)으로 배치합니다.
+        - paragraph [ref=e420]: 노드 위에 마우스를 올려 편집 버튼을 눌러 옵션 창을 띄웁니다.
+        - paragraph [ref=e421]:
+          - text: 노드의 이름을
+          - code [ref=e422]: Send Slack Node
+          - text: 로 수정합니다.
+        - paragraph [ref=e423]: 슬랙 노드는 Send, Update, Delete, List 등을 선택할 수 있기 때문에 운영 설정에 따라 노드 명을 수정해서 사용하는 것이 좋습니다.
+        - paragraph [ref=e424]
+        - 'heading "3단계: 인풋 변수 선언" [level=2] [ref=e425]':
+          - 'link "3단계: 인풋 변수 선언" [ref=e426] [cursor=pointer]':
+            - /url: ./slack-node-ko#3%EB%8B%A8%EA%B3%84-%EC%9D%B8%ED%92%8B-%EB%B3%80%EC%88%98-%EC%84%A0%EC%96%B8
+        - paragraph [ref=e427]
+        - paragraph [ref=e428]
+        - paragraph [ref=e429]:
+          - strong [ref=e430]: 에이전트리아
+          - text: 캔버스에는 기본적으로
+          - code [ref=e431]: 스타트 노드(Start Node)
+          - text: 와
+          - code [ref=e432]: 엔드 노드(End Node)
+          - text: 가 하나씩 배치되어 있습니다.
+        - paragraph [ref=e433]
+        - list [ref=e434]:
+          - listitem [ref=e435]:
+            - text: •
+            - paragraph [ref=e436]: 스타트 노드는 전체 흐름을 시작합니다.
+          - listitem [ref=e437]:
+            - text: •
+            - paragraph [ref=e438]: 엔드 노드는 전체 흐름을 종료합니다.
+        - paragraph [ref=e439]
+        - paragraph [ref=e440]: 스타트 노드를 더블클릭하면 노드 편집기가 열리며, 여기에서 자료형과 이름, 설명을 설정할 수 있습니다.
+        - paragraph [ref=e441]:
+          - text: 본 튜토리얼에서는 봇 메시지를 전송해야 하므로, 자료형을
+          - code [ref=e442]: String
+          - text: 으로 두고 변수명을 다음과 같이 설정합니다.
+        - paragraph [ref=e443]
+        - list [ref=e444]:
+          - listitem [ref=e445]:
+            - text: •
+            - paragraph [ref=e446]:
+              - code [ref=e447]: Channel
+          - listitem [ref=e448]:
+            - text: •
+            - paragraph [ref=e449]:
+              - code [ref=e450]: Text
+        - paragraph [ref=e451]
+        - paragraph [ref=e452]: 변수 선언을 완료했다면 다시 에디터 캔버스로 돌아갑니다.
+        - paragraph [ref=e453]
+        - 'heading "4단계: 엣지로 노드 연결" [level=2] [ref=e454]':
+          - 'link "4단계: 엣지로 노드 연결" [ref=e455] [cursor=pointer]':
+            - /url: ./slack-node-ko#4%EB%8B%A8%EA%B3%84-%EC%97%A3%EC%A7%80%EB%A1%9C-%EB%85%B8%EB%93%9C-%EC%97%B0%EA%B2%B0
+        - paragraph [ref=e456]
+        - paragraph [ref=e457]
+        - paragraph [ref=e458]: 스타트 노드에서 입력받은 변수를 슬랙 노드에서 사용하기 위해서는 엣지를 사용해 두 노드를 연결해야 합니다.
+        - paragraph [ref=e459]: 스타트 노드의 오른쪽 아웃 핀(Out-Pin)을 슬랙 노드의 왼쪽 인 핀(In-Pin)과 연결합니다.
+        - paragraph [ref=e460]: 이렇게 하면 스타트 노드의 입력값이 슬랙 노드로 전달됩니다.
+        - paragraph [ref=e461]
+        - 'heading "5단계: 슬랙 노드 설정" [level=2] [ref=e462]':
+          - 'link "5단계: 슬랙 노드 설정" [ref=e463] [cursor=pointer]':
+            - /url: ./slack-node-ko#5%EB%8B%A8%EA%B3%84-%EC%8A%AC%EB%9E%99-%EB%85%B8%EB%93%9C-%EC%84%A4%EC%A0%95
+        - paragraph [ref=e464]
+        - paragraph [ref=e465]
+        - paragraph [ref=e466]: 슬랙 노드를 더블클릭하면 노드 편집기가 열립니다.
+        - paragraph [ref=e467]: 노드를 사용하기 위해 등록해 둔 슬랙 크리덴셜을 선택해 불러옵니다.
+        - paragraph [ref=e468]: 슬랙 노드는 작업(Task) 설정을 통해 봇을 어떤 방식으로 사용할지 선택할 수 있습니다.
+        - paragraph [ref=e469]:
+          - text: 본 튜토리얼은 봇 메시지 전송하기를 목표로 하므로,
+          - code [ref=e470]: Send Message
+          - text: 를 선택합니다.
+        - paragraph [ref=e471]
+        - paragraph [ref=e472]:
+          - text: 봇 메시지를 전송하기 위해 스타트 노드에서 채널 명(
+          - code [ref=e473]: Channel
+          - text: ), 메시지 내용(
+          - code [ref=e474]: Text
+          - text: )을 변수로 선언했습니다.
+        - paragraph [ref=e475]: 입력값을 받아서 사용하기 위해 어댑터(Adapter) 변수를 선택해야 합니다.
+        - paragraph [ref=e476]:
+          - code [ref=e477]: Show Optional Variables
+          - text: 버튼을 클릭하고
+          - code [ref=e478]: +Add Optional Variables
+          - text: 를 클릭하면 슬랙에서 사용할 수 있는 다양한 옵션을 확인할 수 있습니다.
+        - paragraph [ref=e479]: 본 튜토리얼에서 선택할 변수는 다음과 같습니다.
+        - paragraph [ref=e480]
+        - list [ref=e481]:
+          - listitem [ref=e482]:
+            - text: •
+            - paragraph [ref=e483]:
+              - code [ref=e484]: channel
+          - listitem [ref=e485]:
+            - text: •
+            - paragraph [ref=e486]:
+              - code [ref=e487]: text
+        - paragraph [ref=e488]
+        - paragraph [ref=e489]
+        - 'heading "6단계: 드래그 앤 드롭으로 변수 바인딩" [level=2] [ref=e490]':
+          - 'link "6단계: 드래그 앤 드롭으로 변수 바인딩" [ref=e491] [cursor=pointer]':
+            - /url: ./slack-node-ko#6%EB%8B%A8%EA%B3%84-%EB%93%9C%EB%9E%98%EA%B7%B8-%EC%95%A4-%EB%93%9C%EB%A1%AD%EC%9C%BC%EB%A1%9C-%EB%B3%80%EC%88%98-%EB%B0%94%EC%9D%B8%EB%94%A9
+        - paragraph [ref=e492]
+        - paragraph [ref=e493]
+        - paragraph [ref=e494]:
+          - strong [ref=e495]: 에이전트리아
+          - text: 에서는 코드를 작성하지 않고, 드래그 앤 드롭 방식으로 변수를 손쉽게 불러올 수 있습니다.
+        - paragraph [ref=e496]: 인풋 영역에 있는 변수와 어댑터 변수를 이름에 맞게 연결합니다.
+        - paragraph [ref=e497]
+        - list [ref=e498]:
+          - listitem [ref=e499]:
+            - text: •
+            - paragraph [ref=e500]:
+              - text: "channel:"
+              - code [ref=e501]: Channel
+          - listitem [ref=e502]:
+            - text: •
+            - paragraph [ref=e503]:
+              - text: "text:"
+              - code [ref=e504]: Text
+        - paragraph [ref=e505]
+        - paragraph [ref=e506]
+        - paragraph [ref=e507]: Slack 노드는 기본적으로 JSON 형식의 아웃풋을 반환합니다.
+        - paragraph [ref=e508]
+        - 'heading "7단계: Slack 프로그램 설정" [level=2] [ref=e509]':
+          - 'link "7단계: Slack 프로그램 설정" [ref=e510] [cursor=pointer]':
+            - /url: ./slack-node-ko#7%EB%8B%A8%EA%B3%84-slack-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8-%EC%84%A4%EC%A0%95
+        - paragraph [ref=e511]
+        - heading "7-1 ) 채널 ID 복사" [level=3] [ref=e512]:
+          - link "7-1 ) 채널 ID 복사" [ref=e513] [cursor=pointer]:
+            - /url: ./slack-node-ko#7-1-)-%EC%B1%84%EB%84%90-id-%EB%B3%B5%EC%82%AC
+        - paragraph [ref=e514]
+        - paragraph [ref=e515]
+        - paragraph [ref=e516]: 본 튜토리얼은 슬랙 데스크탑(PC) 버전 기준으로 진행합니다.
+        - paragraph [ref=e517]: 슬랙 어플리케이션에서 봇을 사용할 채널이나 다이렉트 메시지 창에 진입합니다.
+        - paragraph [ref=e518]:
+          - text: 메시지 창에서 우측 상단의
+          - code [ref=e519]: 더보기
+          - text: 아이콘을 클릭합니다.
+        - paragraph [ref=e520]:
+          - code [ref=e521]: 채널 세부정보 열기(Open channel details)
+          - text: 를 클릭합니다.
+        - paragraph [ref=e522]
+        - paragraph [ref=e523]
+        - paragraph [ref=e524]:
+          - text: 팝업창이 열리면
+          - code [ref=e525]: 채널 ID(Channel ID)
+          - text: 를 복사합니다.
+        - paragraph [ref=e526]:
+          - text: 복사한 값은
+          - strong [ref=e527]: 8단계
+          - text: 에서 사용합니다.
+        - paragraph [ref=e528]
+        - heading "7-2 ) 봇 초대" [level=3] [ref=e529]:
+          - link "7-2 ) 봇 초대" [ref=e530] [cursor=pointer]:
+            - /url: ./slack-node-ko#7-2-)-%EB%B4%87-%EC%B4%88%EB%8C%80
+        - paragraph [ref=e531]
+        - paragraph [ref=e532]
+        - paragraph [ref=e533]:
+          - link "슬랙 크리덴셜" [ref=e534] [cursor=pointer]:
+            - /url: ./slack-credential-ko
+          - text: 가이드를 따라 진행하면 메시지를 보내는 슬랙 봇을 설정할 수 있습니다.
+        - paragraph [ref=e535]: 이때 설정한 봇의 이름을 통해 채널 또는 다이렉트 메시지 창에서 봇을 초대합니다.
+        - paragraph [ref=e536]
+        - paragraph [ref=e537]:
+          - text: 봇의 이름은
+          - link "슬랙 API 사이트" [ref=e538] [cursor=pointer]:
+            - /url: https://api.slack.com/apps/
+          - text: 에서 앱 홈(App Home) 탭에 진입하면 확인할 수 있습니다.
+        - paragraph [ref=e539]
+        - paragraph [ref=e540]
+        - paragraph [ref=e541]:
+          - text: 메시지 입력창에 봇의 이름을
+          - code [ref=e542]: "@이름"
+          - text: 형식으로 검색하고 엔터(Enter)키를 누른 뒤 메시지를 전송하여 초대합니다.
+        - paragraph [ref=e543]:
+          - text: 팝업창에서
+          - code [ref=e544]: 채널에 추가(Add to Channel)
+          - text: 버튼을 클릭합니다.
+        - paragraph [ref=e545]
+        - paragraph [ref=e546]:
+          - text: 만약 해당 과정이 원활하게 진행되지 않는다면 슬랙 API 사이트 앱 홈(App Home) 탭에서
+          - code [ref=e547]: 내 봇 항상 온라인 상태 표시(Always Show My Bot as Online)
+          - text: 토글을 활성화한 후 초대를 다시 진행합니다.
+        - paragraph [ref=e548]
+        - 'heading "8단계: 노드 테스트 실행" [level=2] [ref=e549]':
+          - 'link "8단계: 노드 테스트 실행" [ref=e550] [cursor=pointer]':
+            - /url: ./slack-node-ko#8%EB%8B%A8%EA%B3%84-%EB%85%B8%EB%93%9C-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8B%A4%ED%96%89
+        - paragraph [ref=e551]
+        - paragraph [ref=e552]:
+          - text: 설정을 완료한 후, 편집기 내 인풋 영역의
+          - code [ref=e553]: 테스트(TEST)
+          - text: 버튼을 눌러 노드 테스트를 진행할 수 있습니다.
+        - paragraph [ref=e554]: 노드 테스트란 노드 편집기에서 개별적으로 진행할 수 있는 점검 작업입니다.
+        - paragraph [ref=e555]: 이를 통해 노드가 올바르게 구성되어 있음을 확인하고 다른 노드와 연결하면 오류를 최소화하고 흐름을 안정적으로 이어 나갈 수 있습니다.
+        - paragraph [ref=e556]:
+          - text: 입력창에 채널(channel), 텍스트(text)를 입력한 뒤
+          - code [ref=e557]: 테스트(Test)
+          - text: 를 실행하면, 출력변수인
+          - code [ref=e558]: result
+          - text: 에 전송 정보가 반영됩니다.
+        - paragraph [ref=e559]
+        - list [ref=e560]:
+          - listitem [ref=e561]:
+            - text: •
+            - paragraph [ref=e562]:
+              - text: 채널 입력창에
+              - strong [ref=e563]: 7-1단계
+              - text: 에서 복사한 채널 ID를 입력합니다.
+          - listitem [ref=e564]:
+            - text: •
+            - paragraph [ref=e565]: 텍스트 입력창에는 봇으로 보낼 메시지 내용을 입력합니다.
+        - paragraph [ref=e566]
+        - paragraph [ref=e567]
+        - paragraph [ref=e568]
+        - paragraph [ref=e569]: 봇을 초대해 둔 채널 또는 다이렉트 메시지로 봇이 메시지를 보냈다면 노드가 정상적으로 구성된 것입니다.
+        - paragraph [ref=e570]
+        - 'heading "9단계: 엔드 노드 연결" [level=2] [ref=e571]':
+          - 'link "9단계: 엔드 노드 연결" [ref=e572] [cursor=pointer]':
+            - /url: ./slack-node-ko#9%EB%8B%A8%EA%B3%84-%EC%97%94%EB%93%9C-%EB%85%B8%EB%93%9C-%EC%97%B0%EA%B2%B0
+        - paragraph [ref=e573]
+        - paragraph [ref=e574]
+        - paragraph [ref=e575]: 슬랙 메시지 전송 아웃풋을 엔드 노드로 전달합니다.
+        - paragraph [ref=e576]: 다시 캔버스로 돌아와서 슬랙 노드와 엔드 노드를 엣지로 연결합니다.
+        - paragraph [ref=e577]:
+          - text: 엔드 노드를 더블클릭하여 노드 편집기를 열고, JSON 타입의
+          - code [ref=e578]: Result
+          - text: 변수를 추가합니다.
+        - paragraph [ref=e579]:
+          - text: 슬랙 노드의 아웃풋을 담은
+          - code [ref=e580]: result
+          - text: 변수를 선택 또는 드래그 앤 드롭 방식으로 엔드 노드의
+          - code [ref=e581]: Result
+          - text: 변수와 연결합니다.
+        - paragraph [ref=e582]: 이로써 ‘슬랙 메시지 전송’ 워크플로가 완성되었습니다.
+        - paragraph [ref=e583]
+        - 'heading "10단계: 어빌리티 테스트로 워크플로 전체 실행" [level=2] [ref=e584]':
+          - 'link "10단계: 어빌리티 테스트로 워크플로 전체 실행" [ref=e585] [cursor=pointer]':
+            - /url: ./slack-node-ko#10%EB%8B%A8%EA%B3%84-%EC%96%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0-%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%A1%9C-%EC%9B%8C%ED%81%AC%ED%94%8C%EB%A1%9C-%EC%A0%84%EC%B2%B4-%EC%8B%A4%ED%96%89
+        - paragraph [ref=e586]
+        - paragraph [ref=e587]:
+          - text: 캔버스 우측 하단에서
+          - code [ref=e588]: 테스트 실행(RUN TEST)
+          - text: 버튼을 클릭하여 완성된 전체 워크플로를 실행할 수 있습니다.
+        - paragraph [ref=e589]:
+          - text: 입력창에 채널(channel), 텍스트(text)를 입력한 뒤
+          - code [ref=e590]: 테스트(Test)
+          - text: 를 실행하면, 출력변수인
+          - code [ref=e591]: result
+          - text: 에 전송 정보가 반영됩니다.
+        - paragraph [ref=e592]: 봇을 초대해 둔 채널 또는 다이렉트 메시지로 봇이 메시지를 보냈다면 노드가 정상적으로 구성된 것입니다.
+        - paragraph [ref=e593]
+        - heading "다음 단계" [level=2] [ref=e594]:
+          - link "다음 단계" [ref=e595] [cursor=pointer]:
+            - /url: ./slack-node-ko#%EB%8B%A4%EC%9D%8C-%EB%8B%A8%EA%B3%84
+        - paragraph [ref=e596]
+        - paragraph [ref=e597]:
+          - text: 🎉 축하합니다!
+          - strong [ref=e598]: 에이전트리아
+          - text: 를 사용해 ‘슬랙 메시지 전송’ 워크플로를 완성했습니다.
+        - paragraph [ref=e599]: 이제 다양한 운영 설정을 적용해 결과를 확인해 보고, 변수를 추가하며 워크플로를 확장해 보세요.
+        - paragraph [ref=e600]
+        - paragraph [ref=e601]:
+          - strong [ref=e602]: 에이전트리아
+          - text: 는 아이디어를 현실로 바꾸는 가능성의 공간입니다.
+        - paragraph [ref=e603]: 당신의 상상력으로 워크플로는 무한히 확장될 수 있습니다.
+        - paragraph [ref=e604]
+        - paragraph [ref=e605]
+        - list [ref=e606]:
+          - listitem [ref=e607]:
+            - text: •
+            - paragraph [ref=e608]:
+              - text: 더 많은 어빌리티 예제가 궁금하다면 🔗
+              - link "어빌리티 가이드" [ref=e609] [cursor=pointer]:
+                - /url: ./ability-guide-ko
+              - text: 페이지를 확인하세요.
+          - listitem [ref=e610]:
+            - text: •
+            - paragraph [ref=e611]:
+              - text: 에이전트 예제를 원한다면 🔗
+              - link "에이전트 가이드" [ref=e612] [cursor=pointer]:
+                - /url: ./agent-guide-ko
+              - text: 페이지를 확인하세요.
+        - paragraph [ref=e613]
+  - navigation [ref=e617]:
+    - link "Agentria home" [ref=e619] [cursor=pointer]:
+      - /url: ../ko
+      - img "Agentria home" [ref=e621]
+    - generic [ref=e623]:
+      - generic [ref=e624]:
+        - link "Features" [ref=e626] [cursor=pointer]:
+          - /url: ../ko#topfeatures
+          - paragraph [ref=e628]: Features
+        - link "Pricing" [ref=e630] [cursor=pointer]:
+          - /url: ../ko#pricing
+          - paragraph [ref=e632]: Pricing
+        - link "Docs" [ref=e634] [cursor=pointer]:
+          - /url: ./about-agentria-ko
+          - paragraph [ref=e636]: Docs
+      - link "EN · KO" [ref=e638] [cursor=pointer]:
+        - /url: ./slack-node
+        - paragraph [ref=e640]: EN · KO
+      - link "Try Now" [ref=e642] [cursor=pointer]:
+        - /url: https://app.agentria.ai
+        - paragraph [ref=e644]: Try Now

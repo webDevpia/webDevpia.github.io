@@ -1,0 +1,508 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "Welcome to Agentria" [ref=e12] [cursor=pointer]:
+        - /url: ./about-agentria-ko
+        - paragraph [ref=e15]: Welcome to Agentria
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - link "시작하기" [ref=e22] [cursor=pointer]:
+            - /url: ./get-started-ko
+            - paragraph [ref=e25]: 시작하기
+          - link "3단계 핵심 가이드" [ref=e32] [cursor=pointer]:
+            - /url: ./3step-core-ko
+            - paragraph [ref=e35]: 3단계 핵심 가이드
+          - generic [ref=e38]:
+            - link "어빌리티 가이드" [ref=e45] [cursor=pointer]:
+              - /url: ./ability-guide-ko
+              - paragraph [ref=e48]: 어빌리티 가이드
+            - generic [ref=e52]:
+              - link "[어빌리티] AI 노드 (LLM)" [ref=e55] [cursor=pointer]:
+                - /url: ./llm-node-ko
+                - paragraph [ref=e58]: "[어빌리티] AI 노드 (LLM)"
+              - link "[어빌리티] 코드 노드 (Python)" [ref=e61] [cursor=pointer]:
+                - /url: ./python-node-ko
+                - paragraph [ref=e64]: "[어빌리티] 코드 노드 (Python)"
+              - link "[어빌리티] 도구 노드 (Gmail)" [ref=e67] [cursor=pointer]:
+                - /url: ./gmail-node-ko
+                - paragraph [ref=e70]: "[어빌리티] 도구 노드 (Gmail)"
+              - link "[어빌리티] 도구 노드 (Slack)" [ref=e73] [cursor=pointer]:
+                - /url: ./slack-node-ko
+                - paragraph [ref=e76]: "[어빌리티] 도구 노드 (Slack)"
+              - link "[어빌리티] 흐름 제어 노드 (Branch)" [ref=e79] [cursor=pointer]:
+                - /url: ./branch-node-ko
+                - paragraph [ref=e82]: "[어빌리티] 흐름 제어 노드 (Branch)"
+          - generic [ref=e85]:
+            - link "에이전트 가이드" [ref=e92] [cursor=pointer]:
+              - /url: ./agent-guide-ko
+              - paragraph [ref=e95]: 에이전트 가이드
+            - generic [ref=e99]:
+              - link "[에이전트] 단기 기억 조회" [ref=e102] [cursor=pointer]:
+                - /url: ./shortterm-node-ko
+                - paragraph [ref=e105]: "[에이전트] 단기 기억 조회"
+              - link "[에이전트] 추론 행동 (ReAct)" [ref=e108] [cursor=pointer]:
+                - /url: ./react-node-ko
+                - paragraph [ref=e111]: "[에이전트] 추론 행동 (ReAct)"
+        - generic [ref=e112]:
+          - link "핵심개념" [ref=e117] [cursor=pointer]:
+            - /url: ./key-concepts-ko
+            - paragraph [ref=e120]: 핵심개념
+          - generic [ref=e123]:
+            - link "노드" [ref=e129] [cursor=pointer]:
+              - /url: ./node-ko
+              - paragraph [ref=e132]: 노드
+            - generic [ref=e136]:
+              - link "유형" [ref=e139] [cursor=pointer]:
+                - /url: ./node-type-ko
+                - paragraph [ref=e142]: 유형
+              - link "구조" [ref=e145] [cursor=pointer]:
+                - /url: ./node-structure-ko
+                - paragraph [ref=e148]: 구조
+              - link "사용법" [ref=e151] [cursor=pointer]:
+                - /url: ./node-usage-ko
+                - paragraph [ref=e154]: 사용법
+              - link "노드 테스트" [ref=e157] [cursor=pointer]:
+                - /url: ./node-test-ko
+                - paragraph [ref=e160]: 노드 테스트
+          - generic [ref=e163]:
+            - link "어빌리티" [ref=e169] [cursor=pointer]:
+              - /url: ./ability-ko
+              - paragraph [ref=e172]: 어빌리티
+            - generic [ref=e176]:
+              - link "구조" [ref=e179] [cursor=pointer]:
+                - /url: ./ability-structure-ko
+                - paragraph [ref=e182]: 구조
+              - link "사용법" [ref=e185] [cursor=pointer]:
+                - /url: ./ability-usage-ko
+                - paragraph [ref=e188]: 사용법
+              - link "어빌리티 테스트" [ref=e191] [cursor=pointer]:
+                - /url: ./ability-test-ko
+                - paragraph [ref=e194]: 어빌리티 테스트
+          - generic [ref=e197]:
+            - link "에이전트" [ref=e203] [cursor=pointer]:
+              - /url: ./agent-ko
+              - paragraph [ref=e206]: 에이전트
+            - generic [ref=e210]:
+              - link "구조" [ref=e213] [cursor=pointer]:
+                - /url: ./agent-structure-ko
+                - paragraph [ref=e216]: 구조
+              - link "사용법" [ref=e219] [cursor=pointer]:
+                - /url: ./agent-usage-ko
+                - paragraph [ref=e222]: 사용법
+              - link "에이전트 테스트" [ref=e225] [cursor=pointer]:
+                - /url: ./agent-test-ko
+                - paragraph [ref=e228]: 에이전트 테스트
+          - generic [ref=e231]:
+            - link "스토리지" [ref=e237] [cursor=pointer]:
+              - /url: ./storage-ko
+              - paragraph [ref=e240]: 스토리지
+            - generic [ref=e244]:
+              - link "정형 데이터" [ref=e247] [cursor=pointer]:
+                - /url: ./structured-data-ko
+                - paragraph [ref=e250]: 정형 데이터
+              - link "데이터 구조" [ref=e253] [cursor=pointer]:
+                - /url: ./data-structure-ko
+                - paragraph [ref=e256]: 데이터 구조
+              - link "벌크 런 테스트" [ref=e259] [cursor=pointer]:
+                - /url: ./bulkrun-test-ko
+                - paragraph [ref=e262]: 벌크 런 테스트
+        - generic [ref=e263]:
+          - link "핵심기능" [ref=e268] [cursor=pointer]:
+            - /url: ./key-features-ko
+            - paragraph [ref=e271]: 핵심기능
+          - generic [ref=e274]:
+            - link "크리덴셜" [ref=e280] [cursor=pointer]:
+              - /url: ./credential-ko
+              - paragraph [ref=e283]: 크리덴셜
+            - generic [ref=e287]:
+              - link "구글 크리덴셜" [ref=e290] [cursor=pointer]:
+                - /url: ./google-credential-ko
+                - paragraph [ref=e293]: 구글 크리덴셜
+              - link "슬랙 크리덴셜" [ref=e296] [cursor=pointer]:
+                - /url: ./slack-credential-ko
+                - paragraph [ref=e299]: 슬랙 크리덴셜
+          - generic [ref=e302]:
+            - link "API" [ref=e308] [cursor=pointer]:
+              - /url: ./api-ko
+              - paragraph [ref=e311]: API
+            - generic [ref=e315]:
+              - link "버전" [ref=e318] [cursor=pointer]:
+                - /url: ./api-version-ko
+                - paragraph [ref=e321]: 버전
+              - link "API 배포" [ref=e324] [cursor=pointer]:
+                - /url: ./api-release-ko
+                - paragraph [ref=e327]: API 배포
+              - link "어빌리티 API cURL" [ref=e330] [cursor=pointer]:
+                - /url: ./ability-endpoint-ko
+                - paragraph [ref=e333]: 어빌리티 API cURL
+              - link "에이전트 API cURL" [ref=e336] [cursor=pointer]:
+                - /url: ./agent-endpoint-ko
+                - paragraph [ref=e339]: 에이전트 API cURL
+              - link "API 호출 (포스트맨)" [ref=e342] [cursor=pointer]:
+                - /url: ./postman-ko
+                - paragraph [ref=e345]: API 호출 (포스트맨)
+        - link "노드정보" [ref=e352] [cursor=pointer]:
+          - /url: ./node-info-ko
+          - paragraph [ref=e355]: 노드정보
+    - generic [ref=e361]:
+      - paragraph [ref=e365]: Key Features
+      - heading "구글 크리덴셜 가이드" [level=1] [ref=e368]
+      - generic [ref=e369]:
+        - paragraph [ref=e370]:
+          - text: 지메일(Gmail), 구글 시트(Google Sheets), 구글 캘린더(Google Calendar) 등 구글 서비스와 관련된 노드를 사용하려면 구글 크리덴셜(Credential)을 발급한 후에
+          - strong [ref=e371]: 에이전트리아(Agentria)
+          - text: 에 등록해야 합니다.
+        - paragraph [ref=e372]: 이를 위해 구글 계정이 필요합니다.
+        - paragraph [ref=e373]
+        - heading "크리덴셜 등록 목표" [level=2] [ref=e374]:
+          - link "크리덴셜 등록 목표" [ref=e375] [cursor=pointer]:
+            - /url: ./google-credential-ko#%ED%81%AC%EB%A6%AC%EB%8D%B4%EC%85%9C-%EB%93%B1%EB%A1%9D-%EB%AA%A9%ED%91%9C
+        - paragraph [ref=e376]
+        - paragraph [ref=e377]
+        - paragraph [ref=e378]:
+          - strong [ref=e379]: 에이전트리아
+          - text: 에서 크리덴셜을 등록하려면
+          - code [ref=e380]: Client ID
+          - text: 와
+          - code [ref=e381]: Client Secret
+          - text: ","
+          - code [ref=e382]: Refresh Token
+          - text: 정보가 필요합니다.
+        - paragraph [ref=e383]: 본 가이드를 따라 진행하면 필요한 정보를 발급하여 구글 크리덴셜을 등록할 수 있습니다.
+        - paragraph [ref=e384]: 본 가이드는 지메일 노드 사용을 위한 크리덴셜 등록을 기준으로 진행하며, 구글 Client ID와 Client Secret 정보는 한 번 발급하여 여러 구글 기반 노드에 사용할 수 있습니다.
+        - paragraph [ref=e385]
+        - 'heading "1단계: 구글 클라우드 콘솔 접속" [level=2] [ref=e386]':
+          - 'link "1단계: 구글 클라우드 콘솔 접속" [ref=e387] [cursor=pointer]':
+            - /url: ./google-credential-ko#1%EB%8B%A8%EA%B3%84-%EA%B5%AC%EA%B8%80-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%BD%98%EC%86%94-%EC%A0%91%EC%86%8D
+        - paragraph [ref=e388]
+        - paragraph [ref=e389]
+        - paragraph [ref=e390]:
+          - text: 크리덴셜 발급을 위해 브라우저에서 🔗
+          - link "구글 클라우드 콘솔 Auth 플랫폼" [ref=e391] [cursor=pointer]:
+            - /url: https://console.cloud.google.com/projectselector2/auth/overview?supportedpurview=project
+          - text: 페이지로 접속합니다.
+        - paragraph [ref=e392]:
+          - text: 클라우드 콘솔에 처음 접속했다면
+          - code [ref=e393]: 프로젝트 생성(Create Project)
+          - text: 버튼을 클릭하여 프로젝트를 생성합니다.
+        - paragraph [ref=e394]
+        - 'heading "2단계: OAuth 관리" [level=2] [ref=e395]':
+          - 'link "2단계: OAuth 관리" [ref=e396] [cursor=pointer]':
+            - /url: ./google-credential-ko#2%EB%8B%A8%EA%B3%84-oauth-%EA%B4%80%EB%A6%AC
+        - paragraph [ref=e397]
+        - paragraph [ref=e398]: OAuth는 인터넷 사용자 인증 및 권한 부여를 위한 개방형 표준 프로토콜입니다.
+        - paragraph [ref=e399]: 구글 크리덴셜을 발급하기 위해서는 OAuth 플로우를 거쳐야 합니다.
+        - paragraph [ref=e400]
+        - heading "2-1 ) 프로젝트 생성" [level=3] [ref=e401]:
+          - link "2-1 ) 프로젝트 생성" [ref=e402] [cursor=pointer]:
+            - /url: ./google-credential-ko#2-1-)-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%83%9D%EC%84%B1
+        - paragraph [ref=e403]
+        - paragraph [ref=e404]
+        - paragraph [ref=e405]
+        - paragraph [ref=e406]: 프로젝트 명을 설정하고 조직(Organization)을 선택합니다.
+        - paragraph [ref=e407]:
+          - text: 개인 사용자라면 ‘조직 없음(No organization)’ 상태로 두고
+          - code [ref=e408]: 만들기(Create)
+          - text: 를 클릭합니다.
+        - paragraph [ref=e409]
+        - heading "2-2 ) 프로젝트 구성" [level=3] [ref=e410]:
+          - link "2-2 ) 프로젝트 구성" [ref=e411] [cursor=pointer]:
+            - /url: ./google-credential-ko#2-2-)-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%EC%84%B1
+        - paragraph [ref=e412]
+        - paragraph [ref=e413]
+        - paragraph [ref=e414]:
+          - code [ref=e415]: 시작하기(Get Started)
+          - text: 버튼을 클릭하여 프로젝트를 구성합니다.
+        - paragraph [ref=e416]
+        - paragraph [ref=e417]
+        - paragraph [ref=e418]:
+          - strong [ref=e419]: "1단계 : 앱 정보(App Information)"
+        - paragraph [ref=e420]
+        - list [ref=e421]:
+          - listitem [ref=e422]:
+            - text: •
+            - paragraph [ref=e423]: 애플리케이션 이름(App name) 설정
+          - listitem [ref=e424]:
+            - text: •
+            - paragraph [ref=e425]: 사용자 이메일(User support) 설정
+        - paragraph [ref=e426]
+        - paragraph [ref=e427]:
+          - strong [ref=e428]: "2단계 : 사용 대상(Audience)"
+        - paragraph [ref=e429]
+        - list [ref=e430]:
+          - listitem [ref=e431]:
+            - text: •
+            - paragraph [ref=e432]: "내부(Internal) : 소속된 조직 내 Google Workspace 사용자를 대상으로 제한 (조직 내부 앱을 만들 때 적합)"
+          - listitem [ref=e433]:
+            - text: •
+            - paragraph [ref=e434]: "외부(External) : Google 계정이 있는 모든 테스트 사용자를 대상으로 하며, 테스트 사용자 목록에 추가한 사용자들만 이용 가능 (대중적으로 서비스할 앱을 만들 때 적합)"
+        - paragraph [ref=e435]
+        - paragraph [ref=e436]:
+          - strong [ref=e437]: "3단계 : 연락처 정보(Contact Information)"
+        - paragraph [ref=e438]
+        - list [ref=e439]:
+          - listitem [ref=e440]:
+            - text: •
+            - paragraph [ref=e441]: 연락처 정보에 프로젝트 변경 사항을 보고받을 이메일 주소 입력 (사용자 이메일과 동일해도 됨)
+        - paragraph [ref=e442]
+        - paragraph [ref=e443]:
+          - strong [ref=e444]: "4단계 : 완료(Finish)"
+        - list [ref=e445]:
+          - listitem [ref=e446]:
+            - text: •
+            - paragraph [ref=e447]: Google 정책에 동의하고 프로젝트 생성
+        - paragraph [ref=e448]
+        - paragraph [ref=e449]:
+          - code [ref=e450]: 만들기(Create)
+          - text: 를 클릭하면 OAuth 프로젝트 구성이 완료됩니다.
+        - paragraph [ref=e451]
+        - 'heading "3단계: OAuth 클라이언트 ID 생성" [level=2] [ref=e452]':
+          - 'link "3단계: OAuth 클라이언트 ID 생성" [ref=e453] [cursor=pointer]':
+            - /url: ./google-credential-ko#3%EB%8B%A8%EA%B3%84-oauth-%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8-id-%EC%83%9D%EC%84%B1
+        - paragraph [ref=e454]
+        - paragraph [ref=e455]: 사용자 인증 정보를 생성하기 위해 클라이언트 ID를 생성해야 합니다.
+        - paragraph [ref=e456]:
+          - text: 이 단계를 진행하는 과정에서
+          - code [ref=e457]: Client ID
+          - text: 와
+          - code [ref=e458]: Client Secret
+          - text: 이 표시된다면, 반드시 안전한 곳에 복사해두어야 합니다.
+        - paragraph [ref=e459]
+        - heading "3-1 ) OAuth 클라이언트 생성" [level=3] [ref=e460]:
+          - link "3-1 ) OAuth 클라이언트 생성" [ref=e461] [cursor=pointer]:
+            - /url: ./google-credential-ko#3-1-)-oauth-%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8-%EC%83%9D%EC%84%B1
+        - paragraph [ref=e462]
+        - paragraph [ref=e463]
+        - paragraph [ref=e464]:
+          - code [ref=e465]: OAuth 클라이언트 생성(Create OAuth client)
+          - text: 을 클릭하여 ID를 생성합니다.
+        - paragraph [ref=e466]
+        - paragraph [ref=e467]
+        - paragraph [ref=e468]:
+          - text: 만약 버튼을 찾기 어렵다면, 사이드바에서
+          - code [ref=e469]: 고객(Clients)
+          - text: 탭으로 진입하여
+          - code [ref=e470]: +클라이언트 생성(Create client)
+          - text: 를 클릭해면 같은 ID 생성 과정을 진행할 수 있습니다.
+        - paragraph [ref=e471]
+        - heading "3-2 ) 클라이언트 ID 생성" [level=3] [ref=e472]:
+          - link "3-2 ) 클라이언트 ID 생성" [ref=e473] [cursor=pointer]:
+            - /url: ./google-credential-ko#3-2-)-%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8-id-%EC%83%9D%EC%84%B1
+        - paragraph [ref=e474]
+        - paragraph [ref=e475]
+        - paragraph [ref=e476]
+        - list [ref=e477]:
+          - listitem [ref=e478]:
+            - text: •
+            - paragraph [ref=e479]:
+              - strong [ref=e480]: 에이전트리아
+              - text: 에서 사용하기 위해 애플리케이션 유형은
+              - code [ref=e481]: 웹 애플리케이션(Web application)
+              - text: 으로 합니다.
+          - listitem [ref=e482]:
+            - text: •
+            - paragraph [ref=e483]: 클라이언트 ID 이름을 입력합니다.
+          - listitem [ref=e484]:
+            - text: •
+            - paragraph [ref=e485]: JavaScript 출처(origins)는 생략해도 됩니다.
+          - listitem [ref=e486]:
+            - text: •
+            - paragraph [ref=e487]: 이제 리디렉션 URL을 입력할 차례입니다.
+        - paragraph [ref=e488]
+        - paragraph [ref=e489]
+        - paragraph [ref=e490]: 사용자 인증을 진행 할 때 성공 또는 실패 결과를 돌려주기 위해 리디렉션 URL(콜백 URL)이 필요합니다.
+        - paragraph [ref=e491]:
+          - text: 구글 콘솔 페이지를 잠시 그대로 두고, 승인된 리디렉션 URL을 추가하기 위해
+          - strong [ref=e492]: 에이전트리아
+          - text: 페이지로 이동합니다.
+        - paragraph [ref=e493]
+        - 'heading "4단계: 에이전트리아에서 크리덴셜 추가" [level=2] [ref=e494]':
+          - 'link "4단계: 에이전트리아에서 크리덴셜 추가" [ref=e495] [cursor=pointer]':
+            - /url: ./google-credential-ko#4%EB%8B%A8%EA%B3%84-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8%EB%A6%AC%EC%95%84%EC%97%90%EC%84%9C-%ED%81%AC%EB%A6%AC%EB%8D%B4%EC%85%9C-%EC%B6%94%EA%B0%80
+        - paragraph [ref=e496]
+        - paragraph [ref=e497]
+        - paragraph [ref=e498]:
+          - strong [ref=e499]: 에이전트리아
+          - text: 프로젝트 페이지에서 사이드바의 크리덴셜 탭을 클릭합니다.
+        - paragraph [ref=e500]:
+          - text: 우측 상단의
+          - code [ref=e501]: +자격 증명 추가(Add Credential)
+          - text: 버튼을 클릭하여 새로운 크리덴셜을 생성합니다.
+        - paragraph [ref=e502]: 사용할 구글 템플릿을 선택합니다.
+        - paragraph [ref=e503]: 크리덴셜은 템플릿에 따라 별개로 생성해야 합니다.
+        - paragraph [ref=e504]:
+          - text: 본 가이드에서는
+          - code [ref=e505]: Google Gmail
+          - text: 템플릿을 사용합니다.
+        - paragraph [ref=e506]:
+          - text: SET 1 영역의 Callback URL을 복사하여
+          - strong [ref=e507]: 5단계
+          - text: 를 진행합니다.
+        - paragraph [ref=e508]
+        - paragraph [ref=e509]:
+          - text: 크리덴셜 팝업창은 아직 저장할 수 없는 상태이므로,
+          - strong [ref=e510]: 에이전트리아
+          - text: 페이지를 그대로 두고 다시 구글 콘솔 페이지로 이동합니다.
+        - paragraph [ref=e511]
+        - 'heading "5단계: Callback URL 등록" [level=2] [ref=e512]':
+          - 'link "5단계: Callback URL 등록" [ref=e513] [cursor=pointer]':
+            - /url: ./google-credential-ko#5%EB%8B%A8%EA%B3%84-callback-url-%EB%93%B1%EB%A1%9D
+        - paragraph [ref=e514]
+        - paragraph [ref=e515]
+        - paragraph [ref=e516]:
+          - text: 클라이언트 ID 만들기를 진행 중이던 구글 클라우드 콘솔에서 승인된 리디렉션 URL 부분의
+          - code [ref=e517]: +URI 추가(Add URI)
+          - text: 버튼을 클릭하면 리디렉션 URL 입력창이 나옵니다.
+        - paragraph [ref=e518]
+        - paragraph [ref=e519]:
+          - text: 입력창에
+          - strong [ref=e520]: 4단계
+          - text: 에서 복사해둔 Callback URL을 붙여넣습니다.
+        - paragraph [ref=e521]:
+          - code [ref=e522]: Create(만들기)
+          - text: 를 클릭하여 저장하면 OAuth 클라이언트가 생성됩니다.
+        - paragraph [ref=e523]: 생성 완료 팝업은 닫아도 됩니다.
+        - paragraph [ref=e524]
+        - 'heading "6단계: Secret 보관 (중요)" [level=2] [ref=e525]':
+          - 'link "6단계: Secret 보관 (중요)" [ref=e526] [cursor=pointer]':
+            - /url: ./google-credential-ko#6%EB%8B%A8%EA%B3%84-secret-%EB%B3%B4%EA%B4%80-(%EC%A4%91%EC%9A%94)
+        - paragraph [ref=e527]
+        - paragraph [ref=e528]
+        - paragraph [ref=e529]: 고객(Clients) 탭에서 Client ID를 클릭하면 위에서 닫았던 팝업의 내용을 다시 확인할 수 있습니다.
+        - paragraph [ref=e530]
+        - paragraph [ref=e531]
+        - paragraph [ref=e532]:
+          - text: 만일을 대비해
+          - code [ref=e533]: 클라이언트 ID(Client ID)
+          - text: 와
+          - code [ref=e534]: 클라이언트 암호(Client Secret)
+          - text: 는 반드시 안전한 곳에 저장합니다.
+        - paragraph [ref=e535]: JSON 파일 형태로 다운받아 보관할 수도 있습니다.
+        - paragraph [ref=e536]
+        - paragraph [ref=e537]:
+          - text: 이 정보는
+          - strong [ref=e538]: 8단계
+          - text: 에서 사용합니다.
+        - paragraph [ref=e539]
+        - 'heading "7단계: 데이터 액세스 범위 추가" [level=2] [ref=e540]':
+          - 'link "7단계: 데이터 액세스 범위 추가" [ref=e541] [cursor=pointer]':
+            - /url: ./google-credential-ko#7%EB%8B%A8%EA%B3%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%95%A1%EC%84%B8%EC%8A%A4-%EB%B2%94%EC%9C%84-%EC%B6%94%EA%B0%80
+        - paragraph [ref=e542]
+        - heading "7-1 ) 데이터 액세스" [level=3] [ref=e543]:
+          - link "7-1 ) 데이터 액세스" [ref=e544] [cursor=pointer]:
+            - /url: ./google-credential-ko#7-1-)-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%95%A1%EC%84%B8%EC%8A%A4
+        - paragraph [ref=e545]
+        - paragraph [ref=e546]
+        - paragraph [ref=e547]: 사이드바에서 데이터 액세스(Data Access) 탭으로 진입합니다.
+        - paragraph [ref=e548]:
+          - code [ref=e549]: 범위 추가 또는 삭제(Add or remove scopes)
+          - text: 버튼을 클릭하면 사이드 팝업이 열립니다.
+        - paragraph [ref=e550]
+        - paragraph [ref=e551]
+        - paragraph [ref=e552]:
+          - text: 상단 메시지의
+          - code [ref=e553]: Google API 라이브러리
+          - link "링크" [ref=e554] [cursor=pointer]:
+            - /url: https://console.cloud.google.com/apis/library?project=test01-473105&supportedpurview=project
+          - text: 로 접속합니다.
+        - paragraph [ref=e555]
+        - paragraph [ref=e556]
+        - paragraph [ref=e557]: 검색창에 필요한 API를 검색합니다.
+        - paragraph [ref=e558]:
+          - text: "(예시:"
+          - code [ref=e559]: Gmail API
+          - text: ","
+          - code [ref=e560]: Google Sheets API
+          - text: )
+        - paragraph [ref=e561]: 본 가이드는 Gmail API 기준으로 설명합니다.
+        - paragraph [ref=e562]
+        - heading "7-2 ) API 사용" [level=3] [ref=e563]:
+          - link "7-2 ) API 사용" [ref=e564] [cursor=pointer]:
+            - /url: ./google-credential-ko#7-2-)-api-%EC%82%AC%EC%9A%A9
+        - paragraph [ref=e565]
+        - paragraph [ref=e566]
+        - paragraph [ref=e567]:
+          - text: 검색 결과를 선택하고
+          - code [ref=e568]: 사용(Enable)
+          - text: 버튼을 클릭해 활성화합니다.
+        - paragraph [ref=e569]: 이제 구글 클라우드 콘솔에서의 모든 설정이 끝났습니다.
+        - paragraph [ref=e570]:
+          - strong [ref=e571]: 에이전트리아
+          - text: 페이지로 돌아갑니다.
+        - paragraph [ref=e572]
+        - 'heading "8단계: 크리덴셜 세팅 완성" [level=2] [ref=e573]':
+          - 'link "8단계: 크리덴셜 세팅 완성" [ref=e574] [cursor=pointer]':
+            - /url: ./google-credential-ko#8%EB%8B%A8%EA%B3%84-%ED%81%AC%EB%A6%AC%EB%8D%B4%EC%85%9C-%EC%84%B8%ED%8C%85-%EC%99%84%EC%84%B1
+        - paragraph [ref=e575]
+        - paragraph [ref=e576]
+        - paragraph [ref=e577]:
+          - strong [ref=e578]: 에이전트리아
+          - text: 에서 설정 중이던 크리덴셜 팝업창에
+          - strong [ref=e579]: 6단계
+          - text: 에서 기록해두었던
+          - code [ref=e580]: Client ID
+          - text: 와
+          - code [ref=e581]: Client Secret
+          - text: 정보를 입력합니다.
+        - paragraph [ref=e582]: 만약 정보를 복사해두지 않았다면 Clients 탭으로 접속해 Client ID를 클릭하여 다시 확인할 수 있습니다.
+        - paragraph [ref=e583]:
+          - code [ref=e584]: Google Connect
+          - text: 버튼을 클릭하여 구글 계정을 연동합니다.
+        - paragraph [ref=e585]
+        - paragraph [ref=e586]
+        - paragraph [ref=e587]:
+          - text: 엑세스를 허용하면
+          - code [ref=e588]: Refresh Token
+          - text: 이 자동으로 입력됩니다.
+        - paragraph [ref=e589]:
+          - text: 여러 Client를 등록하려면
+          - code [ref=e590]: +세트 추가(ADD SET)
+          - text: 으로 추가할 수 있습니다.
+        - paragraph [ref=e591]:
+          - text: 우측 하단의
+          - code [ref=e592]: 추가(ADD)
+          - text: 버튼을 클릭하면 크리덴셜 세팅이 완료됩니다.
+        - paragraph [ref=e593]
+        - 'heading "9단계: 구글 템플릿 노드 추가" [level=2] [ref=e594]':
+          - 'link "9단계: 구글 템플릿 노드 추가" [ref=e595] [cursor=pointer]':
+            - /url: ./google-credential-ko#9%EB%8B%A8%EA%B3%84-%EA%B5%AC%EA%B8%80-%ED%85%9C%ED%94%8C%EB%A6%BF-%EB%85%B8%EB%93%9C-%EC%B6%94%EA%B0%80
+        - paragraph [ref=e596]
+        - paragraph [ref=e597]: 캔버스에 구글 템플릿 노드를 추가합니다.
+        - paragraph [ref=e598]: 등록한 크리덴셜과 동일한 템플릿이어야 합니다.
+        - paragraph [ref=e599]: 예를 들어, Gmail 템플릿으로 크리덴셜을 생성했다면 Gmail 노드에서 사용할 수 있습니다.
+        - paragraph [ref=e600]
+        - 'heading "10단계: 노드에서 크리덴셜 등록" [level=2] [ref=e601]':
+          - 'link "10단계: 노드에서 크리덴셜 등록" [ref=e602] [cursor=pointer]':
+            - /url: ./google-credential-ko#10%EB%8B%A8%EA%B3%84-%EB%85%B8%EB%93%9C%EC%97%90%EC%84%9C-%ED%81%AC%EB%A6%AC%EB%8D%B4%EC%85%9C-%EB%93%B1%EB%A1%9D
+        - paragraph [ref=e603]
+        - paragraph [ref=e604]
+        - paragraph [ref=e605]: 노드를 더블클릭하여 노드 편집기를 열고, 크리덴셜을 선택합니다.
+        - paragraph [ref=e606]: 이제 구글 노드를 사용할 수 있습니다.
+        - paragraph [ref=e607]
+        - heading "다음 단계" [level=2] [ref=e608]:
+          - link "다음 단계" [ref=e609] [cursor=pointer]:
+            - /url: ./google-credential-ko#%EB%8B%A4%EC%9D%8C-%EB%8B%A8%EA%B3%84
+        - paragraph [ref=e610]
+        - paragraph [ref=e611]: 클라이언트 정보는 구글 크리덴셜 설정 시 재사용할 수 있습니다.
+        - paragraph [ref=e612]: 만약 6개월동안 사용하지 않아 기한이 만료되었다면 다시 사용을 허용한 후 인증을 진행할 수 있습니다.
+  - navigation [ref=e616]:
+    - link "Agentria home" [ref=e618] [cursor=pointer]:
+      - /url: ../ko
+      - img "Agentria home" [ref=e620]
+    - generic [ref=e622]:
+      - generic [ref=e623]:
+        - link "Features" [ref=e625] [cursor=pointer]:
+          - /url: ../ko#topfeatures
+          - paragraph [ref=e627]: Features
+        - link "Pricing" [ref=e629] [cursor=pointer]:
+          - /url: ../ko#pricing
+          - paragraph [ref=e631]: Pricing
+        - link "Docs" [ref=e633] [cursor=pointer]:
+          - /url: ./about-agentria-ko
+          - paragraph [ref=e635]: Docs
+      - link "EN · KO" [ref=e637] [cursor=pointer]:
+        - /url: ./google-credential
+        - paragraph [ref=e639]: EN · KO
+      - link "Try Now" [ref=e641] [cursor=pointer]:
+        - /url: https://app.agentria.ai
+        - paragraph [ref=e643]: Try Now

@@ -1,0 +1,239 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "Welcome to Agentria" [ref=e12] [cursor=pointer]:
+        - /url: ./about-agentria-ko
+        - paragraph [ref=e15]: Welcome to Agentria
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - link "시작하기" [ref=e22] [cursor=pointer]:
+            - /url: ./get-started-ko
+            - paragraph [ref=e25]: 시작하기
+          - link "3단계 핵심 가이드" [ref=e32] [cursor=pointer]:
+            - /url: ./3step-core-ko
+            - paragraph [ref=e35]: 3단계 핵심 가이드
+          - generic [ref=e38]:
+            - link "어빌리티 가이드" [ref=e45] [cursor=pointer]:
+              - /url: ./ability-guide-ko
+              - paragraph [ref=e48]: 어빌리티 가이드
+            - generic [ref=e52]:
+              - link "[어빌리티] AI 노드 (LLM)" [ref=e55] [cursor=pointer]:
+                - /url: ./llm-node-ko
+                - paragraph [ref=e58]: "[어빌리티] AI 노드 (LLM)"
+              - link "[어빌리티] 코드 노드 (Python)" [ref=e61] [cursor=pointer]:
+                - /url: ./python-node-ko
+                - paragraph [ref=e64]: "[어빌리티] 코드 노드 (Python)"
+              - link "[어빌리티] 도구 노드 (Gmail)" [ref=e67] [cursor=pointer]:
+                - /url: ./gmail-node-ko
+                - paragraph [ref=e70]: "[어빌리티] 도구 노드 (Gmail)"
+              - link "[어빌리티] 도구 노드 (Slack)" [ref=e73] [cursor=pointer]:
+                - /url: ./slack-node-ko
+                - paragraph [ref=e76]: "[어빌리티] 도구 노드 (Slack)"
+              - link "[어빌리티] 흐름 제어 노드 (Branch)" [ref=e79] [cursor=pointer]:
+                - /url: ./branch-node-ko
+                - paragraph [ref=e82]: "[어빌리티] 흐름 제어 노드 (Branch)"
+          - generic [ref=e85]:
+            - link "에이전트 가이드" [ref=e92] [cursor=pointer]:
+              - /url: ./agent-guide-ko
+              - paragraph [ref=e95]: 에이전트 가이드
+            - generic [ref=e99]:
+              - link "[에이전트] 단기 기억 조회" [ref=e102] [cursor=pointer]:
+                - /url: ./shortterm-node-ko
+                - paragraph [ref=e105]: "[에이전트] 단기 기억 조회"
+              - link "[에이전트] 추론 행동 (ReAct)" [ref=e108] [cursor=pointer]:
+                - /url: ./react-node-ko
+                - paragraph [ref=e111]: "[에이전트] 추론 행동 (ReAct)"
+        - generic [ref=e112]:
+          - link "핵심개념" [ref=e117] [cursor=pointer]:
+            - /url: ./key-concepts-ko
+            - paragraph [ref=e120]: 핵심개념
+          - generic [ref=e123]:
+            - link "노드" [ref=e129] [cursor=pointer]:
+              - /url: ./node-ko
+              - paragraph [ref=e132]: 노드
+            - generic [ref=e136]:
+              - link "유형" [ref=e139] [cursor=pointer]:
+                - /url: ./node-type-ko
+                - paragraph [ref=e142]: 유형
+              - link "구조" [ref=e145] [cursor=pointer]:
+                - /url: ./node-structure-ko
+                - paragraph [ref=e148]: 구조
+              - link "사용법" [ref=e151] [cursor=pointer]:
+                - /url: ./node-usage-ko
+                - paragraph [ref=e154]: 사용법
+              - link "노드 테스트" [ref=e157] [cursor=pointer]:
+                - /url: ./node-test-ko
+                - paragraph [ref=e160]: 노드 테스트
+          - generic [ref=e163]:
+            - link "어빌리티" [ref=e169] [cursor=pointer]:
+              - /url: ./ability-ko
+              - paragraph [ref=e172]: 어빌리티
+            - generic [ref=e176]:
+              - link "구조" [ref=e179] [cursor=pointer]:
+                - /url: ./ability-structure-ko
+                - paragraph [ref=e182]: 구조
+              - link "사용법" [ref=e185] [cursor=pointer]:
+                - /url: ./ability-usage-ko
+                - paragraph [ref=e188]: 사용법
+              - link "어빌리티 테스트" [ref=e191] [cursor=pointer]:
+                - /url: ./ability-test-ko
+                - paragraph [ref=e194]: 어빌리티 테스트
+          - generic [ref=e197]:
+            - link "에이전트" [ref=e203] [cursor=pointer]:
+              - /url: ./agent-ko
+              - paragraph [ref=e206]: 에이전트
+            - generic [ref=e210]:
+              - link "구조" [ref=e213] [cursor=pointer]:
+                - /url: ./agent-structure-ko
+                - paragraph [ref=e216]: 구조
+              - link "사용법" [ref=e219] [cursor=pointer]:
+                - /url: ./agent-usage-ko
+                - paragraph [ref=e222]: 사용법
+              - link "에이전트 테스트" [ref=e225] [cursor=pointer]:
+                - /url: ./agent-test-ko
+                - paragraph [ref=e228]: 에이전트 테스트
+          - generic [ref=e231]:
+            - link "스토리지" [ref=e237] [cursor=pointer]:
+              - /url: ./storage-ko
+              - paragraph [ref=e240]: 스토리지
+            - generic [ref=e244]:
+              - link "정형 데이터" [ref=e247] [cursor=pointer]:
+                - /url: ./structured-data-ko
+                - paragraph [ref=e250]: 정형 데이터
+              - link "데이터 구조" [ref=e253] [cursor=pointer]:
+                - /url: ./data-structure-ko
+                - paragraph [ref=e256]: 데이터 구조
+              - link "벌크 런 테스트" [ref=e259] [cursor=pointer]:
+                - /url: ./bulkrun-test-ko
+                - paragraph [ref=e262]: 벌크 런 테스트
+        - generic [ref=e263]:
+          - link "핵심기능" [ref=e268] [cursor=pointer]:
+            - /url: ./key-features-ko
+            - paragraph [ref=e271]: 핵심기능
+          - generic [ref=e274]:
+            - link "크리덴셜" [ref=e280] [cursor=pointer]:
+              - /url: ./credential-ko
+              - paragraph [ref=e283]: 크리덴셜
+            - generic [ref=e287]:
+              - link "구글 크리덴셜" [ref=e290] [cursor=pointer]:
+                - /url: ./google-credential-ko
+                - paragraph [ref=e293]: 구글 크리덴셜
+              - link "슬랙 크리덴셜" [ref=e296] [cursor=pointer]:
+                - /url: ./slack-credential-ko
+                - paragraph [ref=e299]: 슬랙 크리덴셜
+          - generic [ref=e302]:
+            - link "API" [ref=e308] [cursor=pointer]:
+              - /url: ./api-ko
+              - paragraph [ref=e311]: API
+            - generic [ref=e315]:
+              - link "버전" [ref=e318] [cursor=pointer]:
+                - /url: ./api-version-ko
+                - paragraph [ref=e321]: 버전
+              - link "API 배포" [ref=e324] [cursor=pointer]:
+                - /url: ./api-release-ko
+                - paragraph [ref=e327]: API 배포
+              - link "어빌리티 API cURL" [ref=e330] [cursor=pointer]:
+                - /url: ./ability-endpoint-ko
+                - paragraph [ref=e333]: 어빌리티 API cURL
+              - link "에이전트 API cURL" [ref=e336] [cursor=pointer]:
+                - /url: ./agent-endpoint-ko
+                - paragraph [ref=e339]: 에이전트 API cURL
+              - link "API 호출 (포스트맨)" [ref=e342] [cursor=pointer]:
+                - /url: ./postman-ko
+                - paragraph [ref=e345]: API 호출 (포스트맨)
+        - link "노드정보" [ref=e352] [cursor=pointer]:
+          - /url: ./node-info-ko
+          - paragraph [ref=e355]: 노드정보
+    - generic [ref=e361]:
+      - paragraph [ref=e365]: Key Concepts
+      - heading "노드란?" [level=1] [ref=e368]
+      - generic [ref=e369]:
+        - 'heading "노드 : 워크플로의 기본 실행 단위" [level=2] [ref=e370]':
+          - 'link "노드 : 워크플로의 기본 실행 단위" [ref=e371] [cursor=pointer]':
+            - /url: ./node-ko#%EB%85%B8%EB%93%9C-%EC%9B%8C%ED%81%AC%ED%94%8C%EB%A1%9C%EC%9D%98-%EA%B8%B0%EB%B3%B8-%EC%8B%A4%ED%96%89-%EB%8B%A8%EC%9C%84
+        - paragraph [ref=e372]
+        - paragraph [ref=e373]:
+          - strong [ref=e374]: 에이전트리아(Agentria)
+          - text: 를 활용하려면 설계의 핵심인 노드(Node) 개념을 이해하는 것이 필수입니다.
+        - paragraph [ref=e375]
+        - paragraph [ref=e376]
+        - paragraph [ref=e377]: 노드는 워크플로(Workflow)를 구성하는 가장 기본적인 실행 단위이자, 특정 목적에 따라 설계된 독립적인 기능 블록입니다.
+        - paragraph [ref=e378]: 텍스트 생성, 데이터 처리, 외부 API 호출, 조건 분기 등 다양한 작업을 수행할 수 있으며, 입력을 받아 정해진 작업을 수행하고 결과를 반환하는 구조로 되어 있습니다.
+        - paragraph [ref=e379]: 노드를 연결하면 하나의 완성된 워크플로가 만들어지고, 이 흐름이 자동화 로직으로 작동합니다.
+        - paragraph [ref=e380]: 또한 직관적인 블록 형태로 시각화되어, 복잡한 자동화 과정도 쉽고 간편하게 관리할 수 있습니다.
+        - paragraph [ref=e381]
+        - heading "주요 기능 및 장점" [level=2] [ref=e382]:
+          - link "주요 기능 및 장점" [ref=e383] [cursor=pointer]:
+            - /url: ./node-ko#%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EB%B0%8F-%EC%9E%A5%EC%A0%90
+            - strong [ref=e384]: 주요 기능 및 장점
+        - paragraph [ref=e385]
+        - paragraph [ref=e386]
+        - list [ref=e387]:
+          - listitem [ref=e388]:
+            - text: •
+            - paragraph [ref=e389]:
+              - strong [ref=e390]: "효율성:"
+              - text: 생성한 노드를 여러 워크플로에서 재사용 가능, 중복 작업 감소
+          - listitem [ref=e391]:
+            - text: •
+            - paragraph [ref=e392]:
+              - strong [ref=e393]: "확장성:"
+              - text: 노드 간 엣지 연결로 정교한 시스템 구축 및 체계적 관리
+          - listitem [ref=e394]:
+            - text: •
+            - paragraph [ref=e395]:
+              - strong [ref=e396]: "빠른 구현:"
+              - text: 아이디어를 빠르게 실험하고 검증 가능
+          - listitem [ref=e397]:
+            - text: •
+            - paragraph [ref=e398]:
+              - strong [ref=e399]: "코드 지원:"
+              - text: 직접 코딩 없이 자동화 워크플로를 생성할 수 있는 코드 생성기(Code Generator) 제공
+        - paragraph [ref=e400]
+        - paragraph [ref=e401]
+        - heading "더 알아보기" [level=2] [ref=e402]:
+          - link "더 알아보기" [ref=e403] [cursor=pointer]:
+            - /url: ./node-ko#%EB%8D%94-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0
+        - paragraph [ref=e404]
+        - paragraph [ref=e405]: 어빌리티를 활용해서 고수준의 자동화 시스템을 구현하고 싶다면, 단계별 가이드를 통해 차근차근 학습을 진행할 수 있습니다.
+        - paragraph [ref=e406]
+        - paragraph [ref=e407]
+        - list [ref=e408]:
+          - listitem [ref=e409]:
+            - text: •
+            - paragraph [ref=e410]:
+              - text: 🔗
+              - link "어빌리티 가이드" [ref=e411] [cursor=pointer]:
+                - /url: ./ability-guide-ko
+              - text: 는 어빌리티 튜토리얼로 구성되어 있습니다. 개발이 처음인 초보 사용자를 위한 기초 가이드입니다.
+          - listitem [ref=e412]:
+            - text: •
+            - paragraph [ref=e413]:
+              - text: 🔗
+              - link "에이전트 가이드" [ref=e414] [cursor=pointer]:
+                - /url: ./agent-guide-ko
+              - text: 는 에이전트 튜토리얼로 구성되어 있습니다. 기본적인 개발 지식은 있으나
+              - strong [ref=e415]: 에이전트리아
+              - text: 를 처음 이용하는 사용자를 위한 가이드입니다.
+        - paragraph [ref=e416]
+  - navigation [ref=e420]:
+    - link "Agentria home" [ref=e422] [cursor=pointer]:
+      - /url: ../ko
+      - img "Agentria home" [ref=e424]
+    - generic [ref=e426]:
+      - generic [ref=e427]:
+        - link "Features" [ref=e429] [cursor=pointer]:
+          - /url: ../ko#topfeatures
+          - paragraph [ref=e431]: Features
+        - link "Pricing" [ref=e433] [cursor=pointer]:
+          - /url: ../ko#pricing
+          - paragraph [ref=e435]: Pricing
+        - link "Docs" [ref=e437] [cursor=pointer]:
+          - /url: ./about-agentria-ko
+          - paragraph [ref=e439]: Docs
+      - link "EN · KO" [ref=e441] [cursor=pointer]:
+        - /url: ./node-info-ko
+        - paragraph [ref=e443]: EN · KO
+      - link "Try Now" [ref=e445] [cursor=pointer]:
+        - /url: https://app.agentria.ai
+        - paragraph [ref=e447]: Try Now

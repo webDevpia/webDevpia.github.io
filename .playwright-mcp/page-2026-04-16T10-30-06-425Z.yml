@@ -1,0 +1,470 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e7]:
+      - link "Welcome to Agentria" [ref=e12] [cursor=pointer]:
+        - /url: ./about-agentria-ko
+        - paragraph [ref=e15]: Welcome to Agentria
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - link "시작하기" [ref=e22] [cursor=pointer]:
+            - /url: ./get-started-ko
+            - paragraph [ref=e25]: 시작하기
+          - link "3단계 핵심 가이드" [ref=e32] [cursor=pointer]:
+            - /url: ./3step-core-ko
+            - paragraph [ref=e35]: 3단계 핵심 가이드
+          - generic [ref=e38]:
+            - link "어빌리티 가이드" [ref=e45] [cursor=pointer]:
+              - /url: ./ability-guide-ko
+              - paragraph [ref=e48]: 어빌리티 가이드
+            - generic [ref=e52]:
+              - link "[어빌리티] AI 노드 (LLM)" [ref=e55] [cursor=pointer]:
+                - /url: ./llm-node-ko
+                - paragraph [ref=e58]: "[어빌리티] AI 노드 (LLM)"
+              - link "[어빌리티] 코드 노드 (Python)" [ref=e61] [cursor=pointer]:
+                - /url: ./python-node-ko
+                - paragraph [ref=e64]: "[어빌리티] 코드 노드 (Python)"
+              - link "[어빌리티] 도구 노드 (Gmail)" [ref=e67] [cursor=pointer]:
+                - /url: ./gmail-node-ko
+                - paragraph [ref=e70]: "[어빌리티] 도구 노드 (Gmail)"
+              - link "[어빌리티] 도구 노드 (Slack)" [ref=e73] [cursor=pointer]:
+                - /url: ./slack-node-ko
+                - paragraph [ref=e76]: "[어빌리티] 도구 노드 (Slack)"
+              - link "[어빌리티] 흐름 제어 노드 (Branch)" [ref=e79] [cursor=pointer]:
+                - /url: ./branch-node-ko
+                - paragraph [ref=e82]: "[어빌리티] 흐름 제어 노드 (Branch)"
+          - generic [ref=e85]:
+            - link "에이전트 가이드" [ref=e92] [cursor=pointer]:
+              - /url: ./agent-guide-ko
+              - paragraph [ref=e95]: 에이전트 가이드
+            - generic [ref=e99]:
+              - link "[에이전트] 단기 기억 조회" [ref=e102] [cursor=pointer]:
+                - /url: ./shortterm-node-ko
+                - paragraph [ref=e105]: "[에이전트] 단기 기억 조회"
+              - link "[에이전트] 추론 행동 (ReAct)" [ref=e108] [cursor=pointer]:
+                - /url: ./react-node-ko
+                - paragraph [ref=e111]: "[에이전트] 추론 행동 (ReAct)"
+        - generic [ref=e112]:
+          - link "핵심개념" [ref=e117] [cursor=pointer]:
+            - /url: ./key-concepts-ko
+            - paragraph [ref=e120]: 핵심개념
+          - generic [ref=e123]:
+            - link "노드" [ref=e129] [cursor=pointer]:
+              - /url: ./node-ko
+              - paragraph [ref=e132]: 노드
+            - generic [ref=e136]:
+              - link "유형" [ref=e139] [cursor=pointer]:
+                - /url: ./node-type-ko
+                - paragraph [ref=e142]: 유형
+              - link "구조" [ref=e145] [cursor=pointer]:
+                - /url: ./node-structure-ko
+                - paragraph [ref=e148]: 구조
+              - link "사용법" [ref=e151] [cursor=pointer]:
+                - /url: ./node-usage-ko
+                - paragraph [ref=e154]: 사용법
+              - link "노드 테스트" [ref=e157] [cursor=pointer]:
+                - /url: ./node-test-ko
+                - paragraph [ref=e160]: 노드 테스트
+          - generic [ref=e163]:
+            - link "어빌리티" [ref=e169] [cursor=pointer]:
+              - /url: ./ability-ko
+              - paragraph [ref=e172]: 어빌리티
+            - generic [ref=e176]:
+              - link "구조" [ref=e179] [cursor=pointer]:
+                - /url: ./ability-structure-ko
+                - paragraph [ref=e182]: 구조
+              - link "사용법" [ref=e185] [cursor=pointer]:
+                - /url: ./ability-usage-ko
+                - paragraph [ref=e188]: 사용법
+              - link "어빌리티 테스트" [ref=e191] [cursor=pointer]:
+                - /url: ./ability-test-ko
+                - paragraph [ref=e194]: 어빌리티 테스트
+          - generic [ref=e197]:
+            - link "에이전트" [ref=e203] [cursor=pointer]:
+              - /url: ./agent-ko
+              - paragraph [ref=e206]: 에이전트
+            - generic [ref=e210]:
+              - link "구조" [ref=e213] [cursor=pointer]:
+                - /url: ./agent-structure-ko
+                - paragraph [ref=e216]: 구조
+              - link "사용법" [ref=e219] [cursor=pointer]:
+                - /url: ./agent-usage-ko
+                - paragraph [ref=e222]: 사용법
+              - link "에이전트 테스트" [ref=e225] [cursor=pointer]:
+                - /url: ./agent-test-ko
+                - paragraph [ref=e228]: 에이전트 테스트
+          - generic [ref=e231]:
+            - link "스토리지" [ref=e237] [cursor=pointer]:
+              - /url: ./storage-ko
+              - paragraph [ref=e240]: 스토리지
+            - generic [ref=e244]:
+              - link "정형 데이터" [ref=e247] [cursor=pointer]:
+                - /url: ./structured-data-ko
+                - paragraph [ref=e250]: 정형 데이터
+              - link "데이터 구조" [ref=e253] [cursor=pointer]:
+                - /url: ./data-structure-ko
+                - paragraph [ref=e256]: 데이터 구조
+              - link "벌크 런 테스트" [ref=e259] [cursor=pointer]:
+                - /url: ./bulkrun-test-ko
+                - paragraph [ref=e262]: 벌크 런 테스트
+        - generic [ref=e263]:
+          - link "핵심기능" [ref=e268] [cursor=pointer]:
+            - /url: ./key-features-ko
+            - paragraph [ref=e271]: 핵심기능
+          - generic [ref=e274]:
+            - link "크리덴셜" [ref=e280] [cursor=pointer]:
+              - /url: ./credential-ko
+              - paragraph [ref=e283]: 크리덴셜
+            - generic [ref=e287]:
+              - link "구글 크리덴셜" [ref=e290] [cursor=pointer]:
+                - /url: ./google-credential-ko
+                - paragraph [ref=e293]: 구글 크리덴셜
+              - link "슬랙 크리덴셜" [ref=e296] [cursor=pointer]:
+                - /url: ./slack-credential-ko
+                - paragraph [ref=e299]: 슬랙 크리덴셜
+          - generic [ref=e302]:
+            - link "API" [ref=e308] [cursor=pointer]:
+              - /url: ./api-ko
+              - paragraph [ref=e311]: API
+            - generic [ref=e315]:
+              - link "버전" [ref=e318] [cursor=pointer]:
+                - /url: ./api-version-ko
+                - paragraph [ref=e321]: 버전
+              - link "API 배포" [ref=e324] [cursor=pointer]:
+                - /url: ./api-release-ko
+                - paragraph [ref=e327]: API 배포
+              - link "어빌리티 API cURL" [ref=e330] [cursor=pointer]:
+                - /url: ./ability-endpoint-ko
+                - paragraph [ref=e333]: 어빌리티 API cURL
+              - link "에이전트 API cURL" [ref=e336] [cursor=pointer]:
+                - /url: ./agent-endpoint-ko
+                - paragraph [ref=e339]: 에이전트 API cURL
+              - link "API 호출 (포스트맨)" [ref=e342] [cursor=pointer]:
+                - /url: ./postman-ko
+                - paragraph [ref=e345]: API 호출 (포스트맨)
+        - link "노드정보" [ref=e352] [cursor=pointer]:
+          - /url: ./node-info-ko
+          - paragraph [ref=e355]: 노드정보
+    - generic [ref=e361]:
+      - paragraph [ref=e365]: Get Started
+      - heading "도구 노드 사용하기 (Gmail)" [level=1] [ref=e368]
+      - generic [ref=e369]:
+        - paragraph [ref=e370]:
+          - text: 어빌리티(Ability) 가이드의 튜토리얼은
+          - strong [ref=e371]: 에이전트리아(Agentria)
+          - text: 입문자를 위한 가장 기본적이면서도 핵심적인 과정을 다룹니다.
+        - paragraph [ref=e372]: 본 튜토리얼은 지메일(Gmail) 노드를 활성화하고, 구글(Google) 계정을 연동하여 메일을 전송하는 어빌리티를 직접 만들고 실행합니다.
+        - paragraph [ref=e373]
+        - heading "사전 준비" [level=2] [ref=e374]:
+          - link "사전 준비" [ref=e375] [cursor=pointer]:
+            - /url: ./gmail-node-ko#%EC%82%AC%EC%A0%84-%EC%A4%80%EB%B9%84
+        - paragraph [ref=e376]
+        - paragraph [ref=e377]:
+          - text: 시작을 위해,
+          - strong [ref=e378]: 에이전트리아
+          - text: 에서 프로젝트(Project)를 생성한 후, 어빌리티 캔버스(Canvas)로 진입합니다.
+        - paragraph [ref=e379]:
+          - text: 캔버스 진입 절차는 🔗
+          - link "3단계 핵심 가이드" [ref=e380] [cursor=pointer]:
+            - /url: ./3step-core-ko
+          - text: 의 1단계(프로젝트 생성 및 컴포저 선택)를 참고하시기 바랍니다.
+        - paragraph [ref=e381]
+        - paragraph [ref=e382]: 본 튜토리얼을 완료하면 다음과 같은 작업을 수행할 수 있습니다.
+        - list [ref=e383]:
+          - listitem [ref=e384]:
+            - paragraph [ref=e385]: 노드(Node) 추가하기
+          - listitem [ref=e386]:
+            - paragraph [ref=e387]: 스타트 노드(Start Node)에서 변수 선언하기
+          - listitem [ref=e388]:
+            - paragraph [ref=e389]: 노드 연결하기
+          - listitem [ref=e390]:
+            - paragraph [ref=e391]: 지메일 크리덴셜(Credential) 등록하기
+          - listitem [ref=e392]:
+            - paragraph [ref=e393]: 구글 계정 연동하기
+          - listitem [ref=e394]:
+            - paragraph [ref=e395]: 지메일 노드에서 크리덴셜 설정하기
+          - listitem [ref=e396]:
+            - paragraph [ref=e397]: 지메일 노드로 메일 세팅하기
+          - listitem [ref=e398]:
+            - paragraph [ref=e399]: 어빌리티 테스트를 통해 워크플로(Workflow) 실행 결과 확인하기
+        - paragraph [ref=e400]
+        - 'heading "1단계: 구글 OAuth 생성" [level=2] [ref=e401]':
+          - 'link "1단계: 구글 OAuth 생성" [ref=e402] [cursor=pointer]':
+            - /url: ./gmail-node-ko#1%EB%8B%A8%EA%B3%84-%EA%B5%AC%EA%B8%80-oauth-%EC%83%9D%EC%84%B1
+        - paragraph [ref=e403]
+        - paragraph [ref=e404]: 지메일 노드를 사용하기 위해서는 구글에서 제공하는 인증키를 기반으로 자격증명을 설정해야 합니다.
+        - paragraph [ref=e405]: 구글의 액세스 토큰은 OAuth(오픈인증, Open Authorization) 플로우를 거쳐야 발급할 수 있습니다.
+        - paragraph [ref=e406]:
+          - text: 구글 OAuth 생성이 처음이라면 🔗
+          - link "구글 크리덴셜" [ref=e407] [cursor=pointer]:
+            - /url: ./google-credential-ko
+          - text: 사용 가이드를 참고하시기 바랍니다.
+        - paragraph [ref=e408]
+        - 'heading "2단계: 지메일 크리덴셜 등록" [level=2] [ref=e409]':
+          - 'link "2단계: 지메일 크리덴셜 등록" [ref=e410] [cursor=pointer]':
+            - /url: ./gmail-node-ko#2%EB%8B%A8%EA%B3%84-%EC%A7%80%EB%A9%94%EC%9D%BC-%ED%81%AC%EB%A6%AC%EB%8D%B4%EC%85%9C-%EB%93%B1%EB%A1%9D
+        - paragraph [ref=e411]
+        - paragraph [ref=e412]
+        - paragraph [ref=e413]: 크리덴셜은 시스템이나 서비스에 접근하기 위해 사용자를 인증하는 데 필요한 자격 증명 정보입니다.
+        - paragraph [ref=e414]:
+          - text: 본 튜토리얼 진행을 위해 크리덴셜 등록 시 템플릿을
+          - code [ref=e415]: Google Gmail
+          - text: 로 설정합니다.
+        - paragraph [ref=e416]:
+          - text: 구글 크리덴셜 사용 가이드를 따라 진행하며 지메일 크리덴셜을 등록했다면
+          - strong [ref=e417]: 3단계
+          - text: 로 넘어갑니다.
+        - paragraph [ref=e418]
+        - 'heading "3단계: 지메일 노드 추가" [level=2] [ref=e419]':
+          - 'link "3단계: 지메일 노드 추가" [ref=e420] [cursor=pointer]':
+            - /url: ./gmail-node-ko#3%EB%8B%A8%EA%B3%84-%EC%A7%80%EB%A9%94%EC%9D%BC-%EB%85%B8%EB%93%9C-%EC%B6%94%EA%B0%80
+        - paragraph [ref=e421]
+        - paragraph [ref=e422]
+        - paragraph [ref=e423]:
+          - text: 캔버스 하단의
+          - code [ref=e424]: +노드 추가(Add Node)
+          - text: 버튼을 클릭하고 사이드바 도구(Tools) 카테고리에서 지메일 노드를 선택해 드래그 앤 드롭(Drag and Drop)으로 배치합니다.
+        - paragraph [ref=e425]: 노드 위에 마우스를 올려 편집 아이콘을 눌러 옵션 창을 띄웁니다.
+        - paragraph [ref=e426]:
+          - text: 노드의 이름을
+          - code [ref=e427]: Send Gmail Node
+          - text: 로 수정합니다.
+        - paragraph [ref=e428]: 지메일 노드는 Send, Get, List, Delete 등을 선택할 수 있기 때문에 운영 설정에 따라 노드 명을 수정해서 사용하는 것이 좋습니다.
+        - paragraph [ref=e429]
+        - 'heading "4단계: 인풋 변수 선언" [level=2] [ref=e430]':
+          - 'link "4단계: 인풋 변수 선언" [ref=e431] [cursor=pointer]':
+            - /url: ./gmail-node-ko#4%EB%8B%A8%EA%B3%84-%EC%9D%B8%ED%92%8B-%EB%B3%80%EC%88%98-%EC%84%A0%EC%96%B8
+        - paragraph [ref=e432]
+        - paragraph [ref=e433]
+        - paragraph [ref=e434]:
+          - strong [ref=e435]: 에이전트리아
+          - text: 캔버스에는 기본적으로
+          - code [ref=e436]: 스타트 노드(Start Node)
+          - text: 와
+          - code [ref=e437]: 엔드 노드(End Node)
+          - text: 가 하나씩 배치되어 있습니다.
+        - list [ref=e438]:
+          - listitem [ref=e439]:
+            - text: •
+            - paragraph [ref=e440]: 스타트 노드는 전체 흐름을 시작합니다.
+          - listitem [ref=e441]:
+            - text: •
+            - paragraph [ref=e442]: 엔드 노드는 전체 흐름을 종료합니다.
+        - paragraph [ref=e443]
+        - paragraph [ref=e444]: 스타트 노드를 더블 클릭하면 노드 편집기가 열리며, 여기에서 자료형과 이름, 설명을 설정할 수 있습니다.
+        - paragraph [ref=e445]:
+          - text: 본 튜토리얼에서는 메일을 전송해야 하므로, 자료형을
+          - code [ref=e446]: String
+          - text: 으로 두고 변수명을 다음과 같이 설정합니다.
+        - list [ref=e447]:
+          - listitem [ref=e448]:
+            - text: •
+            - paragraph [ref=e449]:
+              - code [ref=e450]: To
+          - listitem [ref=e451]:
+            - text: •
+            - paragraph [ref=e452]:
+              - code [ref=e453]: Subject
+          - listitem [ref=e454]:
+            - text: •
+            - paragraph [ref=e455]:
+              - code [ref=e456]: MessageBody
+        - paragraph [ref=e457]
+        - paragraph [ref=e458]: 변수 선언을 완료했다면 다시 캔버스로 돌아갑니다.
+        - paragraph [ref=e459]
+        - 'heading "5단계: 엣지로 노드 연결" [level=2] [ref=e460]':
+          - 'link "5단계: 엣지로 노드 연결" [ref=e461] [cursor=pointer]':
+            - /url: ./gmail-node-ko#5%EB%8B%A8%EA%B3%84-%EC%97%A3%EC%A7%80%EB%A1%9C-%EB%85%B8%EB%93%9C-%EC%97%B0%EA%B2%B0
+        - paragraph [ref=e462]
+        - paragraph [ref=e463]
+        - paragraph [ref=e464]: 스타트 노드에서 입력받은 변수를 지메일 노드에서 사용하기 위해서는 엣지를 사용해 두 노드를 연결해야 합니다.
+        - paragraph [ref=e465]: 스타트 노드의 오른쪽 아웃 핀(Out-Pin)을 지메일 노드의 왼쪽 인 핀(In-Pin)과 연결합니다.
+        - paragraph [ref=e466]: 이렇게 하면 스타트 노드의 입력값이 지메일 노드로 전달됩니다.
+        - paragraph [ref=e467]
+        - 'heading "6단계: 지메일 노드 설정" [level=2] [ref=e468]':
+          - 'link "6단계: 지메일 노드 설정" [ref=e469] [cursor=pointer]':
+            - /url: ./gmail-node-ko#6%EB%8B%A8%EA%B3%84-%EC%A7%80%EB%A9%94%EC%9D%BC-%EB%85%B8%EB%93%9C-%EC%84%A4%EC%A0%95
+        - paragraph [ref=e470]
+        - paragraph [ref=e471]
+        - paragraph [ref=e472]: 지메일 노드를 더블클릭하면 노드 편집기가 열립니다.
+        - paragraph [ref=e473]: 노드를 사용하기 위해 등록해 둔 지메일 크리덴셜을 선택해 불러옵니다.
+        - paragraph [ref=e474]:
+          - text: 지메일 노드는
+          - code [ref=e475]: Operation
+          - text: 설정을 통해 메일을 어떤 방식으로 사용할지 선택할 수 있습니다.
+        - paragraph [ref=e476]:
+          - text: 본 튜토리얼은 메일 전송하기를 목표로 하므로,
+          - code [ref=e477]: Send Message
+          - text: 를 선택합니다.
+        - paragraph [ref=e478]
+        - paragraph [ref=e479]:
+          - text: 메일을 전송하기 위해 스타트 노드에서 받는 이(
+          - code [ref=e480]: To
+          - text: ), 제목(
+          - code [ref=e481]: Subject
+          - text: ), 메시지 내용(
+          - code [ref=e482]: MessageBody
+          - text: )을 변수로 선언합니다.
+        - paragraph [ref=e483]: 입력값을 받아서 사용하기 위해서는 어댑터(Adapter) 변수를 선택해야 합니다.
+        - paragraph [ref=e484]:
+          - code [ref=e485]: Show Optional Variables
+          - text: 버튼을 클릭하고
+          - code [ref=e486]: +Add Optional Variables
+          - text: 를 클릭하면 메일에 사용할 수 있는 다양한 옵션 변수를 확인할 수 있습니다.
+        - paragraph [ref=e487]: 본 튜토리얼에서 선택할 변수는 다음과 같습니다.
+        - paragraph [ref=e488]
+        - paragraph [ref=e489]
+        - list [ref=e490]:
+          - listitem [ref=e491]:
+            - text: •
+            - paragraph [ref=e492]:
+              - code [ref=e493]: to
+          - listitem [ref=e494]:
+            - text: •
+            - paragraph [ref=e495]:
+              - code [ref=e496]: subject
+          - listitem [ref=e497]:
+            - text: •
+            - paragraph [ref=e498]:
+              - code [ref=e499]: message_body
+        - paragraph [ref=e500]
+        - paragraph [ref=e501]
+        - paragraph [ref=e502]: 지메일 노드는 기본적으로 JSON 형식의 아웃풋을 반환합니다.
+        - paragraph [ref=e503]
+        - 'heading "7단계: 드래그 앤 드롭으로 변수 바인딩" [level=2] [ref=e504]':
+          - 'link "7단계: 드래그 앤 드롭으로 변수 바인딩" [ref=e505] [cursor=pointer]':
+            - /url: ./gmail-node-ko#7%EB%8B%A8%EA%B3%84-%EB%93%9C%EB%9E%98%EA%B7%B8-%EC%95%A4-%EB%93%9C%EB%A1%AD%EC%9C%BC%EB%A1%9C-%EB%B3%80%EC%88%98-%EB%B0%94%EC%9D%B8%EB%94%A9
+        - paragraph [ref=e506]
+        - paragraph [ref=e507]
+        - paragraph [ref=e508]:
+          - strong [ref=e509]: 에이전트리아
+          - text: 에서는 코드를 작성하지 않고, 드래그 앤 드롭 방식으로 변수를 손쉽게 불러올 수 있습니다.
+        - paragraph [ref=e510]: 입력 변수와 어댑터 변수를 이름에 맞게 연결합니다.
+        - paragraph [ref=e511]
+        - list [ref=e512]:
+          - listitem [ref=e513]:
+            - text: •
+            - paragraph [ref=e514]:
+              - text: "to:"
+              - code [ref=e515]: To
+          - listitem [ref=e516]:
+            - text: •
+            - paragraph [ref=e517]:
+              - text: "subject:"
+              - code [ref=e518]: Subject
+          - listitem [ref=e519]:
+            - text: •
+            - paragraph [ref=e520]:
+              - text: "message_body:"
+              - code [ref=e521]: MessageBody
+        - paragraph [ref=e522]
+        - paragraph [ref=e523]
+        - 'heading "8단계: 노드 테스트 실행" [level=2] [ref=e524]':
+          - 'link "8단계: 노드 테스트 실행" [ref=e525] [cursor=pointer]':
+            - /url: ./gmail-node-ko#8%EB%8B%A8%EA%B3%84-%EB%85%B8%EB%93%9C-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8B%A4%ED%96%89
+        - paragraph [ref=e526]
+        - paragraph [ref=e527]
+        - paragraph [ref=e528]:
+          - text: 설정을 완료한 후, 편집기 내 인풋 영역의
+          - code [ref=e529]: 테스트(TEST)
+          - text: 버튼을 클릭하여 노드를 점검할 수 있습니다.
+        - paragraph [ref=e530]: 노드 테스트(Node Test)란 노드 편집기에서 개별적으로 진행할 수 있는 점검 작업입니다.
+        - paragraph [ref=e531]: 이를 통해 노드가 올바르게 구성되어 있음을 확인하고 다른 노드와 연결하면 오류를 최소화하고 흐름을 안정적으로 이어 나갈 수 있습니다.
+        - paragraph [ref=e532]:
+          - text: 입력창에 받는 이(메일 주소), 제목, 메시지 내용을 입력한 뒤
+          - code [ref=e533]: 테스트(Test)
+          - text: 를 실행하면, 출력변수인
+          - code [ref=e534]: result
+          - text: 에 전송 정보가 반영됩니다.
+        - paragraph [ref=e535]: 브라우저로 지메일에 접속하여 보낸 메일함을 확인하거나 받는 이의 메일함을 확인하면 메일이 정상적으로 전송되었음을 알 수 있습니다.
+        - paragraph [ref=e536]
+        - 'heading "9단계: 엔드 노드 연결" [level=2] [ref=e537]':
+          - 'link "9단계: 엔드 노드 연결" [ref=e538] [cursor=pointer]':
+            - /url: ./gmail-node-ko#9%EB%8B%A8%EA%B3%84-%EC%97%94%EB%93%9C-%EB%85%B8%EB%93%9C-%EC%97%B0%EA%B2%B0
+        - paragraph [ref=e539]
+        - paragraph [ref=e540]
+        - paragraph [ref=e541]: 이제 지메일 전송 결괏값을 엔드 노드로 전달합니다.
+        - paragraph [ref=e542]: 다시 캔버스로 돌아와서 지메일 노드와 엔드 노드를 엣지로 연결합니다.
+        - paragraph [ref=e543]:
+          - text: 엔드 노드를 더블클릭하여 노드 편집기를 열고, JSON 타입의
+          - code [ref=e544]: Mail
+          - text: 변수를 추가합니다.
+        - paragraph [ref=e545]:
+          - text: 지메일 노드에서 아웃풋 값을 담은
+          - code [ref=e546]: result
+          - text: 변수를 선택 또는 드래그 앤 드롭 방식으로
+          - code [ref=e547]: Mail
+          - text: 변수와 연결합니다.
+        - paragraph [ref=e548]: 이로써 ‘지메일 전송’ 워크플로가 완성되었습니다.
+        - paragraph [ref=e549]
+        - 'heading "10단계: 어빌리티 테스트로 워크플로 전체 실행" [level=2] [ref=e550]':
+          - 'link "10단계: 어빌리티 테스트로 워크플로 전체 실행" [ref=e551] [cursor=pointer]':
+            - /url: ./gmail-node-ko#10%EB%8B%A8%EA%B3%84-%EC%96%B4%EB%B9%8C%EB%A6%AC%ED%8B%B0-%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%A1%9C-%EC%9B%8C%ED%81%AC%ED%94%8C%EB%A1%9C-%EC%A0%84%EC%B2%B4-%EC%8B%A4%ED%96%89
+        - paragraph [ref=e552]
+        - paragraph [ref=e553]
+        - paragraph [ref=e554]:
+          - text: 캔버스 우측 하단에서
+          - code [ref=e555]: 테스트 실행(RUN TEST)
+          - text: 버튼을 클릭하여 완성된 전체 워크플로를 실행할 수 있습니다.
+        - paragraph [ref=e556]:
+          - text: 입력창에 맞게 받는 이(메일 주소), 제목, 메시지 내용을 입력한 뒤
+          - code [ref=e557]: 테스트 실행(Run Test)
+          - text: 를 실행하면,
+          - code [ref=e558]: Mail
+          - text: 결과에 전송 정보가 표시됩니다.
+        - paragraph [ref=e559]: 브라우저로 지메일에 접속하여 보낸 메일함을 확인하거나 받는 이의 메일함을 확인하면 메일이 정상적으로 전송되었음을 알 수 있습니다.
+        - paragraph [ref=e560]
+        - heading "다음 단계" [level=2] [ref=e561]:
+          - link "다음 단계" [ref=e562] [cursor=pointer]:
+            - /url: ./gmail-node-ko#%EB%8B%A4%EC%9D%8C-%EB%8B%A8%EA%B3%84
+        - paragraph [ref=e563]
+        - paragraph [ref=e564]
+        - paragraph [ref=e565]:
+          - text: 🎉 축하합니다!
+          - strong [ref=e566]: 에이전트리아
+          - text: 를 사용해 ‘지메일 전송’ 워크플로를 완성했습니다.
+        - paragraph [ref=e567]: 이제 다양한 운영 설정을 적용해 결과를 확인해 보고, 변수를 추가하며 워크플로를 확장해 보세요.
+        - paragraph [ref=e568]
+        - paragraph [ref=e569]:
+          - strong [ref=e570]: 에이전트리아
+          - text: 는 아이디어를 현실로 바꾸는 가능성의 공간입니다.
+        - paragraph [ref=e571]: 당신의 상상력으로 워크플로는 무한히 확장될 수 있습니다.
+        - paragraph [ref=e572]
+        - paragraph [ref=e573]
+        - list [ref=e574]:
+          - listitem [ref=e575]:
+            - text: •
+            - paragraph [ref=e576]:
+              - text: 더 많은 어빌리티 예제가 궁금하다면 🔗
+              - link "어빌리티 가이드" [ref=e577] [cursor=pointer]:
+                - /url: ./ability-guide-ko
+              - text: 페이지를 확인하세요.
+          - listitem [ref=e578]:
+            - text: •
+            - paragraph [ref=e579]:
+              - text: 에이전트 예제를 원한다면 🔗
+              - link "에이전트 가이드" [ref=e580] [cursor=pointer]:
+                - /url: ./agent-guide-ko
+              - text: 페이지를 확인하세요.
+        - paragraph [ref=e581]
+        - paragraph [ref=e582]
+  - navigation [ref=e586]:
+    - link "Agentria home" [ref=e588] [cursor=pointer]:
+      - /url: ../ko
+      - img "Agentria home" [ref=e590]
+    - generic [ref=e592]:
+      - generic [ref=e593]:
+        - link "Features" [ref=e595] [cursor=pointer]:
+          - /url: ../ko#topfeatures
+          - paragraph [ref=e597]: Features
+        - link "Pricing" [ref=e599] [cursor=pointer]:
+          - /url: ../ko#pricing
+          - paragraph [ref=e601]: Pricing
+        - link "Docs" [ref=e603] [cursor=pointer]:
+          - /url: ./about-agentria-ko
+          - paragraph [ref=e605]: Docs
+      - link "EN · KO" [ref=e607] [cursor=pointer]:
+        - /url: ./gmail-node
+        - paragraph [ref=e609]: EN · KO
+      - link "Try Now" [ref=e611] [cursor=pointer]:
+        - /url: https://app.agentria.ai
+        - paragraph [ref=e613]: Try Now
