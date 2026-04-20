@@ -25,7 +25,7 @@ nav_exclude: true
 
 ## 1️⃣ Tailwind CSS란?
 
-**Tailwind CSS**는 **유틸리티 클래스(Utility Class)** 기반의 CSS 프레임워크입니다.
+**Tailwind CSS**는 **유틸리티 클래스**(Utility Class) 기반의 CSS 프레임워크입니다.
 
 ### CSS 속성의 축약어 사전
 
@@ -46,7 +46,7 @@ CSS를 직접 작성하는 대신, 미리 정의된 클래스를 HTML에 바로 
 
 ### 왜 인기인가?
 
-2025년 기준 CSS 프레임워크 사용률 **1위(37%)** 를 차지하고 있습니다. 인기 이유는 다음과 같습니다.
+2025년 기준 CSS 프레임워크 사용률 **1위**(37%) 를 차지하고 있습니다. 인기 이유는 다음과 같습니다.
 
 - **CSS 파일을 따로 관리하지 않아도 됩니다** — HTML 하나로 구조와 스타일을 동시에
 - **디자인 일관성** — 정해진 간격(4, 8, 12px...)과 색상 팔레트를 사용하므로 디자인이 통일됩니다
@@ -99,7 +99,7 @@ Bootstrap은 `btn btn-primary`처럼 **미리 만들어진 컴포넌트**를 사
 
 ## 2️⃣ CDN으로 시작하기 (v4)
 
-**CDN(Content Delivery Network)** 이란 인터넷에서 파일을 가져오는 방법입니다. npm으로 설치하지 않고도 `<script>` 태그 하나로 Tailwind를 바로 사용할 수 있습니다.
+**CDN**(Content Delivery Network) 이란 인터넷에서 파일을 가져오는 방법입니다. npm으로 설치하지 않고도 `<script>` 태그 하나로 Tailwind를 바로 사용할 수 있습니다.
 
 ```html
 <!DOCTYPE html>
@@ -488,7 +488,7 @@ purple, fuchsia, pink, rose         ← 분홍/보라 계열
 
 ## 5️⃣ hover, focus, 상태 클래스
 
-Tailwind에서 `hover:`, `focus:` 등의 **접두사(prefix)** 를 붙이면 해당 상태일 때만 스타일이 적용됩니다.
+Tailwind에서 `hover:`, `focus:` 등의 **접두사**(prefix) 를 붙이면 해당 상태일 때만 스타일이 적용됩니다.
 
 ### 기본 상태 클래스
 

@@ -296,7 +296,7 @@ mode: "chat"
 
 ### Context Packet — 맥락 꾸러미
 
-좋은 AI 요청에는 5가지 요소가 있습니다. 이를 **Context Packet(맥락 꾸러미)**이라고 합니다.
+좋은 AI 요청에는 5가지 요소가 있습니다. 이를 **Context Packet**(맥락 꾸러미)이라고 합니다.
 
 ```
 1. 목표 (Goal)
@@ -509,6 +509,6 @@ searchTodos('없는것');
 
 ### 다음 장 미리보기
 
-Custom Instructions로 AI에게 규칙을 알려주고, Prompt Files로 반복 작업을 자동화했습니다. 이제 한 걸음 더 나아가 **TDD(테스트 주도 개발)**와 **Custom Agent**를 결합합니다. 테스트를 먼저 작성하고, AI에게 구현을 맡기는 전문적인 개발 방법론을 배웁니다.
+Custom Instructions로 AI에게 규칙을 알려주고, Prompt Files로 반복 작업을 자동화했습니다. 이제 한 걸음 더 나아가 **TDD**(테스트 주도 개발)와 **Custom Agent**를 결합합니다. 테스트를 먼저 작성하고, AI에게 구현을 맡기는 전문적인 개발 방법론을 배웁니다.
 
 {% endraw %}
