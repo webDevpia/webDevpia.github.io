@@ -245,7 +245,7 @@ Tailwind의 숫자 단위: **숫자 × 0.25rem** (기본 폰트 16px 기준)
 | `display: flex` | `flex` | 동일 |
 | `display: grid` | `grid` | 동일 |
 | `display: block` | `block` | 동일 |
-| `display: hidden` | `hidden` | none 대신 hidden |
+| `display: none` | `hidden` | Tailwind에서는 hidden으로 표현 |
 | `justify-content: center` | `justify-center` | justify + 값 |
 | `justify-content: space-between` | `justify-between` | |
 | `justify-content: flex-end` | `justify-end` | |
@@ -626,7 +626,7 @@ input {
 }
 input:focus {
     outline: none;
-    ring: 2px solid #3b82f6;
+    box-shadow: 0 0 0 2px #3b82f6;
     border-color: transparent;
 }
 ```
@@ -809,10 +809,13 @@ overflow: hidden  →  overflow-hidden
 
 ### 다음 장 미리보기
 
-02장에서는 **반응형 디자인**을 다룹니다.
-- CSS 03장의 미디어 쿼리를 Tailwind에서는 어떻게 작성하는지
-- `sm:`, `md:`, `lg:` 접두사로 한 줄로 반응형 구현
-- 내비게이션 + 히어로 + 카드 그리드 + 폼 + 푸터로 구성된 랜딩 페이지 완성
+02장에서는 **핵심 패턴**을 다룹니다.
+- `position`, `z-index`로 요소 배치 제어
+- `group-hover`, `peer`로 연관 요소 스타일링
+- `transition`, `animate`로 부드러운 인터랙션 구현
+- Tailwind 공식 문서를 활용하여 필요한 클래스를 찾는 방법
+
+03장에서는 반응형 랜딩 페이지 프로젝트를 완성합니다.
 
 ### 실습 과제
 

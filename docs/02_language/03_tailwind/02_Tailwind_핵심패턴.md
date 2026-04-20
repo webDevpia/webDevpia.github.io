@@ -13,10 +13,10 @@ permalink: /language/tailwind/patterns
 ## 학습 목표
 
 - position, z-index, overflow 등 레이아웃 심화 클래스를 활용할 수 있다
-- group hover, transition, 다크모드 등 인터랙티브 패턴을 적용할 수 있다
+- group hover, transition 등 인터랙티브 패턴을 적용할 수 있다
 - Tailwind 공식 문서를 활용하여 필요한 클래스를 스스로 찾을 수 있다
 
-> **사전 준비:** 01장에서 유틸리티 클래스 개념, Flexbox, 반응형 접두어(sm/md/lg)를 이해한 상태에서 진행합니다.
+> **사전 준비:** 01장에서 유틸리티 클래스 개념과 Flexbox 클래스를 이해한 상태에서 진행합니다.
 
 <a id="toc"></a>
 
@@ -457,14 +457,14 @@ Tailwind의 스케일에 없는 정확한 값이 필요할 때 `[값]` 형태로
 | 설정 파일 | `tailwind.config.js` | CSS 내 `@theme` 지시어 |
 | 초기화 | `@tailwind base/components/utilities` 3줄 | `@import "tailwindcss"` 1줄 |
 | 빌드 엔진 | Node.js | Rust 기반 (5~100배 빠름) |
-| CDN | 별도 설치 필요 | `<script src="cdn.tailwindcss.com">` 1줄 |
+| CDN | 별도 설치 필요 | `<script src="cdn.jsdelivr.net/npm/@tailwindcss/browser@4">` 1줄 |
 
 ```html
 <!-- v4 CDN 사용 (수업 방식) — 설정 파일 불필요 -->
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
   <div class="bg-blue-500 text-white p-4">v4 CDN으로 바로 사용</div>
@@ -542,7 +542,7 @@ Tailwind의 스케일에 없는 정확한 값이 필요할 때 `[값]` 형태로
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="min-h-screen">
   <!-- sticky 내비게이션 -->
@@ -581,7 +581,7 @@ Tailwind의 스케일에 없는 정확한 값이 필요할 때 `[값]` 형태로
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="p-8 bg-gray-100 min-h-screen">
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -639,7 +639,7 @@ Tailwind의 스케일에 없는 정확한 값이 필요할 때 `[값]` 형태로
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="p-8 bg-gray-50">
   <p class="text-gray-500 text-sm mb-4">콘텐츠를 불러오는 동안 표시되는 스켈레톤 UI</p>
