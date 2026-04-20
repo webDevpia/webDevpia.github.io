@@ -730,8 +730,8 @@ Image.network(
 class ImageGalleryScreen extends StatelessWidget {
   const ImageGalleryScreen({super.key});
 
-  // 랜덤 이미지 URL 생성 (picsum.photos 무료 서비스)
-  String _imageUrl(int id) => 'https://picsum.photos/seed/$id/300/300';
+  // 랜덤 이미지 URL 생성 (placehold.co 무료 서비스)
+  String _imageUrl(int id) => 'https://placehold.co/300x300';
 
   @override
   Widget build(BuildContext context) {
@@ -801,7 +801,7 @@ class ImageDetailScreen extends StatelessWidget {
         child: Hero(
           tag: 'image-$imageId',
           child: Image.network(
-            'https://picsum.photos/seed/$imageId/600/600',
+            'https://placehold.co/600x600',
             fit: BoxFit.contain,
           ),
         ),
