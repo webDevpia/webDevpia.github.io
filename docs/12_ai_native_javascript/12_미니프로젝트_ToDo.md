@@ -165,7 +165,7 @@ mkdir src tests
     "test:watch": "vitest"
   },
   "devDependencies": {
-    "vitest": "^2.0.0"
+    "vitest": "^3.0.0"
   }
 }
 ```

@@ -247,10 +247,13 @@ el.classList.contains('highlight'); // true 또는 false 반환
 
 ### 실습: 색상 변경 버튼 만들기
 
+> 💡 `index.html`과 `app.js` 두 파일을 만드세요. HTML 파일의 `</body>` 앞에 `<script src="app.js"></script>`를 추가하세요.
+
 ```html
 <!-- index.html -->
 <div id="box" style="width:200px; height:200px; background:blue;"></div>
 <button id="changeBtn">색상 바꾸기</button>
+<script src="app.js"></script>
 ```
 
 ```javascript
