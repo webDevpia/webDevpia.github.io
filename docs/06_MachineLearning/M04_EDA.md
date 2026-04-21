@@ -526,29 +526,24 @@ print("고액 요금은 실제 존재할 수 있음(1등석) → 제거보다 Ca
 고액 요금은 실제 존재할 수 있음(1등석) → 제거보다 Capping 권장
 ```
 
-<details markdown="1">
+{::nomarkdown}
+<details>
 <summary>📐 더 알아보기 — IQR 방법의 수학적 근거</summary>
-
-**IQR (Interquartile Range, 사분위 범위)**:
-```
-IQR = Q3 - Q1 (75번째 백분위수 - 25번째 백분위수)
-```
-
-**Tukey의 Fence 규칙** (1977):
-```
-이상치: x < Q1 - 1.5×IQR  또는  x > Q3 + 1.5×IQR
+<p><strong>IQR (Interquartile Range, 사분위 범위)</strong>:</p>
+<pre><code>IQR = Q3 - Q1 (75번째 백분위수 - 25번째 백분위수)
+</code></pre>
+<p><strong>Tukey의 Fence 규칙</strong> (1977):</p>
+<pre><code>이상치: x < Q1 - 1.5×IQR  또는  x > Q3 + 1.5×IQR
 극단 이상치: x < Q1 - 3×IQR  또는  x > Q3 + 3×IQR
-```
-
-**정규분포에서의 의미**:  
-정규분포를 따르는 데이터에서 이 경계 밖에 있을 확률은 약 0.7%입니다.  
-즉, 100개 중 0.7개 정도만 이상치로 분류됩니다.
-
-**z-score 방법과 차이**:  
-z-score (|z| > 3)는 평균과 표준편차를 사용하므로 이상치 자체에 영향받습니다.  
-IQR은 중앙값 기반이라 이상치에 더 강건(robust)합니다.
-
+</code></pre>
+<p><strong>정규분포에서의 의미</strong>:</p>
+<p>정규분포를 따르는 데이터에서 이 경계 밖에 있을 확률은 약 0.7%입니다.</p>
+<p>즉, 100개 중 0.7개 정도만 이상치로 분류됩니다.</p>
+<p><strong>z-score 방법과 차이</strong>:</p>
+<p>z-score (|z| > 3)는 평균과 표준편차를 사용하므로 이상치 자체에 영향받습니다.</p>
+<p>IQR은 중앙값 기반이라 이상치에 더 강건(robust)합니다.</p>
 </details>
+{:/nomarkdown}
 
 ---
 
@@ -633,23 +628,20 @@ plt.show()
 > **주의**: 상관관계 ≠ 인과관계. `pclass`와 `survived`의 상관관계는  
 > "1등석이 생존시킨다"가 아니라 "구조 우선순위와 좋은 위치 등 여러 요인"이 복합된 결과입니다.
 
-<details markdown="1">
+{::nomarkdown}
+<details>
 <summary>📐 더 알아보기 — Pearson 상관계수 수식</summary>
-
-**Pearson 상관계수 r**:
-```
-r(X, Y) = Σ[(Xi - X̄)(Yi - Ȳ)] / √[Σ(Xi - X̄)² × Σ(Yi - Ȳ)²]
-```
-
-- r = 1: 완벽한 양의 선형 관계
-- r = -1: 완벽한 음의 선형 관계
-- r = 0: 선형 관계 없음 (비선형 관계는 있을 수 있음!)
-
-**한계**: Pearson은 선형 관계만 측정합니다.  
-비선형 관계(U자형, 지수형 등)는 r이 0에 가까워도 강한 관계가 있을 수 있습니다.  
-이럴 때는 Spearman 순위 상관계수를 사용합니다: `df.corr(method='spearman')`
-
+<p><strong>Pearson 상관계수 r</strong>:</p>
+<pre><code>r(X, Y) = Σ[(Xi - X̄)(Yi - Ȳ)] / √[Σ(Xi - X̄)² × Σ(Yi - Ȳ)²]
+</code></pre>
+<p>- r = 1: 완벽한 양의 선형 관계</p>
+<p>- r = -1: 완벽한 음의 선형 관계</p>
+<p>- r = 0: 선형 관계 없음 (비선형 관계는 있을 수 있음!)</p>
+<p><strong>한계</strong>: Pearson은 선형 관계만 측정합니다.</p>
+<p>비선형 관계(U자형, 지수형 등)는 r이 0에 가까워도 강한 관계가 있을 수 있습니다.</p>
+<p>이럴 때는 Spearman 순위 상관계수를 사용합니다: <code>df.corr(method='spearman')</code></p>
 </details>
+{:/nomarkdown}
 
 ---
 

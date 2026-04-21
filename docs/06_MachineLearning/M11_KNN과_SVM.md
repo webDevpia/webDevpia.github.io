@@ -153,26 +153,18 @@ p2 = [4 6 1]
   코사인:       0.0269  (방향 유사도)
 ```
 
-<details markdown="1">
+{::nomarkdown}
+<details>
 <summary>📐 더 알아보기 — 유클리드 거리 수식</summary>
-
-두 점 $\mathbf{a} = (a_1, a_2, ..., a_n)$ 과 $\mathbf{b} = (b_1, b_2, ..., b_n)$ 사이의 유클리드 거리:
-
+<p>두 점 $\mathbf{a} = (a_1, a_2, ..., a_n)$ 과 $\mathbf{b} = (b_1, b_2, ..., b_n)$ 사이의 유클리드 거리:</p>
 $$
-d(\mathbf{a}, \mathbf{b}) = \sqrt{\sum_{i=1}^{n} (a_i - b_i)^2}
+<p>d(\mathbf{a}, \mathbf{b}) = \sqrt{\sum_{i=1}^{n} (a_i - b_i)^2}</p>
 $$
-
-**거리 척도 비교:**
-
-| 거리 | 수식 | 특징 |
-|---|---|---|
-| 유클리드 (L2) | $\sqrt{\sum(a_i - b_i)^2}$ | 직선 거리, 가장 일반적 |
-| 맨해튼 (L1) | $\sum\|a_i - b_i\|$ | 격자 경로, 이상값에 강건 |
-| 코사인 | $1 - \frac{\mathbf{a} \cdot \mathbf{b}}{\|\mathbf{a}\|\|\mathbf{b}\|}$ | 방향 유사도, NLP에서 많이 사용 |
-
-KNN에서 `metric='euclidean'` (기본값) 외에도 `'manhattan'`, `'cosine'` 등을 사용할 수 있습니다.
-
+<p><strong>거리 척도 비교:</strong></p>
+<table><tr><th>거리</th><th>수식</th><th>특징</th></tr><tr><td>유클리드 (L2)</td><td>$\sqrt{\sum(a_i - b_i)^2}$</td><td>직선 거리, 가장 일반적</td></tr><tr><td>맨해튼 (L1)</td><td>$\sum\</td><td>a_i - b_i\</td><td>$</td><td>격자 경로, 이상값에 강건</td></tr><tr><td>코사인</td><td>$1 - \frac{\mathbf{a} \cdot \mathbf{b}}{\</td><td>\mathbf{a}\</td><td>\</td><td>\mathbf{b}\</td><td>}$</td><td>방향 유사도, NLP에서 많이 사용</td></tr></table>
+<p>KNN에서 <code>metric='euclidean'</code> (기본값) 외에도 <code>'manhattan'</code>, <code>'cosine'</code> 등을 사용할 수 있습니다.</p>
 </details>
+{:/nomarkdown}
 
 ---
 
@@ -419,32 +411,26 @@ print(f"서포트 벡터 수: {len(svm_linear.support_vectors_)}")
 print(f"정확도: {svm_linear.score(X_scaled, y_svm):.4f}")
 ```
 
-<details markdown="1">
+{::nomarkdown}
+<details>
 <summary>📐 더 알아보기 — SVM 최적화 수식</summary>
-
-SVM의 목표: **마진을 최대화**하면서 올바르게 분류
-
+<p>SVM의 목표: <strong>마진을 최대화</strong>하면서 올바르게 분류</p>
 $$
-\max_{w, b} \frac{2}{\|w\|}  \quad \text{(마진 최대화)}
+<p>\max_{w, b} \frac{2}{\|w\|}  \quad \text{(마진 최대화)}</p>
 $$
-
-등가 목적식 (최소화로 변환):
-
+<p>등가 목적식 (최소화로 변환):</p>
 $$
-\min_{w, b} \frac{1}{2} \|w\|^2 \quad \text{subject to} \quad y_i(w^T x_i + b) \geq 1
+<p>\min_{w, b} \frac{1}{2} \|w\|^2 \quad \text{subject to} \quad y_i(w^T x_i + b) \geq 1</p>
 $$
-
-**소프트 마진 (C 파라미터):**
-일부 오분류를 허용하는 완화된 버전
-
+<p><strong>소프트 마진 (C 파라미터):</strong></p>
+<p>일부 오분류를 허용하는 완화된 버전</p>
 $$
-\min_{w, b} \frac{1}{2}\|w\|^2 + C \sum_i \xi_i
+<p>\min_{w, b} \frac{1}{2}\|w\|^2 + C \sum_i \xi_i</p>
 $$
-
-- C가 크면 → 마진 좁고 오분류 거의 없음 (과적합 위험)
-- C가 작으면 → 마진 넓고 일부 오분류 허용 (과소적합 위험)
-
+<p>- C가 크면 → 마진 좁고 오분류 거의 없음 (과적합 위험)</p>
+<p>- C가 작으면 → 마진 넓고 일부 오분류 허용 (과소적합 위험)</p>
 </details>
+{:/nomarkdown}
 
 ---
 

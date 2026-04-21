@@ -316,13 +316,12 @@ graph TD;
 
 The following uses the [`<details markdown="1">`](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-collapsed-sections) tag to create a collapsed section.
 
-<details markdown="block">
+{::nomarkdown}
+<details>
 <summary>Shopping list (click me!)</summary>
-
-This is content inside a `<details markdown="1">` dropdown.
-
-- [ ] Apples
-- [ ] Oranges
-- [ ] Milk
-
+<p>This is content inside a <code><details markdown="1"></code> dropdown.</p>
+<p>- [ ] Apples</p>
+<p>- [ ] Oranges</p>
+<p>- [ ] Milk</p>
 </details>
+{:/nomarkdown}

@@ -186,20 +186,18 @@ permalink: /machinelearning/intro
   - 이 꽃은 어떤 종인가? → Setosa / Versicolor / Virginica
 ```
 
-<details markdown="1">
+{::nomarkdown}
+<details>
 <summary>📐 더 알아보기 — 회귀와 분류의 수학적 차이</summary>
-
-**회귀**: 출력값 y가 실수 전체 범위 (y ∈ ℝ)  
-예: 집값 = w₁×면적 + w₂×층수 + b
-
-**분류**: 출력값 y가 클래스 레이블 {0, 1} 또는 {0, 1, 2, ...}  
-이진 분류: P(y=1|X) = σ(wᵀX + b), 여기서 σ는 시그모이드 함수
-
-이 차이가 손실 함수 선택에도 영향을 줍니다.
-- 회귀: 평균 제곱 오차(MSE)
-- 분류: 교차 엔트로피(Cross-Entropy)
-
+<p><strong>회귀</strong>: 출력값 y가 실수 전체 범위 (y ∈ ℝ)</p>
+<p>예: 집값 = w₁×면적 + w₂×층수 + b</p>
+<p><strong>분류</strong>: 출력값 y가 클래스 레이블 {0, 1} 또는 {0, 1, 2, ...}</p>
+<p>이진 분류: P(y=1|X) = σ(wᵀX + b), 여기서 σ는 시그모이드 함수</p>
+<p>이 차이가 손실 함수 선택에도 영향을 줍니다.</p>
+<p>- 회귀: 평균 제곱 오차(MSE)</p>
+<p>- 분류: 교차 엔트로피(Cross-Entropy)</p>
 </details>
+{:/nomarkdown}
 
 ---
 

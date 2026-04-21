@@ -427,18 +427,13 @@ Machine Learning 과정 (18장, 80시간)
 ### 5.2 수학 처리 — "더 알아보기" 접이식 패턴
 
 ```html
-<details markdown="1">
+{::nomarkdown}
+<details>
 <summary>📐 더 알아보기: MSE 수식</summary>
-
 $$MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$$
-
-| 기호 | 의미 |
-|------|------|
-| n | 데이터 개수 |
-| yᵢ | 실제 값 |
-| ŷᵢ | 예측 값 |
-
+<table><tr><th>기호</th><th>의미</th></tr><tr><td>n</td><td>데이터 개수</td></tr><tr><td>yᵢ</td><td>실제 값</td></tr><tr><td>ŷᵢ</td><td>예측 값</td></tr></table>
 </details>
+{:/nomarkdown}
 ```
 
 본문에서는 **"오차를 제곱해서 평균 낸 것"**으로만 설명하고, 수식은 접이식 블록에 배치.
