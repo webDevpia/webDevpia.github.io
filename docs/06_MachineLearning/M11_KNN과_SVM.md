@@ -153,7 +153,7 @@ p2 = [4 6 1]
   코사인:       0.0269  (방향 유사도)
 ```
 
-<details>
+<details markdown="0">
 <summary>📐 더 알아보기 — 유클리드 거리 수식</summary>
 
 두 점 $\mathbf{a} = (a_1, a_2, ..., a_n)$ 과 $\mathbf{b} = (b_1, b_2, ..., b_n)$ 사이의 유클리드 거리:
@@ -419,7 +419,7 @@ print(f"서포트 벡터 수: {len(svm_linear.support_vectors_)}")
 print(f"정확도: {svm_linear.score(X_scaled, y_svm):.4f}")
 ```
 
-<details>
+<details markdown="0">
 <summary>📐 더 알아보기 — SVM 최적화 수식</summary>
 
 SVM의 목표: **마진을 최대화**하면서 올바르게 분류

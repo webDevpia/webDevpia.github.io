@@ -314,12 +314,12 @@ graph TD;
 
 ### Collapsed Section
 
-The following uses the [`<details>`](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-collapsed-sections) tag to create a collapsed section.
+The following uses the [`<details markdown="0">`](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-collapsed-sections) tag to create a collapsed section.
 
 <details markdown="block">
 <summary>Shopping list (click me!)</summary>
 
-This is content inside a `<details>` dropdown.
+This is content inside a `<details markdown="0">` dropdown.
 
 - [ ] Apples
 - [ ] Oranges

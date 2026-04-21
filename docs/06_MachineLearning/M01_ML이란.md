@@ -186,7 +186,7 @@ permalink: /machinelearning/intro
   - 이 꽃은 어떤 종인가? → Setosa / Versicolor / Virginica
 ```
 
-<details>
+<details markdown="0">
 <summary>📐 더 알아보기 — 회귀와 분류의 수학적 차이</summary>
 
 **회귀**: 출력값 y가 실수 전체 범위 (y ∈ ℝ)  
