@@ -9,7 +9,7 @@ permalink: /ai-native-js/dom
 # 08장. DOM과 이벤트 — AI가 쓴 코드 읽기
 {: .no_toc }
 
-> **Day 3** · Phase 2 · 예상 시간: 60분
+> **Phase 2**
 
 > 💡 **실습 흐름**: 강사 시연 보기 → 함께 따라하기 → 혼자 변형해 보기
 

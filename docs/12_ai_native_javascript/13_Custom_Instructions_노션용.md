@@ -4,7 +4,7 @@ nav_exclude: true
 
 # 12장. Custom Instructions — AI에게 규칙 알려주기
 
-> **Day 3-4** · Phase 3 · 예상 시간: 45분
+> **Phase 3**
 
 > 💡 **실습 흐름**: 강사 시연 보기 → 함께 따라하기 → 혼자 변형해 보기
 

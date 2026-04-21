@@ -6,7 +6,7 @@ nav_exclude: true
 
 # 13장. Prompt Files + Context Engineering
 
-> **Day 4** · Phase 3 · 예상 시간: 30분 (시간 여유 시)
+> **Phase 3**
 
 > 🚀 **도전 챕터** — 여유가 있다면 도전해 보세요! 핵심 개념만 알아도 충분합니다.
 

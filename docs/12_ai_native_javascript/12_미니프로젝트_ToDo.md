@@ -9,7 +9,7 @@ permalink: /ai-native-js/todo-app
 # 11장. 미니 프로젝트 — AI 협업 ToDo 앱
 {: .no_toc }
 
-> **Day 3** · Phase 2 · 예상 시간: 120분
+> **Phase 2**
 
 > 💡 **실습 흐름**: 강사 시연 보기 → 함께 따라하기 → 혼자 변형해 보기
 
