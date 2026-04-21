@@ -350,7 +350,7 @@ This example skips the page name heading (`#`) from the TOC, as well as the head
 
 ### Collapsible Table of Contents
 
-The Table of Contents can be made collapsible using the `<details markdown="0">` and `<summary>` elements, as in the following example. The attribute `open` (expands the Table of Contents by default) and the styling with `{: .text-delta }` are optional.
+The Table of Contents can be made collapsible using the `<details markdown="1">` and `<summary>` elements, as in the following example. The attribute `open` (expands the Table of Contents by default) and the styling with `{: .text-delta }` are optional.
 
 ```markdown
 <details open markdown="block">

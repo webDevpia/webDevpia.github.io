@@ -526,7 +526,7 @@ print("고액 요금은 실제 존재할 수 있음(1등석) → 제거보다 Ca
 고액 요금은 실제 존재할 수 있음(1등석) → 제거보다 Capping 권장
 ```
 
-<details markdown="0">
+<details markdown="1">
 <summary>📐 더 알아보기 — IQR 방법의 수학적 근거</summary>
 
 **IQR (Interquartile Range, 사분위 범위)**:
@@ -633,7 +633,7 @@ plt.show()
 > **주의**: 상관관계 ≠ 인과관계. `pclass`와 `survived`의 상관관계는  
 > "1등석이 생존시킨다"가 아니라 "구조 우선순위와 좋은 위치 등 여러 요인"이 복합된 결과입니다.
 
-<details markdown="0">
+<details markdown="1">
 <summary>📐 더 알아보기 — Pearson 상관계수 수식</summary>
 
 **Pearson 상관계수 r**:

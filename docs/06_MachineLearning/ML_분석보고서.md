@@ -427,7 +427,7 @@ Machine Learning 과정 (18장, 80시간)
 ### 5.2 수학 처리 — "더 알아보기" 접이식 패턴
 
 ```html
-<details markdown="0">
+<details markdown="1">
 <summary>📐 더 알아보기: MSE 수식</summary>
 
 $$MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$$
