@@ -312,6 +312,8 @@ mode: "chat"
 
 좋은 AI 요청에는 5가지 요소가 있습니다. 이를 **Context Packet(맥락 꾸러미)**이라고 합니다.
 
+> 💡 11장에서 작성한 `requirements.md`를 떠올려보세요. 기능 요구사항, 제약 조건, 범위 밖, 금지 사항 — 이것이 바로 Context Packet의 요소들입니다. requirements.md는 프로젝트 전체의 맥락이고, Context Packet은 개별 요청마다의 맥락입니다.
+
 ```
 1. 목표 (Goal)
    무엇을 만들 것인가?
