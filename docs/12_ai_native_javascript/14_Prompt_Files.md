@@ -537,7 +537,7 @@ searchTodos('없는것');
 |------|---------------|-------------|----------------|
 | **작업 템플릿** | `.github/prompts/*.prompt.md` | `.claude/commands/*.md` | — (직접 프롬프트) |
 | **실행 방법** | Copilot Chat에서 파일 참조 | `/명령어` 슬래시 커맨드 | 프롬프트에 직접 작성 |
-| **변수 지원** | `{% raw %}{{변수명}}{% endraw %}` | `$ARGUMENTS` | — |
+| **변수 지원** | 이중 중괄호 변수 문법 | `$ARGUMENTS` | — |
 | **AI 에이전트** | `.github/agents/*.md` | 에이전트 시스템 내장 (subagent) | 에이전트 시스템 내장 |
 
 > 💡 **공통 원칙**: "자주 하는 요청을 파일로 저장하고 재사용한다."
@@ -547,7 +547,7 @@ searchTodos('없는것');
 
 ### 다음 장 미리보기
 
-Custom Instructions로 AI에게 규칙을 알려주고, Prompt Files로 반복 작업을 자동화했습니다. 이제 한 걸음 더 나아가 **TDD(테스트 주도 개발)**와 **Custom Agent**를 결합합니다. 테스트를 먼저 작성하고, AI에게 구현을 맡기는 전문적인 개발 방법론을 배웁니다.
+Custom Instructions로 규칙을 알려주고, Prompt Files로 반복 작업을 자동화했습니다. 다음 장에서는 AI-Native 도구의 마지막 퍼즐 — **Custom Agent**를 배웁니다. AI에게 "TDD 전문가" 같은 역할을 부여하는 방법입니다.
 
-→ **다음 내용으로 넘어갑시다**: [14장. TDD + AI 에이전트](/ai-native-js/tdd-agent)
+→ **다음 내용으로 넘어갑시다**: [14장. Custom Agent — AI에게 전문가 역할 부여](/ai-native-js/agent)
 {% endraw %}
