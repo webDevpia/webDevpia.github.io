@@ -132,6 +132,7 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Position + Badge</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -212,6 +213,7 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hidden vs invisible</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -337,6 +339,7 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Border + Shadow + Ring</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -430,6 +433,7 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group Hover + Peer</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -561,6 +565,7 @@ Tailwind는 자주 쓰는 애니메이션 4종을 제공합니다.
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tailwind 애니메이션 4종</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>

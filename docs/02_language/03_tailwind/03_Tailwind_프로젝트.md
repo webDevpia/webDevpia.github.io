@@ -491,7 +491,7 @@ CSS 대응:
             <div class="hidden md:flex items-center gap-8">
                 <a href="#features" class="text-gray-600 hover:text-blue-600 transition duration-200">특징</a>
                 <a href="#contact" class="text-gray-600 hover:text-blue-600 transition duration-200">연락처</a>
-                <a href="#about" class="text-gray-600 hover:text-blue-600 transition duration-200">소개</a>
+                <a href="#hero" class="text-gray-600 hover:text-blue-600 transition duration-200">소개</a>
             </div>
 
             <!-- CTA 버튼 -->
@@ -519,7 +519,6 @@ Tailwind는 `hidden md:flex`로 이를 2단어로 표현합니다.
 > **이 코드에서 처음 등장하는 클래스:**
 > - `sticky top-0`: 스크롤 시 화면 상단에 고정 (02장 Position 참조)
 > - `z-50`: 다른 요소 위에 표시 (02장 Z-index 참조)
-> - `backdrop-blur-sm`: 뒤 배경을 약간 흐리게 (유리 효과)
 
 **브라우저에서 이렇게 보입니다:** 화면 상단에 좌측 'MyApp' 로고, 우측 '특징/연락처/소개' 메뉴가 가로로 배치됩니다. 스크롤하면 내비게이션이 상단에 고정됩니다(sticky).
 
@@ -798,7 +797,7 @@ Tailwind는 `hidden md:flex`로 이를 2단어로 표현합니다.
                 <div class="hidden md:flex items-center gap-8">
                     <a href="#features" class="text-gray-600 hover:text-blue-600 transition duration-200">특징</a>
                     <a href="#contact" class="text-gray-600 hover:text-blue-600 transition duration-200">연락처</a>
-                    <a href="#about" class="text-gray-600 hover:text-blue-600 transition duration-200">소개</a>
+                    <a href="#hero" class="text-gray-600 hover:text-blue-600 transition duration-200">소개</a>
                 </div>
                 <button class="bg-blue-600 text-white px-5 py-2 rounded-lg font-medium
                                hover:bg-blue-700 transition duration-200">
@@ -1008,7 +1007,7 @@ Day 1 (HTML만)        Day 2 (+ CSS)         Day 3 (+ Tailwind)
 | `grid grid-cols-1 md:grid-cols-3` | 반응형 그리드 | Day 2 (CSS 03장) → Day 3 Tailwind 변환 |
 | `bg-blue-600`, `text-white`, `rounded-lg` | Tailwind 유틸리티 | Day 3 (Tailwind 01장) |
 | `hover:bg-blue-700`, `transition` | 상태 클래스 + 전환 | Day 3 (Tailwind 01장) |
-| `md:grid-cols-3`, `lg:text-6xl` | Tailwind 반응형 접두사 | Day 3 (Tailwind 02장) |
+| `md:grid-cols-3`, `lg:text-6xl` | Tailwind 반응형 접두사 | Day 3 (Tailwind 03장) |
 
 ### CSS ↔ Tailwind 반응형 최종 정리
 
@@ -1021,7 +1020,7 @@ Day 1 (HTML만)        Day 2 (+ CSS)         Day 3 (+ Tailwind)
 
 /* 예시 */
 @media (min-width: 768px) {         md:grid-cols-3
-    .grid { grid-cols: 3; }
+    .grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (min-width: 768px) {         md:hidden
     .mobile-menu { display: none; }
