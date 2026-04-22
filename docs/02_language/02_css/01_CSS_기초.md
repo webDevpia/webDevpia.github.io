@@ -940,23 +940,25 @@ a.button {
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- 1. fixed: 상단 고정 네비게이션 -->
   <nav class="navbar">고정 네비게이션 (스크롤해도 여기 고정됩니다)</nav>
 
   <div class="content">
     <h1>position + transition 체험</h1>
-    <p>스크롤해보세요 — 네비게이션이 고정됩니다.</p>
-    <p>버튼과 카드에 마우스를 올려보세요 — 부드러운 전환 효과를 확인하세요.</p>
 
-    <h2>relative + absolute (배지 카드)</h2>
+    <!-- 2. relative + absolute: 배지 카드 -->
+    <h2>배지 카드 (relative + absolute)</h2>
     <div class="product-card">
       <img src="https://placehold.co/200x200" alt="상품 이미지">
       <span class="product-badge">NEW</span>
     </div>
 
+    <!-- 3. transition: 버튼 hover -->
     <h2>버튼 (hover → 색상 전환)</h2>
     <button class="btn">시작하기</button>
     <button class="btn">더 보기</button>
 
+    <!-- 4. transition: 카드 hover -->
     <h2>카드 (hover → 위로 이동 + 그림자)</h2>
     <div class="card">
       <h3>카드 1</h3>
@@ -967,7 +969,7 @@ a.button {
       <p>부드럽게 올라갑니다</p>
     </div>
 
-    <!-- 스크롤을 위한 여백 -->
+    <!-- 스크롤 테스트용 여백 -->
     <div style="height: 800px;"></div>
     <p>여기까지 스크롤해도 네비게이션은 상단에 고정되어 있습니다.</p>
   </div>
@@ -982,7 +984,7 @@ a.button {
 * { box-sizing: border-box; margin: 0; }
 body { font-family: sans-serif; }
 
-/* === 1. 네비게이션 (fixed) === */
+/* === 1. fixed: 네비게이션 === */
 .navbar {
   position: fixed;
   top: 0;
@@ -996,7 +998,7 @@ body { font-family: sans-serif; }
 
 .content { padding: 80px 24px 24px; }
 
-/* === 2. 배지 카드 (relative + absolute) === */
+/* === 2. relative + absolute: 배지 카드 === */
 .product-card {
   position: relative;
   width: 200px;
@@ -1018,7 +1020,7 @@ body { font-family: sans-serif; }
   border-radius: 12px;
 }
 
-/* === 3. 버튼 (hover transition) === */
+/* === 3. transition: 버튼 hover === */
 .btn {
   display: inline-block;
   padding: 12px 24px;
@@ -1035,7 +1037,7 @@ body { font-family: sans-serif; }
   background-color: #2980b9;
 }
 
-/* === 4. 카드 (hover transition) === */
+/* === 4. transition: 카드 hover === */
 .card {
   width: 250px;
   padding: 24px;
