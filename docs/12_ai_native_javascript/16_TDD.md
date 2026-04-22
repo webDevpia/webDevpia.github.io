@@ -75,7 +75,7 @@ TDD는 세 단계의 짧은 사이클을 반복합니다.
 11장(ToDo 프로젝트)에서 이미 TDD의 핵심을 경험했습니다:
 
 ```
-11장: requirements.md 작성 → AI가 테스트 생성 → AI가 구현 → 테스트 통과 확인
+11장: 요구사항 작성 → AI가 테스트 생성 → AI가 구현 → 테스트 통과 확인
 TDD:  요구사항 정의 → 테스트 준비(Red) → 구현(Green) → 리팩터링(Refactor)
 ```
 
@@ -100,7 +100,9 @@ TDD:  요구사항 정의 → 테스트 준비(Red) → 구현(Green) → 리팩
 
 ### Step 1: 요구사항 작성
 
-아래 요구사항을 직접 작성하세요. (11장에서 배운 패턴입니다)
+아래 요구사항을 직접 작성하세요.
+
+> 💡 11장에서는 `requirements.md` 파일을, 16~17장에서는 `.github/copilot-instructions.md`를 사용합니다. TDD 미니 실습에서는 프롬프트에 요구사항을 직접 전달합니다.
 
 ```markdown
 # 문자열 유틸리티 요구사항
@@ -131,13 +133,18 @@ TDD:  요구사항 정의 → 테스트 준비(Red) → 구현(Green) → 리팩
 아래 요구사항을 기반으로 tests/utils.test.js를 작성해줘.
 각 함수별 정상 케이스 + 엣지 케이스(빈 문자열, null) 포함.
 
-#file:requirements.md (또는 위 요구사항 직접 붙여넣기)
+요구사항:
+- capitalize(str): 첫 글자를 대문자로. "hello"→"Hello", 빈 문자열→빈 문자열
+- truncate(str, maxLength): 초과 시 "..." 추가. 짧으면 그대로
+- slugify(str): 공백→-, 대문자→소문자. "Hello World"→"hello-world"
+- 빈 문자열, null, undefined 안전 처리
+- ESM export, Vitest, var 금지
 ```
 
 AI가 생성한 테스트를 **검토**하세요:
 - 요구사항의 모든 기능이 테스트에 포함되어 있는가?
 - 빈 문자열, null 등 엣지 케이스가 있는가?
-- 누락된 테스트가 있으면 AI에게 추가 요청
+- 누락된 항목이 있으면 요구사항을 보완한 뒤 AI에게 재생성 요청
 
 테스트를 저장하고 실행합니다:
 
