@@ -14,9 +14,10 @@ nav_exclude: true
 1. Flexbox란? - flex 컨테이너와 아이템
 2. 주축과 교차축 - flex-direction, 방향 이해
 3. 정렬: justify-content와 align-items - 주축과 교차축 정렬
-4. flex-wrap과 gap - 줄바꿈과 간격 조절
-5. 실용 예제: 카드 레이아웃 - 실제 카드 레이아웃 구현
-6. 정리 - 속성 요약 및 실습 과제
+4. flex 속성 이해하기 - grow, shrink, basis
+5. flex-wrap과 gap - 줄바꿈과 간격 조절
+6. 실용 예제: 카드 레이아웃 - 실제 카드 레이아웃 구현
+7. 정리 - 속성 요약 및 실습 과제
 
 ---
 
@@ -55,23 +56,78 @@ nav_exclude: true
 
 **적용 전** — div는 기본값이 `block`이므로 세로로 쌓입니다.
 ```
-┌──────────┐
-│  아이템 1 │
-└──────────┘
-┌──────────┐
-│  아이템 2 │
-└──────────┘
-┌──────────┐
-│  아이템 3 │
-└──────────┘
++------------+
+| 아이템 1   |
++------------+
+| 아이템 2   |
++------------+
+| 아이템 3   |
++------------+
 ```
 
 **적용 후** — `display: flex`를 적용하면 가로로 나란히 배치됩니다.
 ```
-┌──────────┐ ┌──────────┐ ┌──────────┐
-│  아이템 1 │ │  아이템 2 │ │  아이템 3 │
-└──────────┘ └──────────┘ └──────────┘
++------------+ +------------+ +------------+
+| 아이템 1   | | 아이템 2   | | 아이템 3   |
++------------+ +------------+ +------------+
 ```
+
+### 전체 코드로 실행해보기
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Flexbox 기본</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>flex 적용 전 (block — 세로 쌓임)</h2>
+  <div class="no-flex">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+
+  <h2>flex 적용 후 (가로 나란히)</h2>
+  <div class="with-flex">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+body { font-family: sans-serif; padding: 20px; }
+.item {
+  width: 100px;
+  height: 60px;
+  background-color: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  margin: 4px;
+}
+
+/* flex 없음 — block이므로 세로 */
+.no-flex { /* 아무 설정 없음 */ }
+
+/* flex 적용 — 가로로 나란히 */
+.with-flex { display: flex; }
+```
+
+> 💡 `.with-flex`에서 `display: flex;`를 지우면 세로로 바뀝니다. 직접 바꿔보세요.
 
 ---
 
@@ -108,22 +164,91 @@ Flexbox에서는 두 개의 축이 있습니다.
 
 ### 방향에 따른 축 변화
 
-**flex-direction: row**(기본)
+**flex-direction: row **(기본)
 ```
-주축 →
-┌──────────────────────────────────────┐
-│  [아이템1]  [아이템2]  [아이템3]      │ ↕ 교차축
-└──────────────────────────────────────┘
+주축 -->
++--------------------------------------+
+|  [아이템1]  [아이템2]  [아이템3]      | 교차축
++--------------------------------------+
 ```
 
 **flex-direction: column**
 ```
-┌──────────────────────────┐  ↔ 교차축
-│  [아이템1]               │
-│  [아이템2]               │  ↕ 주축
-│  [아이템3]               │
-└──────────────────────────┘
++-------------------------+ 교차축
+|  [아이템1]              |
+|  [아이템2]              | 주축
+|  [아이템3]              |
++-------------------------+
 ```
+
+### 전체 코드로 실행해보기
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>flex-direction</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>row (기본 — 가로)</h2>
+  <div class="container row">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+
+  <h2>row-reverse (가로 역방향)</h2>
+  <div class="container row-reverse">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+
+  <h2>column (세로)</h2>
+  <div class="container column">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+body { font-family: sans-serif; padding: 20px; }
+.container {
+  display: flex;
+  gap: 8px;
+  background-color: #f0f4ff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.item {
+  width: 80px;
+  height: 50px;
+  background-color: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.row { flex-direction: row; }
+.row-reverse { flex-direction: row-reverse; }
+.column { flex-direction: column; }
+```
+
+> 💡 `.row`를 `.column`으로 바꾸면 방향이 바뀝니다. 직접 바꿔보세요.
 
 ---
 
@@ -209,9 +334,183 @@ space-evenly:  _ [1] _ [2] _ [3] _
 
 이 조합은 **히어로 섹션, 버튼, 카드 내용 정렬** 등 실무에서 매우 자주 사용됩니다.
 
+### 전체 코드로 실행해보기
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>justify-content + align-items</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>justify-content 비교 (주축 정렬)</h2>
+
+  <p>flex-start (기본)</p>
+  <div class="box jc-start"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>flex-end</p>
+  <div class="box jc-end"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>center</p>
+  <div class="box jc-center"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>space-between</p>
+  <div class="box jc-between"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>space-around</p>
+  <div class="box jc-around"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>space-evenly</p>
+  <div class="box jc-evenly"><span>1</span><span>2</span><span>3</span></div>
+
+  <h2>align-items 비교 (교차축 정렬)</h2>
+
+  <p>stretch (기본 — 높이를 채움)</p>
+  <div class="box tall ai-stretch"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>flex-start</p>
+  <div class="box tall ai-start"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>center</p>
+  <div class="box tall ai-center"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>flex-end</p>
+  <div class="box tall ai-end"><span>1</span><span>2</span><span>3</span></div>
+
+  <h2>완벽한 가운데 정렬</h2>
+  <div class="box tall jc-center ai-center">
+    <p>가운데!</p>
+  </div>
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+body { font-family: sans-serif; padding: 20px; }
+.box {
+  display: flex;
+  background-color: #f0f4ff;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.box span {
+  width: 60px;
+  height: 40px;
+  background-color: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+.tall { height: 120px; }
+
+/* justify-content */
+.jc-start   { justify-content: flex-start; }
+.jc-end     { justify-content: flex-end; }
+.jc-center  { justify-content: center; }
+.jc-between { justify-content: space-between; }
+.jc-around  { justify-content: space-around; }
+.jc-evenly  { justify-content: space-evenly; }
+
+/* align-items */
+.ai-stretch { align-items: stretch; }
+.ai-stretch span { height: auto; } /* stretch를 보려면 고정 높이 해제 */
+.ai-start   { align-items: flex-start; }
+.ai-center  { align-items: center; }
+.ai-end     { align-items: flex-end; }
+```
+
+> 💡 `jc-between`을 `jc-evenly`로 바꿔보세요. 간격 차이를 직접 확인할 수 있습니다.
+
 ---
 
-## 4️⃣ flex-wrap과 gap
+## 4️⃣ flex 속성 이해하기
+
+### flex: grow shrink basis — 세 숫자의 의미
+
+`flex` 속성은 3개의 값을 한 줄로 씁니다:
+
+```css
+.card {
+  flex: 1 1 200px;
+  /*    │ │  └─ flex-basis: 기본 너비 (시작 크기)
+        │ └──── flex-shrink: 공간 부족 시 줄어드는 비율
+        └────── flex-grow: 남은 공간을 가져가는 비율  */
+}
+```
+
+### flex-grow — "남은 공간을 얼마나 가져갈까?"
+
+```
+부모 컨테이너: 900px
+카드 3개 기본 너비: 200px × 3 = 600px
+남은 공간: 300px
+
+flex-grow: 0 → 남은 300px 무시. 카드는 200px 유지
+flex-grow: 1 → 남은 300px을 3등분(100px씩). 카드는 300px
+```
+
+| 값 | 의미 | 비유 |
+|---|------|------|
+| `flex-grow: 0` | 남은 공간 안 가져감 (기본값) | "내 자리만 차지" |
+| `flex-grow: 1` | 남은 공간을 균등하게 나눔 | "빈자리 공평하게 나누자" |
+| `flex-grow: 2` | 다른 것보다 2배로 가져감 | "나는 2인분" |
+
+### flex-shrink — "공간이 부족하면 얼마나 줄어들까?"
+
+```
+부모 컨테이너: 600px
+카드 3개 기본 너비: 300px × 3 = 900px
+부족한 공간: 300px
+
+flex-shrink: 0 → 안 줄어듦. 컨테이너 밖으로 삐져나감
+flex-shrink: 1 → 부족한 300px을 3등분(100px씩 줄임). 카드는 200px
+```
+
+| 값 | 의미 | 비유 |
+|---|------|------|
+| `flex-shrink: 0` | 절대 안 줄어듦 | "내 자리는 양보 안 해" |
+| `flex-shrink: 1` | 부족하면 균등하게 줄어듦 (기본값) | "좁으면 양보하지" |
+
+### flex-basis — "기본 너비(시작 크기)는 얼마?"
+
+| 값 | 의미 |
+|---|------|
+| `flex-basis: 200px` | 기본 너비 200px에서 시작 |
+| `flex-basis: 33.33%` | 부모의 33.33%에서 시작 |
+| `flex-basis: auto` | 내용 크기에 맞춤 (기본값) |
+
+### 자주 쓰는 조합
+
+```css
+/* 균등 분배 — 남은 공간을 똑같이 나눔 */
+.item { flex: 1; }
+/* = flex: 1 1 0  (grow:1, shrink:1, basis:0) */
+
+/* 고정 너비 — 절대 안 변함 */
+.sidebar { flex: 0 0 250px; }
+/* = grow:0(안 늘어남), shrink:0(안 줄어듦), basis:250px(고정) */
+
+/* 3열 카드 — gap 고려한 계산 */
+.card { flex: 1 1 calc(33.33% - 11px); }
+/* = 기본 33.33%에서 시작, 남으면 늘어나고 부족하면 줄어듦 */
+```
+
+> 💡 **요약**: `flex-grow`는 커지는 비율, `flex-shrink`는 줄어드는 비율, `flex-basis`는 시작 크기입니다.
+
+---
+
+## 5️⃣ flex-wrap과 gap
 
 ### flex-wrap — 줄바꿈
 
@@ -257,39 +556,61 @@ flex-wrap: wrap (화면이 좁을 때):
 
 `margin`을 사용하면 첫/마지막 요소에도 여백이 생겨 복잡해지지만, `gap`은 **아이템 사이에만** 간격을 적용합니다.
 
-### 실습: 카드 3개를 한 줄에 배치
+### 전체 코드로 실행해보기 — 카드 3개를 한 줄에 배치
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
 
 ```html
-<div class="card-container">
-  <div class="card">카드 1</div>
-  <div class="card">카드 2</div>
-  <div class="card">카드 3</div>
-  <div class="card">카드 4</div>
-  <div class="card">카드 5</div>
-</div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>flex-wrap + gap</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>flex-wrap: wrap + gap (브라우저 너비를 줄여보세요)</h2>
+  <div class="card-container">
+    <div class="card">카드 1</div>
+    <div class="card">카드 2</div>
+    <div class="card">카드 3</div>
+    <div class="card">카드 4</div>
+    <div class="card">카드 5</div>
+  </div>
+</body>
+</html>
 ```
 
+`style.css`:
+
 ```css
+body { font-family: sans-serif; padding: 20px; background-color: #f5f5f5; }
+
 .card-container {
   display: flex;
-  flex-wrap: wrap;  /* 화면이 좁으면 자동 줄바꿈 */
+  flex-wrap: wrap;
   gap: 16px;
 }
 
 .card {
-  /* 3개가 한 줄에 배치되도록 너비 설정 */
-  /* (100% - gap 2개) / 3개 = 약 31% */
+  /* 3개가 한 줄: gap 16px × 2개 = 32px, 32px / 3 = 약 11px씩 빼기 */
   flex: 0 0 calc(33.33% - 11px);
-  padding: 20px;
+  padding: 24px;
   background-color: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
+  text-align: center;
 }
 ```
 
+> 💡 브라우저 창 너비를 줄여보세요. `flex-wrap: wrap` 덕분에 3열 → 2열 → 1열로 자동 줄바꿈됩니다.
+> `gap: 16px`을 `gap: 32px`으로 바꾸면 간격이 넓어집니다.
+
 ---
 
-## 5️⃣ 실용 예제: 카드 레이아웃
+## 6️⃣ 실용 예제: 카드 레이아웃
 
 3개의 카드를 Flexbox로 가로 배치하고, 카드 안에서도 Flexbox로 내용을 정렬하는 예제입니다.
 
@@ -430,7 +751,7 @@ body {
 
 ---
 
-## 6️⃣ 정리
+## 7️⃣ 정리
 
 ### Flexbox 속성 요약
 

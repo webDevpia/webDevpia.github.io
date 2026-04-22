@@ -117,50 +117,84 @@ nav_exclude: true
 
 > 실무에서는 프레임워크나 팀 컨벤션에 따라 브레이크포인트가 달라집니다. Tailwind CSS는 `sm(640px)`, `md(768px)`, `lg(1024px)`, `xl(1280px)` 등을 사용합니다.
 
-### 실습: 카드가 데스크톱은 3열, 모바일은 1열
+### 전체 코드로 실행해보기 — 카드 3열 → 2열 → 1열
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
 
 ```html
-<div class="cards">
-  <div class="card">카드 1</div>
-  <div class="card">카드 2</div>
-  <div class="card">카드 3</div>
-</div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>미디어 쿼리 실습</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>카드 레이아웃 (3열 → 2열 → 1열)</h1>
+  <div class="cards">
+    <div class="card">카드 1</div>
+    <div class="card">카드 2</div>
+    <div class="card">카드 3</div>
+    <div class="card">카드 4</div>
+    <div class="card">카드 5</div>
+    <div class="card">카드 6</div>
+  </div>
+</body>
+</html>
 ```
+
+`style.css`:
 
 ```css
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; }
+body { font-family: sans-serif; padding: 20px; background-color: #f5f5f5; }
+h1 { margin-bottom: 16px; }
 
-/* 기본(데스크톱): 3열 */
+/* 기본: 3열 */
 .cards {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
+/*
+  flex: 1 1 calc(33.33% - 11px) 해석 (02장 4번 참고):
+  ┌─ flex-grow: 1    → 남은 공간 있으면 늘어남 ("빈자리 나누자")
+  ├─ flex-shrink: 1  → 공간 부족하면 줄어듦 ("좁으면 양보")
+  └─ flex-basis: calc(33.33% - 11px) → 기본 너비 (시작 크기)
+
+  왜 11px을 빼는가?
+  - 카드 3개 사이에 gap이 2개 = 16px × 2 = 32px
+  - 32px / 3 = 약 11px씩 각 카드가 부담
+  - 100% / 3 = 33.33%, 거기서 11px을 빼면 3개가 딱 맞음
+*/
 .card {
-  flex: 1;
-  padding: 20px;
+  flex: 1 1 calc(33.33% - 11px);
+  padding: 24px;
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
+  text-align: center;
 }
 
-/* 태블릿 이하: 2열 */
+/* 태블릿 (768px 이하): 2열 */
+/* 카드 2개 사이 gap 1개 = 16px, 16px / 2 = 8px씩 빼기 */
 @media (max-width: 768px) {
-  .card {
-    flex: 0 0 calc(50% - 10px);
-  }
+  .card { flex: 1 1 calc(50% - 8px); }
 }
 
-/* 모바일: 1열 */
+/* 모바일 (480px 이하): 1열 */
+/* 한 줄에 1개이므로 gap 계산 불필요 */
 @media (max-width: 480px) {
-  .cards {
-    flex-direction: column;
-  }
-  .card {
-    flex: none;
-  }
+  .card { flex: 1 1 100%; }
 }
 ```
+
+> 💡 **반응형 확인**: 브라우저 창 너비를 줄여보세요 — 3열 → 2열 → 1열로 변합니다.
+> 또는 F12 → 모바일 아이콘(📱)을 클릭하면 다양한 기기 크기를 시뮬레이션할 수 있습니다.
 
 ---
 
@@ -224,6 +258,85 @@ nav_exclude: true
 2. **점진적 향상**(Progressive Enhancement): 핵심 내용을 먼저 확보, 이후 기능 추가
 3. **트렌드**: Tailwind CSS, Bootstrap 5 모두 모바일 퍼스트 방식을 사용
 
+### 전체 코드로 실행해보기 — 모바일 퍼스트
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>모바일 퍼스트</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>사이드바</h2>
+      <p>모바일에서는 위에, 데스크톱에서는 왼쪽에 표시됩니다.</p>
+    </div>
+    <div class="main">
+      <h1>메인 콘텐츠</h1>
+      <p>모바일 퍼스트: 작은 화면 먼저 디자인하고, 큰 화면으로 확장합니다.</p>
+      <p>브라우저 너비를 줄이거나 늘려보세요!</p>
+    </div>
+  </div>
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+* { box-sizing: border-box; margin: 0; }
+body { font-family: sans-serif; }
+
+/* ===== 모바일 기본 (min-width 없음) ===== */
+.container { padding: 16px; }
+.sidebar {
+  background-color: #1e293b;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.main {
+  padding: 20px;
+  background-color: #f0f4ff;
+  border-radius: 8px;
+}
+
+/* ===== 태블릿 이상 (481px~) ===== */
+@media (min-width: 481px) {
+  .container { padding: 24px; }
+}
+
+/* ===== 데스크톱 이상 (769px~) ===== */
+@media (min-width: 769px) {
+  .container {
+    display: flex;
+    gap: 24px;
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+  .sidebar {
+    flex: 0 0 250px;
+    margin-bottom: 0;
+  }
+  .main { flex: 1; }
+}
+```
+
+> 💡 **반응형 확인**: 브라우저 창 너비를 줄여보세요.
+> - 769px 이상: 사이드바가 왼쪽, 메인이 오른쪽 (2열)
+> - 768px 이하: 사이드바가 위, 메인이 아래 (1열)
+>
+> CSS를 보면 **모바일 스타일이 기본**이고, `min-width`로 큰 화면을 추가하는 것을 확인하세요.
+
 ---
 
 ## 4️⃣ 반응형 유닛
@@ -272,6 +385,83 @@ small { font-size: 0.875rem; } /* 14px = 16px × 0.875 */
   padding: 0 20px;      /* 좌우 여백 (모바일에서 중요) */
 }
 ```
+
+### 전체 코드로 실행해보기 — 반응형 유닛
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>반응형 유닛</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>반응형 타이포그래피 (rem)</h1>
+    <p>이 페이지의 글자 크기는 화면 너비에 따라 변합니다.</p>
+    <p class="small">작은 글자도 비율에 맞게 조정됩니다.</p>
+
+    <div class="hero">
+      <h2>히어로 섹션 (vh 단위)</h2>
+      <p>이 영역은 화면 높이의 50%를 차지합니다.</p>
+    </div>
+
+    <p>max-width: 800px로 제한된 컨테이너입니다. 화면을 아무리 넓혀도 800px을 넘지 않습니다.</p>
+  </div>
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+* { box-sizing: border-box; margin: 0; }
+
+/* rem 기준: 기본 16px */
+html { font-size: 16px; }
+body { font-family: sans-serif; padding: 20px; color: #333; }
+
+h1 { font-size: 2rem; margin-bottom: 16px; }      /* 32px */
+p  { font-size: 1rem; margin-bottom: 12px; }       /* 16px */
+.small { font-size: 0.875rem; color: #666; }       /* 14px */
+
+/* max-width 컨테이너 */
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* vh 단위: 화면 높이의 50% */
+.hero {
+  height: 50vh;
+  background-color: #f0f4ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+/* 큰 화면에서 글자 크기 확대 */
+@media (min-width: 1200px) {
+  html { font-size: 18px; }
+  /* h1은 자동으로 36px, p는 18px으로 커짐 */
+}
+```
+
+> 💡 **반응형 확인**:
+> - 브라우저 창을 넓혀보세요 — 1200px 이상에서 모든 글자가 커집니다 (html font-size: 18px)
+> - 컨테이너는 800px을 넘지 않고 가운데 정렬을 유지합니다
+> - 히어로 영역은 화면 높이의 50%(vh)를 차지합니다 — 창 높이를 바꿔보세요
 
 ---
 
@@ -450,6 +640,7 @@ body {
   padding: 32px 24px;
   border: 1px solid #e8e8e8;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden; /* 내용이 박스 밖으로 삐져나가지 않도록 */
 }
 
 .profile {
@@ -591,11 +782,12 @@ body {
     gap: 40px;
   }
 
-  /* 사이드바: 고정 너비 */
+  /* 사이드바: 고정 너비 + 스크롤 시 상단 고정 */
   .sidebar {
     flex: 0 0 260px;
-    position: sticky; /* 스크롤 시 사이드바 고정 */
+    position: sticky;
     top: 80px;
+    align-self: flex-start; /* sticky가 제대로 작동하려면 필요 */
   }
 
   /* 메인 콘텐츠: 나머지 공간 */
@@ -604,6 +796,11 @@ body {
   }
 }
 ```
+
+> 💡 **반응형 확인**: 브라우저 창 너비를 줄여보세요.
+> - 1024px 이하: 2단 → 1단 레이아웃으로 변합니다
+> - 사이드바가 위로, 메인 콘텐츠가 아래로 재배치됩니다
+> - F12 → 모바일 아이콘(📱)으로 iPhone/Galaxy 등 기기별 확인도 가능합니다
 
 ---
 

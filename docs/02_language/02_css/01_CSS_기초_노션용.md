@@ -1,6 +1,7 @@
 ---
 nav_exclude: true
 ---
+
 # 01장. CSS 기초
 
 ## 학습 목표
@@ -30,11 +31,11 @@ nav_exclude: true
 > HTML이 건물의 뼈대라면,
 > **CSS는 인테리어 — 벽지 색, 가구 배치, 조명을 결정**합니다.
 
-| 기술          | 역할                                  | 비유               |
-| ------------- | ------------------------------------- | ------------------ |
-| HTML          | 웹페이지의 구조와 내용                | 건물의 뼈대        |
-| **CSS** | 색상, 폰트, 레이아웃 등 시각적 스타일 | 인테리어 디자인    |
-| JavaScript    | 버튼 클릭, 데이터 처리 등 동작        | 엘리베이터, 자동문 |
+| 기술 | 역할 | 비유 |
+|------|------|------|
+| HTML | 웹페이지의 구조와 내용 | 건물의 뼈대 |
+| **CSS** | 색상, 폰트, 레이아웃 등 시각적 스타일 | 인테리어 디자인 |
+| JavaScript | 버튼 클릭, 데이터 처리 등 동작 | 엘리베이터, 자동문 |
 
 ### 캐스케이드(Cascade)의 의미
 
@@ -111,11 +112,11 @@ p  { color: gray; }
 
 ### 비교 표
 
-| 방식                  | 재사용                   | 유지보수       | 사용 상황                           |
-| --------------------- | ------------------------ | -------------- | ----------------------------------- |
-| 인라인                | 불가능                   | 매우 어려움    | 긴급 테스트, JavaScript로 동적 적용 |
-| 내부 스타일           | 같은 파일 내             | 어려움         | 단일 페이지, 이메일 템플릿          |
-| **외부 스타일** | **여러 파일 공유** | **쉬움** | **실무 표준 방식**            |
+| 방식 | 재사용 | 유지보수 | 사용 상황 |
+|------|--------|----------|-----------|
+| 인라인 | 불가능 | 매우 어려움 | 긴급 테스트, JavaScript로 동적 적용 |
+| 내부 스타일 | 같은 파일 내 | 어려움 | 단일 페이지, 이메일 템플릿 |
+| **외부 스타일** | **여러 파일 공유** | **쉬움** | **실무 표준 방식** |
 
 외부 파일 방식을 권장하는 이유는 **여러 HTML 파일이 하나의 CSS 파일을 공유**할 수 있어, 스타일을 한 곳에서 수정하면 모든 페이지에 반영되기 때문입니다.
 
@@ -180,23 +181,74 @@ p { font-size: 16px; }
 
 ```html
 <nav>
-	<a href="#">홈</a>
-	<a href="#">소개</a>
+  
+  
 </nav>
 ```
 
 ```css
 /* nav 안의 모든 a 태그 */
-nav a { color: white; text-decoration: none; }
+nav a { color: green; text-decoration: none; }
 ```
+
+### 전체 코드로 실행해보기
+
+2장에서 배운 **외부 파일 방식**으로 실습합니다. 아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>선택자 연습</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 id="main-title">메인 제목 (ID + 요소)</h1>
+  <h1>일반 h1 제목 (요소만)</h1>
+
+  <p class="highlight">이 문장은 강조됩니다. (클래스)</p>
+  <p>일반 문단입니다. (요소만)</p>
+  <span class="highlight">이 텍스트도 강조됩니다. (클래스)</span>
+
+  <nav>
+    
+    
+    
+  </nav>
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+/* 요소 선택자 */
+h1 { color: red; }
+p { font-size: 16px; }
+
+/* 클래스 선택자 */
+.highlight { background-color: yellow; }
+
+/* ID 선택자 */
+#main-title { font-size: 48px; color: navy; }
+
+/* 자손 선택자 */
+nav { background-color: #333; padding: 10px; }
+nav a { color: green; text-decoration: none; }
+```
+
+> 💡 스타일이 안 먹히면 `<link>` 태그의 `href="style.css"` 경로를 확인하세요. HTML 파일과 CSS 파일이 같은 폴더에 있어야 합니다.
 
 ### 언제 무엇을 사용하나?
 
-| 선택자 | 형태        | 재사용         | 우선순위 | 사용 상황                         |
-| ------ | ----------- | -------------- | -------- | --------------------------------- |
-| 요소   | `h1`      | 해당 태그 전체 | 낮음     | 기본 스타일 설정                  |
-| 클래스 | `.box`    | 여러 요소      | 중간     | **실무에서 가장 많이 사용** |
-| ID     | `#header` | 단 하나        | 높음     | 페이지에서 유일한 요소            |
+| 선택자 | 형태 | 재사용 | 우선순위 | 사용 상황 |
+|--------|------|--------|----------|-----------|
+| 요소 | `h1` | 해당 태그 전체 | 낮음 | 기본 스타일 설정 |
+| 클래스 | `.box` | 여러 요소 | 중간 | **실무에서 가장 많이 사용** |
+| ID | `#header` | 단 하나 | 높음 | 페이지에서 유일한 요소 |
 
 ### 특이성(Specificity) 간단 소개
 
@@ -244,10 +296,10 @@ h2 { color: rgb(51, 51, 51); }  /* 진한 회색 */
 
 #### 글꼴의 종류
 
-| 분류                  | 설명                     | 대표 글꼴                             |
-| --------------------- | ------------------------ | ------------------------------------- |
-| **시스템 글꼴** | OS에 기본 설치된 글꼴    | Arial, 맑은 고딕, Apple SD Gothic Neo |
-| **웹 글꼴**     | 인터넷에서 불러오는 글꼴 | Noto Sans KR, Pretendard, Roboto      |
+| 분류 | 설명 | 대표 글꼴 |
+|------|------|----------|
+| **시스템 글꼴** | OS에 기본 설치된 글꼴 | Arial, 맑은 고딕, Apple SD Gothic Neo |
+| **웹 글꼴** | 인터넷에서 불러오는 글꼴 | Noto Sans KR, Pretendard, Roboto |
 
 #### 시스템 글꼴만 사용하기
 
@@ -291,11 +343,11 @@ font-family: 'Noto Sans KR', Arial, sans-serif;
 /*            ①               ②      ③        */
 ```
 
-| 순서 | 글꼴               | 언제 사용되나                               |
-| ---- | ------------------ | ------------------------------------------- |
-| ①   | `'Noto Sans KR'` | `<link>`로 불러왔거나 PC에 설치된 경우    |
-| ②   | `Arial`          | ①이 없을 때 — Windows/Mac 기본 내장       |
-| ③   | `sans-serif`     | ①②가 모두 없을 때 — 브라우저 기본 고딕체 |
+| 순서 | 글꼴 | 언제 사용되나 |
+|------|------|-------------|
+| ① | `'Noto Sans KR'` | `<link>`로 불러왔거나 PC에 설치된 경우 |
+| ② | `Arial` | ①이 없을 때 — Windows/Mac 기본 내장 |
+| ③ | `sans-serif` | ①②가 모두 없을 때 — 브라우저 기본 고딕체 |
 
 > 💡 **실무 팁**: 글꼴 이름에 공백이 있으면 반드시 따옴표로 감싸세요. `'Noto Sans KR'` (O), `Noto Sans KR` (X)
 
@@ -333,11 +385,11 @@ font-family: 'Nanum Gothic', sans-serif;
 
 #### 글꼴을 찾을 수 있는 사이트
 
-| 사이트                 | URL                                       | 특징                                            |
-| ---------------------- | ----------------------------------------- | ----------------------------------------------- |
-| **Google Fonts** | [fonts.google.com](https://fonts.google.com) | 무료, 한글 글꼴 다수,`<link>` 코드 자동 생성  |
-| **눈누**         | [noonnu.cc](https://noonnu.cc)               | 한글 무료 글꼴 전문, 상업적 사용 가능 여부 표시 |
-| **Adobe Fonts**  | [fonts.adobe.com](https://fonts.adobe.com)   | Adobe 구독자 무료, 고품질 글꼴                  |
+| 사이트 | URL | 특징 |
+|--------|-----|------|
+| **Google Fonts** | [fonts.google.com](https://fonts.google.com) | 무료, 한글 글꼴 다수, `<link>` 코드 자동 생성 |
+| **눈누** | [noonnu.cc](https://noonnu.cc) | 한글 무료 글꼴 전문, 상업적 사용 가능 여부 표시 |
+| **Adobe Fonts** | [fonts.adobe.com](https://fonts.adobe.com) | Adobe 구독자 무료, 고품질 글꼴 |
 
 > 💡 **Google Fonts 사용법**: 사이트 접속 → 원하는 글꼴 선택 → "Get font" → "Get embed code" → `<link>` 태그를 HTML에 복사-붙여넣기
 
@@ -384,11 +436,11 @@ p.intro {
 
 글자 크기나 여백을 지정할 때 숫자 뒤에 붙는 단위입니다.
 
-| 단위    | 의미                            | 예시                 | 특징                                   |
-| ------- | ------------------------------- | -------------------- | -------------------------------------- |
-| `px`  | 픽셀 (고정 크기)                | `font-size: 16px;` | 화면 해상도에 따라 고정                |
+| 단위 | 의미 | 예시 | 특징 |
+|------|------|------|------|
+| `px` | 픽셀 (고정 크기) | `font-size: 16px;` | 화면 해상도에 따라 고정 |
 | `rem` | 루트 글자 크기 기준 (상대 크기) | `font-size: 2rem;` | 브라우저 기본 16px 기준 → 2rem = 32px |
-| `%`   | 부모 요소 기준 비율             | `width: 50%;`      | 부모의 절반                            |
+| `%` | 부모 요소 기준 비율 | `width: 50%;` | 부모의 절반 |
 
 > 💡 `rem`은 "root em"의 약자입니다. `2rem`은 "기본 글자 크기의 2배"라는 뜻입니다.
 > 반응형 디자인에서는 `px`보다 `rem`을 권장합니다. 더 자세한 단위는 CSS 03장에서 다룹니다.
@@ -416,6 +468,52 @@ a { color: #3498db; text-decoration: none; }
 a:hover { text-decoration: underline; }
 ```
 
+### 전체 코드로 실행해보기
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>텍스트 스타일링</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>큰 제목 (2rem)</h1>
+  <h2>중간 제목 (1.5rem)</h2>
+  <p>기본 문단입니다. Noto Sans KR 폰트가 적용됩니다.</p>
+  <p class="intro">이 문단은 대문자+글자 간격이 적용됩니다.</p>
+  
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333;
+  background-color: #fafafa;
+  padding: 20px;
+}
+h1 { font-size: 2rem; color: #1a1a1a; }
+h2 { font-size: 1.5rem; color: #2c2c2c; }
+a { color: #3498db; text-decoration: none; }
+a:hover { text-decoration: underline; }
+p.intro {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+```
+
 ---
 
 ## 5️⃣ 박스 모델(Box Model)
@@ -423,7 +521,6 @@ a:hover { text-decoration: underline; }
 ### 택배 상자 비유
 
 > **택배 상자**를 생각해 보세요.
->
 > - **내용물**(content): 실제 물건
 > - **완충재**(padding): 내용물 보호를 위한 스티로폼
 > - **상자 테두리**(border): 상자 겉면
@@ -432,19 +529,19 @@ a:hover { text-decoration: underline; }
 ### 박스 모델 구조
 
 ```
-┌─────────────────────────────────┐
-│            margin               │
-│  ┌───────────────────────────┐  │
-│  │          border           │  │
-│  │  ┌─────────────────────┐  │  │
-│  │  │       padding       │  │  │
-│  │  │  ┌───────────────┐  │  │  │
-│  │  │  │    content    │  │  │  │
-│  │  │  │  (width/height│  │  │  │
-│  │  │  └───────────────┘  │  │  │
-│  │  └─────────────────────┘  │  │
-│  └───────────────────────────┘  │
-└─────────────────────────────────┘
++-----------------------------------+
+|             margin                |
+|   +---------------------------+   |
+|   |          border           |   |
+|   |   +-------------------+   |   |
+|   |   |     padding       |   |   |
+|   |   |   +-----------+   |   |   |
+|   |   |   |  content  |   |   |   |
+|   |   |   | (w x h)   |   |   |   |
+|   |   |   +-----------+   |   |   |
+|   |   +-------------------+   |   |
+|   +---------------------------+   |
++-----------------------------------+
 ```
 
 ```css
@@ -508,40 +605,55 @@ a:hover { text-decoration: underline; }
 
 ### 실습: 카드 만들기
 
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
 ```html
-<!-- index.html -->
-<div class="card">
-  <h2 class="card-title">카드 제목</h2>
-  <p class="card-text">카드 내용입니다. 박스 모델을 활용해 여백을 조절합니다.</p>
-</div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>카드 만들기</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+    <h2 class="card-title">카드 제목</h2>
+    <p class="card-text">카드 내용입니다. 박스 모델을 활용해 여백을 조절합니다.</p>
+  </div>
+</body>
+</html>
 ```
 
+`style.css`:
+
 ```css
-/* style.css */
 * { box-sizing: border-box; }
+body { background-color: #f5f5f5; padding: 20px; font-family: sans-serif; }
 
 .card {
   width: 320px;
-  padding: 24px;           /* 내부 여백 */
-  border: 1px solid #e0e0e0; /* 테두리 */
-  border-radius: 8px;      /* 모서리 둥글게 */
-  margin: 16px;            /* 외부 여백 */
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin: 16px;
   background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-
 .card-title {
   font-size: 1.25rem;
   margin-bottom: 12px;
   color: #1a1a1a;
 }
-
 .card-text {
   font-size: 0.95rem;
   color: #666;
   line-height: 1.6;
 }
 ```
+
+> 💡 `style.css`의 padding, margin, border-radius 값을 바꿔가며 카드 모양이 어떻게 변하는지 확인해보세요.
 
 ---
 
@@ -601,24 +713,96 @@ a:hover { text-decoration: underline; }
 
 ### 비교 표
 
-| 값               | 공간 차지  | width/height 설정 | 줄바꿈 | 대표 태그  |
-| ---------------- | ---------- | ----------------- | ------ | ---------- |
-| `block`        | 한 줄 전체 | 가능              | 발생   | div, p, h1 |
-| `inline`       | 내용만큼   | **불가능**  | 미발생 | span, a    |
-| `inline-block` | 내용만큼   | **가능**    | 미발생 | —         |
-| `none`         | 0          | —                | —     | —         |
+| 값 | 공간 차지 | width/height 설정 | 줄바꿈 | 대표 태그 |
+|----|-----------|-------------------|--------|-----------|
+| `block` | 한 줄 전체 | 가능 | 발생 | div, p, h1 |
+| `inline` | 내용만큼 | **불가능** | 미발생 | span, a |
+| `inline-block` | 내용만큼 | **가능** | 미발생 | — |
+| `none` | 0 | — | — | — |
+
+### 전체 코드로 실행해보기 — block vs inline vs inline-block
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>display 비교</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>block (한 줄 전체)</h2>
+  <div class="block-demo">
+    <div>첫 번째 div</div>
+    <div>두 번째 div</div>
+  </div>
+
+  <h2>inline (내용만큼)</h2>
+  <div class="inline-demo">
+    <span>텍스트</span>
+    <span>링크</span>
+    <span>굵은 텍스트</span>
+  </div>
+
+  <h2>inline-block (내용만큼 + 크기 조절)</h2>
+  <span class="badge">HTML</span>
+  <span class="badge">CSS</span>
+  <span class="badge">JS</span>
+
+  <h2>inline-block 버튼</h2>
+  <a href="#" class="button">시작하기</a>
+  <a href="#" class="button">더 보기</a>
+</body>
+</html>
+```
+
+`style.css`:
 
 ```css
-/* 예시: 인라인 요소에 크기를 주고 싶을 때 */
+body { font-family: sans-serif; padding: 20px; }
+
+/* block */
+.block-demo div {
+  background-color: #dbeafe;
+  border: 1px solid #3b82f6;
+  margin: 4px 0;
+  padding: 8px;
+}
+
+/* inline */
+.inline-demo span {
+  background-color: #dcfce7;
+  border: 1px solid #22c55e;
+  padding: 4px 8px;
+}
+
+/* inline-block */
+.badge {
+  display: inline-block;
+  width: 80px;
+  height: 28px;
+  background-color: #3498db;
+  color: white;
+  text-align: center;
+  line-height: 28px;
+  border-radius: 4px;
+  margin: 4px;
+}
+
 a.button {
-  display: inline-block; /* inline에서는 width/height 적용 안 됨 */
+  display: inline-block;
   width: 120px;
   height: 40px;
   background-color: #3498db;
   color: white;
   text-align: center;
-  line-height: 40px; /* 세로 가운데 정렬 트릭 */
+  line-height: 40px;
   border-radius: 4px;
+  text-decoration: none;
 }
 ```
 
@@ -630,13 +814,43 @@ a.button {
 
 **position** 속성은 요소를 문서 흐름에서 어떻게 배치할지 결정합니다.
 
-| 값           | 의미                                    | 사용 예                      |
-| ------------ | --------------------------------------- | ---------------------------- |
-| `static`   | 기본값 — 문서 흐름대로 배치            | 대부분의 요소                |
-| `relative` | 원래 위치 기준으로 이동                 | 미세 조정, absolute의 기준점 |
-| `absolute` | 가장 가까운 relative 부모 기준으로 배치 | 배지, 드롭다운, 오버레이     |
-| `fixed`    | 화면(뷰포트) 기준 고정                  | 상단 고정 네비게이션         |
-| `sticky`   | 스크롤 시 특정 위치에 붙음              | 스크롤 따라가는 헤더         |
+| 값 | 의미 | 사용 예 |
+|----|------|---------|
+| `static` | 기본값 — 문서 흐름대로 배치 | 대부분의 요소 |
+| `relative` | 원래 위치 기준으로 이동 | 미세 조정, absolute의 기준점 |
+| `absolute` | 가장 가까운 relative 부모 기준으로 배치 | 배지, 드롭다운, 오버레이 |
+| `fixed` | 화면(뷰포트) 기준 고정 | 상단 고정 네비게이션 |
+| `sticky` | 스크롤 시 특정 위치에 붙음 | 스크롤 따라가는 헤더 |
+
+### static — 기본값
+
+모든 요소는 기본적으로 `position: static`입니다. 문서 흐름에 따라 위에서 아래로, 왼쪽에서 오른쪽으로 배치됩니다. **따로 설정할 일이 거의 없습니다.**
+
+### relative + absolute — 가장 많이 쓰는 조합
+
+`relative`는 혼자 쓰기보다 **`absolute`의 기준점**으로 사용합니다. 이 조합이 실무에서 position 사용의 대부분입니다.
+
+> **비유**: `relative`는 **방**(기준 공간)이고, `absolute`는 그 방 안에서 **자유롭게 위치를 잡는 가구**입니다.
+
+```css
+/* 부모: relative → "이 안에서 기준을 잡겠다" */
+.card {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+/* 자식: absolute → "부모 기준으로 위치 지정" */
+.badge {
+  position: absolute;
+  top: 8px;      /* 부모 위에서 8px */
+  right: 8px;    /* 부모 오른쪽에서 8px */
+}
+```
+
+> ⚠️ **주의**: 부모에 `relative`가 없으면 `absolute`는 **페이지 전체**를 기준으로 배치됩니다. 반드시 부모에 `relative`를 설정하세요.
+
+### fixed — 화면에 고정
 
 ```css
 /* 상단 고정 네비게이션 */
@@ -647,7 +861,11 @@ a.button {
   width: 100%;
   z-index: 100;  /* 다른 요소 위에 표시 (숫자가 클수록 위) */
 }
+```
 
+### sticky — 스크롤하면 붙음
+
+```css
 /* 스크롤하면 상단에 붙는 사이드바 */
 .sidebar {
   position: sticky;
@@ -686,22 +904,151 @@ a.button {
 
 > **비유**: transition은 **슬로우 모션**입니다. "색상이 바뀌었다!"가 아니라 "색상이 부드럽게~ 바뀌는 중..."이 됩니다. 이후 Flexbox 챕터와 Tailwind에서 자주 사용합니다.
 
+### 전체 코드로 실행해보기 — position + transition
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>position + transition</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 1. fixed: 상단 고정 네비게이션 -->
+  <nav class="navbar">고정 네비게이션 (스크롤해도 여기 고정됩니다)</nav>
+
+  <div class="content">
+    <h1>position + transition 체험</h1>
+
+    <!-- 2. relative + absolute: 배지 카드 -->
+    <h2>배지 카드 (relative + absolute)</h2>
+    <div class="product-card">
+      <img src="https://placehold.co/200x200" alt="상품 이미지">
+      <span class="product-badge">NEW</span>
+    </div>
+
+    <!-- 3. transition: 버튼 hover -->
+    <h2>버튼 (hover → 색상 전환)</h2>
+    <button class="btn">시작하기</button>
+    <button class="btn">더 보기</button>
+
+    <!-- 4. transition: 카드 hover -->
+    <h2>카드 (hover → 위로 이동 + 그림자)</h2>
+    <div class="card">
+      <h3>카드 1</h3>
+      <p>마우스를 올려보세요</p>
+    </div>
+    <div class="card">
+      <h3>카드 2</h3>
+      <p>부드럽게 올라갑니다</p>
+    </div>
+
+    <!-- 스크롤 테스트용 여백 -->
+    <div style="height: 800px;"></div>
+    <p>여기까지 스크롤해도 네비게이션은 상단에 고정되어 있습니다.</p>
+  </div>
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+/* === 공통 === */
+* { box-sizing: border-box; margin: 0; }
+body { font-family: sans-serif; }
+
+/* === 1. fixed: 네비게이션 === */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1e293b;
+  color: white;
+  padding: 16px 24px;
+  z-index: 100;
+}
+
+.content { padding: 80px 24px 24px; }
+
+/* === 2. relative + absolute: 배지 카드 === */
+.product-card {
+  position: relative;
+  width: 200px;
+  display: inline-block;
+  margin: 16px;
+}
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+.product-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* === 3. transition: 버튼 hover === */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 8px;
+}
+.btn:hover {
+  background-color: #2980b9;
+}
+
+/* === 4. transition: 카드 hover === */
+.card {
+  width: 250px;
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin: 16px;
+  display: inline-block;
+  background: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+```
+
 ---
 
 ## 8️⃣ 정리
 
 ### 핵심 개념 요약
 
-| 개념       | 설명                                          | 핵심 포인트                                  |
-| ---------- | --------------------------------------------- | -------------------------------------------- |
-| CSS 연결   | 외부 파일 방식 권장                           | `<link rel="stylesheet" href="style.css">` |
-| 선택자     | 요소 / 클래스 / ID                            | 클래스를 가장 많이 사용                      |
-| 특이성     | ID > 클래스 > 요소                            | 충돌 시 더 구체적인 규칙 적용                |
-| 색상       | 이름, HEX, RGB                                | 실무에서는 HEX 많이 사용                     |
-| 박스 모델  | content→padding→border→margin              | `box-sizing: border-box` 필수              |
-| display    | block / inline / inline-block / none          | 레이아웃의 기초                              |
-| position   | static / relative / absolute / fixed / sticky | 요소 배치 제어                               |
-| transition | 속성 변화를 부드럽게                          | `transition: 속성 시간`                    |
+| 개념 | 설명 | 핵심 포인트 |
+|------|------|-------------|
+| CSS 연결 | 외부 파일 방식 권장 | `<link rel="stylesheet" href="style.css">` |
+| 선택자 | 요소 / 클래스 / ID | 클래스를 가장 많이 사용 |
+| 특이성 | ID > 클래스 > 요소 | 충돌 시 더 구체적인 규칙 적용 |
+| 색상 | 이름, HEX, RGB | 실무에서는 HEX 많이 사용 |
+| 박스 모델 | content→padding→border→margin | `box-sizing: border-box` 필수 |
+| display | block / inline / inline-block / none | 레이아웃의 기초 |
+| position | static / relative / absolute / fixed / sticky | 요소 배치 제어 |
+| transition | 속성 변화를 부드럽게 | `transition: 속성 시간` |
 
 ### 다음 장 미리보기
 
@@ -710,17 +1057,14 @@ a.button {
 ### 실습 과제
 
 **기본** — HTML 03장의 포트폴리오 페이지에 CSS로 색상과 폰트 입히기
-
 - `body`에 `font-family`, `color`, `background-color` 설정
 - 제목, 본문, 링크에 각각 다른 스타일 적용
 
 **중급** — 3개의 카드를 만들고 박스 모델로 여백/테두리 조절하기
-
 - `padding`, `border`, `margin`, `border-radius` 활용
 - `box-sizing: border-box` 적용
 
 **심화** — 개발자 도구(F12)에서 아무 웹사이트의 박스 모델 탐색하기
-
 - 마음에 드는 웹사이트에서 요소를 선택
 - 박스 모델 다이어그램에서 각 영역의 크기 확인
 - CSS 속성을 개발자 도구에서 직접 수정해 보기
