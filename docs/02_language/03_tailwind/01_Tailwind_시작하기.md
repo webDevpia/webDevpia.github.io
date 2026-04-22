@@ -145,9 +145,42 @@ Bootstrap은 `btn btn-primary`처럼 **미리 만들어진 컴포넌트**를 사
 
 > **수업에서는 CDN을 사용합니다.** 실무에서는 npm + Vite 환경을 사용하지만, 지금은 HTML 파일 하나로 바로 실습합니다.
 
-### 첫 번째 실습: 텍스트 스타일링
+### 기본 템플릿 — 이후 모든 실습에서 사용
+
+이후 나오는 코드 조각들은 아래 기본 템플릿의 `<body>` 안에 붙여넣어서 실행하세요.
 
 ```html
+<!-- base.html — 이 파일에 각 실습 코드를 붙여넣으세요 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind 실습</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8">
+
+    <!-- 여기에 실습 코드를 붙여넣으세요 -->
+
+</body>
+</html>
+```
+
+> 💡 이 파일을 `base.html`로 저장해두세요. 이후 예제마다 `<body>` 안의 내용만 바꾸면 됩니다.
+
+### 첫 번째 실습: 텍스트 스타일링
+
+복사-붙여넣기로 바로 실행하세요.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>텍스트 스타일링</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
 <body class="bg-gray-100 p-10">
     <!-- text-3xl: font-size: 1.875rem -->
     <!-- font-bold: font-weight: 700 -->
@@ -158,6 +191,7 @@ Bootstrap은 `btn btn-primary`처럼 **미리 만들어진 컴포넌트**를 사
     <!-- text-gray-500: color: #6b7280 -->
     <p class="mt-4 text-gray-500">본문 텍스트입니다.</p>
 </body>
+</html>
 ```
 
 > 브라우저에서 이렇게 보입니다: 연한 회색 배경 위에 파란 굵은 제목이 크게 표시되고, 아래에 회색(연한) 본문 텍스트가 위쪽 간격을 두고 나타납니다.

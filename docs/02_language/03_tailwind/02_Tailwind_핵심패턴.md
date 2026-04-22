@@ -18,6 +18,8 @@ permalink: /language/tailwind/patterns
 
 > **사전 준비:** 01장에서 유틸리티 클래스 개념과 Flexbox 클래스를 이해한 상태에서 진행합니다.
 
+> 💡 이 장의 코드 조각들은 01장에서 만든 **기본 템플릿(base.html)**의 `<body>` 안에 붙여넣어서 실행하세요.
+
 <a id="toc"></a>
 
 ## 진행 순서
@@ -87,7 +89,7 @@ permalink: /language/tailwind/patterns
 ```html
 <!-- 카드 오른쪽 위에 "NEW" 배지 -->
 <div class="relative w-64">
-  <img src="product.jpg" class="rounded-lg w-full">
+  <img src="https://placehold.co/256x256" class="rounded-lg w-full">
   <span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
     NEW
   </span>
@@ -119,7 +121,7 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 ```html
 <!-- 카드 이미지를 둥글게 클리핑 — overflow-hidden이 없으면 모서리가 튀어나옴 -->
 <div class="rounded-lg overflow-hidden w-64">
-  <img src="photo.jpg" class="w-full scale-110">
+  <img src="https://placehold.co/400x300" class="w-full scale-110">
 </div>
 ```
 
@@ -167,7 +169,35 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 <!-- 결과: A와 C 사이에 빈 공간이 유지됨 -->
 ```
 
-**브라우저에서 이렇게 보입니다:** `hidden`에서는 B가 없는 것처럼 A-C가 붙고, `invisible`에서는 B 자리가 비어 A와 C 사이에 간격이 생깁니다.
+**전체 코드로 실행해보기:**
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>hidden vs invisible</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8 space-y-8">
+    <h2 class="text-xl font-bold">hidden: 공간 사라짐</h2>
+    <div class="flex gap-4 items-center">
+        <div class="w-16 h-16 bg-blue-500 rounded text-white flex items-center justify-center">A</div>
+        <div class="hidden w-16 h-16 bg-red-500 rounded text-white flex items-center justify-center">B</div>
+        <div class="w-16 h-16 bg-green-500 rounded text-white flex items-center justify-center">C</div>
+    </div>
+    <p class="text-gray-500">A와 C가 붙어서 표시됩니다 (B의 공간이 사라짐)</p>
+
+    <h2 class="text-xl font-bold">invisible: 공간 유지</h2>
+    <div class="flex gap-4 items-center">
+        <div class="w-16 h-16 bg-blue-500 rounded text-white flex items-center justify-center">A</div>
+        <div class="invisible w-16 h-16 bg-red-500 rounded text-white flex items-center justify-center">B</div>
+        <div class="w-16 h-16 bg-green-500 rounded text-white flex items-center justify-center">C</div>
+    </div>
+    <p class="text-gray-500">A와 C 사이에 빈 공간이 유지됩니다 (B가 투명)</p>
+</body>
+</html>
+```
 
 ### 반응형 숨기기
 
@@ -410,11 +440,50 @@ Tailwind는 자주 쓰는 애니메이션 4종을 제공합니다.
 <div class="animate-bounce text-2xl">↓</div>
 ```
 
-**브라우저에서 이렇게 보입니다:**
-- `animate-spin`: 파란 원형 스피너가 계속 돌아갑니다.
-- `animate-ping`: 빨간 점 주변에 파동이 퍼져나갑니다.
-- `animate-pulse`: 회색 블록들이 서서히 밝아졌다 어두워지며 콘텐츠 로딩 중임을 표시합니다.
-- `animate-bounce`: 화살표가 위아래로 통통 튀어 스크롤을 유도합니다.
+**전체 코드로 실행해보기:**
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Tailwind 애니메이션 4종</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8 space-y-10">
+    <h1 class="text-2xl font-bold">Tailwind 내장 애니메이션 4종</h1>
+
+    <div class="flex items-center gap-4">
+        <div class="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+        <span>animate-spin (로딩 스피너)</span>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <span class="relative flex h-4 w-4">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
+        </span>
+        <span>animate-ping (알림 뱃지)</span>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <div class="animate-pulse flex space-x-4 w-64">
+            <div class="rounded-full bg-gray-300 h-10 w-10"></div>
+            <div class="flex-1 space-y-2 py-1">
+                <div class="h-3 bg-gray-300 rounded w-3/4"></div>
+                <div class="h-3 bg-gray-300 rounded w-1/2"></div>
+            </div>
+        </div>
+        <span>animate-pulse (스켈레톤 로딩)</span>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <div class="animate-bounce text-2xl">↓</div>
+        <span>animate-bounce (스크롤 유도)</span>
+    </div>
+</body>
+</html>
+```
 
 ---
 
