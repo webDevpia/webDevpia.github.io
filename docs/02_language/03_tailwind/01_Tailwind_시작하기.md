@@ -557,13 +557,7 @@ Tailwind에서 `hover:`, `focus:` 등의 **접두사(prefix)** 를 붙이면 해
 | `:focus { outline: 2px solid blue }` | `focus:ring-2 focus:ring-blue-500` | 클릭/탭 포커스 시 |
 | `:active { opacity: 0.8 }` | `active:opacity-80` | 클릭하는 순간 |
 
-> **Tailwind가 `hover:bg-blue-700`을 만나면 내부적으로 이런 CSS를 생성합니다:**
-> ```css
-> .hover\:bg-blue-700:hover {
->   background-color: #1d4ed8;
-> }
-> ```
-> 즉, CSS의 `:hover` 가상 클래스를 자동으로 만들어주는 것입니다. `focus:`, `active:` 등도 동일한 원리입니다.
+> 💡 **원리**: `hover:bg-blue-700`은 CSS의 `:hover { background-color: ... }`를 Tailwind가 자동으로 만들어주는 것입니다. `focus:`, `active:` 등도 동일한 원리입니다.
 
 ### transition — 부드러운 전환
 
