@@ -127,6 +127,44 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 
 **브라우저에서 이렇게 보입니다:** 이미지가 110%로 확대되어 있지만 카드 테두리 밖으로 나오는 부분은 잘려서 깔끔한 둥근 모서리가 유지됩니다.
 
+### 전체 코드로 실행해보기 — Position + Badge
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Position + Badge</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8 space-y-8">
+    <h1 class="text-2xl font-bold">Position 패턴</h1>
+
+    <h2 class="text-lg font-semibold">sticky 네비게이션 (스크롤해보세요)</h2>
+    <nav class="sticky top-0 z-50 bg-white shadow-sm p-4 rounded">
+        <span class="font-bold text-blue-600">MyApp</span>
+        <span class="ml-4 text-gray-500">스크롤해도 여기 고정</span>
+    </nav>
+
+    <h2 class="text-lg font-semibold">absolute 배지 카드</h2>
+    <div class="relative w-64 inline-block">
+        <img src="https://placehold.co/256x256" class="rounded-lg w-full">
+        <span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">NEW</span>
+    </div>
+
+    <h2 class="text-lg font-semibold">z-index 레이어</h2>
+    <div class="relative h-32">
+        <div class="absolute top-0 left-0 w-24 h-24 bg-blue-300 rounded z-10 flex items-center justify-center">z-10</div>
+        <div class="absolute top-4 left-4 w-24 h-24 bg-red-300 rounded z-20 flex items-center justify-center">z-20</div>
+        <div class="absolute top-8 left-8 w-24 h-24 bg-green-300 rounded z-30 flex items-center justify-center">z-30</div>
+    </div>
+
+    <div style="height: 600px;"></div>
+    <p>스크롤해도 네비게이션이 상단에 고정됩니다.</p>
+</body>
+</html>
+```
+
 ---
 
 <a id="part2"></a>
@@ -294,6 +332,44 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 | `outline` | `outline` | 테두리 바깥 | 없음 | 브라우저 기본 포커스 |
 | `ring` | `ring-{n}` | 테두리 바깥 | 없음 | 커스텀 포커스 강조 |
 
+### 전체 코드로 실행해보기 — Border + Shadow + Ring
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Border + Shadow + Ring</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8 space-y-8">
+    <h1 class="text-2xl font-bold">테두리, 그림자, Ring</h1>
+
+    <h2 class="text-lg font-semibold">Border 변형</h2>
+    <div class="flex gap-4 flex-wrap">
+        <div class="border border-gray-300 rounded p-4">border (기본)</div>
+        <div class="border-2 border-blue-500 rounded-lg p-4">border-2 + 파랑</div>
+        <div class="border-4 border-dashed border-red-400 rounded-xl p-4">border-4 + dashed</div>
+    </div>
+
+    <h2 class="text-lg font-semibold">Shadow 변형</h2>
+    <div class="flex gap-4 flex-wrap">
+        <div class="shadow-sm bg-white rounded-lg p-4">shadow-sm</div>
+        <div class="shadow-md bg-white rounded-lg p-4">shadow-md</div>
+        <div class="shadow-xl bg-white rounded-lg p-4">shadow-xl</div>
+    </div>
+
+    <h2 class="text-lg font-semibold">Ring (포커스 클릭해보세요)</h2>
+    <div class="flex gap-4 flex-wrap">
+        <input type="text" placeholder="focus → 파란 ring"
+               class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <input type="text" placeholder="focus → 빨간 ring"
+               class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" />
+    </div>
+</body>
+</html>
+```
+
 ---
 
 <a id="part4"></a>
@@ -348,6 +424,46 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 **브라우저에서 이렇게 보입니다:** input을 클릭하기 전에는 안내 문구가 숨겨져 있다가, 클릭해서 포커스가 생기는 순간 파란 안내 문구가 아래에 나타납니다.
 
 > **주의:** `peer`와 `peer-*:` 클래스는 **HTML 순서**가 중요합니다. `peer`가 먼저, 반응하는 요소가 나중에 와야 합니다. CSS의 형제 선택자(`~`) 방향이 앞→뒤이기 때문입니다.
+
+### 전체 코드로 실행해보기 — Group Hover + Peer
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Group Hover + Peer</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8 space-y-8">
+    <h1 class="text-2xl font-bold">Group Hover + Peer</h1>
+
+    <h2 class="text-lg font-semibold">group-hover (카드에 마우스를 올려보세요)</h2>
+    <div class="flex gap-6">
+        <div class="group bg-white rounded-xl p-6 shadow-md max-w-xs cursor-pointer transition hover:shadow-xl">
+            <h3 class="text-lg font-bold group-hover:text-blue-600 transition">프로젝트 A</h3>
+            <p class="text-gray-500 text-sm group-hover:text-gray-700 transition">카드 hover 시 제목 색상이 바뀝니다</p>
+            <span class="text-blue-500 text-sm opacity-0 group-hover:opacity-100 transition">자세히 보기 →</span>
+        </div>
+        <div class="group bg-white rounded-xl p-6 shadow-md max-w-xs cursor-pointer transition hover:shadow-xl">
+            <h3 class="text-lg font-bold group-hover:text-green-600 transition">프로젝트 B</h3>
+            <p class="text-gray-500 text-sm group-hover:text-gray-700 transition">부모 hover로 자식 여러 개가 변합니다</p>
+            <span class="text-green-500 text-sm opacity-0 group-hover:opacity-100 transition">자세히 보기 →</span>
+        </div>
+    </div>
+
+    <h2 class="text-lg font-semibold">peer (입력창을 클릭해보세요)</h2>
+    <div class="max-w-md">
+        <input type="text" placeholder="이름을 입력하세요"
+               class="peer border border-gray-300 rounded-lg px-4 py-2 w-full
+                      focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <p class="text-blue-500 text-sm mt-1 hidden peer-focus:block">2글자 이상 입력해주세요</p>
+    </div>
+</body>
+</html>
+```
+
+> 💡 `group-hover:text-blue-600`을 `group-hover:text-red-600`으로 바꿔보세요. 부모에 마우스를 올리면 자식 색상이 변합니다.
 
 ---
 

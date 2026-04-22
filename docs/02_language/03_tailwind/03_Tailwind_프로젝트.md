@@ -288,6 +288,56 @@ CSS 대응:
 </footer>
 ```
 
+### 전체 코드로 실행해보기 — 히어로 + 카드 그리드
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>히어로 + 카드 그리드</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- 히어로 섹션 -->
+    <section class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white
+                    min-h-screen flex items-center justify-center text-center px-4">
+        <div>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">멋진 서비스</h1>
+            <p class="text-lg md:text-xl text-blue-100 mb-8">당신의 생산성을 높여드립니다</p>
+            <button class="bg-white text-blue-600 font-semibold px-8 py-3 rounded-full
+                          hover:bg-blue-50 transition">시작하기</button>
+        </div>
+    </section>
+
+    <!-- 카드 그리드 (반응형: 1열 → 3열) -->
+    <section class="max-w-screen-xl mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold text-center mb-12">주요 기능</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white rounded-xl p-8 shadow-md text-center">
+                <div class="text-4xl mb-4">🚀</div>
+                <h3 class="text-xl font-bold mb-2">빠른 속도</h3>
+                <p class="text-gray-500">최적화된 성능으로 빠르게 동작합니다</p>
+            </div>
+            <div class="bg-white rounded-xl p-8 shadow-md text-center">
+                <div class="text-4xl mb-4">🔒</div>
+                <h3 class="text-xl font-bold mb-2">강력한 보안</h3>
+                <p class="text-gray-500">최신 보안 기술로 데이터를 보호합니다</p>
+            </div>
+            <div class="bg-white rounded-xl p-8 shadow-md text-center">
+                <div class="text-4xl mb-4">💡</div>
+                <h3 class="text-xl font-bold mb-2">스마트 AI</h3>
+                <p class="text-gray-500">AI가 알아서 추천해 드립니다</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+```
+
+> 💡 **반응형 확인**: 브라우저 창 너비를 줄여보세요. 카드가 3열 → 1열로 변합니다. `md:grid-cols-3`이 768px 이상에서만 3열을 적용합니다.
+
 ---
 
 <a id="part3"></a>

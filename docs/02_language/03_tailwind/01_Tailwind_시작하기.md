@@ -532,7 +532,37 @@ purple, fuchsia, pink, rose         ← 분홍/보라 계열
 </div>
 ```
 
-> 브라우저에서 이렇게 보입니다: 파랑, 초록, 빨강 버튼이 가로로 나란히 나타나고, 아웃라인 버튼은 배경 없이 파란 테두리만 보이며, 회색 버튼은 연한 회색 배경에 진한 회색 글씨로 표시됩니다.
+### 전체 코드로 실행해보기 — 색상 시스템
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Tailwind 색상</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8">
+    <h1 class="text-2xl font-bold mb-6">색상 시스템</h1>
+
+    <h2 class="text-lg font-semibold mb-3">텍스트 + 배경 색상</h2>
+    <p class="text-blue-500 mb-1">text-blue-500: 파란 텍스트</p>
+    <p class="text-red-600 mb-1">text-red-600: 빨간 텍스트</p>
+    <div class="bg-gray-800 text-white p-3 rounded mb-6">bg-gray-800: 어두운 배경 + 흰 텍스트</div>
+
+    <h2 class="text-lg font-semibold mb-3">다양한 색상의 버튼</h2>
+    <div class="flex gap-4 flex-wrap">
+        <button class="bg-blue-500 text-white px-4 py-2 rounded">파랑</button>
+        <button class="bg-green-500 text-white px-4 py-2 rounded">초록</button>
+        <button class="bg-red-500 text-white px-4 py-2 rounded">빨강</button>
+        <button class="border-2 border-blue-500 text-blue-500 px-4 py-2 rounded">아웃라인</button>
+        <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded">회색</button>
+    </div>
+</body>
+</html>
+```
+
+> 💡 `blue-500`을 `blue-300`이나 `blue-700`으로 바꿔보세요. 숫자가 작을수록 연하고, 클수록 진합니다.
 
 ---
 
@@ -664,6 +694,49 @@ input:focus {
     border-color: transparent;
 }
 ```
+
+### 전체 코드로 실행해보기 — hover + focus
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>hover + focus</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 p-8 space-y-8">
+    <h1 class="text-2xl font-bold">hover + focus 체험</h1>
+
+    <h2 class="text-lg font-semibold">hover 카드 (마우스를 올려보세요)</h2>
+    <div class="flex gap-6">
+        <div class="bg-white rounded-xl p-6 shadow-md max-w-xs
+                    transition duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
+            <h3 class="text-lg font-bold text-gray-800 mb-2">카드 1</h3>
+            <p class="text-gray-500 text-sm">hover 시 위로 올라갑니다</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow-md max-w-xs
+                    transition duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
+            <h3 class="text-lg font-bold text-gray-800 mb-2">카드 2</h3>
+            <p class="text-gray-500 text-sm">그림자도 커집니다</p>
+        </div>
+    </div>
+
+    <h2 class="text-lg font-semibold">focus 입력창 (클릭해보세요)</h2>
+    <input type="text" placeholder="이름을 입력하세요"
+           class="border border-gray-300 rounded-lg px-4 py-2 w-full max-w-md
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                  transition duration-200" />
+
+    <input type="email" placeholder="이메일을 입력하세요"
+           class="border border-gray-300 rounded-lg px-4 py-2 w-full max-w-md
+                  focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent
+                  transition duration-200" />
+</body>
+</html>
+```
+
+> 💡 `focus:ring-blue-500`을 `focus:ring-red-500`으로 바꾸면 포커스 링 색상이 변합니다.
 
 ---
 
