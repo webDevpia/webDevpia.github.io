@@ -77,7 +77,7 @@ nav_exclude: true
 ```html
 <!-- 카드 오른쪽 위에 "NEW" 배지 -->
 <div class="relative w-64">
-  <img src="product.jpg" class="rounded-lg w-full">
+  <img src="https://placehold.co/256x256" class="rounded-lg w-full">
   <span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
     NEW
   </span>
@@ -109,11 +109,50 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 ```html
 <!-- 카드 이미지를 둥글게 클리핑 — overflow-hidden이 없으면 모서리가 튀어나옴 -->
 <div class="rounded-lg overflow-hidden w-64">
-  <img src="photo.jpg" class="w-full scale-110">
+  <img src="https://placehold.co/400x300" class="w-full scale-110">
 </div>
 ```
 
 **브라우저에서 이렇게 보입니다:** 이미지가 110%로 확대되어 있지만 카드 테두리 밖으로 나오는 부분은 잘려서 깔끔한 둥근 모서리가 유지됩니다.
+
+### 전체 코드로 실행해보기 — Position + Badge
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Position + Badge</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8 space-y-8">
+    <h1 class="text-2xl font-bold">Position 패턴</h1>
+
+    <h2 class="text-lg font-semibold">sticky 네비게이션 (스크롤해보세요)</h2>
+    <nav class="sticky top-0 z-50 bg-white shadow-sm p-4 rounded">
+        <span class="font-bold text-blue-600">MyApp</span>
+        <span class="ml-4 text-gray-500">스크롤해도 여기 고정</span>
+    </nav>
+
+    <h2 class="text-lg font-semibold">absolute 배지 카드</h2>
+    <div class="relative w-64 inline-block">
+        <img src="https://placehold.co/256x256" class="rounded-lg w-full">
+        <span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">NEW</span>
+    </div>
+
+    <h2 class="text-lg font-semibold">z-index 레이어</h2>
+    <div class="relative h-32">
+        <div class="absolute top-0 left-0 w-24 h-24 bg-blue-300 rounded z-10 flex items-center justify-center">z-10</div>
+        <div class="absolute top-4 left-4 w-24 h-24 bg-red-300 rounded z-20 flex items-center justify-center">z-20</div>
+        <div class="absolute top-8 left-8 w-24 h-24 bg-green-300 rounded z-30 flex items-center justify-center">z-30</div>
+    </div>
+
+    <div style="height: 600px;"></div>
+    <p>스크롤해도 네비게이션이 상단에 고정됩니다.</p>
+</body>
+</html>
+```
 
 ---
 
@@ -155,7 +194,36 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 <!-- 결과: A와 C 사이에 빈 공간이 유지됨 -->
 ```
 
-**브라우저에서 이렇게 보입니다:** `hidden`에서는 B가 없는 것처럼 A-C가 붙고, `invisible`에서는 B 자리가 비어 A와 C 사이에 간격이 생깁니다.
+**전체 코드로 실행해보기:**
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hidden vs invisible</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8 space-y-8">
+    <h2 class="text-xl font-bold">hidden: 공간 사라짐</h2>
+    <div class="flex gap-4 items-center">
+        <div class="w-16 h-16 bg-blue-500 rounded text-white flex items-center justify-center">A</div>
+        <div class="hidden w-16 h-16 bg-red-500 rounded text-white flex items-center justify-center">B</div>
+        <div class="w-16 h-16 bg-green-500 rounded text-white flex items-center justify-center">C</div>
+    </div>
+    <p class="text-gray-500">A와 C가 붙어서 표시됩니다 (B의 공간이 사라짐)</p>
+
+    <h2 class="text-xl font-bold">invisible: 공간 유지</h2>
+    <div class="flex gap-4 items-center">
+        <div class="w-16 h-16 bg-blue-500 rounded text-white flex items-center justify-center">A</div>
+        <div class="invisible w-16 h-16 bg-red-500 rounded text-white flex items-center justify-center">B</div>
+        <div class="w-16 h-16 bg-green-500 rounded text-white flex items-center justify-center">C</div>
+    </div>
+    <p class="text-gray-500">A와 C 사이에 빈 공간이 유지됩니다 (B가 투명)</p>
+</body>
+</html>
+```
 
 ### 반응형 숨기기
 
@@ -250,6 +318,45 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 | `outline` | `outline` | 테두리 바깥 | 없음 | 브라우저 기본 포커스 |
 | `ring` | `ring-{n}` | 테두리 바깥 | 없음 | 커스텀 포커스 강조 |
 
+### 전체 코드로 실행해보기 — Border + Shadow + Ring
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Border + Shadow + Ring</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8 space-y-8">
+    <h1 class="text-2xl font-bold">테두리, 그림자, Ring</h1>
+
+    <h2 class="text-lg font-semibold">Border 변형</h2>
+    <div class="flex gap-4 flex-wrap">
+        <div class="border border-gray-300 rounded p-4">border (기본)</div>
+        <div class="border-2 border-blue-500 rounded-lg p-4">border-2 + 파랑</div>
+        <div class="border-4 border-dashed border-red-400 rounded-xl p-4">border-4 + dashed</div>
+    </div>
+
+    <h2 class="text-lg font-semibold">Shadow 변형</h2>
+    <div class="flex gap-4 flex-wrap">
+        <div class="shadow-sm bg-white rounded-lg p-4">shadow-sm</div>
+        <div class="shadow-md bg-white rounded-lg p-4">shadow-md</div>
+        <div class="shadow-xl bg-white rounded-lg p-4">shadow-xl</div>
+    </div>
+
+    <h2 class="text-lg font-semibold">Ring (포커스 클릭해보세요)</h2>
+    <div class="flex gap-4 flex-wrap">
+        <input type="text" placeholder="focus → 파란 ring"
+               class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <input type="text" placeholder="focus → 빨간 ring"
+               class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500" />
+    </div>
+</body>
+</html>
+```
+
 ---
 
 ## 4️⃣ Group Hover와 Peer
@@ -302,6 +409,47 @@ Tailwind의 z-index 스케일: `z-0`(0) · `z-10`(10) · `z-20`(20) · `z-30`(30
 **브라우저에서 이렇게 보입니다:** input을 클릭하기 전에는 안내 문구가 숨겨져 있다가, 클릭해서 포커스가 생기는 순간 파란 안내 문구가 아래에 나타납니다.
 
 > **주의:** `peer`와 `peer-*:` 클래스는 **HTML 순서**가 중요합니다. `peer`가 먼저, 반응하는 요소가 나중에 와야 합니다. CSS의 형제 선택자(`~`) 방향이 앞→뒤이기 때문입니다.
+
+### 전체 코드로 실행해보기 — Group Hover + Peer
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Hover + Peer</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8 space-y-8">
+    <h1 class="text-2xl font-bold">Group Hover + Peer</h1>
+
+    <h2 class="text-lg font-semibold">group-hover (카드에 마우스를 올려보세요)</h2>
+    <div class="flex gap-6">
+        <div class="group bg-white rounded-xl p-6 shadow-md max-w-xs cursor-pointer transition hover:shadow-xl">
+            <h3 class="text-lg font-bold group-hover:text-blue-600 transition">프로젝트 A</h3>
+            <p class="text-gray-500 text-sm group-hover:text-gray-700 transition">카드 hover 시 제목 색상이 바뀝니다</p>
+            <span class="text-blue-500 text-sm opacity-0 group-hover:opacity-100 transition">자세히 보기 →</span>
+        </div>
+        <div class="group bg-white rounded-xl p-6 shadow-md max-w-xs cursor-pointer transition hover:shadow-xl">
+            <h3 class="text-lg font-bold group-hover:text-green-600 transition">프로젝트 B</h3>
+            <p class="text-gray-500 text-sm group-hover:text-gray-700 transition">부모 hover로 자식 여러 개가 변합니다</p>
+            <span class="text-green-500 text-sm opacity-0 group-hover:opacity-100 transition">자세히 보기 →</span>
+        </div>
+    </div>
+
+    <h2 class="text-lg font-semibold">peer (입력창을 클릭해보세요)</h2>
+    <div class="max-w-md">
+        <input type="text" placeholder="이름을 입력하세요"
+               class="peer border border-gray-300 rounded-lg px-4 py-2 w-full
+                      focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <p class="text-blue-500 text-sm mt-1 hidden peer-focus:block">2글자 이상 입력해주세요</p>
+    </div>
+</body>
+</html>
+```
+
+> 💡 `group-hover:text-blue-600`을 `group-hover:text-red-600`으로 바꿔보세요. 부모에 마우스를 올리면 자식 색상이 변합니다.
 
 ---
 
@@ -392,11 +540,51 @@ Tailwind는 자주 쓰는 애니메이션 4종을 제공합니다.
 <div class="animate-bounce text-2xl">↓</div>
 ```
 
-**브라우저에서 이렇게 보입니다:**
-- `animate-spin`: 파란 원형 스피너가 계속 돌아갑니다.
-- `animate-ping`: 빨간 점 주변에 파동이 퍼져나갑니다.
-- `animate-pulse`: 회색 블록들이 서서히 밝아졌다 어두워지며 콘텐츠 로딩 중임을 표시합니다.
-- `animate-bounce`: 화살표가 위아래로 통통 튀어 스크롤을 유도합니다.
+**전체 코드로 실행해보기:**
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind 애니메이션 4종</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 p-8 space-y-10">
+    <h1 class="text-2xl font-bold">Tailwind 내장 애니메이션 4종</h1>
+
+    <div class="flex items-center gap-4">
+        <div class="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+        <span>animate-spin (로딩 스피너)</span>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <span class="relative flex h-4 w-4">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
+        </span>
+        <span>animate-ping (알림 뱃지)</span>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <div class="animate-pulse flex space-x-4 w-64">
+            <div class="rounded-full bg-gray-300 h-10 w-10"></div>
+            <div class="flex-1 space-y-2 py-1">
+                <div class="h-3 bg-gray-300 rounded w-3/4"></div>
+                <div class="h-3 bg-gray-300 rounded w-1/2"></div>
+            </div>
+        </div>
+        <span>animate-pulse (스켈레톤 로딩)</span>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <div class="animate-bounce text-2xl">↓</div>
+        <span>animate-bounce (스크롤 유도)</span>
+    </div>
+</body>
+</html>
+```
 
 ---
 

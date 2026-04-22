@@ -274,6 +274,133 @@ CSS 대응:
 </footer>
 ```
 
+### 전체 코드로 실행해보기 — 레이아웃 패턴 6개 통합
+
+위에서 설명한 6개 패턴(컨테이너, 내비게이션, 히어로, 카드 그리드, 폼, 푸터)을 **하나의 페이지**에 모았습니다.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레이아웃 패턴 6개</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- 1. 내비게이션 바 (컨테이너 포함) -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-blue-600">로고</a>
+            <div class="hidden md:flex gap-6">
+                <a href="#hero" class="text-gray-600 hover:text-blue-600 transition">소개</a>
+                <a href="#cards" class="text-gray-600 hover:text-blue-600 transition">기능</a>
+                <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">연락처</a>
+            </div>
+            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg
+                           hover:bg-blue-700 transition duration-200">시작하기</button>
+        </div>
+    </nav>
+
+    <!-- 2. 히어로 섹션 -->
+    <section id="hero" class="min-h-screen flex items-center justify-center
+                              bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div class="text-center px-4">
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">큰 제목입니다</h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                부제목 설명 텍스트가 들어갑니다. 최대 너비를 제한해서 읽기 편하게 합니다.
+            </p>
+            <button class="bg-blue-600 text-white px-8 py-4 rounded-xl text-lg font-semibold
+                           hover:bg-blue-700 transition duration-300 shadow-lg hover:shadow-xl">
+                CTA 버튼
+            </button>
+        </div>
+    </section>
+
+    <!-- 3. 카드 그리드 (반응형: 1열 → 2열 → 3열) -->
+    <section id="cards" class="max-w-screen-xl mx-auto px-4 py-20">
+        <h2 class="text-3xl font-bold text-center mb-12">주요 기능</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition duration-300 text-center">
+                <div class="text-4xl mb-4">🚀</div>
+                <h3 class="text-xl font-bold mb-2">빠른 속도</h3>
+                <p class="text-gray-500">최적화된 성능으로 빠르게 동작합니다</p>
+            </div>
+            <div class="bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition duration-300 text-center">
+                <div class="text-4xl mb-4">🔒</div>
+                <h3 class="text-xl font-bold mb-2">강력한 보안</h3>
+                <p class="text-gray-500">최신 보안 기술로 데이터를 보호합니다</p>
+            </div>
+            <div class="bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition duration-300 text-center">
+                <div class="text-4xl mb-4">💡</div>
+                <h3 class="text-xl font-bold mb-2">스마트 AI</h3>
+                <p class="text-gray-500">AI가 알아서 추천해 드립니다</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 폼 입력창 -->
+    <section id="contact" class="max-w-screen-xl mx-auto px-4 py-20">
+        <h2 class="text-3xl font-bold text-center mb-12">연락하기</h2>
+        <div class="max-w-lg mx-auto space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">이름</label>
+                <input type="text" placeholder="홍길동"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2
+                              focus:outline-none focus:ring-2 focus:ring-blue-500
+                              focus:border-transparent transition duration-200" />
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">이메일</label>
+                <input type="email" placeholder="example@email.com"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2
+                              focus:outline-none focus:ring-2 focus:ring-blue-500
+                              focus:border-transparent transition duration-200" />
+            </div>
+            <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold
+                           hover:bg-blue-700 transition duration-200">보내기</button>
+        </div>
+    </section>
+
+    <!-- 5. 푸터 -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-4">회사</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">소개</a></li>
+                        <li><a href="#" class="hover:text-white transition">채용</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">서비스</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">기능1</a></li>
+                        <li><a href="#" class="hover:text-white transition">기능2</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">연락처</h3>
+                    <p class="text-gray-400">contact@example.com</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+                (c) 2025 회사명. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
+```
+
+> 💡 **반응형 확인**: 브라우저 창 너비를 줄여보세요.
+> - 내비게이션 메뉴가 숨겨집니다 (`hidden md:flex`)
+> - 카드가 3열 → 2열 → 1열로 변합니다 (`grid-cols-1 md:grid-cols-2 lg:grid-cols-3`)
+> - 푸터가 3열 → 1열로 변합니다
+
 ---
 
 ## 3️⃣ 프로젝트 소개: 랜딩 페이지
@@ -283,37 +410,37 @@ CSS 대응:
 ### 완성 화면 구조
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  내비게이션 바                                            │
-│  [로고]                    [메뉴1 메뉴2 메뉴3] [시작하기] │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│                    히어로 섹션                            │
-│               큰 제목 (텍스트 중앙 정렬)                  │
-│            부제목 설명 텍스트 (연한 회색)                  │
-│              [ 무료로 시작하기 ] 버튼                      │
-│                                                         │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  특징 카드 (모바일: 1열, 데스크톱: 3열)                    │
-│  ┌────────────┐  ┌────────────┐  ┌────────────┐        │
-│  │ 🚀 빠른 속도│  │ 🔒 강력 보안│  │ 💡 스마트AI │        │
-│  │ 설명 텍스트 │  │ 설명 텍스트 │  │ 설명 텍스트 │        │
-│  └────────────┘  └────────────┘  └────────────┘        │
-│                                                         │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│                   연락처 폼                               │
-│        이름 입력창  /  이메일 입력창                        │
-│             메시지 텍스트에어리어                           │
-│                [ 보내기 ] 버튼                             │
-│                                                         │
-├─────────────────────────────────────────────────────────┤
-│  푸터                                                    │
-│  [회사]  [서비스]  [연락처]  (3열)                         │
-│  ─────────────────────────────────                      │
-│  © 2025 회사명. All rights reserved.                    │
-└─────────────────────────────────────────────────────────┘
++----------------------------------------------------------+
+|  내비게이션 바                                             |
+|  [로고]               [메뉴1 메뉴2 메뉴3]  [시작하기]      |
++----------------------------------------------------------+
+|                                                          |
+|                  히어로 섹션                               |
+|            큰 제목 (텍스트 중앙 정렬)                      |
+|          부제목 설명 텍스트 (연한 회색)                     |
+|            [ 무료로 시작하기 ] 버튼                         |
+|                                                          |
++----------------------------------------------------------+
+|                                                          |
+|  특징 카드 (모바일: 1열, 데스크톱: 3열)                     |
+|  +--------------+ +--------------+ +--------------+      |
+|  | 빠른 속도     | | 강력 보안     | | 스마트 AI    |      |
+|  | 설명 텍스트   | | 설명 텍스트   | | 설명 텍스트   |      |
+|  +--------------+ +--------------+ +--------------+      |
+|                                                          |
++----------------------------------------------------------+
+|                                                          |
+|                  연락처 폼                                 |
+|        이름 입력창  /  이메일 입력창                         |
+|           메시지 텍스트에어리어                              |
+|              [ 보내기 ] 버튼                                |
+|                                                          |
++----------------------------------------------------------+
+|  푸터                                                     |
+|  [회사]  [서비스]  [연락처]  (3열)                          |
+|  ----------------------------------------                |
+|  (c) 2025 회사명. All rights reserved.                    |
++----------------------------------------------------------+
 ```
 
 ### 사용 기술 정리
@@ -329,6 +456,8 @@ CSS 대응:
 ---
 
 ## 4️⃣ 단계별 구현
+
+> 💡 아래 Step 1~5는 각 섹션의 **코드 조각**입니다. 하나씩 이해한 뒤, 5. 전체 코드에서 완성된 HTML을 복사해서 실행하세요.
 
 ### Step 1: 내비게이션 바
 
@@ -346,7 +475,7 @@ CSS 대응:
             <div class="hidden md:flex items-center gap-8">
                 <a href="#features" class="text-gray-600 hover:text-blue-600 transition duration-200">특징</a>
                 <a href="#contact" class="text-gray-600 hover:text-blue-600 transition duration-200">연락처</a>
-                <a href="#about" class="text-gray-600 hover:text-blue-600 transition duration-200">소개</a>
+                <a href="#hero" class="text-gray-600 hover:text-blue-600 transition duration-200">소개</a>
             </div>
 
             <!-- CTA 버튼 -->
@@ -374,7 +503,6 @@ Tailwind는 `hidden md:flex`로 이를 2단어로 표현합니다.
 > **이 코드에서 처음 등장하는 클래스:**
 > - `sticky top-0`: 스크롤 시 화면 상단에 고정 (02장 Position 참조)
 > - `z-50`: 다른 요소 위에 표시 (02장 Z-index 참조)
-> - `backdrop-blur-sm`: 뒤 배경을 약간 흐리게 (유리 효과)
 
 **브라우저에서 이렇게 보입니다:** 화면 상단에 좌측 'MyApp' 로고, 우측 '특징/연락처/소개' 메뉴가 가로로 배치됩니다. 스크롤하면 내비게이션이 상단에 고정됩니다(sticky).
 
@@ -651,7 +779,7 @@ Tailwind는 `hidden md:flex`로 이를 2단어로 표현합니다.
                 <div class="hidden md:flex items-center gap-8">
                     <a href="#features" class="text-gray-600 hover:text-blue-600 transition duration-200">특징</a>
                     <a href="#contact" class="text-gray-600 hover:text-blue-600 transition duration-200">연락처</a>
-                    <a href="#about" class="text-gray-600 hover:text-blue-600 transition duration-200">소개</a>
+                    <a href="#hero" class="text-gray-600 hover:text-blue-600 transition duration-200">소개</a>
                 </div>
                 <button class="bg-blue-600 text-white px-5 py-2 rounded-lg font-medium
                                hover:bg-blue-700 transition duration-200">
@@ -837,17 +965,16 @@ Tailwind는 `hidden md:flex`로 이를 2단어로 표현합니다.
 ### 3일간의 성장 흐름
 
 ```
-Day 1 (HTML만)          Day 2 (+ CSS)           Day 3 (+ Tailwind)
-┌──────────────┐     ┌──────────────┐       ┌──────────────┐
-│ 심선조        │     │ ■ 심선조      │       │ ✦ MyApp       │
-│              │     │ ────────────  │       │ ══════════════│
-│ 안녕하세요    │     │  안녕하세요   │       │  멋진 서비스   │
-│ - 취미1      │     │ ┌────┐┌────┐ │       │ ┌───┐┌───┐┌───┐│
-│ - 취미2      │     │ │카드││카드│ │       │ │ ✦ ││ ✦ ││ ✦ ││
-│              │     │ └────┘└────┘ │       │ └───┘└───┘└───┘│
-│ 연락처       │     │ © 2026       │       │ [시작하기]     │
-└──────────────┘     └──────────────┘       └──────────────┘
-  투박한 텍스트         색상+레이아웃          프로 수준 UI
+Day 1 (HTML만)        Day 2 (+ CSS)         Day 3 (+ Tailwind)
++--------------+    +--------------+     +-----------------+
+| 심선조        |    | # 심선조      |     | * MyApp          |
+|              |    | ------------ |     | ================|
+| 안녕하세요    |    | 안녕하세요    |     |  멋진 서비스     |
+| - 취미1      |    | [카드][카드]  |     | [카드][카드][카드]|
+| - 취미2      |    |              |     |                 |
+| 연락처       |    | (c) 2026     |     | [시작하기]       |
++--------------+    +--------------+     +-----------------+
+  투박한 텍스트       색상+레이아웃        프로 수준 UI
 ```
 
 ### 이 랜딩 페이지에 사용된 3일간의 개념
@@ -860,7 +987,7 @@ Day 1 (HTML만)          Day 2 (+ CSS)           Day 3 (+ Tailwind)
 | `grid grid-cols-1 md:grid-cols-3` | 반응형 그리드 | Day 2 (CSS 03장) → Day 3 Tailwind 변환 |
 | `bg-blue-600`, `text-white`, `rounded-lg` | Tailwind 유틸리티 | Day 3 (Tailwind 01장) |
 | `hover:bg-blue-700`, `transition` | 상태 클래스 + 전환 | Day 3 (Tailwind 01장) |
-| `md:grid-cols-3`, `lg:text-6xl` | Tailwind 반응형 접두사 | Day 3 (Tailwind 02장) |
+| `md:grid-cols-3`, `lg:text-6xl` | Tailwind 반응형 접두사 | Day 3 (Tailwind 03장) |
 
 ### CSS ↔ Tailwind 반응형 최종 정리
 
@@ -873,7 +1000,7 @@ Day 1 (HTML만)          Day 2 (+ CSS)           Day 3 (+ Tailwind)
 
 /* 예시 */
 @media (min-width: 768px) {         md:grid-cols-3
-    .grid { grid-cols: 3; }
+    .grid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (min-width: 768px) {         md:hidden
     .mobile-menu { display: none; }
