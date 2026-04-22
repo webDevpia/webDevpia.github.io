@@ -657,6 +657,7 @@ body {
   padding: 32px 24px;
   border: 1px solid #e8e8e8;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden; /* 내용이 박스 밖으로 삐져나가지 않도록 */
 }
 
 .profile {
@@ -798,11 +799,12 @@ body {
     gap: 40px;
   }
 
-  /* 사이드바: 고정 너비 */
+  /* 사이드바: 고정 너비 + 스크롤 시 상단 고정 */
   .sidebar {
     flex: 0 0 260px;
-    position: sticky; /* 스크롤 시 사이드바 고정 */
+    position: sticky;
     top: 80px;
+    align-self: flex-start; /* sticky가 제대로 작동하려면 필요 */
   }
 
   /* 메인 콘텐츠: 나머지 공간 */
