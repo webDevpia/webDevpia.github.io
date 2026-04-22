@@ -201,7 +201,7 @@ p { font-size: 16px; }
 
 ```css
 /* nav 안의 모든 a 태그 */
-nav a { color: white; text-decoration: none; }
+nav a { color: green; text-decoration: none; }
 ```
 
 ### 전체 코드로 실행해보기
@@ -250,7 +250,7 @@ p { font-size: 16px; }
 
 /* 자손 선택자 */
 nav { background-color: #333; padding: 10px; }
-nav a { color: white; text-decoration: none; }
+nav a { color: green; text-decoration: none; }
 ```
 
 > 💡 스타일이 안 먹히면 `<link>` 태그의 `href="style.css"` 경로를 확인하세요. HTML 파일과 CSS 파일이 같은 폴더에 있어야 합니다.
@@ -843,6 +843,36 @@ a.button {
 | `fixed` | 화면(뷰포트) 기준 고정 | 상단 고정 네비게이션 |
 | `sticky` | 스크롤 시 특정 위치에 붙음 | 스크롤 따라가는 헤더 |
 
+### static — 기본값
+
+모든 요소는 기본적으로 `position: static`입니다. 문서 흐름에 따라 위에서 아래로, 왼쪽에서 오른쪽으로 배치됩니다. **따로 설정할 일이 거의 없습니다.**
+
+### relative + absolute — 가장 많이 쓰는 조합
+
+`relative`는 혼자 쓰기보다 **`absolute`의 기준점**으로 사용합니다. 이 조합이 실무에서 position 사용의 대부분입니다.
+
+> **비유**: `relative`는 **방(기준 공간)**이고, `absolute`는 그 방 안에서 **자유롭게 위치를 잡는 가구**입니다.
+
+```css
+/* 부모: relative → "이 안에서 기준을 잡겠다" */
+.card {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+/* 자식: absolute → "부모 기준으로 위치 지정" */
+.badge {
+  position: absolute;
+  top: 8px;      /* 부모 위에서 8px */
+  right: 8px;    /* 부모 오른쪽에서 8px */
+}
+```
+
+> ⚠️ **주의**: 부모에 `relative`가 없으면 `absolute`는 **페이지 전체**를 기준으로 배치됩니다. 반드시 부모에 `relative`를 설정하세요.
+
+### fixed — 화면에 고정
+
 ```css
 /* 상단 고정 네비게이션 */
 .navbar {
@@ -852,7 +882,11 @@ a.button {
   width: 100%;
   z-index: 100;  /* 다른 요소 위에 표시 (숫자가 클수록 위) */
 }
+```
 
+### sticky — 스크롤하면 붙음
+
+```css
 /* 스크롤하면 상단에 붙는 사이드바 */
 .sidebar {
   position: sticky;
@@ -913,6 +947,12 @@ a.button {
     <p>스크롤해보세요 — 네비게이션이 고정됩니다.</p>
     <p>버튼과 카드에 마우스를 올려보세요 — 부드러운 전환 효과를 확인하세요.</p>
 
+    <h2>relative + absolute (배지 카드)</h2>
+    <div class="product-card">
+      <img src="https://placehold.co/200x200" alt="상품 이미지">
+      <span class="product-badge">NEW</span>
+    </div>
+
     <h2>버튼 (hover → 색상 전환)</h2>
     <button class="btn">시작하기</button>
     <button class="btn">더 보기</button>
@@ -940,6 +980,28 @@ a.button {
 ```css
 * { box-sizing: border-box; margin: 0; }
 body { font-family: sans-serif; }
+
+/* relative + absolute: 배지 카드 */
+.product-card {
+  position: relative;  /* 기준점 설정 */
+  width: 200px;
+  display: inline-block;
+  margin: 16px;
+}
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+.product-badge {
+  position: absolute;  /* 부모(.product-card) 기준으로 배치 */
+  top: 8px;
+  right: 8px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
 
 /* 상단 고정 네비게이션 */
 .navbar {
