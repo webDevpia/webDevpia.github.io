@@ -18,8 +18,6 @@ permalink: /language/tailwind/patterns
 
 > **사전 준비:** 01장에서 유틸리티 클래스 개념과 Flexbox 클래스를 이해한 상태에서 진행합니다.
 
-> 💡 이 장의 코드 조각들은 01장에서 만든 **기본 템플릿(base.html)**의 `<body>` 안에 붙여넣어서 실행하세요.
-
 <a id="toc"></a>
 
 ## 진행 순서
