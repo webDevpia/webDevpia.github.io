@@ -286,7 +286,9 @@ CSS 대응:
 </footer>
 ```
 
-### 전체 코드로 실행해보기 — 히어로 + 카드 그리드
+### 전체 코드로 실행해보기 — 레이아웃 패턴 6개 통합
+
+위에서 설명한 6개 패턴(컨테이너, 내비게이션, 히어로, 카드 그리드, 폼, 푸터)을 **하나의 페이지**에 모았습니다.
 
 ```html
 <!DOCTYPE html>
@@ -294,47 +296,122 @@ CSS 대응:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>히어로 + 카드 그리드</title>
+    <title>레이아웃 패턴 6개</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-50">
-    <!-- 히어로 섹션 -->
-    <section class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white
-                    min-h-screen flex items-center justify-center text-center px-4">
-        <div>
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">멋진 서비스</h1>
-            <p class="text-lg md:text-xl text-blue-100 mb-8">당신의 생산성을 높여드립니다</p>
-            <button class="bg-white text-blue-600 font-semibold px-8 py-3 rounded-full
-                          hover:bg-blue-50 transition">시작하기</button>
+
+    <!-- 1. 내비게이션 바 (컨테이너 포함) -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-blue-600">로고</a>
+            <div class="hidden md:flex gap-6">
+                <a href="#hero" class="text-gray-600 hover:text-blue-600 transition">소개</a>
+                <a href="#cards" class="text-gray-600 hover:text-blue-600 transition">기능</a>
+                <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">연락처</a>
+            </div>
+            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg
+                           hover:bg-blue-700 transition duration-200">시작하기</button>
+        </div>
+    </nav>
+
+    <!-- 2. 히어로 섹션 -->
+    <section id="hero" class="min-h-screen flex items-center justify-center
+                              bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div class="text-center px-4">
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">큰 제목입니다</h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                부제목 설명 텍스트가 들어갑니다. 최대 너비를 제한해서 읽기 편하게 합니다.
+            </p>
+            <button class="bg-blue-600 text-white px-8 py-4 rounded-xl text-lg font-semibold
+                           hover:bg-blue-700 transition duration-300 shadow-lg hover:shadow-xl">
+                CTA 버튼
+            </button>
         </div>
     </section>
 
-    <!-- 카드 그리드 (반응형: 1열 → 3열) -->
-    <section class="max-w-screen-xl mx-auto px-4 py-16">
+    <!-- 3. 카드 그리드 (반응형: 1열 → 2열 → 3열) -->
+    <section id="cards" class="max-w-screen-xl mx-auto px-4 py-20">
         <h2 class="text-3xl font-bold text-center mb-12">주요 기능</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white rounded-xl p-8 shadow-md text-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition duration-300 text-center">
                 <div class="text-4xl mb-4">🚀</div>
                 <h3 class="text-xl font-bold mb-2">빠른 속도</h3>
                 <p class="text-gray-500">최적화된 성능으로 빠르게 동작합니다</p>
             </div>
-            <div class="bg-white rounded-xl p-8 shadow-md text-center">
+            <div class="bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition duration-300 text-center">
                 <div class="text-4xl mb-4">🔒</div>
                 <h3 class="text-xl font-bold mb-2">강력한 보안</h3>
                 <p class="text-gray-500">최신 보안 기술로 데이터를 보호합니다</p>
             </div>
-            <div class="bg-white rounded-xl p-8 shadow-md text-center">
+            <div class="bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition duration-300 text-center">
                 <div class="text-4xl mb-4">💡</div>
                 <h3 class="text-xl font-bold mb-2">스마트 AI</h3>
                 <p class="text-gray-500">AI가 알아서 추천해 드립니다</p>
             </div>
         </div>
     </section>
+
+    <!-- 4. 폼 입력창 -->
+    <section id="contact" class="max-w-screen-xl mx-auto px-4 py-20">
+        <h2 class="text-3xl font-bold text-center mb-12">연락하기</h2>
+        <div class="max-w-lg mx-auto space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">이름</label>
+                <input type="text" placeholder="홍길동"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2
+                              focus:outline-none focus:ring-2 focus:ring-blue-500
+                              focus:border-transparent transition duration-200" />
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">이메일</label>
+                <input type="email" placeholder="example@email.com"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2
+                              focus:outline-none focus:ring-2 focus:ring-blue-500
+                              focus:border-transparent transition duration-200" />
+            </div>
+            <button class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold
+                           hover:bg-blue-700 transition duration-200">보내기</button>
+        </div>
+    </section>
+
+    <!-- 5. 푸터 -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="font-bold text-lg mb-4">회사</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">소개</a></li>
+                        <li><a href="#" class="hover:text-white transition">채용</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">서비스</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">기능1</a></li>
+                        <li><a href="#" class="hover:text-white transition">기능2</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">연락처</h3>
+                    <p class="text-gray-400">contact@example.com</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+                (c) 2025 회사명. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
 ```
 
-> 💡 **반응형 확인**: 브라우저 창 너비를 줄여보세요. 카드가 3열 → 1열로 변합니다. `md:grid-cols-3`이 768px 이상에서만 3열을 적용합니다.
+> 💡 **반응형 확인**: 브라우저 창 너비를 줄여보세요.
+> - 내비게이션 메뉴가 숨겨집니다 (`hidden md:flex`)
+> - 카드가 3열 → 2열 → 1열로 변합니다 (`grid-cols-1 md:grid-cols-2 lg:grid-cols-3`)
+> - 푸터가 3열 → 1열로 변합니다
 
 ---
 
