@@ -467,6 +467,66 @@ localStorage에 데이터를 저장하고 불러오는 함수를 만들어줘.
 
 ---
 
+### 📖 더 알아보기: 다른 AI 도구에서는?
+
+이 장에서 배운 Custom Instructions는 **GitHub Copilot의 방식**입니다. 다른 AI 코딩 도구도 같은 개념을 다른 파일 구조로 제공합니다.
+
+> **핵심**: "AI에게 프로젝트 규칙을 알려주는 파일"이라는 개념은 동일합니다. 파일 이름과 위치만 다릅니다.
+
+#### 프로젝트 규칙 파일 비교
+
+| 개념 | GitHub Copilot | Claude Code | Codex (OpenAI) |
+|------|---------------|-------------|----------------|
+| **프로젝트 규칙** | `.github/copilot-instructions.md` | `CLAUDE.md` (프로젝트 루트) | `AGENTS.md` (프로젝트 루트) |
+| **위치** | `.github/` 폴더 안 | 프로젝트 루트 | 프로젝트 루트 |
+| **자동 적용** | Copilot Chat에 자동 적용 | Claude Code 실행 시 자동 로드 | Codex 실행 시 자동 로드 |
+
+#### 파일별 규칙 비교
+
+| 개념 | GitHub Copilot | Claude Code | Codex (OpenAI) |
+|------|---------------|-------------|----------------|
+| **파일별 규칙** | `.github/instructions/*.instructions.md` | `CLAUDE.md` 내 섹션 또는 하위 폴더 `CLAUDE.md` | `AGENTS.md` 내 섹션 |
+| **테스트 규칙** | `testing.instructions.md` | `CLAUDE.md`에 테스트 규칙 작성 | `AGENTS.md`에 테스트 규칙 작성 |
+
+#### 작업 템플릿 / 커맨드 비교
+
+| 개념 | GitHub Copilot | Claude Code | Codex (OpenAI) |
+|------|---------------|-------------|----------------|
+| **반복 작업 템플릿** | `.github/prompts/*.prompt.md` | `.claude/commands/*.md` (슬래시 커맨드) | — (프롬프트로 직접 전달) |
+| **AI 에이전트** | `.github/agents/*.md` | 에이전트 시스템 내장 | 에이전트 시스템 내장 |
+| **실행 방법** | Copilot Chat에서 파일 참조 | `/명령어` 로 실행 | 프롬프트로 지시 |
+
+#### 예시: 같은 규칙을 세 도구에 적용하기
+
+**GitHub Copilot** — `.github/copilot-instructions.md`:
+```markdown
+## 코딩 규칙
+- ESM(import/export)만 사용한다
+- var 금지, let/const만 사용한다
+- 함수에는 JSDoc 주석을 작성한다
+```
+
+**Claude Code** — `CLAUDE.md`:
+```markdown
+## 코딩 규칙
+- ESM(import/export)만 사용한다
+- var 금지, let/const만 사용한다
+- 함수에는 JSDoc 주석을 작성한다
+```
+
+**Codex** — `AGENTS.md`:
+```markdown
+## 코딩 규칙
+- ESM(import/export)만 사용한다
+- var 금지, let/const만 사용한다
+- 함수에는 JSDoc 주석을 작성한다
+```
+
+> 💡 규칙 내용은 **완전히 동일**합니다. 차이는 파일 이름(`copilot-instructions.md` vs `CLAUDE.md` vs `AGENTS.md`)과 위치(`.github/` vs 루트)뿐입니다.
+> 하나를 배우면 나머지도 바로 적용할 수 있습니다.
+
+---
+
 ### 다음 장 미리보기
 
 Custom Instructions가 "항상 적용되는 규칙"이라면, Prompt Files는 "필요할 때 꺼내 쓰는 작업 템플릿"입니다. 카페의 단골 주문서처럼, 자주 하는 요청을 파일로 저장해두고 한 번에 실행하는 방법을 배웁니다.

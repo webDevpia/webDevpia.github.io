@@ -529,6 +529,22 @@ searchTodos('없는것');
 
 ---
 
+### 📖 더 알아보기: 다른 AI 도구의 작업 템플릿
+
+12장에서 Custom Instructions를 비교했듯이, Prompt Files도 도구마다 이름이 다릅니다.
+
+| 개념 | GitHub Copilot | Claude Code | Codex (OpenAI) |
+|------|---------------|-------------|----------------|
+| **작업 템플릿** | `.github/prompts/*.prompt.md` | `.claude/commands/*.md` | — (직접 프롬프트) |
+| **실행 방법** | Copilot Chat에서 파일 참조 | `/명령어` 슬래시 커맨드 | 프롬프트에 직접 작성 |
+| **변수 지원** | `{% raw %}{{변수명}}{% endraw %}` | `$ARGUMENTS` | — |
+| **AI 에이전트** | `.github/agents/*.md` | 에이전트 시스템 내장 (subagent) | 에이전트 시스템 내장 |
+
+> 💡 **공통 원칙**: "자주 하는 요청을 파일로 저장하고 재사용한다."
+> 도구가 바뀌어도 이 원칙은 동일합니다.
+
+---
+
 ### 다음 장 미리보기
 
 Custom Instructions로 AI에게 규칙을 알려주고, Prompt Files로 반복 작업을 자동화했습니다. 이제 한 걸음 더 나아가 **TDD(테스트 주도 개발)**와 **Custom Agent**를 결합합니다. 테스트를 먼저 작성하고, AI에게 구현을 맡기는 전문적인 개발 방법론을 배웁니다.
