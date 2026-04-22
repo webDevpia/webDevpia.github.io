@@ -170,6 +170,18 @@ h1 { margin-bottom: 16px; }
   flex-wrap: wrap;
   gap: 16px;
 }
+
+/*
+  flex: 1 1 calc(33.33% - 11px) 해석:
+  ┌─ flex-grow: 1   → 남은 공간이 있으면 늘어남
+  ├─ flex-shrink: 1  → 공간이 부족하면 줄어듦
+  └─ flex-basis: calc(33.33% - 11px) → 기본 너비
+
+  왜 11px을 빼는가?
+  - 카드 3개 사이에 gap이 2개 생김 (16px × 2 = 32px)
+  - 32px을 3개 카드가 나눠 부담 = 약 11px씩
+  - 100% / 3 = 33.33%, 거기서 11px을 빼면 3개가 딱 맞음
+*/
 .card {
   flex: 1 1 calc(33.33% - 11px);
   padding: 24px;
@@ -180,11 +192,13 @@ h1 { margin-bottom: 16px; }
 }
 
 /* 태블릿 (768px 이하): 2열 */
+/* 카드 2개 사이 gap 1개 = 16px, 16px / 2 = 8px씩 빼기 */
 @media (max-width: 768px) {
   .card { flex: 1 1 calc(50% - 8px); }
 }
 
 /* 모바일 (480px 이하): 1열 */
+/* 한 줄에 1개이므로 gap 계산 불필요 */
 @media (max-width: 480px) {
   .card { flex: 1 1 100%; }
 }
