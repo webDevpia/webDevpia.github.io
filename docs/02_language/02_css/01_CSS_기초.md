@@ -978,32 +978,11 @@ a.button {
 `style.css`:
 
 ```css
+/* === 공통 === */
 * { box-sizing: border-box; margin: 0; }
 body { font-family: sans-serif; }
 
-/* relative + absolute: 배지 카드 */
-.product-card {
-  position: relative;  /* 기준점 설정 */
-  width: 200px;
-  display: inline-block;
-  margin: 16px;
-}
-.product-card img {
-  width: 100%;
-  border-radius: 8px;
-}
-.product-badge {
-  position: absolute;  /* 부모(.product-card) 기준으로 배치 */
-  top: 8px;
-  right: 8px;
-  background-color: #ef4444;
-  color: white;
-  font-size: 12px;
-  padding: 2px 8px;
-  border-radius: 12px;
-}
-
-/* 상단 고정 네비게이션 */
+/* === 1. 네비게이션 (fixed) === */
 .navbar {
   position: fixed;
   top: 0;
@@ -1017,7 +996,29 @@ body { font-family: sans-serif; }
 
 .content { padding: 80px 24px 24px; }
 
-/* 버튼 hover transition */
+/* === 2. 배지 카드 (relative + absolute) === */
+.product-card {
+  position: relative;
+  width: 200px;
+  display: inline-block;
+  margin: 16px;
+}
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+.product-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* === 3. 버튼 (hover transition) === */
 .btn {
   display: inline-block;
   padding: 12px 24px;
@@ -1034,7 +1035,7 @@ body { font-family: sans-serif; }
   background-color: #2980b9;
 }
 
-/* 카드 hover transition */
+/* === 4. 카드 (hover transition) === */
 .card {
   width: 250px;
   padding: 24px;
