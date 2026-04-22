@@ -80,6 +80,63 @@ permalink: /language/css/flexbox
 +------------+ +------------+ +------------+
 ```
 
+### 전체 코드로 실행해보기
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Flexbox 기본</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>flex 적용 전 (block — 세로 쌓임)</h2>
+  <div class="no-flex">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+
+  <h2>flex 적용 후 (가로 나란히)</h2>
+  <div class="with-flex">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+body { font-family: sans-serif; padding: 20px; }
+.item {
+  width: 100px;
+  height: 60px;
+  background-color: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  margin: 4px;
+}
+
+/* flex 없음 — block이므로 세로 */
+.no-flex { /* 아무 설정 없음 */ }
+
+/* flex 적용 — 가로로 나란히 */
+.with-flex { display: flex; }
+```
+
+> 💡 `.with-flex`에서 `display: flex;`를 지우면 세로로 바뀝니다. 직접 바꿔보세요.
+
 ---
 
 <a id="part2"></a>
@@ -133,6 +190,75 @@ Flexbox에서는 두 개의 축이 있습니다.
 |  [아이템3]              |
 +-------------------------+
 ```
+
+### 전체 코드로 실행해보기
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>flex-direction</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>row (기본 — 가로)</h2>
+  <div class="container row">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+
+  <h2>row-reverse (가로 역방향)</h2>
+  <div class="container row-reverse">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+
+  <h2>column (세로)</h2>
+  <div class="container column">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+body { font-family: sans-serif; padding: 20px; }
+.container {
+  display: flex;
+  gap: 8px;
+  background-color: #f0f4ff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.item {
+  width: 80px;
+  height: 50px;
+  background-color: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.row { flex-direction: row; }
+.row-reverse { flex-direction: row-reverse; }
+.column { flex-direction: column; }
+```
+
+> 💡 `.row`를 `.column`으로 바꾸면 방향이 바뀝니다. 직접 바꿔보세요.
 
 ---
 
@@ -220,6 +346,91 @@ space-evenly:  _ [1] _ [2] _ [3] _
 
 이 조합은 **히어로 섹션, 버튼, 카드 내용 정렬** 등 실무에서 매우 자주 사용됩니다.
 
+### 전체 코드로 실행해보기
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>justify-content + align-items</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>justify-content 비교 (주축 정렬)</h2>
+
+  <p>flex-start (기본)</p>
+  <div class="box jc-start"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>center</p>
+  <div class="box jc-center"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>space-between</p>
+  <div class="box jc-between"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>space-evenly</p>
+  <div class="box jc-evenly"><span>1</span><span>2</span><span>3</span></div>
+
+  <h2>align-items 비교 (교차축 정렬)</h2>
+
+  <p>flex-start</p>
+  <div class="box tall ai-start"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>center</p>
+  <div class="box tall ai-center"><span>1</span><span>2</span><span>3</span></div>
+
+  <p>flex-end</p>
+  <div class="box tall ai-end"><span>1</span><span>2</span><span>3</span></div>
+
+  <h2>완벽한 가운데 정렬</h2>
+  <div class="box tall jc-center ai-center">
+    <p>가운데!</p>
+  </div>
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+body { font-family: sans-serif; padding: 20px; }
+.box {
+  display: flex;
+  background-color: #f0f4ff;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.box span {
+  width: 60px;
+  height: 40px;
+  background-color: #3b82f6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+.tall { height: 120px; }
+
+/* justify-content */
+.jc-start   { justify-content: flex-start; }
+.jc-center  { justify-content: center; }
+.jc-between { justify-content: space-between; }
+.jc-evenly  { justify-content: space-evenly; }
+
+/* align-items */
+.ai-start  { align-items: flex-start; }
+.ai-center { align-items: center; }
+.ai-end    { align-items: flex-end; }
+```
+
+> 💡 `jc-between`을 `jc-evenly`로 바꿔보세요. 간격 차이를 직접 확인할 수 있습니다.
+
 ---
 
 <a id="part4"></a>
@@ -299,6 +510,57 @@ flex-wrap: wrap (화면이 좁을 때):
   border-radius: 8px;
 }
 ```
+
+### 전체 코드로 실행해보기
+
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>flex-wrap + gap</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>flex-wrap: wrap + gap (브라우저 너비를 줄여보세요)</h2>
+  <div class="card-container">
+    <div class="card">카드 1</div>
+    <div class="card">카드 2</div>
+    <div class="card">카드 3</div>
+    <div class="card">카드 4</div>
+    <div class="card">카드 5</div>
+  </div>
+</body>
+</html>
+```
+
+`style.css`:
+
+```css
+body { font-family: sans-serif; padding: 20px; background-color: #f5f5f5; }
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.card {
+  flex: 0 0 calc(33.33% - 11px);
+  padding: 24px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  text-align: center;
+}
+```
+
+> 💡 브라우저 창 너비를 줄여보세요. `flex-wrap: wrap` 덕분에 3열 → 2열 → 1열로 자동 줄바꿈됩니다.
+> `gap: 16px`을 `gap: 32px`으로 바꾸면 간격이 넓어집니다.
 
 ---
 
