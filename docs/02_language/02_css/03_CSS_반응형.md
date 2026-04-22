@@ -128,52 +128,7 @@ permalink: /language/css/responsive
 
 > 실무에서는 프레임워크나 팀 컨벤션에 따라 브레이크포인트가 달라집니다. Tailwind CSS는 `sm(640px)`, `md(768px)`, `lg(1024px)`, `xl(1280px)` 등을 사용합니다.
 
-### 실습: 카드가 데스크톱은 3열, 모바일은 1열
-
-```html
-<div class="cards">
-  <div class="card">카드 1</div>
-  <div class="card">카드 2</div>
-  <div class="card">카드 3</div>
-</div>
-```
-
-```css
-* { box-sizing: border-box; }
-
-/* 기본(데스크톱): 3열 */
-.cards {
-  display: flex;
-  gap: 20px;
-}
-
-.card {
-  flex: 1;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-/* 태블릿 이하: 2열 */
-@media (max-width: 768px) {
-  .card {
-    flex: 0 0 calc(50% - 10px);
-  }
-}
-
-/* 모바일: 1열 */
-@media (max-width: 480px) {
-  .cards {
-    flex-direction: column;
-  }
-  .card {
-    flex: none;
-  }
-}
-```
-
-### 전체 코드로 실행해보기 — 미디어 쿼리
+### 전체 코드로 실행해보기 — 카드 3열 → 2열 → 1열
 
 아래 두 파일을 같은 폴더에 만드세요.
 
