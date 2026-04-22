@@ -204,6 +204,51 @@ p { font-size: 16px; }
 nav a { color: white; text-decoration: none; }
 ```
 
+### 전체 코드로 실행해보기
+
+위 선택자들을 한 파일에서 확인할 수 있습니다. 복사-붙여넣기로 바로 실행하세요.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>선택자 연습</title>
+  <style>
+    /* 요소 선택자 */
+    h1 { color: red; }
+    p { font-size: 16px; }
+
+    /* 클래스 선택자 */
+    .highlight { background-color: yellow; }
+
+    /* ID 선택자 */
+    #main-title { font-size: 48px; color: navy; }
+
+    /* 자손 선택자 */
+    nav a { color: white; text-decoration: none; }
+    nav { background-color: #333; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h1 id="main-title">메인 제목 (ID + 요소)</h1>
+  <h1>일반 h1 제목 (요소만)</h1>
+
+  <p class="highlight">이 문장은 강조됩니다. (클래스)</p>
+  <p>일반 문단입니다. (요소만)</p>
+  <span class="highlight">이 텍스트도 강조됩니다. (클래스)</span>
+
+  <nav>
+    <a href="#">홈</a>
+    <a href="#">소개</a>
+    <a href="#">연락처</a>
+  </nav>
+</body>
+</html>
+```
+
+> 💡 브라우저에서 열어보면 각 선택자가 어떤 요소에 적용되는지 바로 확인할 수 있습니다.
+
 ### 언제 무엇을 사용하나?
 
 | 선택자 | 형태 | 재사용 | 우선순위 | 사용 상황 |
@@ -432,6 +477,44 @@ a { color: #3498db; text-decoration: none; }
 a:hover { text-decoration: underline; }
 ```
 
+### 전체 코드로 실행해보기
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>텍스트 스타일링</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #333;
+      background-color: #fafafa;
+      padding: 20px;
+    }
+    h1 { font-size: 2rem; color: #1a1a1a; }
+    h2 { font-size: 1.5rem; color: #2c2c2c; }
+    a { color: #3498db; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    p.intro {
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <h1>큰 제목 (2rem)</h1>
+  <h2>중간 제목 (1.5rem)</h2>
+  <p>기본 문단입니다. Noto Sans KR 폰트가 적용됩니다.</p>
+  <p class="intro">이 문단은 대문자+글자 간격이 적용됩니다.</p>
+  <a href="#">링크 텍스트 (마우스를 올려보세요)</a>
+</body>
+</html>
+```
+
 ---
 
 <a id="part5"></a>
@@ -525,40 +608,49 @@ a:hover { text-decoration: underline; }
 
 ### 실습: 카드 만들기
 
+복사-붙여넣기로 바로 실행하세요.
+
 ```html
-<!-- index.html -->
-<div class="card">
-  <h2 class="card-title">카드 제목</h2>
-  <p class="card-text">카드 내용입니다. 박스 모델을 활용해 여백을 조절합니다.</p>
-</div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>카드 만들기</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { background-color: #f5f5f5; padding: 20px; font-family: sans-serif; }
+
+    .card {
+      width: 320px;
+      padding: 24px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin: 16px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .card-title {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+    .card-text {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2 class="card-title">카드 제목</h2>
+    <p class="card-text">카드 내용입니다. 박스 모델을 활용해 여백을 조절합니다.</p>
+  </div>
+</body>
+</html>
 ```
 
-```css
-/* style.css */
-* { box-sizing: border-box; }
-
-.card {
-  width: 320px;
-  padding: 24px;           /* 내부 여백 */
-  border: 1px solid #e0e0e0; /* 테두리 */
-  border-radius: 8px;      /* 모서리 둥글게 */
-  margin: 16px;            /* 외부 여백 */
-  background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 */
-}
-
-.card-title {
-  font-size: 1.25rem;
-  margin-bottom: 12px;
-  color: #1a1a1a;
-}
-
-.card-text {
-  font-size: 0.95rem;
-  color: #666;
-  line-height: 1.6;
-}
-```
+> 💡 padding, margin, border-radius 값을 바꿔가며 카드 모양이 어떻게 변하는지 확인해보세요.
 
 ---
 
@@ -627,18 +719,83 @@ a:hover { text-decoration: underline; }
 | `inline-block` | 내용만큼 | **가능** | 미발생 | — |
 | `none` | 0 | — | — | — |
 
-```css
-/* 예시: 인라인 요소에 크기를 주고 싶을 때 */
-a.button {
-  display: inline-block; /* inline에서는 width/height 적용 안 됨 */
-  width: 120px;
-  height: 40px;
-  background-color: #3498db;
-  color: white;
-  text-align: center;
-  line-height: 40px; /* 세로 가운데 정렬 트릭 */
-  border-radius: 4px;
-}
+### 전체 코드로 실행해보기 — block vs inline vs inline-block
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>display 비교</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+
+    /* block: 한 줄 전체 차지 */
+    .block-demo div {
+      background-color: #dbeafe;
+      border: 1px solid #3b82f6;
+      margin: 4px 0;
+      padding: 8px;
+    }
+
+    /* inline: 내용만큼만 차지 */
+    .inline-demo span {
+      background-color: #dcfce7;
+      border: 1px solid #22c55e;
+      padding: 4px 8px;
+    }
+
+    /* inline-block: 내용만큼 + 크기 조절 가능 */
+    .badge {
+      display: inline-block;
+      width: 80px;
+      height: 28px;
+      background-color: #3498db;
+      color: white;
+      text-align: center;
+      line-height: 28px;
+      border-radius: 4px;
+      margin: 4px;
+    }
+
+    /* inline-block 버튼 */
+    a.button {
+      display: inline-block;
+      width: 120px;
+      height: 40px;
+      background-color: #3498db;
+      color: white;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>block (한 줄 전체)</h2>
+  <div class="block-demo">
+    <div>첫 번째 div</div>
+    <div>두 번째 div</div>
+  </div>
+
+  <h2>inline (내용만큼)</h2>
+  <div class="inline-demo">
+    <span>텍스트</span>
+    <span>링크</span>
+    <span>굵은 텍스트</span>
+  </div>
+
+  <h2>inline-block (내용만큼 + 크기 조절)</h2>
+  <span class="badge">HTML</span>
+  <span class="badge">CSS</span>
+  <span class="badge">JS</span>
+
+  <h2>inline-block 버튼</h2>
+  <a href="#" class="button">시작하기</a>
+  <a href="#" class="button">더 보기</a>
+</body>
+</html>
 ```
 
 ---
@@ -706,6 +863,96 @@ a.button {
 ```
 
 > **비유**: transition은 **슬로우 모션**입니다. "색상이 바뀌었다!"가 아니라 "색상이 부드럽게~ 바뀌는 중..."이 됩니다. 이후 Flexbox 챕터와 Tailwind에서 자주 사용합니다.
+
+### 전체 코드로 실행해보기 — position + transition
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>position + transition</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body { font-family: sans-serif; }
+
+    /* 상단 고정 네비게이션 */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1e293b;
+      color: white;
+      padding: 16px 24px;
+      z-index: 100;
+    }
+
+    .content { padding: 80px 24px 24px; }
+
+    /* 버튼 hover transition */
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin: 8px;
+    }
+    .btn:hover {
+      background-color: #2980b9;
+    }
+
+    /* 카드 hover transition */
+    .card {
+      width: 250px;
+      padding: 24px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin: 16px;
+      display: inline-block;
+      background: white;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">고정 네비게이션 (스크롤해도 여기 고정됩니다)</nav>
+
+  <div class="content">
+    <h1>position + transition 체험</h1>
+    <p>스크롤해보세요 — 네비게이션이 고정됩니다.</p>
+    <p>버튼과 카드에 마우스를 올려보세요 — 부드러운 전환 효과를 확인하세요.</p>
+
+    <h2>버튼 (hover → 색상 전환)</h2>
+    <button class="btn">시작하기</button>
+    <button class="btn">더 보기</button>
+
+    <h2>카드 (hover → 위로 이동 + 그림자)</h2>
+    <div class="card">
+      <h3>카드 1</h3>
+      <p>마우스를 올려보세요</p>
+    </div>
+    <div class="card">
+      <h3>카드 2</h3>
+      <p>부드럽게 올라갑니다</p>
+    </div>
+
+    <!-- 스크롤을 위한 여백 -->
+    <div style="height: 800px;"></div>
+    <p>여기까지 스크롤해도 네비게이션은 상단에 고정되어 있습니다.</p>
+  </div>
+</body>
+</html>
+```
 
 ---
 
