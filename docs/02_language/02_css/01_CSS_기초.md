@@ -206,7 +206,9 @@ nav a { color: white; text-decoration: none; }
 
 ### 전체 코드로 실행해보기
 
-위 선택자들을 한 파일에서 확인할 수 있습니다. 복사-붙여넣기로 바로 실행하세요.
+2장에서 배운 **외부 파일 방식**으로 실습합니다. 아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
 
 ```html
 <!DOCTYPE html>
@@ -214,21 +216,7 @@ nav a { color: white; text-decoration: none; }
 <head>
   <meta charset="UTF-8">
   <title>선택자 연습</title>
-  <style>
-    /* 요소 선택자 */
-    h1 { color: red; }
-    p { font-size: 16px; }
-
-    /* 클래스 선택자 */
-    .highlight { background-color: yellow; }
-
-    /* ID 선택자 */
-    #main-title { font-size: 48px; color: navy; }
-
-    /* 자손 선택자 */
-    nav a { color: white; text-decoration: none; }
-    nav { background-color: #333; padding: 10px; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1 id="main-title">메인 제목 (ID + 요소)</h1>
@@ -247,7 +235,25 @@ nav a { color: white; text-decoration: none; }
 </html>
 ```
 
-> 💡 브라우저에서 열어보면 각 선택자가 어떤 요소에 적용되는지 바로 확인할 수 있습니다.
+`style.css`:
+
+```css
+/* 요소 선택자 */
+h1 { color: red; }
+p { font-size: 16px; }
+
+/* 클래스 선택자 */
+.highlight { background-color: yellow; }
+
+/* ID 선택자 */
+#main-title { font-size: 48px; color: navy; }
+
+/* 자손 선택자 */
+nav { background-color: #333; padding: 10px; }
+nav a { color: white; text-decoration: none; }
+```
+
+> 💡 스타일이 안 먹히면 `<link>` 태그의 `href="style.css"` 경로를 확인하세요. HTML 파일과 CSS 파일이 같은 폴더에 있어야 합니다.
 
 ### 언제 무엇을 사용하나?
 
@@ -479,6 +485,10 @@ a:hover { text-decoration: underline; }
 
 ### 전체 코드로 실행해보기
 
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
 ```html
 <!DOCTYPE html>
 <html lang="ko">
@@ -486,24 +496,7 @@ a:hover { text-decoration: underline; }
   <meta charset="UTF-8">
   <title>텍스트 스타일링</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 16px;
-      line-height: 1.7;
-      color: #333;
-      background-color: #fafafa;
-      padding: 20px;
-    }
-    h1 { font-size: 2rem; color: #1a1a1a; }
-    h2 { font-size: 1.5rem; color: #2c2c2c; }
-    a { color: #3498db; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    p.intro {
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>큰 제목 (2rem)</h1>
@@ -513,6 +506,27 @@ a:hover { text-decoration: underline; }
   <a href="#">링크 텍스트 (마우스를 올려보세요)</a>
 </body>
 </html>
+```
+
+`style.css`:
+
+```css
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333;
+  background-color: #fafafa;
+  padding: 20px;
+}
+h1 { font-size: 2rem; color: #1a1a1a; }
+h2 { font-size: 1.5rem; color: #2c2c2c; }
+a { color: #3498db; text-decoration: none; }
+a:hover { text-decoration: underline; }
+p.intro {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 ```
 
 ---
@@ -608,7 +622,9 @@ a:hover { text-decoration: underline; }
 
 ### 실습: 카드 만들기
 
-복사-붙여넣기로 바로 실행하세요.
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
 
 ```html
 <!DOCTYPE html>
@@ -616,30 +632,7 @@ a:hover { text-decoration: underline; }
 <head>
   <meta charset="UTF-8">
   <title>카드 만들기</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { background-color: #f5f5f5; padding: 20px; font-family: sans-serif; }
-
-    .card {
-      width: 320px;
-      padding: 24px;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      margin: 16px;
-      background-color: #ffffff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-    .card-title {
-      font-size: 1.25rem;
-      margin-bottom: 12px;
-      color: #1a1a1a;
-    }
-    .card-text {
-      font-size: 0.95rem;
-      color: #666;
-      line-height: 1.6;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="card">
@@ -650,7 +643,34 @@ a:hover { text-decoration: underline; }
 </html>
 ```
 
-> 💡 padding, margin, border-radius 값을 바꿔가며 카드 모양이 어떻게 변하는지 확인해보세요.
+`style.css`:
+
+```css
+* { box-sizing: border-box; }
+body { background-color: #f5f5f5; padding: 20px; font-family: sans-serif; }
+
+.card {
+  width: 320px;
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  color: #1a1a1a;
+}
+.card-text {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+}
+```
+
+> 💡 `style.css`의 padding, margin, border-radius 값을 바꿔가며 카드 모양이 어떻게 변하는지 확인해보세요.
 
 ---
 
@@ -721,56 +741,17 @@ a:hover { text-decoration: underline; }
 
 ### 전체 코드로 실행해보기 — block vs inline vs inline-block
 
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
 ```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <title>display 비교</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-
-    /* block: 한 줄 전체 차지 */
-    .block-demo div {
-      background-color: #dbeafe;
-      border: 1px solid #3b82f6;
-      margin: 4px 0;
-      padding: 8px;
-    }
-
-    /* inline: 내용만큼만 차지 */
-    .inline-demo span {
-      background-color: #dcfce7;
-      border: 1px solid #22c55e;
-      padding: 4px 8px;
-    }
-
-    /* inline-block: 내용만큼 + 크기 조절 가능 */
-    .badge {
-      display: inline-block;
-      width: 80px;
-      height: 28px;
-      background-color: #3498db;
-      color: white;
-      text-align: center;
-      line-height: 28px;
-      border-radius: 4px;
-      margin: 4px;
-    }
-
-    /* inline-block 버튼 */
-    a.button {
-      display: inline-block;
-      width: 120px;
-      height: 40px;
-      background-color: #3498db;
-      color: white;
-      text-align: center;
-      line-height: 40px;
-      border-radius: 4px;
-      text-decoration: none;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h2>block (한 줄 전체)</h2>
@@ -796,6 +777,52 @@ a:hover { text-decoration: underline; }
   <a href="#" class="button">더 보기</a>
 </body>
 </html>
+```
+
+`style.css`:
+
+```css
+body { font-family: sans-serif; padding: 20px; }
+
+/* block */
+.block-demo div {
+  background-color: #dbeafe;
+  border: 1px solid #3b82f6;
+  margin: 4px 0;
+  padding: 8px;
+}
+
+/* inline */
+.inline-demo span {
+  background-color: #dcfce7;
+  border: 1px solid #22c55e;
+  padding: 4px 8px;
+}
+
+/* inline-block */
+.badge {
+  display: inline-block;
+  width: 80px;
+  height: 28px;
+  background-color: #3498db;
+  color: white;
+  text-align: center;
+  line-height: 28px;
+  border-radius: 4px;
+  margin: 4px;
+}
+
+a.button {
+  display: inline-block;
+  width: 120px;
+  height: 40px;
+  background-color: #3498db;
+  color: white;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 4px;
+  text-decoration: none;
+}
 ```
 
 ---
@@ -866,63 +893,17 @@ a:hover { text-decoration: underline; }
 
 ### 전체 코드로 실행해보기 — position + transition
 
+아래 두 파일을 같은 폴더에 만드세요.
+
+`index.html`:
+
 ```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <title>position + transition</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; }
-    body { font-family: sans-serif; }
-
-    /* 상단 고정 네비게이션 */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #1e293b;
-      color: white;
-      padding: 16px 24px;
-      z-index: 100;
-    }
-
-    .content { padding: 80px 24px 24px; }
-
-    /* 버튼 hover transition */
-    .btn {
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      margin: 8px;
-    }
-    .btn:hover {
-      background-color: #2980b9;
-    }
-
-    /* 카드 hover transition */
-    .card {
-      width: 250px;
-      padding: 24px;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      margin: 16px;
-      display: inline-block;
-      background: white;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <nav class="navbar">고정 네비게이션 (스크롤해도 여기 고정됩니다)</nav>
@@ -952,6 +933,60 @@ a:hover { text-decoration: underline; }
   </div>
 </body>
 </html>
+```
+
+`style.css`:
+
+```css
+* { box-sizing: border-box; margin: 0; }
+body { font-family: sans-serif; }
+
+/* 상단 고정 네비게이션 */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1e293b;
+  color: white;
+  padding: 16px 24px;
+  z-index: 100;
+}
+
+.content { padding: 80px 24px 24px; }
+
+/* 버튼 hover transition */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 8px;
+}
+.btn:hover {
+  background-color: #2980b9;
+}
+
+/* 카드 hover transition */
+.card {
+  width: 250px;
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin: 16px;
+  display: inline-block;
+  background: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
 ```
 
 ---
