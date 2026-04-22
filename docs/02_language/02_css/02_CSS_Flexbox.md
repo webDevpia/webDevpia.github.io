@@ -366,16 +366,25 @@ space-evenly:  _ [1] _ [2] _ [3] _
   <p>flex-start (기본)</p>
   <div class="box jc-start"><span>1</span><span>2</span><span>3</span></div>
 
+  <p>flex-end</p>
+  <div class="box jc-end"><span>1</span><span>2</span><span>3</span></div>
+
   <p>center</p>
   <div class="box jc-center"><span>1</span><span>2</span><span>3</span></div>
 
   <p>space-between</p>
   <div class="box jc-between"><span>1</span><span>2</span><span>3</span></div>
 
+  <p>space-around</p>
+  <div class="box jc-around"><span>1</span><span>2</span><span>3</span></div>
+
   <p>space-evenly</p>
   <div class="box jc-evenly"><span>1</span><span>2</span><span>3</span></div>
 
   <h2>align-items 비교 (교차축 정렬)</h2>
+
+  <p>stretch (기본 — 높이를 채움)</p>
+  <div class="box tall ai-stretch"><span>1</span><span>2</span><span>3</span></div>
 
   <p>flex-start</p>
   <div class="box tall ai-start"><span>1</span><span>2</span><span>3</span></div>
@@ -419,14 +428,18 @@ body { font-family: sans-serif; padding: 20px; }
 
 /* justify-content */
 .jc-start   { justify-content: flex-start; }
+.jc-end     { justify-content: flex-end; }
 .jc-center  { justify-content: center; }
 .jc-between { justify-content: space-between; }
+.jc-around  { justify-content: space-around; }
 .jc-evenly  { justify-content: space-evenly; }
 
 /* align-items */
-.ai-start  { align-items: flex-start; }
-.ai-center { align-items: center; }
-.ai-end    { align-items: flex-end; }
+.ai-stretch { align-items: stretch; }
+.ai-stretch span { height: auto; } /* stretch를 보려면 고정 높이 해제 */
+.ai-start   { align-items: flex-start; }
+.ai-center  { align-items: center; }
+.ai-end     { align-items: flex-end; }
 ```
 
 > 💡 `jc-between`을 `jc-evenly`로 바꿔보세요. 간격 차이를 직접 확인할 수 있습니다.
