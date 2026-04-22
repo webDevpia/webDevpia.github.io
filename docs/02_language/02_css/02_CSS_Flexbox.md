@@ -21,9 +21,10 @@ permalink: /language/css/flexbox
 1. [Flexbox란?](#part1) - flex 컨테이너와 아이템
 2. [주축과 교차축](#part2) - flex-direction, 방향 이해
 3. [정렬: justify-content와 align-items](#part3) - 주축과 교차축 정렬
-4. [flex-wrap과 gap](#part4) - 줄바꿈과 간격 조절
-5. [실용 예제: 카드 레이아웃](#part5) - 실제 카드 레이아웃 구현
-6. [정리](#part6) - 속성 요약 및 실습 과제
+4. [flex 속성 이해하기](#part4) - grow, shrink, basis
+5. [flex-wrap과 gap](#part5) - 줄바꿈과 간격 조절
+6. [실용 예제: 카드 레이아웃](#part6) - 실제 카드 레이아웃 구현
+7. [정리](#part7) - 속성 요약 및 실습 과제
 
 ---
 
@@ -448,7 +449,85 @@ body { font-family: sans-serif; padding: 20px; }
 
 <a id="part4"></a>
 
-## 4️⃣ flex-wrap과 gap [↑](#toc)
+## 4️⃣ flex 속성 이해하기 [↑](#toc)
+
+### flex: grow shrink basis — 세 숫자의 의미
+
+`flex` 속성은 3개의 값을 한 줄로 씁니다:
+
+```css
+.card {
+  flex: 1 1 200px;
+  /*    │ │  └─ flex-basis: 기본 너비 (시작 크기)
+        │ └──── flex-shrink: 공간 부족 시 줄어드는 비율
+        └────── flex-grow: 남은 공간을 가져가는 비율  */
+}
+```
+
+### flex-grow — "남은 공간을 얼마나 가져갈까?"
+
+```
+부모 컨테이너: 900px
+카드 3개 기본 너비: 200px × 3 = 600px
+남은 공간: 300px
+
+flex-grow: 0 → 남은 300px 무시. 카드는 200px 유지
+flex-grow: 1 → 남은 300px을 3등분(100px씩). 카드는 300px
+```
+
+| 값 | 의미 | 비유 |
+|---|------|------|
+| `flex-grow: 0` | 남은 공간 안 가져감 (기본값) | "내 자리만 차지" |
+| `flex-grow: 1` | 남은 공간을 균등하게 나눔 | "빈자리 공평하게 나누자" |
+| `flex-grow: 2` | 다른 것보다 2배로 가져감 | "나는 2인분" |
+
+### flex-shrink — "공간이 부족하면 얼마나 줄어들까?"
+
+```
+부모 컨테이너: 600px
+카드 3개 기본 너비: 300px × 3 = 900px
+부족한 공간: 300px
+
+flex-shrink: 0 → 안 줄어듦. 컨테이너 밖으로 삐져나감
+flex-shrink: 1 → 부족한 300px을 3등분(100px씩 줄임). 카드는 200px
+```
+
+| 값 | 의미 | 비유 |
+|---|------|------|
+| `flex-shrink: 0` | 절대 안 줄어듦 | "내 자리는 양보 안 해" |
+| `flex-shrink: 1` | 부족하면 균등하게 줄어듦 (기본값) | "좁으면 양보하지" |
+
+### flex-basis — "기본 너비(시작 크기)는 얼마?"
+
+| 값 | 의미 |
+|---|------|
+| `flex-basis: 200px` | 기본 너비 200px에서 시작 |
+| `flex-basis: 33.33%` | 부모의 33.33%에서 시작 |
+| `flex-basis: auto` | 내용 크기에 맞춤 (기본값) |
+
+### 자주 쓰는 조합
+
+```css
+/* 균등 분배 — 남은 공간을 똑같이 나눔 */
+.item { flex: 1; }
+/* = flex: 1 1 0  (grow:1, shrink:1, basis:0) */
+
+/* 고정 너비 — 절대 안 변함 */
+.sidebar { flex: 0 0 250px; }
+/* = grow:0(안 늘어남), shrink:0(안 줄어듦), basis:250px(고정) */
+
+/* 3열 카드 — gap 고려한 계산 */
+.card { flex: 1 1 calc(33.33% - 11px); }
+/* = 기본 33.33%에서 시작, 남으면 늘어나고 부족하면 줄어듦 */
+```
+
+> 💡 **요약**: `flex-grow`는 커지는 비율, `flex-shrink`는 줄어드는 비율, `flex-basis`는 시작 크기입니다.
+
+---
+
+<a id="part5"></a>
+
+## 5️⃣ flex-wrap과 gap [↑](#toc)
 
 ### flex-wrap — 줄바꿈
 
@@ -548,9 +627,9 @@ body { font-family: sans-serif; padding: 20px; background-color: #f5f5f5; }
 
 ---
 
-<a id="part5"></a>
+<a id="part6"></a>
 
-## 5️⃣ 실용 예제: 카드 레이아웃 [↑](#toc)
+## 6️⃣ 실용 예제: 카드 레이아웃 [↑](#toc)
 
 3개의 카드를 Flexbox로 가로 배치하고, 카드 안에서도 Flexbox로 내용을 정렬하는 예제입니다.
 
@@ -691,9 +770,9 @@ body {
 
 ---
 
-<a id="part6"></a>
+<a id="part7"></a>
 
-## 6️⃣ 정리 [↑](#toc)
+## 7️⃣ 정리 [↑](#toc)
 
 ### Flexbox 속성 요약
 
