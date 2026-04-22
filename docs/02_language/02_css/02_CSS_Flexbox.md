@@ -494,37 +494,7 @@ flex-wrap: wrap (화면이 좁을 때):
 
 `margin`을 사용하면 첫/마지막 요소에도 여백이 생겨 복잡해지지만, `gap`은 **아이템 사이에만** 간격을 적용합니다.
 
-### 실습: 카드 3개를 한 줄에 배치
-
-```html
-<div class="card-container">
-  <div class="card">카드 1</div>
-  <div class="card">카드 2</div>
-  <div class="card">카드 3</div>
-  <div class="card">카드 4</div>
-  <div class="card">카드 5</div>
-</div>
-```
-
-```css
-.card-container {
-  display: flex;
-  flex-wrap: wrap;  /* 화면이 좁으면 자동 줄바꿈 */
-  gap: 16px;
-}
-
-.card {
-  /* 3개가 한 줄에 배치되도록 너비 설정 */
-  /* (100% - gap 2개) / 3개 = 약 31% */
-  flex: 0 0 calc(33.33% - 11px);
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-}
-```
-
-### 전체 코드로 실행해보기
+### 전체 코드로 실행해보기 — 카드 3개를 한 줄에 배치
 
 아래 두 파일을 같은 폴더에 만드세요.
 
@@ -563,6 +533,7 @@ body { font-family: sans-serif; padding: 20px; background-color: #f5f5f5; }
 }
 
 .card {
+  /* 3개가 한 줄: gap 16px × 2개 = 32px, 32px / 3 = 약 11px씩 빼기 */
   flex: 0 0 calc(33.33% - 11px);
   padding: 24px;
   background-color: #fff;
