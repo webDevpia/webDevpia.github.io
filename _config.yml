@@ -63,7 +63,7 @@ exclude:
   # - docs/02_language/
   # - docs/02_language/
   - docs/03_db/
-  - docs/04_cloud/
+  # - docs/04_cloud/
   - docs/05_site_Deploy
   # - docs/06_MachineLearning
   # - docs/07_DeepLearning/06_cnn
@@ -244,7 +244,6 @@ plugins:
   - jekyll-paginate
 markdown: kramdown
 kramdown:
-  input: GFM
   smart_quotes: ["apos", "apos", "quot", "quot"]
   syntax_highlighter: rouge
   syntax_highlighter_opts:
