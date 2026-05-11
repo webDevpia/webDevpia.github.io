@@ -13,8 +13,6 @@ permalink: /cloud/nginx
 - Nginx의 주요 파일 경로와 `systemctl` 제어 명령을 이해한다
 - 브라우저에서 퍼블릭 IP로 접속하여 기본 페이지를 확인할 수 있다
 
-> ⏱ **예상 소요 시간**: 약 20분 (설치 5분 + 확인·설명 15분)
-
 <a id="toc"></a>
 
 ## 진행 순서
@@ -25,7 +23,7 @@ permalink: /cloud/nginx
 4. [Nginx 파일 구조](#part4) - 웹 루트, 설정 파일, 로그
 5. [systemctl로 Nginx 제어](#part5) - 시작/정지/재시작/상태
 6. [내 페이지로 바꿔보기](#part6) - HTML 직접 작성 → 브라우저 즉시 반영
-7. [정리](#part7) - 체크리스트, 트러블슈팅, 다음 장 미리보기
+7. [정리](#part7) - 체크리스트, 트러블슈팅
 
 ---
 
@@ -516,19 +514,3 @@ ls /var/www/html/                     # 웹 루트
 sudo tail /var/log/nginx/access.log   # 접속 로그
 ```
 
----
-
-### 다음 장 미리보기
-
-**07장 GitHub에서 정적 사이트 배포**에서는 지금까지 구축한 환경 위에 **강사가 GitHub에 올려둔 사이트 코드**를 배포합니다.
-
-```bash
-# 07장 미리보기
-git clone https://github.com/seonjo0217/todoApp.git
-sudo cp -r todoApp/* /var/www/html/
-# 브라우저 새로고침 → 할 일 목록 앱 등장!
-```
-
----
-
-[↑ 목차로](#toc)
